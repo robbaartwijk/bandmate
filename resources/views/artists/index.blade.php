@@ -16,19 +16,31 @@
 <body>
   <h1 class="text-4xl font-bold text-center text-blue-500 mt-20">Welcome to Laravel with Tailwind CSS - ARTISTS</h1>
 
-  @foreach ($artists as $artist) 
-    <div class="container mx-auto mt-10">
-      <div class="grid grid-cols-12 gap-2">
-        <div class="bg-gray-200">{{ $artist->name }}</div>
-        <div class="bg-gray-200">{{ $artist->sex }}</div>
-        <div class="bg-gray-200">{{ $artist->age }}</div>
-        <div class="bg-gray-200">{{ $artist->style }}</div>
-        <div class="bg-gray-200">{{ $artist->website }}</div>
-        <div class="bg-gray-200">{{ $artist->still_active }}</div>
-        <div class="bg-gray-200">{{ $artist->description }}</div>
-      </div> 
-    </div>
-  @endforeach
+  <table class="table-auto">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Style</th>
+      <th>Website</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($artists as $artist) 
+    <tr>
+      <td> {{ $artist->name }} </td>
+      <td> {{ $artist->sex }} </td>
+      <td> {{ $artist->age }} </td>
+      <td> {{ $artist->style }} </td>
+      <td> {{ $artist->website }} </td>
+      <td> {{ $artist->still_active }} </td>
+    </tr>
+    @endforeach
+
+  </tbody>
+</table>
 
 </body>
 </html>

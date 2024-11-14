@@ -17,7 +17,7 @@ class ArtistController extends Controller
         return view('artists.index', compact('artists'));
     }
 
-    /**
+    /**w312
      * Show the form for creating a new resource.
      */
     public function create()
