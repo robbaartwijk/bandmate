@@ -31,10 +31,19 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'App\Http\Controllers\PageController@tables']);
 		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'App\Http\Controllers\PageController@typography']);
 		Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'App\Http\Controllers\PageController@upgrade']);
-		Route::get('bands', ['as' => 'pages.bands', 'uses' => 'App\Http\Controllers\PageController@bands']);
-		Route::get('artists', ['as' => 'pages.artists', 'uses' => 'App\Http\Controllers\PageController@artists']);
-		Route::get('instruments', ['as' => 'pages.instruments', 'uses' => 'App\Http\Controllers\PageController@instruments']);
-});
+
+		Route::resource('artists', 'App\Http\Controllers\ArtistController')->names([
+			'index' => 'artists.index'
+		]);
+
+		Route::resource('bands', 'App\Http\Controllers\BandController')->names([
+			'index' => 'bands.index'
+		]);
+		
+		Route::resource('instruments', 'App\Http\Controllers\InstrumentController')->names([
+			'index' => 'instruments.index'
+		]);
+	});
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);

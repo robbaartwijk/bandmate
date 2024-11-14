@@ -12,17 +12,17 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artists = Artist::all();
-
+        $artists = Artist::all()->sortBy('name');;
         return view('artists.index', compact('artists'));
     }
 
-    /**w312
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+
+
     }
 
     /**
@@ -36,7 +36,7 @@ class ArtistController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(artists $artists)
+    public function show(Artist $artist)
     {
         //
     }
@@ -44,7 +44,7 @@ class ArtistController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(artists $artists)
+    public function edit(Artist $artist)
     {
         //
     }
@@ -52,7 +52,7 @@ class ArtistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, artists $artists)
+    public function update(Request $request, Artist $artist)
     {
         //
     }
@@ -60,7 +60,7 @@ class ArtistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(artists $artists)
+    public function destroy(Artist $artist)
     {
         //
     }

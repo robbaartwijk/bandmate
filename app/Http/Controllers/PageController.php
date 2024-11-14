@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Band;
-use App\Models\Artist;
-use App\Models\Instrument;
 use Illuminate\Support\Facades\Route;
 
 class PageController extends Controller
@@ -37,39 +34,6 @@ class PageController extends Controller
     public function tables()
     {
         return view('pages.tables');
-    }
-
-    /**
-     * Display bands page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function bands()
-    {
-        $bands = Band::all()->sortBy('name');;
-        return view('pages.bands', compact('bands'));
-    }
-
-     /**
-     * Display artists page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function artists()
-    {
-        $artists = Artist::all()->sortBy('name');;
-        return view('pages.artists', compact('artists'));
-    }
-
-     /**
-     * Display instruments page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function instruments()
-    {
-        $instruments = Instrument::all()->sortBy('name');
-        return view('pages.instruments', compact('instruments'));
     }
 
     /**

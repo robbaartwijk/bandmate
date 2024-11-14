@@ -21,41 +21,27 @@
 
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
-
-                        <li @if ($pageSlug == 'bands') class="active " @endif>
-                            <a href="{{ route('pages.bands') }}">
-                                <i class="tim-icons icon-pin"></i>
-                                <p>{{ __('Bands') }}</p>
-                            </a>
-                        </li>
-
                         <li @if ($pageSlug == 'artists') class="active " @endif>
-                            <a href="{{ route('pages.artists') }}">
+                            <a href="{{ route('artists.index') }}">
                                 <i class="tim-icons icon-pin"></i>
                                 <p>{{ __('Artists') }}</p>
                             </a>
                         </li>
-
+                        <li @if ($pageSlug == 'bands') class="active " @endif>
+                            <a href="{{ route('bands.index') }}">
+                                <i class="tim-icons icon-pin"></i>
+                                <p>{{ __('Bands') }}</p>
+                            </a>
+                        </li>
                         <li @if ($pageSlug == 'instruments') class="active " @endif>
-                            <a href="{{ route('pages.instruments') }}">
+                            <a href="{{ route('instruments.index') }}">
                                 <i class="tim-icons icon-pin"></i>
                                 <p>{{ __('Instruments') }}</p>
                             </a>
                         </li>
-
-
                     </ul>
                 </div>
             </li>
-
-
-
-
-
-
-
-
-
 
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">

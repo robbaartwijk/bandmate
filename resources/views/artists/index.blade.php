@@ -1,46 +1,39 @@
-<!-- resources/views/instruments/index.blade.php -->
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app', ['page' => __('Artists'), 'pageSlug' => 'artists'])
 
-  <!-- FIX LATERm FOR NOW USE CDN -->
-  <!-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet"> -->
-  <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <title>Welcome to Laravel with Tailwind CSS - ARTISTS</title>
-</head>
-<body>
-  <h1 class="text-4xl font-bold text-center text-blue-500 mt-20">Welcome to Laravel with Tailwind CSS - ARTISTS</h1>
-
-  <table class="table-auto">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Sex</th>
-      <th>Age</th>
-      <th>Style</th>
-      <th>Website</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($artists as $artist) 
-    <tr>
-      <td> {{ $artist->name }} </td>
-      <td> {{ $artist->sex }} </td>
-      <td> {{ $artist->age }} </td>
-      <td> {{ $artist->style }} </td>
-      <td> {{ $artist->website }} </td>
-      <td> {{ $artist->still_active }} </td>
-    </tr>
-    @endforeach
-
-  </tbody>
-</table>
-
-</body>
-</html>
+@section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h4 class="card-title"> Artists index</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table tablesorter " id="">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Sex</th>
+                                    <th>Age</th>
+                                    <th>Style</th>
+                                    <th>Description</th>
+                                    <th>Website</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($artists as $artist)
+                                    <tr>
+                                        <td>{{ $artist->name }}</td>
+                                        <td>{{ $artist->sex }}</td>
+                                        <td>{{ $artist->age }}</td>
+                                        <td>{{ $artist->style }}</td>
+                                        <td>{{ $artist->description }}</td>
+                                        <td><a href=" {{ $artist->website }}"> {{ $artist->website }}</a></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endsection

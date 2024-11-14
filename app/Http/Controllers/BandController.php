@@ -12,7 +12,7 @@ class BandController extends Controller
      */
     public function index()
     {
-        $bands = Band::all();
+        $bands = Band::all()->sortBy('name');;
         return view('bands.index', compact('bands'));
     }
 

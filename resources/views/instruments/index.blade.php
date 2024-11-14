@@ -1,30 +1,62 @@
-<!-- resources/views/instruments/index.blade.php -->
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
 
-  <!-- FIX LATERm FOR NOW USE CDN -->
-  <!-- <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet"> -->
-  <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
+@section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h4 class="card-title"> Instruments index</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
 
-  <script src="https://cdn.tailwindcss.com"></script>
+                        <a href="{{ route('instruments.create') }}" class="btn btn-primary">Add instrument</a>
+                        <br>
+                        <br>
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-  <title>Welcome to Laravel with Tailwind CSS - INSTRUMENTS</title>
-</head>
-<body>
-  <h1 class="text-4xl font-bold text-center text-blue-500 mt-20">Welcome to Laravel with Tailwind CSS - INSTRUMENTS</h1>
+                        <table class="table tablesorter " id="">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Date added</th>
+                                    <th>Date last update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($instruments as $instrument)
+                                    <tr>
+                                        <td>{{ $instrument->name }}</td>
+                                        <td>{{ $instrument->type }}</td>
+                                        <td>{{ $instrument->created_at }}</td>
+                                        <td>{{ $instrument->updated_at }}</td>
 
-  @foreach ($instruments as $instrument) 
-    <div class="container mx-auto mt-10">
-      <div class="grid grid-cols-12 gap-2">
-        <div class="bg-gray-200">{{ $instrument->name }}</div>
-        <div class="bg-gray-200">{{ $instrument->type }}</div>
-      </div> 
-    </div>
-  @endforeach
+                                        <td>
+                                            <a href="{{ route('instruments.edit', $instrument->id) }}"
+                                                class="btn btn-primary btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-pencil"></i>
+                                            </a>
+                                            <form action="{{ route('instruments.destroy', $instrument->id) }}"
+                                                method="post" style="display:inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
+                                                    <i class="tim-icons icon-simple-remove"></i>
+                                                </button>
+                                            </form>
+                                        </td>
 
-</body>
-</html>
 
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endsection

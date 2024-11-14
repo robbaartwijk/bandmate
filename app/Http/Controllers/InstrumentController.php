@@ -12,11 +12,8 @@ class InstrumentController extends Controller
      */
     public function index()
     {
-        
-        $instruments = Instrument::all();
-
+        $instruments = Instrument::all()->sortBy('name');
         return view('instruments.index', compact('instruments'));
-
     }
 
     /**
@@ -32,7 +29,16 @@ class InstrumentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+        ]);
+
         Instrument::create($request->all());
+
+        return redirect()->route('instruments.index')
+            ->with('success', 'Instrument created successfully.');
+
     }
 
     /**
@@ -40,7 +46,8 @@ class InstrumentController extends Controller
      */
     public function show(Instrument $instrument)
     {
-        //
+        $instrument = Instrument::find($instrument);
+        return view('pages.instruments', compact('instruments'));
     }
 
     /**
@@ -48,7 +55,7 @@ class InstrumentController extends Controller
      */
     public function edit(Instrument $instrument)
     {
-        //
+        return view('instruments.edit', compact('instrument'));
     }
 
     /**
@@ -56,7 +63,15 @@ class InstrumentController extends Controller
      */
     public function update(Request $request, Instrument $instrument)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+        ]);
+
+        $instrument->update($request->all());
+
+        return redirect()->route('instruments.index')
+            ->with('success', 'Instrument updated successfully');
     }
 
     /**
@@ -64,6 +79,9 @@ class InstrumentController extends Controller
      */
     public function destroy(Instrument $instrument)
     {
-        //
+        $instrument->delete();
+
+        return redirect()->route('instruments.index')
+            ->with('success', 'Instrument deleted successfully');
     }
 }
