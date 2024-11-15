@@ -16,12 +16,14 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('number_of_members');
+            $table->string('number_of_members')->nullable();
             $table->integer('genre_id');
             $table->boolean('rehearsal_room');
-            $table->string('website');
+            $table->string('website')->nullable();
             $table->boolean('active');
-            $table->string('description');
+            $table->string('description')->nullable();
+            $table->string('email');
+            $table->string('phone');
 
             $table->timestamps();
             $table->softDeletes();

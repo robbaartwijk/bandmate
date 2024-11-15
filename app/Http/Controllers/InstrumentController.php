@@ -46,8 +46,7 @@ class InstrumentController extends Controller
      */
     public function show(Instrument $instrument)
     {
-        $instrument = Instrument::find($instrument);
-        return view('pages.instruments', compact('instruments'));
+        return view('instruments.show', compact('instrument'));
     }
 
     /**

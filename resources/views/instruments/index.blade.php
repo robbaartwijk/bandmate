@@ -31,7 +31,7 @@
                             <tbody>
                                 @foreach ($instruments as $instrument)
                                     <tr>
-                                        <td>{{ $instrument->name }}</td>
+                                        <td><a href="{{ route('instruments.show', $instrument->id) }}">{{ $instrument->name }}</a></td>
                                         <td>{{ $instrument->type }}</td>
                                         <td>{{ $instrument->created_at }}</td>
                                         <td>{{ $instrument->updated_at }}</td>

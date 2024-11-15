@@ -12,7 +12,7 @@ class ActController extends Controller
      */
     public function index()
     {
-        $acts = Act::all()->sortBy('name');;
+        $acts = Act::all()->sortBy('name');
         return view('acts.index', compact('acts'));
     }
 
@@ -21,7 +21,7 @@ class ActController extends Controller
      */
     public function create()
     {
-        //
+        return view('acts.create');
     }
 
     /**
@@ -29,21 +29,29 @@ class ActController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'genre_id' => 'required',
+        ]);
+
+        Act::create($request->all());
+
+        return redirect()->route('acts.index')
+            ->with('success', 'Act created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(bands $bands)
+    public function show(act $act)
     {
-        //
+        return view('acts.show', compact('act'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(bands $bands)
+    public function edit(acts $acts)
     {
         //
     }
@@ -51,7 +59,7 @@ class ActController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, bands $bands)
+    public function update(Request $request, acts $acts)
     {
         //
     }
@@ -59,7 +67,7 @@ class ActController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(bands $bands)
+    public function destroy(acts $acts)
     {
         //
     }
