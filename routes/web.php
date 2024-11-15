@@ -32,17 +32,18 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'App\Http\Controllers\PageController@typography']);
 		Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'App\Http\Controllers\PageController@upgrade']);
 
-		Route::resource('artists', 'App\Http\Controllers\ArtistController')->names([
-			'index' => 'artists.index'
-		]);
-
-		Route::resource('bands', 'App\Http\Controllers\BandController')->names([
-			'index' => 'bands.index'
+		Route::resource('acts', 'App\Http\Controllers\ActController')->names([
+			'index' => 'acts.index'
 		]);
 		
 		Route::resource('instruments', 'App\Http\Controllers\InstrumentController')->names([
 			'index' => 'instruments.index'
 		]);
+
+		Route::resource('genres', 'App\Http\Controllers\GenreController')->names([
+			'index' => 'genres.index'
+		]);
+
 	});
 
 Route::group(['middleware' => 'auth'], function () {

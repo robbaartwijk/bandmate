@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Bands index</h4>
+                    <h4 class="card-title"> Acts index</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -13,20 +13,26 @@
                             <thead class=" text-primary">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Type</th>
                                     <th>Number of members</th>
                                     <th>Style</th>
-                                    <th>Description</th>
+                                    <th>Rehearsal Room</th>
                                     <th>Website</th>
+                                    <th>Active</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bands as $band)
+                                @foreach ($acts as $act)
                                     <tr>
-                                        <td>{{ $band->name }}</td>
-                                        <td>{{ $band->number_of_members }}</td>
-                                        <td>{{ $band->style }}</td>
-                                        <td>{{ $band->description }}</td>
-                                        <td><a href=" {{ $band->website }}"> {{ $band->website }}</td>
+                                        <td>{{ $act->name }}</td>
+                                        <td>{{ $act->type }}</td>
+                                        <td>{{ $act->number_of_members }}</td>
+                                        <td>{{ $act->style }}</td>
+                                        <td>{{ $act->rehearsal_room }}</td>
+                                        <td><a href=" {{ $act->website }}"> {{ $act->website }}</td>
+                                        <td>{{ $act->active }}</td>
+                                        <td>{{ $act->description }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

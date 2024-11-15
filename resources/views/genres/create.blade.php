@@ -1,15 +1,15 @@
-@extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
+@extends('layouts.app', ['page' => __('Genres'), 'pageSlug' => 'genres'])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Add instrument</h4>
+                    <h4 class="card-title"> Add genre</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <form action="{{ route('instruments.store') }}" method="post">
+                        <form action="{{ route('genres.store') }}" method="post">
                             @csrf
                             <div
                                 class="form-group
@@ -21,19 +21,20 @@
                                     placeholder="Name" value="{{ old('name') }}">
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
+  
                             <div
                                 class="form-group
-                                        {{ $errors->has('type') ? 'has-danger' : '' }}">
-                                <label for="type">Type</label>
-                                <input type="text" name="type"
+                                        {{ $errors->has('description') ? 'has-danger' : '' }}">
+                                <label for="description">Description</label>
+                                <input type="text" name="description"
                                     class="form-control
-                                            {{ $errors->has('type') ? 'is-invalid' : '' }}"
-                                    placeholder="Type" value="{{ old('type') }}">
-                                @include('alerts.feedback', ['field' => 'type'])
+                                            {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    placeholder="Description" value="{{ old('description') }}">
+                                @include('alerts.feedback', ['field' => 'description'])
                             </div>
 
                             <button type="submit" class="btn btn-primary">Add</button>
-                            <a href="{{ route('instruments.index') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
 
                         </form>
                     </div>

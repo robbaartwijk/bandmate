@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
+use App\Models\Act;
 use Illuminate\Http\Request;
 
-class ArtistController extends Controller
+class ActController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $artists = Artist::all()->sortBy('name');;
-        return view('artists.index', compact('artists'));
+        $acts = Act::all()->sortBy('name');;
+        return view('acts.index', compact('acts'));
     }
 
     /**
@@ -21,8 +21,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-
-
+        //
     }
 
     /**
@@ -36,7 +35,7 @@ class ArtistController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Artist $artist)
+    public function show(bands $bands)
     {
         //
     }
@@ -44,7 +43,7 @@ class ArtistController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Artist $artist)
+    public function edit(bands $bands)
     {
         //
     }
@@ -52,7 +51,7 @@ class ArtistController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Artist $artist)
+    public function update(Request $request, bands $bands)
     {
         //
     }
@@ -60,7 +59,7 @@ class ArtistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Artist $artist)
+    public function destroy(bands $bands)
     {
         //
     }

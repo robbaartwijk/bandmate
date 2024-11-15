@@ -1,35 +1,37 @@
-@extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
+@extends('layouts.app', ['page' => __('Genres'), 'pageSlug' => 'genres'])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Edit instrument</h4>
+                    <h4 class="card-title"> Edit genre</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <form action="{{ route('instruments.update', $instrument->id) }}" method="post">
+                        <form action="{{ route('genres.update', $genre->id) }}" method="post">
                             @csrf
                             @method('put')
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
                                 <label for="name">Name</label>
+
                                 <input type="text" name="name"
                                     class="form-control
                                     {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                    placeholder="Name" value="{{ $instrument->name }}">
+                                    placeholder="Name" value="{{ $genre->name }}">
 
-                                <input type="text" name="type"
+                                <input type="text" name="description"
                                     class="form-control
-                                    {{ $errors->has('type') ? 'is-invalid' : '' }}"
-                                    placeholder="Type" value="{{ $instrument->type }}">
+                                    {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    placeholder="Description" value="{{ $genre->description }}">
 
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('instruments.index') }}" class="btn btn-secondary">Back</a>
-                            
+                                <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
+
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
+                        </form>
                     </div>
                 </div>
             @endsection
