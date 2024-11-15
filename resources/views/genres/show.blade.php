@@ -7,41 +7,14 @@
                 <div class="card-header">
                     <h4 class="card-title"> Show genre</h4>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table tablesorter " id="">
-                            <thead class=" text-primary">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Date added</th>
-                                    <th>Date last update</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{ $genre->name }}</td>
-                                    <td>{{ $genre->description }}</td>
-                                    <td>{{ $genre->created_at }}</td>
-                                    <td>{{ $genre->updated_at }}</td>
-                                    <td>
 
-                                        <form action="{{ route('genres.destroy', $genre->id) }}" method="post"
-                                            style="display:inline">
-                                            @csrf
-                                            @method('delete')
-                                        </form>
-
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        
-                        <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
-
-                    </div>
-
+                <div class="card-body text-primary">
+                    <h5><b>Name : </b>{{ $genre->name }}</h5>
+                    <h5><b>Description : </b> {{ $genre->description }}</h5>
+                    <h5><b>Date added : </b>{{ $genre->created_at }}</h5>
+                    <h5><b>Date last update : </b>{{ $genre->updated_at }}</h5>
+                    <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
                 </div>
             </div>
-        @endsection
+        </div>
+    @endsection

@@ -31,7 +31,9 @@
                             <tbody>
                                 @foreach ($genres as $genre)
                                     <tr>
-                                        <td>{{ $genre->name }}</td>
+
+                                        // $genre->name clickable to show genre details
+                                        <td><a href="{{ route('genres.show', $genre->id) }}">{{ $genre->name }}</a></td>
                                         <td>{{ $genre->description }}</td>
                                         <td>{{ $genre->created_at }}</td>
                                         <td>{{ $genre->updated_at }}</td>
