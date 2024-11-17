@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rehearsalroom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RehearsalroomsController extends Controller
 {
@@ -21,7 +22,7 @@ class RehearsalroomsController extends Controller
      */
     public function create()
     {
-        //
+        return view('rehearsalrooms.create');
     }
 
     /**
@@ -29,31 +30,47 @@ class RehearsalroomsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rehearsalroom = new Rehearsalroom();
+
+        $rehearsalroom->user_id = Auth::user()->id;
+        $rehearsalroom->fill($request->all());
+        $rehearsalroom->save();
+        return redirect()->route('rehearsalrooms.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(rehearsalrooms $rehearsalrooms)
+    public function show(rehearsalroom $rehearsalroom)
     {
-        //
+        return view('rehearsalrooms.show', compact('rehearsalroom'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(rehearsalrooms $rehearsalrooms)
+    public function edit(rehearsalroom $rehearsalroom)
     {
-        //
+        return view('rehearsalrooms.edit', compact('rehearsalroom'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, rehearsalrooms $rehearsalrooms)
+    public function update(Request $request, rehearsalroom $rehearsalroom)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'city' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'description' => 'required',
+        ]);
+
+        $rehearsalroom->update($request->all());
+
+        return redirect()->route('rehearsalrooms.index')
+            ->with('success', 'Rehearsal room updated successfully');
     }
 
     /**

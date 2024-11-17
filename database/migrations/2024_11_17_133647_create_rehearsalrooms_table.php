@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('name');
 
             $table->string('address');
+            $table->string('zip');
             $table->string('city');
             $table->string('state');
-            $table->string('zip');
+            $table->string('country');
             $table->string('phone');
             $table->string('email');
             $table->string('website');
