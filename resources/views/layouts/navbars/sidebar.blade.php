@@ -7,14 +7,14 @@
         <ul class="nav">
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
                 <a href="{{ route('home') }}">
-                    <i class="tim-icons icon-chart-pie-36"></i>
-                    <p>{{ __('Dashboard') }}</p>
+                    <i class="fa fa-home"></i>
+                    <p>{{ __('Home') }}</p>
                 </a>
             </li>
 
             <li>
                 <a data-toggle="collapse" href="#beheer" aria-expanded="true">
-                    <i class="fab fa-laravel"></i>
+                    <i class="fa fa-list"></i>
                     <span class="nav-link-text">{{ __('Beheer') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
@@ -23,25 +23,25 @@
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'acts') class="active " @endif>
                             <a href="{{ route('acts.index') }}">
-                                <i class="tim-icons icon-pin"></i>
+                                <i class="fa fa-music"></i>
                                 <p>{{ __('Acts') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'instruments') class="active " @endif>
                             <a href="{{ route('instruments.index') }}">
-                                <i class="tim-icons icon-pin"></i>
+                                <i class="fa fa-music"></i>
                                 <p>{{ __('Instruments') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'genres') class="active " @endif>
                             <a href="{{ route('genres.index') }}">
-                                <i class="tim-icons icon-pin"></i>
+                                <i class="fa fa-music"></i>
                                 <p>{{ __('Genres') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'rehearsalrooms') class="active " @endif>
                             <a href="{{ route('rehearsalrooms.index') }}">
-                                <i class="tim-icons icon-pin"></i>
+                                <i class="fa fa-music"></i>
                                 <p>{{ __('Reheearsal rooms') }}</p>
                             </a>
                         </li>
@@ -51,8 +51,8 @@
 
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
-                    <i class="fab fa-laravel"></i>
-                    <span class="nav-link-text">{{ __('Laravel Examples') }}</span>
+                    <i class="fa fa-list"></i>
+                    <span class="nav-link-text">{{ __('Users') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -60,25 +60,18 @@
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'profile') class="active " @endif>
                             <a href="{{ route('profile.edit') }}">
-                                <i class="tim-icons icon-single-02"></i>
+                                <i class="fa fa-user-circle"></i>
                                 <p>{{ __('User Profile') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="{{ route('user.index') }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <i class="fa fa-user-circle"></i>
                                 <p>{{ __('User Management') }}</p>
                             </a>
                         </li>
                     </ul>
                 </div>
-            </li>
-
-            <li @if ($pageSlug == 'icons') class="active " @endif>
-                <a href="{{ route('pages.icons') }}">
-                    <i class="tim-icons icon-atom"></i>
-                    <p>{{ __('Icons') }}</p>
-                </a>
             </li>
 
             <li @if ($pageSlug == 'notifications') class="active " @endif>
