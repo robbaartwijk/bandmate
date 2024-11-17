@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rehearsalrooms', function (Blueprint $table) {
+
             $table->id();
 
+            $table->bigInteger('user_id')->nullable()->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
             $table->string('name');
+
             $table->string('address');
             $table->string('city');
             $table->string('state');

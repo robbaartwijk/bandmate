@@ -44,6 +44,10 @@ Route::group(['middleware' => 'auth'], function () {
 			'index' => 'genres.index'
 		]);
 
+		Route::resource('rehearsalrooms', 'App\Http\Controllers\RehearsalroomsController')->names([
+			'index' => 'rehearsalrooms.index'
+		]);
+
 	});
 
 Route::group(['middleware' => 'auth'], function () {

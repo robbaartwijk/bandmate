@@ -39,6 +39,12 @@
                                 <p>{{ __('Genres') }}</p>
                             </a>
                         </li>
+                        <li @if ($pageSlug == 'rehearsalrooms') class="active " @endif>
+                            <a href="{{ route('rehearsalrooms.index') }}">
+                                <i class="tim-icons icon-pin"></i>
+                                <p>{{ __('Reheearsal rooms') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

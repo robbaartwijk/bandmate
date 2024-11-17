@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\rehearsalrooms;
+use App\Models\Rehearsalroom;
 use Illuminate\Http\Request;
 
 class RehearsalroomsController extends Controller
@@ -12,7 +12,8 @@ class RehearsalroomsController extends Controller
      */
     public function index()
     {
-        //
+        $rehearsalrooms = Rehearsalroom::all()->sortBy('name');
+        return view('rehearsalrooms.index', compact('rehearsalrooms'));
     }
 
     /**
