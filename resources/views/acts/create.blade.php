@@ -37,10 +37,12 @@
                                 class="form-group
                                     {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
                                 <label for="genre_id">Genre</label>
-                                <input type="number" min="1" name="genre_id"
-                                    class="form-control
-                                        {{ $errors->has('genre_id') ? 'is-invalid' : '' }}"
-                                    placeholder="Genre" value="{{ old('genre_id') }}">
+                                <select name="genre_id" class="form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}">
+                                    <option value="">Select</option>
+                                    @foreach($genres as $genre)
+                                        <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->group }} - {{ $genre->name }}</option>
+                                    @endforeach
+                                </select>
                                 @include('alerts.feedback', ['field' => 'genre_id'])
                             </div>
 
@@ -48,14 +50,13 @@
                                 class="form-group
                             {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
                                 <label for="rehearsal_room">Rehearsal Room</label>
-                                <input type="radio" name="rehearsal_room" value="yes"
-                                    class="{{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}"> Yes
-                                <input type="radio" name="rehearsal_room" value="no"
-                                    class="{{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}"> No
+                                <select name="rehearsal_room" class="form-control {{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}">
+                                    <option value="">Select</option>
+                                    <option value="Yes" {{ old('rehearsal_room') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ old('rehearsal_room') == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
                                 @include('alerts.feedback', ['field' => 'rehearsal_room'])
                             </div>
-
-
 
                             <div
                                 class="form-group
@@ -68,18 +69,17 @@
                                 @include('alerts.feedback', ['field' => 'website'])
                             </div>
 
-
                             <div
                                 class="form-group
-                        {{ $errors->has('active') ? 'has-danger' : '' }}">
+                            {{ $errors->has('active') ? 'has-danger' : '' }}">
                                 <label for="active">Active</label>
-                                <input type="boolean" min="1" name="active"
-                                    class="form-control
-                            {{ $errors->has('active') ? 'is-invalid' : '' }}"
-                                    placeholder="Active" value="{{ old('active') }}">
+                                <select name="active" class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}">
+                                    <option value="">Select</option>
+                                    <option value="Yes" {{ old('active') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ old('active') == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
                                 @include('alerts.feedback', ['field' => 'active'])
                             </div>
-
 
                             <div
                                 class="form-group

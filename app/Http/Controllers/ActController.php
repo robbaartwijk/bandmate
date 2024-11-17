@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Act;
 use Illuminate\Http\Request;
+use App\Models\Genre;
 
 class ActController extends Controller
 {
@@ -13,6 +14,12 @@ class ActController extends Controller
     public function index()
     {
         $acts = Act::all()->sortBy('name');
+
+        foreach($acts as $act) {
+            $genre = Genre::find($act->genre_id);
+            $act->genre = $genre->name;
+        }
+
         return view('acts.index', compact('acts'));
     }
 
@@ -21,7 +28,8 @@ class ActController extends Controller
      */
     public function create()
     {
-        return view('acts.create');
+        $genres = Genre::all()->sortBy(['group', 'name']);
+        return view('acts.create', compact('genres'));
     }
 
     /**
@@ -53,7 +61,8 @@ class ActController extends Controller
      */
     public function show(Act $act)
     {
-        return view('acts.show', compact('act'));
+        $genre = Genre::find($act->genre_id);
+        return view('acts.show', compact(['act', 'genre']));
     }
     
     /**

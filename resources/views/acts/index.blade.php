@@ -23,7 +23,7 @@
                             <thead class=" text-primary">
                                 <tr>
                                     <th>Name</th>
-                                    <th>Number_of_members</th>
+                                    <th>Members</th>
                                     <th>Genre</th>
                                     <th>Description</th>
                                     <th>Date added</th>
@@ -36,7 +36,7 @@
                                     <tr>
                                         <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                                         <td>{{ $act->number_of_members }}</td>
-                                        <td>{{ $act->genre_id }}</td>
+                                        <td>{{ $act->genre }}</td>
                                         <td>{{ $act->description }}</td>
                                         <td>{{ $act->created_at }}</td>
                                         <td>{{ $act->updated_at }}</td>

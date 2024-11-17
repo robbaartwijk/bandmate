@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('number_of_members')->nullable();
             $table->integer('genre_id');
-            $table->boolean('rehearsal_room');
+            $table->string('rehearsal_room');
             $table->string('website')->nullable();
-            $table->boolean('active');
+            $table->string('active');
             $table->string('description')->nullable();
             $table->string('email');
             $table->string('phone');

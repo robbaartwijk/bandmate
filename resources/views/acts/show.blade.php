@@ -11,7 +11,7 @@
                 <div class="card-body text-primary">
                     <h5><b>Name : </b>{{ $act->name }}</h5>
                     <h5><b>Number of members : </b> {{ $act->number_of_members }}</h5>
-                    <h5><b>Genre : </b> {{ $act->genre_id }}</h5>
+                    <h5><b>Genre : </b> {{ $genre->name }} ( {{ $genre->group}} )</h5>
 
                     <h5><b>Rehearsal Room : </b> {{ $act->rehearsal_room }}</h5>
 
@@ -19,6 +19,9 @@
 
                     <h5><b>Active : </b> {{ $act->active }}</h5>
                     <h5><b>Description : </b> {{ $act->description }}</h5>
+
+                    <h5><b>Email : </b> <a href="mailto:{{ $act->email }}">{{ $act->email }}</a></h5>
+                    <h5><b>Phone : </b> {{ $act->phone }}</h5>
 
                     <h5><b>Date added : </b>{{ $act->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $act->updated_at }}</h5>
