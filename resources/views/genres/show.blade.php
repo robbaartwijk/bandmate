@@ -10,6 +10,7 @@
 
                 <div class="card-body text-primary">
                     <h5><b>Name : </b>{{ $genre->name }}</h5>
+                    <h5><b>Group : </b>{{ $genre->group }}</h5>
                     <h5><b>Description : </b> {{ $genre->description }}</h5>
                     <h5><b>Date added : </b>{{ $genre->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $genre->updated_at }}</h5>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Rehearsalroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,8 +77,11 @@ class RehearsalroomsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(rehearsalrooms $rehearsalrooms)
+    public function destroy(rehearsalroom $rehearsalroom)
     {
-        //
+        $rehearsalroom->delete();
+
+        return redirect()->route('rehearsalrooms.index')
+            ->with('success', 'Rehearsal room deleted successfully');
     }
 }

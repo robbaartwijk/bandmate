@@ -19,7 +19,7 @@
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse show" id="laravel-examples">
+                <div class="collapse show" id="beheer">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'acts') class="active " @endif>
                             <a href="{{ route('acts.index') }}">
