@@ -1,7 +1,10 @@
 <div class="sidebar">
-    <div class="sidebar-wrapper">
+
+    {{-- RobB Changed background colour of sidebar --}}
+    <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128)">
+        
         <div class="logo">
-            <a href="#" class="simple-text logo-mini">{{ __('BD') }}</a>
+            <a href="#" class="simple-text logo-mini">{{ __('BM') }}</a>
             <a href="#" class="simple-text logo-normal">{{ __('Bandmate') }}</a>
         </div>
         <ul class="nav">
@@ -14,7 +17,7 @@
 
             <li>
                 <a data-toggle="collapse" href="#beheer" aria-expanded="true">
-                    <i class="fa fa-list"></i>
+                    <i class="fa fa-music"></i>
                     <span class="nav-link-text">{{ __('Beheer') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
@@ -51,7 +54,7 @@
 
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
-                    <i class="fa fa-list"></i>
+                    <i class="fa fa-user-circle"></i>
                     <span class="nav-link-text">{{ __('Users') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
@@ -74,7 +77,10 @@
                 </div>
             </li>
 
-            <li @if ($pageSlug == 'notifications') class="active " @endif>
+
+            {{-- @TODO RobB - Legacy code  Delete when not required for inquiry anymore --}}
+
+            {{-- <li @if ($pageSlug == 'notifications') class="active " @endif>
                 <a href="{{ route('pages.notifications') }}">
                     <i class="tim-icons icon-bell-55"></i>
                     <p>{{ __('Notifications') }}</p>
@@ -103,7 +109,9 @@
                     <i class="tim-icons icon-spaceship"></i>
                     <p>{{ __('Upgrade to PRO') }}</p>
                 </a>
-            </li>
+            </li> --}}
+
+            
         </ul>
     </div>
 </div>
