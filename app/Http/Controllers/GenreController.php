@@ -12,7 +12,7 @@ class GenreController extends Controller
      */
     public function index()
     {
-        $genres = Genre::all()->sortBy('name');
+        $genres = Genre::all()->sortBy(['group', 'name']);
         return view('genres.index', compact('genres'));
     }
 
@@ -31,6 +31,7 @@ class GenreController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'group' => 'required',
         ]);
 
         Genre::create($request->all());
@@ -62,6 +63,7 @@ class GenreController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'group' => 'required',
         ]);
 
         $genre->update($request->all());

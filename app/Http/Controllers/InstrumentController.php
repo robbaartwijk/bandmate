@@ -12,7 +12,7 @@ class InstrumentController extends Controller
      */
     public function index()
     {
-        $instruments = Instrument::all()->sortBy('name');
+        $instruments = Instrument::all()->sortBy(['type', 'name']);
         return view('instruments.index', compact('instruments'));
     }
 

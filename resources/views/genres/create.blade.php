@@ -21,7 +21,18 @@
                                     placeholder="Name" value="{{ old('name') }}">
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
-  
+
+                            <div
+                                class="form-group
+                                    {{ $errors->has('group') ? 'has-danger' : '' }}">
+                                <label for="group">Group</label>
+                                <input type="text" name="group"
+                                    class="form-control
+                                        {{ $errors->has('group') ? 'is-invalid' : '' }}"
+                                    placeholder="Group" value="{{ old('group') }}">
+                                @include('alerts.feedback', ['field' => 'group'])
+                            </div>
+
                             <div
                                 class="form-group
                                         {{ $errors->has('description') ? 'has-danger' : '' }}">
@@ -30,11 +41,12 @@
                                     class="form-control
                                             {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     placeholder="Description" value="{{ old('description') }}">
-                                @include('alerts.feedback', ['field' => 'description'])
-                            </div>
+                                    @include('alerts.feedback', ['field' => 'description'])
+                                </div>
 
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
+
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                <a href="{{ route('instruments.index') }}" class="btn btn-secondary">Back</a>
 
                         </form>
                     </div>

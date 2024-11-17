@@ -11,22 +11,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('styles', function (Blueprint $table) {
+        Schema::create('rehearsalrooms', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
+            $table->string('address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('zip');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('website');
             $table->string('description')->nullable();
-            
+
             $table->timestamps();
             $table->softDeletes();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('styles');
+        Schema::dropIfExists('rehearsalrooms');
     }
 };

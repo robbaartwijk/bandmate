@@ -29,9 +29,17 @@ class ActController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'name' => 'required',
             'genre_id' => 'required',
+            'rehearsal_room' => 'required',
+            'number_of_members' => 'required',
+            'active' => 'required',
+            'website' => 'required',
+            'description' => 'required',
+            'email' => 'required',
+            'phone' => 'required'
         ]);
 
         Act::create($request->all());
@@ -43,32 +51,45 @@ class ActController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(act $act)
+    public function show(Act $act)
     {
         return view('acts.show', compact('act'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(acts $acts)
+    public function edit(Act $act)
     {
-        //
+        return view('acts.edit', compact('act'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, acts $acts)
+    public function update(Request $request, Act $act)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+            'number_of_members' => 'required',
+            'genre_id' => 'required',
+            'decscription' => 'required'
+        ]);
 
+        $act->update($request->all());
+
+        return redirect()->route('acts.index')
+            ->with('success', 'Act updated successfully');
+    }
+    
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(acts $acts)
+    public function destroy(Act $act)
     {
-        //
+        $act->delete();
+
+        return redirect()->route('acts.index')
+            ->with('success', 'Act deleted successfully');
     }
 }

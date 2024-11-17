@@ -44,6 +44,66 @@
                                 @include('alerts.feedback', ['field' => 'genre_id'])
                             </div>
 
+                            <div
+                                class="form-group
+                            {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
+                                <label for="rehearsal_room">Rehearsal Room</label>
+                                <input type="radio" name="rehearsal_room" value="yes"
+                                    class="{{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}"> Yes
+                                <input type="radio" name="rehearsal_room" value="no"
+                                    class="{{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}"> No
+                                @include('alerts.feedback', ['field' => 'rehearsal_room'])
+                            </div>
+
+
+
+                            <div
+                                class="form-group
+                            {{ $errors->has('website') ? 'has-danger' : '' }}">
+                                <label for="website">Website</label>
+                                <input type="text" min="1" name="website"
+                                    class="form-control
+                                {{ $errors->has('website') ? 'is-invalid' : '' }}"
+                                    placeholder="Website" value="{{ old('website') }}">
+                                @include('alerts.feedback', ['field' => 'website'])
+                            </div>
+
+
+                            <div
+                                class="form-group
+                        {{ $errors->has('active') ? 'has-danger' : '' }}">
+                                <label for="active">Active</label>
+                                <input type="boolean" min="1" name="active"
+                                    class="form-control
+                            {{ $errors->has('active') ? 'is-invalid' : '' }}"
+                                    placeholder="Active" value="{{ old('active') }}">
+                                @include('alerts.feedback', ['field' => 'active'])
+                            </div>
+
+
+                            <div
+                                class="form-group
+                            {{ $errors->has('email') ? 'has-danger' : '' }}">
+                                <label for="email">Email</label>
+                                <input type="text" min="1" name="email"
+                                    class="form-control
+                                {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                    placeholder="Email" value="{{ old('email') }}">
+                                @include('alerts.feedback', ['field' => 'email'])
+                            </div>
+
+
+                            <div
+                                class="form-group
+                            {{ $errors->has('phone') ? 'has-danger' : '' }}">
+                                <label for="phone">Phone</label>
+                                <input type="text" min="1" name="phone"
+                                    class="form-control
+                                {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                                    placeholder="Phone" value="{{ old('phone') }}">
+                                @include('alerts.feedback', ['field' => 'phone'])
+                            </div>
+
 
                             <div
                                 class="form-group

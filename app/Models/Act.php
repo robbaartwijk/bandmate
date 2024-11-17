@@ -13,8 +13,14 @@ class Act extends Model
 
     protected $fillable = [
         'name',
+        'genre_id',
+        'rehearsal_room',
+        'number_of_members',
+        'website',
+        'active',
         'description',
-        'genre_id'
+        'email',
+        'phone'
     ];
 
 }

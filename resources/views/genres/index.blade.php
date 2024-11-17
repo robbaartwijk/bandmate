@@ -23,6 +23,7 @@
                             <thead class=" text-primary">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Group</th>
                                     <th>Description</th>
                                     <th>Date added</th>
                                     <th>Date last update</th>
@@ -32,6 +33,7 @@
                                 @foreach ($genres as $genre)
                                     <tr>
                                         <td><a href="{{ route('genres.show', $genre->id) }}">{{ $genre->name }}</a></td>
+                                        <td>{{ $genre->group }}</td>
                                         <td>{{ $genre->description }}</td>
                                         <td>{{ $genre->created_at }}</td>
                                         <td>{{ $genre->updated_at }}</td>
