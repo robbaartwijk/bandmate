@@ -24,33 +24,27 @@ Auth::routes();
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'App\Http\Controllers\PageController@icons']);
-		Route::get('maps', ['as' => 'pages.maps', 'uses' => 'App\Http\Controllers\PageController@maps']);
-		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'App\Http\Controllers\PageController@notifications']);
-		Route::get('rtl', ['as' => 'pages.rtl', 'uses' => 'App\Http\Controllers\PageController@rtl']);
-		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'App\Http\Controllers\PageController@tables']);
-		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'App\Http\Controllers\PageController@typography']);
-		Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'App\Http\Controllers\PageController@upgrade']);
 
-		Route::resource('acts', 'App\Http\Controllers\ActController')->names([
-			'index' => 'acts.index'
-		]);
-		
-		Route::resource('instruments', 'App\Http\Controllers\InstrumentController')->names([
-			'index' => 'instruments.index'
-		]);
+	Route::resource('instruments', 'App\Http\Controllers\InstrumentController')->names([
+		'index' => 'instruments.index'
+	]);
 
-		Route::resource('genres', 'App\Http\Controllers\GenreController')->names([
-			'index' => 'genres.index'
-		]);
+	Route::resource('genres', 'App\Http\Controllers\GenreController')->names([
+		'index' => 'genres.index'
+	]);
 
-		Route::resource('rehearsalrooms', 'App\Http\Controllers\RehearsalroomsController')->names([
-			'index' => 'rehearsalrooms.index'
-		]);
+	Route::resource('rehearsalrooms', 'App\Http\Controllers\RehearsalroomController')->names([
+		'index' => 'rehearsalrooms.index'
+	]);
 
-	});
+	Route::resource('users', 'App\Http\Controllers\UserController')->names([
+		'index' => 'users.index'
+	]);
 
-Route::group(['middleware' => 'auth'], function () {
+	Route::resource('acts', 'App\Http\Controllers\ActController')->names([
+		'index' => 'acts.index'
+	]);
+	
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

@@ -17,7 +17,7 @@
                     <h5><b>Country : </b>{{ $rehearsalroom->country }}</h5>
 
                     <h5><b>Phone : </b>{{ $rehearsalroom->phone }}</h5>
-                    <h5><b>Email : </b>{{ $rehearsalroom->email }}</h5>
+                    <h5><b>Email : </b> <a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a></h5>
 
                     <h5><b>Website : </b><a href="{{ $rehearsalroom->website }}">{{ $rehearsalroom->website }}</a></h5>
                     <h5><b>Description : </b> {{ $rehearsalroom->description }}</h5>
