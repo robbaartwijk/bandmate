@@ -28,6 +28,8 @@
                     <th>Name</th>
                     <th>Address</th>
                     <th>City</th>
+                    <th>Website</th>
+                    <th>Email</th>
                     <th>Date added</th>
                     <th>Date last update</th>
                 </tr>
@@ -40,9 +42,11 @@
                 @else
                     @foreach ($rehearsalrooms as $rehearsalroom)
                         <tr>
-                            <td>{{ $rehearsalroom->name }}</td>
+                            <td><a href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a></td>
                             <td>{{ $rehearsalroom->address }}</td>
                             <td>{{ $rehearsalroom->city }}</td>
+                            <td><a href="{{ $rehearsalroom->website }}">{{ $rehearsalroom->website }}</a></td>
+                            <td><a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a</td>
                             <td>{{ $rehearsalroom->created_at }}</td>
                             <td>{{ $rehearsalroom->updated_at }}</td>
 
@@ -53,6 +57,8 @@
         </table>
         </div>
 
+        {{-- old  #ba54f5 --}}
+        {{-- new #a0ce91 --}}
 
         <header><h4><b>Acts</b></h4></header>
 
@@ -62,6 +68,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Genre</th>
+                    <th>Website</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Date added</th>
@@ -76,9 +83,10 @@
                 @else
                     @foreach ($acts as $act)
                         <tr>
-                            <td>{{ $act->name }}</td>
+                            <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                             <td>{{ $act->genre }}</td>
-                            <td>{{ $act->email }}</td>
+                            <td><a href="{{ $act->website }}">{{ $act->website }}</a></td>
+                            <td><a href="mailto:{{ $act->email }}">{{ $act->email }}</a</td>
                             <td>{{ $act->phone }}</td>
                             <td>{{ $act->created_at }}</td>
                             <td>{{ $act->updated_at }}</td>
