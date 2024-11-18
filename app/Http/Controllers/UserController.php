@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Act;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,15 +25,19 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(user $user)
-    {
-        return view('users.show', compact('user'));
+    public function show(User $user)
+    {        
+        $rehearsalrooms = $user->rehearsalrooms()->get();
+
+        // dd($rehearsalrooms);
+
+        return view('users.show', compact('user', 'rehearsalrooms'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(user $user)
+    public function edit(User $user)
     {
         return view('users.edit', compact('user'));
     }
@@ -40,7 +45,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, user $user)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required',
@@ -56,11 +61,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(user $user)
+    public function destroy(User $user)
     {
         $user->delete();
 
-        return redirect()->route('user.index')
+        return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
 }
