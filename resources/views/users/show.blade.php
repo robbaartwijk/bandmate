@@ -18,7 +18,11 @@
             </div>
         </div>
 
-        <table class="table tablesorter " id="">
+
+       <header><h4><b>Rehearsal rooms</b></h4></header>
+       
+        <div class="table-responsive">
+        <table class="table tablesorter" id="">
             <thead class=" text-primary">
                 <tr>
                     <th>Name</th>
@@ -47,4 +51,42 @@
                 @endif
             </tbody>
         </table>
+        </div>
+
+
+        <header><h4><b>Acts</b></h4></header>
+
+        <div class="table-responsive">
+        <table class="table tablesorter" id="">
+            <thead class=" text-primary">
+                <tr>
+                    <th>Name</th>
+                    <th>Genre</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Date added</th>
+                    <th>Date last update</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($acts->isempty())
+                    <tr>
+                        <td colspan="6">No acts found</td>
+                    </tr>
+                @else
+                    @foreach ($acts as $act)
+                        <tr>
+                            <td>{{ $act->name }}</td>
+                            <td>{{ $act->genre }}</td>
+                            <td>{{ $act->email }}</td>
+                            <td>{{ $act->phone }}</td>
+                            <td>{{ $act->created_at }}</td>
+                            <td>{{ $act->updated_at }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+        </div>
+
     @endsection

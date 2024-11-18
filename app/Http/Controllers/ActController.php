@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Act;
 use Illuminate\Http\Request;
 use App\Models\Genre;
+use Illuminate\Support\Facades\Auth;
 
 class ActController extends Controller
 {
@@ -37,7 +38,11 @@ class ActController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $act = new Act();
+
+        $act->user_id = Auth::user()->id;
+        $act->fill($request->all());
+
         $request->validate([
             'name' => 'required',
             'genre_id' => 'required',
@@ -50,7 +55,7 @@ class ActController extends Controller
             'phone' => 'required'
         ]);
 
-        Act::create($request->all());
+        $act->save();
 
         return redirect()->route('acts.index')
             ->with('success', 'Act created successfully.');

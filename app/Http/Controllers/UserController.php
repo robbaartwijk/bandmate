@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Act;
+use App\Models\Genre;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,6 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all()->sortBy('name');
+        
         return view('users.index', compact('users'));
     }
 
@@ -28,10 +29,14 @@ class UserController extends Controller
     public function show(User $user)
     {        
         $rehearsalrooms = $user->rehearsalrooms()->get();
+        $acts = $user->acts()->get();
 
-        // dd($rehearsalrooms);
+        foreach($acts as $act) {
+            $genre = Genre::find($act->genre_id);
+            $act->genre = $genre->name;
+        }
 
-        return view('users.show', compact('user', 'rehearsalrooms'));
+        return view('users.show', compact('user', 'rehearsalrooms', 'acts'));
     }
 
     /**

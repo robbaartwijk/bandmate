@@ -69,4 +69,9 @@ class User extends Authenticatable
         return $this->hasMany(Rehearsalroom::class);
     }
 
+    public function acts(): HasMany
+    {
+        return $this->hasMany(Act::class);
+    }
+
 }
