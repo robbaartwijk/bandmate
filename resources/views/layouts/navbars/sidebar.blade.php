@@ -53,6 +53,27 @@
             </li>
 
             <li>
+                <a data-toggle="collapse" href="#vacancies" aria-expanded="true">
+                    <i class="fa fa-database"></i>
+                    <span class="nav-link-text">{{ __('Vacancies') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse show" id="vacancies">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'vacancies') class="active " @endif>
+                            <a href="{{ route('vacancies.index') }}">
+                                <i class="fa fa-database"></i>
+                                <p>{{ __('Vacancies') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+
+            <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fa fa-user-circle"></i>
                     <span class="nav-link-text">{{ __('Users') }}</span>

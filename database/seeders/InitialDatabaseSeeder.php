@@ -17,6 +17,8 @@ class InitialDatabaseSeeder extends Seeder
         $this->call(RehearsalroomsSeeder::class);
         $this->call(GenresSeeder::class);
         $this->call(InstrumentsSeeder::class);
+        $this->call(ActsSeeder::class);
+        $this->call(VacanciesSeeder::class);
 
     }
 }
