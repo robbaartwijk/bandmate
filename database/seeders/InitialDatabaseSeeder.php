@@ -19,6 +19,7 @@ class InitialDatabaseSeeder extends Seeder
         $this->call(InstrumentsSeeder::class);
         $this->call(ActsSeeder::class);
         $this->call(VacanciesSeeder::class);
+        $this->call(VenuesSeeder::class);
 
     }
 }

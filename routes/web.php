@@ -49,6 +49,10 @@ Route::group(['middleware' => 'auth'], function () {
 		'index' => 'vacancies.index'
 	]);
 
+	Route::resource('venues', 'App\Http\Controllers\VenueController')->names([
+		'index' => 'venues.index'
+	]);
+
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

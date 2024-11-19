@@ -71,7 +71,28 @@
                 </div>
             </li>
 
+            <li>
+                <a data-toggle="collapse" href="#venues" aria-expanded="true">
+                    <i class="fa fa-database"></i>
+                    <span class="nav-link-text">{{ __('Venues') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
 
+                <div class="collapse show" id="vacancies">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'venues') class="active " @endif>
+                            <a href="{{ route('venues.index') }}">
+                                <i class="fa fa-database"></i>
+                                <p>{{ __('Venues') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+
+            
 
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
