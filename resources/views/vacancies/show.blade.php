@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Show vacanct</h4>
+                    <h4 class="card-title"> Show vacancy</h4>
                 </div>
 
                 <div class="card-body text-primary">

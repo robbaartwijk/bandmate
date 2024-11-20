@@ -11,15 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('genres', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name');
-            $table->string('group');
-            $table->longText('description')->nullable();
-        
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('acts', function (Blueprint $table) {
+            $table->boolean('rehearsal_room')->change();  
         });
     }
 
@@ -28,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genres');
+        Schema::table('acts', function (Blueprint $table) {
+            $table->string('rehearsal_room')->change();
+        });
     }
 };

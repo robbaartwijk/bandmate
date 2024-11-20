@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class UsersTableSeeder extends Seeder
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,6 +20,15 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@black.com',
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Rob Baartwijk',
+            'email' => 'rob.baartwijk@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('Towelmaster99'),
             'created_at' => now(),
             'updated_at' => now()
         ]);

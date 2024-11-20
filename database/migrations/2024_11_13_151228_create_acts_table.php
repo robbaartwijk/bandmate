@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('rehearsal_room');
             $table->string('website')->nullable();
             $table->string('active');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('email');
             $table->string('phone');
 

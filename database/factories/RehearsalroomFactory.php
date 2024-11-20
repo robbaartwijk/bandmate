@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Venue>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\rehearsalrooms>
  */
-class VenueFactory extends Factory
+class RehearsalroomFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,19 +17,19 @@ class VenueFactory extends Factory
     public function definition(): array
     {
         $users = \App\Models\User::pluck('id')->toArray();
-
+        
         return [
             'user_id' => $this->faker->randomElement($users),
-            'name' => $this->faker->company,
-            'address' => $this->faker->streetAddress,
+            'name' => $this->faker->name,
+            'address' => $this->faker->address,
             'zip' => $this->faker->postcode,
             'city' => $this->faker->city,
             'state' => $this->faker->state,
             'country' => $this->faker->country,
             'phone' => $this->faker->phoneNumber,
-            'email' => $this->faker->companyEmail,
+            'email' => $this->faker->email,
             'website' => $this->faker->url,
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->text,
         ];
     }
 }

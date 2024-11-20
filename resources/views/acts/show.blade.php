@@ -19,6 +19,7 @@
                             <h5><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h5>
                         </div>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="card-body text-primary">  
                             <h1>Contact and links</h1>  
@@ -57,7 +58,6 @@
                             @if($act->spotify)  
                             <h5><a href="{{ $act->spotify }}" target="_blank"><i class="fab fa-spotify"></i> {{ $act->spotify }}</a></h5>
                             @endif
-
                         </div>
                     </div>
                 </div>

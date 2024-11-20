@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class RehearsalroomsSeeder extends Seeder
+class RehearsalroomSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Act;
+use App\Models\Rehearsalroom;
+use App\Models\User;
+use App\Models\Vacancy;
+use App\Models\Venue;
 use Illuminate\Database\Seeder;
 
 class InitialDatabaseSeeder extends Seeder
@@ -13,13 +18,25 @@ class InitialDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
-        $this->call(RehearsalroomsSeeder::class);
-        $this->call(GenresSeeder::class);
-        $this->call(InstrumentsSeeder::class);
-        $this->call(ActsSeeder::class);
-        $this->call(VacanciesSeeder::class);
-        $this->call(VenuesSeeder::class);
+        // Fill supporting tables
+        $this->call([
+            GenreSeeder::class,
+            InstrumentSeeder::class,
+        ]);
+
+        // Add standard users
+        $this->call([
+            UserTableSeeder::class,
+        ]);
+
+        // Fill main tables
+        User::factory(30)->create();
+        Act::factory(10)->create();
+
+        // Fill user data tables
+        Rehearsalroom::factory(10)->create();
+        Venue::factory(24)->create();
+        Vacancy::factory(20)->create();
 
     }
 }

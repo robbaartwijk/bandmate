@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('act_id')->constrained('acts')->onDelete('cascade');
             $table->foreignId('instrument_id')->constrained('instruments')->onDelete('cascade')->onUpdate('cascade');
             
-            $table->text('description');
+            $table->longText('description');
 
             $table->timestamps();
             $table->softDeletes();
