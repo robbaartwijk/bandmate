@@ -22,9 +22,42 @@
                     <div class="col-lg-6">
                         <div class="card-body text-primary">  
                             <h1>Contact and links</h1>  
-                            <h5><b>Website : </b> <a href="{{ $act->website }}">{{ $act->website }}</a></h5>
-                            <h5><b>Email : </b> <a href="mailto:{{ $act->email }}">{{ $act->email }}</a></h5>
-                            <h5><b>Phone : </b> {{ $act->phone }}</h5>
+                            @if($act->website)
+                                <h5><a href="{{ $act->website }}" target="_blank"><i class="fa fa-anchor"></i> {{ $act->website }}</a></h5>
+                            @endif
+
+                            @if($act->email)
+                            <h5><a href="{{ $act->email }}" target="_blank"><i class="	fa fa-envelope"></i> {{ $act->email }}</a></h5>
+                            @endif
+
+                            @if($act->phone)
+                            <h5><i class="	fa fa-phone"></i> {{ $act->phone }}</a></h5>
+                            @endif
+
+                            @if($act->facebook)    
+                            <h5><a href="{{ $act->facebook }}" target="_blank"><i class="fab fa-facebook"></i> {{ $act->facebook }}</a></h5>
+                            @endif
+
+                            @if($act->youtube)  
+                            <h5><a href="{{ $act->youtube }}" target="_blank"><i class="fab fa-youtube"></i> {{ $act->youtube }}</a></h5>
+                            @endif
+
+                            @if($act->twitter)
+                            <h5><a href="{{ $act->twitter }}" target="_blank"><i class="fab fa-twitter"></i> {{ $act->twitter }}</a></h5>
+                            @endif
+
+                            @if($act->instagram)
+                            <h5><a href="{{ $act->instagram }}" target="_blank"><i class="fab fa-instagram"></i> {{ $act->instagram }}</a></h5>
+                            @endif
+
+                            @if($act->soundcloud)
+                            <h5><a href="{{ $act->soundcloud }}" target="_blank"><i class="fab fa-soundcloud"></i> {{ $act->soundcloud }}</a></h5>
+                            @endif
+
+                            @if($act->spotify)  
+                            <h5><a href="{{ $act->spotify }}" target="_blank"><i class="fab fa-spotify"></i> {{ $act->spotify }}</a></h5>
+                            @endif
+
                         </div>
                     </div>
                 </div>
