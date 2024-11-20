@@ -14,7 +14,29 @@ class VenueController extends Controller
      */
     public function index()
     {
-        $venues = Venue::all()->sortBy('name');
+        $request = request();
+        $query = $request->query();
+
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+        } else {
+            $sort = 'name';
+        }
+
+        $venues = Venue::all();
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $venues = $venues->filter(function ($venue) use ($search) {
+                return (stripos($venue->name, $search) !== false) ||
+                    (stripos($venue->city, $search) !== false);
+            });
+        }
+
+        $venues = $venues->sortBy($sort);
+
+        $venues->count = $venues->count();
+
         return view('venues.index', compact('venues'));
     }
 

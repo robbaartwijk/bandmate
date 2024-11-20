@@ -14,17 +14,30 @@ class RehearsalroomController extends Controller
      */
     public function index()
     {
+        $request = request();
+        $query = $request->query();
+
         if (request()->has('sort')) {
             $sort = request()->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $rehearsalrooms = Rehearsalroom::all()->sortBy('name');
+        $rehearsalrooms = Rehearsalroom::all();
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $rehearsalrooms = $rehearsalrooms->filter(function ($rehearsalroom) use ($search) {
+                return (stripos($rehearsalroom->name, $search) !== false) ||
+                    (stripos($rehearsalroom->city, $search) !== false);
+            });
+        }
 
         if (request()->has('sort')) {
             $rehearsalrooms = $rehearsalrooms->sortBy($sort);
         }
+
+        $rehearsalrooms->count = $rehearsalrooms->count();
 
         return view('rehearsalrooms.index', compact('rehearsalrooms'));
     }

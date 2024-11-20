@@ -11,8 +11,26 @@
                     <div class="table-responsive">
 
                         <a href="{{ route('venues.create') }}" class="btn btn-primary">Add venue</a>
-                        <br>
-                        <br>
+
+                        <div class="float-right">
+
+                            <form action="{{ route('venues.index') }}" method="get">
+                                <div class="input-group no-border">
+                                    <input type="text" name="search" value="{{ request()->search }}"
+                                        class="form-control" placeholder="Search...">
+                                    <a href="{{ route('venues.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort
+                                        by name</a>
+                                    <a href="{{ route('venues.index', ['sort' => 'city']) }}" class="btn btn-secondary">Sort
+                                        by city</a>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="nc-icon nc-zoom-split"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -24,7 +42,6 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>City</th>
-                                    <th>Postal code</th>
                                     <th>Website</th>
                                     <th>Date added</th>
                                     <th>Date last update</th>
@@ -35,9 +52,7 @@
                                     <tr>
                                         <td><a href="{{ route('venues.show', $venue->id) }}">{{ $venue->name }}</a></td>
                                         <td>{{ $venue->city }}</td>
-                                        <td>{{ $venue->zip }}</td>
-
-                                        <td></b> <a href="{{ $venue->website }}">{{ $venue->website }}</a></td>
+                                        <td><a href="{{ $venue->website }}">{{ $venue->website }}</a></td>
                                         <td>{{ $venue->created_at }}</td>
                                         <td>{{ $venue->updated_at }}</td>
 
@@ -62,6 +77,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="float-left" style="color:white">
+                {{ $venues->count() }} {{ $venues->count() > 1 ? 'venues found' : 'venue found' }}
+            </div>
+
         </div>
     </div>
 @endsection

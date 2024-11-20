@@ -13,10 +13,27 @@
                         <a href="{{ route('rehearsalrooms.create') }}" class="btn btn-primary">Add rehearsal room</a>
 
                         <div class="float-right">
-                            <a href="{{ route('rehearsalrooms.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort by name</a>
-                            <a href="{{ route('rehearsalrooms.index', ['sort' => 'city']) }}" class="btn btn-secondary">Sort by city</a>
+
+                            <form action="{{ route('rehearsalrooms.index') }}" method="get">
+                                <div class="input-group no-border">
+                                    <input type="text" name="search" value="{{ request()->search }}"
+                                        class="form-control" placeholder="Search...">
+                                    <a href="{{ route('rehearsalrooms.index', ['sort' => 'name']) }}"
+                                        class="btn btn-secondary">Sort
+                                        by name</a>
+                                    <a href="{{ route('rehearsalrooms.index', ['sort' => 'city']) }}"
+                                        class="btn btn-secondary">Sort
+                                        by city</a>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="nc-icon nc-zoom-split"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        
+                    </div>
+
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -35,7 +52,9 @@
                             <tbody>
                                 @foreach ($rehearsalrooms as $rehearsalroom)
                                     <tr>
-                                        <td><a href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a></td>
+                                        <td><a
+                                                href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a>
+                                        </td>
                                         <td>{{ $rehearsalroom->city }}</td>
                                         <td>{{ $rehearsalroom->created_at }}</td>
                                         <td>{{ $rehearsalroom->updated_at }}</td>
@@ -45,8 +64,8 @@
                                                 class="btn btn-primary btn-link btn-icon btn-sm">
                                                 <i class="tim-icons icon-pencil"></i>
                                             </a>
-                                            <form action="{{ route('rehearsalrooms.destroy', $rehearsalroom->id) }}" method="post"
-                                                style="display:inline">
+                                            <form action="{{ route('rehearsalrooms.destroy', $rehearsalroom->id) }}"
+                                                method="post" style="display:inline">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
@@ -60,7 +79,12 @@
                         </table>
                     </div>
                 </div>
-                    </div>
-                </div>
             </div>
-        @endsection
+
+            <div class="float-left" style="color:white">
+                {{ $rehearsalrooms->count() }} {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
+            </div>
+
+        </div>
+    </div>
+@endsection

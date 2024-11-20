@@ -26,7 +26,8 @@ class AgencyController extends Controller
         if (request()->has('search')) {
             $search = request()->input('search');
             $agencies = $agencies->filter(function ($agency) use ($search) {
-                return stripos($agency->name, $search) !== false;
+                return (stripos($agency->name, $search) !== false) ||
+                    (stripos($agency->country, $search) !== false);
             });
         }
 

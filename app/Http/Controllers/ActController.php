@@ -14,7 +14,8 @@ class ActController extends Controller
      */
     public function index()
     {
-        $query = request()->query();
+        $request = request();
+        $query = $request->query();
 
         if (request()->has('sort')) {
             $sort = request()->input('sort');
@@ -22,17 +23,23 @@ class ActController extends Controller
             $sort = 'name';
         }
 
-        if(request()->has('search')) {
-            $acts = Act::where('name', 'like', '%'. $query['search'] .'%')->get()->sortBy($sort);
-        } else {
-            $acts = Act::all()->sortBy($sort);
-        }
+        $acts = Act::all();
 
         foreach ($acts as $act) {
             $genre = Genre::find($act->genre_id);
             $act->genre = $genre->name;
             $act->description = substr($act->description, 0, 50);
         }
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+
+            $acts = $acts->filter(function ($act) use ($search) {
+                return (stripos($act->name, $search) !== false) ||
+                    (stripos($act->genre, $search) !== false);
+            });
+        }
+
         if (request()->has('sort')) {
             $acts = $acts->sortBy($sort);
         }

@@ -38,8 +38,10 @@ class VacanciesController extends Controller
 
         if (request()->has('search')) {
             $search = request()->input('search');
+
             $vacancies = $vacancies->filter(function ($vacancy) use ($search) {
-                return stripos($vacancy->act_name, $search) !== false;
+                return (stripos($vacancy->act_name, $search) !== false) ||
+                    (stripos($vacancy->instrument_name, $search) !== false);
             });
         }
 

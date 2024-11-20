@@ -12,7 +12,26 @@ class InstrumentController extends Controller
      */
     public function index()
     {
-        $instruments = Instrument::all()->sortBy(['type', 'name']);
+        $request = request();
+        $query = $request->query();
+
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+        } else {
+            $sort = 'name';
+        }
+
+        $instruments = Instrument::all();
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $instruments = $instruments->filter(function ($instrument) use ($search) {
+                return (stripos($instrument->name, $search) !== false) ||
+                    (stripos($instrument->type, $search) !== false);
+            });
+        }
+
+        $instruments = $instruments->sortBy($sort);
 
         $instruments->count = $instruments->count();
 

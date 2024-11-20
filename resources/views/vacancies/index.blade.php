@@ -80,7 +80,7 @@
             </div>
         </div>
     </div>
-
+ 
     <div class="float-left" style="color:white">
         {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
     </div>
