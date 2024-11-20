@@ -26,12 +26,15 @@
                                     <th>Type</th>
                                     <th>Date added</th>
                                     <th>Date last update</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($instruments as $instrument)
                                     <tr>
-                                        <td><a href="{{ route('instruments.show', $instrument->id) }}">{{ $instrument->name }}</a></td>
+                                        <td><a
+                                                href="{{ route('instruments.show', $instrument->id) }}">{{ $instrument->name }}</a>
+                                        </td>
                                         <td>{{ $instrument->type }}</td>
                                         <td>{{ $instrument->created_at }}</td>
                                         <td>{{ $instrument->updated_at }}</td>
@@ -50,8 +53,6 @@
                                                 </button>
                                             </form>
                                         </td>
-
-
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -59,4 +60,6 @@
                     </div>
                 </div>
             </div>
-        @endsection
+        </div>
+    </div>
+@endsection
