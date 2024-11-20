@@ -25,6 +25,7 @@ class ActController extends Controller
         foreach ($acts as $act) {
             $genre = Genre::find($act->genre_id);
             $act->genre = $genre->name;
+            $act->description = substr($act->description, 0, 50);
         }
         if (request()->has('sort')) {
             $acts = $acts->sortBy($sort);

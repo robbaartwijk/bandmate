@@ -32,6 +32,8 @@ class VacanciesController extends Controller
 
             $instrument = Instrument::find($vacancy->instrument_id);
             $vacancy->instrument_name = $instrument->name;
+
+            $vacancy->description = substr($vacancy->description, 0, 35) . '...';
         }
 
         $vacancies = $vacancies->sortBy($sort);

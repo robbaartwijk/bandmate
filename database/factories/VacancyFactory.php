@@ -27,7 +27,7 @@ class VacancyFactory extends Factory
             'user_id' => $this->faker->randomElement($users),
             'act_id' => $this->faker->randomElement($acts),
             'instrument_id' => $this->faker->randomElement($instruments),
-            'description' => $this->faker->text,
+            'description' => $this->faker->paragraph(20),
         ];
     }
 }

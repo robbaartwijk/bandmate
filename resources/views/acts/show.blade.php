@@ -67,6 +67,7 @@
                         <div class="card-body text-primary">
                             <h1>Description</h1>
                             <h5>{{ $act->description }}</h5>
+                            <a href="{{ route('acts.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </div>
                 </div>
@@ -77,7 +78,6 @@
                             <h3>History</h3> 
                             <h5><b>Date added : </b>{{ $act->created_at }}</h5>
                             <h5><b>Date last update : </b>{{ $act->updated_at }}</h5>
-                            <a href="{{ route('acts.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </div>
                 </div>

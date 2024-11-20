@@ -14,7 +14,18 @@ class RehearsalroomController extends Controller
      */
     public function index()
     {
+        if (request()->has('sort')) {
+            $sort = request()->input('sort');
+        } else {
+            $sort = 'name';
+        }
+
         $rehearsalrooms = Rehearsalroom::all()->sortBy('name');
+
+        if (request()->has('sort')) {
+            $rehearsalrooms = $rehearsalrooms->sortBy($sort);
+        }
+
         return view('rehearsalrooms.index', compact('rehearsalrooms'));
     }
 

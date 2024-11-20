@@ -27,7 +27,7 @@ class ActFactory extends Factory
             'number_of_members' => $this->faker->numberBetween(1, 10),
             'active' => $this->faker->boolean,
             'website' => $this->faker->url,
-            'description' => $this->faker->text,
+            'description' => $this->faker->paragraph(30),
             'email' => $this->faker->email,
             'phone' => $this->faker->phoneNumber,
             'facebook' => $this->faker->url,

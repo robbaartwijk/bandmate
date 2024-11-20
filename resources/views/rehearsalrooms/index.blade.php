@@ -11,8 +11,12 @@
                     <div class="table-responsive">
 
                         <a href="{{ route('rehearsalrooms.create') }}" class="btn btn-primary">Add rehearsal room</a>
-                        <br>
-                        <br>
+
+                        <div class="float-right">
+                            <a href="{{ route('rehearsalrooms.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort by name</a>
+                            <a href="{{ route('rehearsalrooms.index', ['sort' => 'city']) }}" class="btn btn-secondary">Sort by genre</a>
+                        </div>
+                        
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
