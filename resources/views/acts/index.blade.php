@@ -11,8 +11,12 @@
                     <div class="table-responsive">
 
                         <a href="{{ route('acts.create') }}" class="btn btn-primary">Add act</a>
-                        <br>
-                        <br>
+
+                        <div class="float-right">
+                            <a href="{{ route('acts.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort by name</a>
+                            <a href="{{ route('acts.index', ['sort' => 'genre']) }}" class="btn btn-secondary">Sort by genre</a>
+                        </div>
+
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}

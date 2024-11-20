@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Act;
-use Illuminate\Http\Request;
 use App\Models\Genre;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ActController extends Controller
@@ -14,13 +14,22 @@ class ActController extends Controller
      */
     public function index()
     {
+        if (request()->has('sort')) {
+            $sort = request()->input('sort');
+        } else {
+            $sort = 'name';
+        }
+
         $acts = Act::all()->sortBy('name');
 
-        foreach($acts as $act) {
+        foreach ($acts as $act) {
             $genre = Genre::find($act->genre_id);
             $act->genre = $genre->name;
         }
-
+        if (request()->has('sort')) {
+            $acts = $acts->sortBy($sort);
+        }
+        
         return view('acts.index', compact('acts'));
     }
 
@@ -30,6 +39,7 @@ class ActController extends Controller
     public function create()
     {
         $genres = Genre::all()->sortBy(['group', 'name']);
+
         return view('acts.create', compact('genres'));
     }
 
@@ -38,7 +48,7 @@ class ActController extends Controller
      */
     public function store(Request $request)
     {
-        $act = new Act();
+        $act = new Act;
 
         $act->user_id = Auth::user()->id;
         $act->fill($request->all());
@@ -52,7 +62,7 @@ class ActController extends Controller
             'website' => 'required',
             'description' => 'required',
             'email' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
         ]);
 
         $act->save();
@@ -67,9 +77,10 @@ class ActController extends Controller
     public function show(Act $act)
     {
         $genre = Genre::find($act->genre_id);
+
         return view('acts.show', compact(['act', 'genre']));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -77,7 +88,7 @@ class ActController extends Controller
     {
         return view('acts.edit', compact('act'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -87,7 +98,7 @@ class ActController extends Controller
             'name' => 'required',
             'number_of_members' => 'required',
             'genre_id' => 'required',
-            'decscription' => 'required'
+            'decscription' => 'required',
         ]);
 
         $act->update($request->all());
@@ -95,7 +106,7 @@ class ActController extends Controller
         return redirect()->route('acts.index')
             ->with('success', 'Act updated successfully');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */

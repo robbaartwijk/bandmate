@@ -11,8 +11,12 @@
                     <div class="table-responsive">
 
                         <a href="{{ route('vacancies.create') }}" class="btn btn-primary">Add vacancy</a>
-                        <br>
-                        <br>
+
+                        <div class="float-right">
+                            <a href="{{ route('vacancies.index', ['sort' => 'act_name']) }}" class="btn btn-secondary">Sort by Act name</a>
+                            <a href="{{ route('vacancies.index', ['sort' => 'instrument_name']) }}" class="btn btn-secondary">Sort by Instrument</a>
+                        </div>
+
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
