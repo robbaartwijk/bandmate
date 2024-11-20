@@ -54,9 +54,9 @@
                     <tbody>
                         @foreach ($vacancies as $vacancy)
                             <tr>
-                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->act_name }}</a></td>
+                                <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
                                 <td>{{ $vacancy->instrument_name }}</td>
-                                <td>{{ $vacancy->description }}</td>
+                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a></td>
                                 <td>{{ $vacancy->user_name }}</td>
                                 <td>{{ $vacancy->created_at }}</td>
                                 <td>{{ $vacancy->updated_at }}</td>
@@ -80,9 +80,9 @@
             </div>
         </div>
     </div>
+
+    <div class="float-left" style="color:white">
+        {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
+
 @endsection

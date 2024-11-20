@@ -23,7 +23,7 @@ class VacanciesController extends Controller
         } else {
             $sort = 'act_name';
         }
-        
+
         $vacancies = Vacancy::with('user')->get();
 
         foreach ($vacancies as $vacancy) {
@@ -44,6 +44,7 @@ class VacanciesController extends Controller
         }
 
         $vacancies = $vacancies->sortBy($sort);
+
         $vacancies->count = $vacancies->count();
 
         return view('vacancies.index', compact('vacancies'));
