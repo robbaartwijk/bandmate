@@ -59,7 +59,12 @@
                         </table>
                     </div>
                 </div>
+            </div> 
+
+            <div class="float-left" style="color:white">
+                {{ $instruments->count() }} {{ $instruments->count() > 1 ? 'instruments found' : 'instrument found' }}
             </div>
+
         </div>
     </div>
 @endsection

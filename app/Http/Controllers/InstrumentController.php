@@ -13,6 +13,9 @@ class InstrumentController extends Controller
     public function index()
     {
         $instruments = Instrument::all()->sortBy(['type', 'name']);
+
+        $instruments->count = $instruments->count();
+
         return view('instruments.index', compact('instruments'));
     }
 

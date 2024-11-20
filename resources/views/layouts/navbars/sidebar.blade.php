@@ -47,13 +47,13 @@
             </li>
 
             <li>
-                <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' ? '' : 'collapsed' }}">
+                <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'agencies' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' ? '' : 'collapsed' }}">
                     <i class="fa fa-database"></i>
                     <span class="nav-link-text">{{ __('Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'beheer' || $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'venues') show @endif" id="beheer" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'beheer' || $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'venues' || $pageSlug == 'agencies') show @endif" id="beheer" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'instruments') class="active " @endif>
                             <a href="{{ route('instruments.index') }}">
