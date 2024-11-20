@@ -14,13 +14,19 @@ class ActController extends Controller
      */
     public function index()
     {
+        $query = request()->query();
+
         if (request()->has('sort')) {
             $sort = request()->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $acts = Act::all()->sortBy('name');
+        if(request()->has('search')) {
+            $acts = Act::where('name', 'like', '%'. $query['search'] .'%')->get()->sortBy($sort);
+        } else {
+            $acts = Act::all()->sortBy($sort);
+        }
 
         foreach ($acts as $act) {
             $genre = Genre::find($act->genre_id);
@@ -30,7 +36,9 @@ class ActController extends Controller
         if (request()->has('sort')) {
             $acts = $acts->sortBy($sort);
         }
-        
+
+        $acts->count = $acts->count();
+
         return view('acts.index', compact('acts'));
     }
 
@@ -39,7 +47,7 @@ class ActController extends Controller
      */
     public function create()
     {
-        $genres = Genre::all()->sortBy(['group', 'name']);
+        $genres = Genre::all()->sortByDesc(['group', 'name']);
 
         return view('acts.create', compact('genres'));
     }
@@ -99,7 +107,7 @@ class ActController extends Controller
             'name' => 'required',
             'number_of_members' => 'required',
             'genre_id' => 'required',
-            'decscription' => 'required',
+            'description' => 'required',
         ]);
 
         $act->update($request->all());

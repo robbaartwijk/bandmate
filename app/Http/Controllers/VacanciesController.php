@@ -15,28 +15,36 @@ class VacanciesController extends Controller
      */
     public function index()
     {
-        if (request()->has('sort')) {
-            $sort = request()->input('sort');
+        $request = request();
+        $query = $request->query();
+
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
         } else {
             $sort = 'act_name';
         }
-
-        $vacancies = Vacancy::all();
+        
+        $vacancies = Vacancy::with('user')->get();
 
         foreach ($vacancies as $vacancy) {
-            $user = User::find($vacancy->user_id);
-            $vacancy->user_name = $user->name;
-
-            $act = Act::find($vacancy->act_id);
-            $vacancy->act_name = $act->name;
+            $vacancy->user_name = $vacancy->user->name;
+            $vacancy->act_name = $vacancy->act->name;
 
             $instrument = Instrument::find($vacancy->instrument_id);
             $vacancy->instrument_name = $instrument->name;
 
-            $vacancy->description = substr($vacancy->description, 0, 35) . '...';
+            $vacancy->description = substr($vacancy->description, 0, 35).'...';
+        }
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $vacancies = $vacancies->filter(function ($vacancy) use ($search) {
+                return stripos($vacancy->act_name, $search) !== false;
+            });
         }
 
         $vacancies = $vacancies->sortBy($sort);
+        $vacancies->count = $vacancies->count();
 
         return view('vacancies.index', compact('vacancies'));
     }
