@@ -7,6 +7,7 @@ use App\Models\Rehearsalroom;
 use App\Models\User;
 use App\Models\Vacancy;
 use App\Models\Venue;
+use App\Models\Agency;
 use Illuminate\Database\Seeder;
 
 class InitialDatabaseSeeder extends Seeder
@@ -37,6 +38,9 @@ class InitialDatabaseSeeder extends Seeder
         Rehearsalroom::factory(10)->create();
         Venue::factory(24)->create();
         Vacancy::factory(20)->create();
+
+        $this->call(AgencySeeder::class);
+        Agency::factory(6)->create();
 
     }
 }

@@ -14,7 +14,7 @@
 
                         <div class="float-right">
                             <a href="{{ route('rehearsalrooms.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort by name</a>
-                            <a href="{{ route('rehearsalrooms.index', ['sort' => 'city']) }}" class="btn btn-secondary">Sort by genre</a>
+                            <a href="{{ route('rehearsalrooms.index', ['sort' => 'city']) }}" class="btn btn-secondary">Sort by city</a>
                         </div>
                         
                         @if (session('status'))
@@ -28,8 +28,6 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>City</th>
-                                    <th>Postal code</th>
-                                    <th>Website</th>
                                     <th>Date added</th>
                                     <th>Date last update</th>
                                 </tr>
@@ -39,9 +37,6 @@
                                     <tr>
                                         <td><a href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a></td>
                                         <td>{{ $rehearsalroom->city }}</td>
-                                        <td>{{ $rehearsalroom->zip }}</td>
-
-                                        <td></b> <a href="{{ $rehearsalroom->website }}">{{ $rehearsalroom->website }}</a></td>
                                         <td>{{ $rehearsalroom->created_at }}</td>
                                         <td>{{ $rehearsalroom->updated_at }}</td>
 

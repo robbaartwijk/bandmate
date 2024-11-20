@@ -53,6 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
 		'index' => 'venues.index'
 	]);
 
+	Route::resource('agencies', 'App\Http\Controllers\AgencyController')->names([
+		'index' => 'agencies.index'
+	]);
+
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('spotify')->nullable()->after('phone');
         });
     }
-
+ 
     /**
      * Reverse the migrations.
      */

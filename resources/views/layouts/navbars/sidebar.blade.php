@@ -73,6 +73,12 @@
                                 <p>{{ __('Venues') }}</p>
                             </a>
                         </li>
+                        <li @if ($pageSlug == 'agencies') class="active " @endif>
+                            <a href="{{ route('agencies.index') }}">
+                                <i class="fa fa-database"></i>
+                                <p>{{ __('Agencies') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
