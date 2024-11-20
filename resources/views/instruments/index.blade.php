@@ -32,7 +32,7 @@
                                 </div>
                             </form>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -80,13 +80,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        <div class="float-left" style="color:white">
-            {{ $instruments->count() }} {{ $instruments->count() > 1 ? 'instruments found' : 'instrument found' }}
-        </div>
+            <div class="float-left" style="color:white">
+                {{ $instruments->count() }} {{ $instruments->count() > 1 ? 'instruments found' : 'instrument found' }}
+            </div>
 
-    </div>
-    </div>
+        </div>
     </div>
 @endsection

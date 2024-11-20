@@ -9,52 +9,77 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <br>
-                        <br>
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        
+                        <div class="float-right">
 
-                        <table class="table tablesorter " id="">
-                            <thead class=" text-primary">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Date added</th>
-                                    <th>Date last update</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td><a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a></td>
-                                        <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a</td>
-                                        <td>{{ $user->created_at }}</td>
-                                        <td>{{ $user->updated_at }}</td>
-
-                                        <td>
-                                            <a href="{{ route('users.edit', $user->id) }}"
-                                                class="btn btn-primary btn-link btn-icon btn-sm">
-                                                <i class="tim-icons icon-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('users.destroy', $user->id) }}" method="post"
-                                                style="display:inline">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
-                                                    <i class="tim-icons icon-simple-remove"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                            <form action="{{ route('users.index') }}" method="get">
+                                <div class="input-group no-border">
+                                    <input type="text" name="search" value="{{ request()->search }}"
+                                        class="form-control" placeholder="Search...">
+                                    <a href="{{ route('users.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort
+                                        by name</a>
+                                    <a href="{{ route('users.index', ['sort' => 'email']) }}" class="btn btn-secondary">Sort
+                                        by email</a>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="nc-icon nc-zoom-split"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
                     </div>
-                </div>
+                @endif
+
+                <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date added</th>
+                            <th>Date last update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td><a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a></td>
+                                <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a< /td>
+                                <td>{{ $user->created_at }}</td>
+                                <td>{{ $user->updated_at }}</td>
+
+                                <td>
+                                    <a href="{{ route('users.edit', $user->id) }}"
+                                        class="btn btn-primary btn-link btn-icon btn-sm">
+                                        <i class="tim-icons icon-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="post"
+                                        style="display:inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
+                                            <i class="tim-icons icon-simple-remove"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        @endsection
+        </div>
+    </div>
+
+    <div class="float-left" style="color:white">
+        {{ $users->count() }} {{ $users->count() > 1 ? 'users found' : 'user found' }}
+    </div>
+
+    </div>
+    </div>
+@endsection

@@ -20,8 +20,29 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all()->sortBy('name');
+        $request = request();
+        $query = $request->query();
+
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+        } else {
+            $sort = 'name';
+        }
+
+        $users = User::all();
         
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $users = $users->filter(function ($user) use ($search) {
+                return (stripos($user->name, $search) !== false) ||
+                    (stripos($user->email, $search) !== false);
+            });
+        }
+
+        $users = $users->sortBy($sort);
+        
+        $users->count = $users->count();
+
         return view('users.index', compact('users'));
     }
 
