@@ -27,37 +27,37 @@ class UserController extends Controller
             $sort = 'name';
         }
 
-        $users = User::all();
+        $users = User::with(['acts', 'rehearsalrooms', 'vacancies'])->get();
 
-        if (request()->has('search')) {
-            $search = request()->input('search');
+        if ($request->has('search')) {
+            $search = $request->input('search');
             $users = $users->filter(function ($user) use ($search) {
                 return (stripos($user->name, $search) !== false) ||
                     (stripos($user->email, $search) !== false);
             });
         }
 
-        // get count of acts for user
+        $users = User::orderBy($sort)->get();
+        
         foreach ($users as $user) {
-            $user->acts_count = $user->acts()->count();
-        }
-
-        // get count of rehearsal rooms for user
-        foreach ($users as $user) {
-            $user->rehearsalrooms_count = $user->rehearsalrooms()->count();
-        }
-
-        // get count of vacancies for user
-        foreach ($users as $user) {
-            $user->vacancies = Vacancy::where('user_id', $user->id)->get();
+            $user->acts_count = $user->acts->count();
+            $user->rehearsalrooms_count = $user->rehearsalrooms->count();
             $user->vacancies_count = $user->vacancies->count();
         }
 
         $users = $users->sortBy($sort);
 
+        if (isset($search)) {
+            $users = $users->filter(function ($user) use ($search) {
+                return (stripos($user->name, $search) !== false) ||
+                    (stripos($user->email, $search) !== false);
+            });
+        }
+        
+        $usersCount = $users->count();
         $users->count = $users->count();
 
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'usersCount'));
     }
 
     /**
@@ -65,6 +65,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        // $users are already sorted by the query
         $rehearsalrooms = $user->rehearsalrooms()->get();
 
         // get acts of user

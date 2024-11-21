@@ -11,6 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Rehearsalroom;
+use App\Models\Act;
+use App\Models\Vacancy;
 
 class User extends Authenticatable
 {
@@ -72,6 +74,11 @@ class User extends Authenticatable
     public function acts(): HasMany
     {
         return $this->hasMany(Act::class);
+    }
+
+    public function vacancies(): HasMany
+    {
+        return $this->hasMany(Vacancy::class);
     }
 
 }
