@@ -34,57 +34,63 @@
                         </div>
                     </div>
 
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert" id="status-alert">
+                            {{ session('status') }}
+                        </div>
+                        <script>
+                            setTimeout(function() {
+                                document.getElementById('status-alert').style.display = 'none';
+                            }, 2000);
+                        </script>
+                    @endif
 
-                        <table class="table tablesorter " id="">
-                            <thead class=" text-primary">
+                    <table class="table tablesorter " id="">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th>City</th>
+                                <th>Date added</th>
+                                <th>Date last update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($rehearsalrooms as $rehearsalroom)
                                 <tr>
-                                    <th>Name</th>
-                                    <th>City</th>
-                                    <th>Date added</th>
-                                    <th>Date last update</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($rehearsalrooms as $rehearsalroom)
-                                    <tr>
-                                        <td><a
-                                                href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a>
-                                        </td>
-                                        <td>{{ $rehearsalroom->city }}</td>
-                                        <td>{{ $rehearsalroom->created_at }}</td>
-                                        <td>{{ $rehearsalroom->updated_at }}</td>
+                                    <td><a
+                                            href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a>
+                                    </td>
+                                    <td>{{ $rehearsalroom->city }}</td>
+                                    <td>{{ $rehearsalroom->created_at }}</td>
+                                    <td>{{ $rehearsalroom->updated_at }}</td>
 
-                                        <td>
-                                            <a href="{{ route('rehearsalrooms.edit', $rehearsalroom->id) }}"
-                                                class="btn btn-primary btn-link btn-icon btn-sm">
-                                                <i class="tim-icons icon-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('rehearsalrooms.destroy', $rehearsalroom->id) }}"
-                                                method="post" style="display:inline">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
-                                                    <i class="tim-icons icon-simple-remove"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                    <td>
+                                        <a href="{{ route('rehearsalrooms.edit', $rehearsalroom->id) }}"
+                                            class="btn btn-primary btn-link btn-icon btn-sm">
+                                            <i class="tim-icons icon-pencil"></i>
+                                        </a>
+                                        <form action="{{ route('rehearsalrooms.destroy', $rehearsalroom->id) }}"
+                                            method="post" style="display:inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-simple-remove"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <div class="float-left" style="color:white">
-                {{ $rehearsalrooms->count() }} {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
-            </div>
-
         </div>
+
+        <div class="float-left" style="color:white">
+            {{ $rehearsalrooms->count() }}
+            {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
+        </div>
+
+    </div>
     </div>
 @endsection

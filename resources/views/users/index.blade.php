@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        
+
                         <div class="float-right">
 
                             <form action="{{ route('users.index') }}" method="get">
@@ -32,9 +32,14 @@
                 </div>
 
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" role="alert" id="status-alert">
                         {{ session('status') }}
                     </div>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById('status-alert').style.display = 'none';
+                        }, 2000);
+                    </script>
                 @endif
 
                 <table class="table tablesorter " id="">

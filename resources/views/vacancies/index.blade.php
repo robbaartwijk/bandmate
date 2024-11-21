@@ -35,9 +35,14 @@
                 </div>
 
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" role="alert" id="status-alert">
                         {{ session('status') }}
                     </div>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById('status-alert').style.display = 'none';
+                        }, 2000);
+                    </script>
                 @endif
 
                 <table class="table tablesorter " id="">
@@ -56,7 +61,8 @@
                             <tr>
                                 <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
                                 <td>{{ $vacancy->instrument_name }}</td>
-                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a></td>
+                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a>
+                                </td>
                                 <td>{{ $vacancy->user_name }}</td>
                                 <td>{{ $vacancy->created_at }}</td>
                                 <td>{{ $vacancy->updated_at }}</td>
@@ -80,9 +86,8 @@
             </div>
         </div>
     </div>
- 
+
     <div class="float-left" style="color:white">
         {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
     </div>
-
 @endsection

@@ -93,7 +93,7 @@ class VenueController extends Controller
         $venue->update($request->all());
 
         return redirect()->route('venues.index')
-            ->with('success', 'Venue updated successfully');
+            ->with('status', 'Venue updated successfully');
     }
 
     /**
@@ -104,6 +104,6 @@ class VenueController extends Controller
         $venue->delete();
 
         return redirect()->route('venues.index')
-            ->with('success', 'Venue deleted successfully');
+            ->with('status', 'Venue deleted successfully');
     }
 }

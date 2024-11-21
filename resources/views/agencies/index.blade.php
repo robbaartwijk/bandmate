@@ -32,11 +32,16 @@
                                 </form>
                             </div>
                         </div>
-                        
+
                         @if (session('status'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success" role="alert" id="status-alert">
                                 {{ session('status') }}
                             </div>
+                            <script>
+                                setTimeout(function() {
+                                    document.getElementById('status-alert').style.display = 'none';
+                                }, 2000);
+                            </script>
                         @endif
 
                         <table class="table tablesorter " id="">
@@ -83,7 +88,7 @@
             <div class="float-left" style="color:white">
                 {{ $agencies->count() }} {{ $agencies->count() > 1 ? 'agencies found' : 'agency found' }}
             </div>
-            
+
         </div>
     </div>
 @endsection

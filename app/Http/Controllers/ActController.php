@@ -84,7 +84,7 @@ class ActController extends Controller
         $act->save();
 
         return redirect()->route('acts.index')
-            ->with('success', 'Act created successfully.');
+            ->with('status', 'Act created successfully.');
     }
 
     /**
@@ -120,7 +120,7 @@ class ActController extends Controller
         $act->update($request->all());
 
         return redirect()->route('acts.index')
-            ->with('success', 'Act updated successfully');
+            ->with('status', 'Act updated successfully');
     }
 
     /**
@@ -131,6 +131,6 @@ class ActController extends Controller
         $act->delete();
 
         return redirect()->route('acts.index')
-            ->with('success', 'Act deleted successfully');
+            ->with('status', 'Act deleted successfully');
     }
 }

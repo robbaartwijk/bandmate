@@ -95,7 +95,7 @@ class RehearsalroomController extends Controller
         $rehearsalroom->update($request->all());
 
         return redirect()->route('rehearsalrooms.index')
-            ->with('success', 'Rehearsal room updated successfully');
+            ->with('status', 'Rehearsal room updated successfully');
     }
 
     /**
@@ -106,6 +106,6 @@ class RehearsalroomController extends Controller
         $rehearsalroom->delete();
 
         return redirect()->route('rehearsalrooms.index')
-            ->with('success', 'Rehearsal room deleted successfully');
+            ->with('status', 'Rehearsal room deleted successfully');
     }
 }

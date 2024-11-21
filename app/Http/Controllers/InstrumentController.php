@@ -59,7 +59,7 @@ class InstrumentController extends Controller
         Instrument::create($request->all());
 
         return redirect()->route('instruments.index')
-            ->with('success', 'Instrument created successfully.');
+            ->with('status', 'Instrument created successfully.');
 
     }
 
@@ -92,7 +92,7 @@ class InstrumentController extends Controller
         $instrument->update($request->all());
 
         return redirect()->route('instruments.index')
-            ->with('success', 'Instrument updated successfully');
+            ->with('status', 'Instrument updated successfully');
     }
 
     /**
@@ -103,6 +103,6 @@ class InstrumentController extends Controller
         $instrument->delete();
 
         return redirect()->route('instruments.index')
-            ->with('success', 'Instrument deleted successfully');
+            ->with('status', 'Instrument deleted successfully');
     }
 }
