@@ -5,25 +5,35 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Instruments index</h4>
+                    <h3 class="card-title"> Instruments index</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <a href="{{ route('instruments.create') }}" class="btn btn-primary">Add instrument</a>
+                        <a href="{{ route('instruments.create') }}" class="btn btn-secondary">Add instrument</a>
 
                         <div class="float-right">
-
                             <form action="{{ route('instruments.index') }}" method="get">
                                 <div class="input-group no-border">
-                                    <input type="text" name="search" value="{{ request()->search }}"
-                                        class="form-control" placeholder="Search...">
-                                    <a href="{{ route('instruments.index', ['sort' => 'name']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by name</a>
-                                    <a href="{{ route('instruments.index', ['sort' => 'type']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by type</a>
+                                
+                                    <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
+
+                                    <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" 
+                                        onchange="location.href='{{ route('instruments.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                        <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                            Sort by name
+                                        </option>
+                                        <option value="type" {{ request()->sort == 'type' ? 'selected' : '' }}>
+                                            Sort by type
+                                        </option>
+                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                            Sort by date added
+                                        </option>
+                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                            Sort by date last update
+                                        </option>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
@@ -32,9 +42,9 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
+
                 @if (session('status'))
                     <div class="alert alert-success" role="alert" id="status-alert">
                         {{ session('status') }}
