@@ -82,7 +82,7 @@ class AgencyController extends Controller
         $agency->update($request->all());
 
         return redirect()->route('agencies.index')
-            ->with('status', 'Agencyt updated successfully');
+            ->with('status', 'Agency updated successfully');
     }
 
     /**

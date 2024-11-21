@@ -55,7 +55,7 @@ class UserController extends Controller
 
         foreach ($acts as $act) {
             $genre = Genre::find($act->genre_id);
-            $act->genre = $genre->name;
+            $act->genre = $genre ? $genre->name : 'Unknown';
 
             $act->vacancies = Vacancy::where('user_id', $act->user_id)->get();
 
