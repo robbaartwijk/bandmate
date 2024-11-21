@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Show agency</h4>
+                    <h3 class="card-title"> Show agency</h3>
                 </div>
 
                 <div class="row">
