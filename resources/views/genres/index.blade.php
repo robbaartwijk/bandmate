@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <a href="{{ route('genres.create') }}" class="btn btn-primary">Add genre</a>
+                        <a href="{{ route('genres.create') }}" class="btn btn-secondary">Add genre</a>
 
                         <div class="float-right">
 
