@@ -12,30 +12,26 @@ class VenueController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $request = request();
-        $query = $request->query();
-
         if ($request->has('sort')) {
             $sort = $request->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $venues = Venue::all();
+        $query = Venue::query()->orderBy($sort);
 
-        if (request()->has('search')) {
-            $search = request()->input('search');
-            $venues = $venues->filter(function ($venue) use ($search) {
-                return (stripos($venue->name, $search) !== false) ||
-                    (stripos($venue->city, $search) !== false);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('website', 'like', '%'.$search.'%')
+                    ->orWhere('city', 'like', '%'.$search.'%');
             });
         }
 
-        $venues = $venues->sortBy($sort);
-
-        $venues->count = $venues->count();
+        $venues = $query->get();
 
         return view('venues.index', compact('venues'));
     }
@@ -64,7 +60,7 @@ class VenueController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(venue $venue)
+    public function show(Venue $venue)
     {
         return view('venues.show', compact('venue'));
     }
@@ -72,7 +68,7 @@ class VenueController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(venue $venue)
+    public function edit(Venue $venue)
     {
         return view('venues.edit', compact('venue'));
     }
@@ -80,7 +76,7 @@ class VenueController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, venue $venue)
+    public function update(Request $request, Venue $venue)
     {
         $request->validate([
             'name' => 'required',
@@ -99,7 +95,7 @@ class VenueController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(venue $venue)
+    public function destroy(Venue $venue)
     {
         $venue->delete();
 

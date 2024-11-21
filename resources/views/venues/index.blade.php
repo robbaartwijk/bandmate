@@ -5,23 +5,43 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title">Venues index</h4>
+                    <h3 class="card-title">Venues index</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <a href="{{ route('venues.create') }}" class="btn btn-primary">Add venue</a>
+                        <a href="{{ route('venues.create') }}" class="btn btn-secondary">Add venue</a>
 
                         <div class="float-right">
 
                             <form action="{{ route('venues.index') }}" method="get">
                                 <div class="input-group no-border">
+
                                     <input type="text" name="search" value="{{ request()->search }}"
-                                        class="form-control" placeholder="Search...">
-                                    <a href="{{ route('venues.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort
-                                        by name</a>
-                                    <a href="{{ route('venues.index', ['sort' => 'city']) }}" class="btn btn-secondary">Sort
-                                        by city</a>
+                                        class="form-control border" style="margin: 10px; width: 300px;"
+                                        placeholder="Search...">
+
+                                    <select name="sort"
+                                        class="form-control btn btn-secondary btn-round rounded border text-center"
+                                        style="margin: 10px; width: 210px;"
+                                        onchange="location.href='{{ route('venues.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                        <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                            Sort by name
+                                        </option>
+                                        <option value="city" {{ request()->sort == 'city' ? 'selected' : '' }}>
+                                            Sort by city
+                                        </option>
+                                        <option value="website" {{ request()->sort == 'website' ? 'selected' : '' }}>
+                                            Sort by website
+                                        </option>
+                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                            Sort by date added
+                                        </option>
+                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                            Sort by date last update
+                                        </option>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
@@ -57,7 +77,7 @@
                                     <tr>
                                         <td><a href="{{ route('venues.show', $venue->id) }}">{{ $venue->name }}</a></td>
                                         <td>{{ $venue->city }}</td>
-                                        <td><a href="{{ $venue->website }}">{{ $venue->website }}</a></td>
+                                        <td><a href="{{ $venue->website }}">{{ Str::limit($venue->website, 50) }}</a></td>
                                         <td>{{ $venue->created_at }}</td>
                                         <td>{{ $venue->updated_at }}</td>
 

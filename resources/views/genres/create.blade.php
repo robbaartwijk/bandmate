@@ -46,7 +46,7 @@
 
 
                                 <button type="submit" class="btn btn-primary">Add</button>
-                                <a href="{{ route('instruments.index') }}" class="btn btn-secondary">Back</a>
+                                <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
 
                         </form>
                     </div>
