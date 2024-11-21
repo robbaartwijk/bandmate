@@ -47,6 +47,9 @@
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Acts</th>
+                            <th>Rehearsal rooms</th>
+                            <th>Vacancies</th>
                             <th>Date added</th>
                             <th>Date last update</th>
                         </tr>
@@ -56,6 +59,10 @@
                             <tr>
                                 <td><a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a></td>
                                 <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a< /td>
+
+                                <td>{{ $user->acts_count }}</td>
+                                <td>{{ $user->rehearsalrooms_count }}</td>
+                                <td>{{ $user->vacancies_count }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
 

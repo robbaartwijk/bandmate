@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Genre;
-use App\Models\Vacancy;
 use App\Models\Instrument;
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Vacancy;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -30,7 +28,7 @@ class UserController extends Controller
         }
 
         $users = User::all();
-        
+
         if (request()->has('search')) {
             $search = request()->input('search');
             $users = $users->filter(function ($user) use ($search) {
@@ -39,8 +37,24 @@ class UserController extends Controller
             });
         }
 
+        // get count of acts for user
+        foreach ($users as $user) {
+            $user->acts_count = $user->acts()->count();
+        }
+
+        // get count of rehearsal rooms for user
+        foreach ($users as $user) {
+            $user->rehearsalrooms_count = $user->rehearsalrooms()->count();
+        }
+
+        // get count of vacancies for user
+        foreach ($users as $user) {
+            $user->vacancies = Vacancy::where('user_id', $user->id)->get();
+            $user->vacancies_count = $user->vacancies->count();
+        }
+
         $users = $users->sortBy($sort);
-        
+
         $users->count = $users->count();
 
         return view('users.index', compact('users'));
@@ -50,25 +64,27 @@ class UserController extends Controller
      * Display the specified resource.
      */
     public function show(User $user)
-    {        
+    {
         $rehearsalrooms = $user->rehearsalrooms()->get();
 
         // get acts of user
         $acts = $user->acts()->get();
 
-        foreach($acts as $act) {
+        foreach ($acts as $act) {
             $genre = Genre::find($act->genre_id);
             $act->genre = $genre->name;
 
-            $vacancies = Vacancy::where('user_id', $act->user_id)->get();
-            $act->vacancies = $vacancies;
+            $act->vacancies = Vacancy::where('user_id', $act->user_id)->get();
 
-            foreach($vacancies as $vacancy) {
-                $instrument = Instrument::find($vacancy->instrument_id);
-                $vacancy->instrument = $instrument->name;
-                $vacancy->description = substr($vacancy->description, 0, 80).'...';
+            if ((isset($act->vacancies)) && ($act->vacancies->count() > 0)) {
+                $act->vacancies->count = $act->vacancies->count();
+
+                foreach ($act->vacancies as $vacancy) {
+                    $instrument = Instrument::find($vacancy->instrument_id);
+                    $vacancy->instrument = $instrument->name;
+                    $vacancy->description = substr($vacancy->description, 0, 80).'...';
+                }
             }
-
         }
 
         return view('users.show', compact('user', 'rehearsalrooms', 'acts'));
@@ -89,7 +105,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required',
         ]);
 
         $user->update($request->all());

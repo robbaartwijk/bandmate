@@ -56,7 +56,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <header>
             <h4><b>Rehearsal rooms</b></h4>
         </header>
@@ -76,9 +76,9 @@
                 </thead>
                 <tbody>
                     @if ($rehearsalrooms->isEmpty())
-                    <tr>
-                        <td colspan="7">No rehearsal rooms found</td>
-                    </tr>
+                        <tr>
+                            <td colspan="7">No rehearsal rooms found</td>
+                        </tr>
                     @else
                         @foreach ($rehearsalrooms as $rehearsalroom)
                             <tr>
@@ -117,28 +117,32 @@
                 <tbody>
                     @php
                         $hasVacancies = false;
-                    @endphp
-                    @foreach ($acts as $act)
-                        @foreach ($act->vacancies as $vacancy)
-                            @php
+                        foreach ($acts as $act) {
+                            if (!$act->vacancies->isEmpty()) {
                                 $hasVacancies = true;
-                            @endphp
+                                break;
+                            }
+                        }
+                    @endphp
+
+                    @if (!$hasVacancies)
+                        <tr>
+                            <td colspan="4">No vacancies found</td>
+                        </tr>
+                    @else
+                        @foreach ($act->vacancies as $vacancy)
                             <tr>
-                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a></td>
+                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a>
+                                </td>
                                 <td>{{ $vacancy->instrument }}</td>
                                 <td>{{ $vacancy->created_at }}</td>
                                 <td>{{ $vacancy->updated_at }}</td>
                             </tr>
                         @endforeach
-                    @endforeach
-                    @if (!$hasVacancies)
-                        <tr>
-                            <td colspan="4">No vacancies found</td>
-                        </tr>
                     @endif
                 </tbody>
             </table>
         </div>
 
-        </div>
-    @endsection
+    </div>
+@endsection
