@@ -24,6 +24,13 @@ class AgencySeeder extends Seeder
             'state' => 'NY',
             'country' => 'USA',
             'description' => 'We are the best agency in the world!',
+            'website' => 'https://acme.com',
+            'youtube' => 'https://youtube.com/acme',
+            'facebook' => 'https://facebook.com/acme',
+            'twitter' => 'https://twitter.com/acme',
+            'instagram' => 'https://instagram.com/acme',
+            'soundcloud' => 'https://soundcloud.com/acme',
+            'spotify' => 'https://spotify.com/acme',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -39,6 +46,13 @@ class AgencySeeder extends Seeder
             'state' => 'Zuid-Holland',
             'country' => 'Nederland',
             'description' => 'We are the best agency in the Netherlands!',
+            'website' => 'https://hollandmanagement.nl',
+            'youtube' => 'https://youtube.com/hollandmanagement',
+            'facebook' => 'https://facebook.com/hollandmanagement',
+            'twitter' => 'https://twitter.com/hollandmanagement',
+            'instagram' => 'https://instagram.com/hollandmanagement',
+            'soundcloud' => 'https://soundcloud.com/hollandmanagement',
+            'spotify' => 'https://spotify.com/hollandmanagement',
             'created_at' => now(),
             'updated_at' => now()
         ]);

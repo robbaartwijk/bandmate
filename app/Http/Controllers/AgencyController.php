@@ -43,7 +43,7 @@ class AgencyController extends Controller
      */
     public function create()
     {
-        //
+        return view('agencies.create');
     }
 
     /**
@@ -51,7 +51,11 @@ class AgencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $agency = new Agency();
+
+        $agency->fill($request->all());
+        $agency->save();
+        return redirect()->route('agencies.index');
     }
 
     /**
@@ -59,7 +63,7 @@ class AgencyController extends Controller
      */
     public function show(Agency $agency)
     {
-        //
+        return view('agencies.show', compact('agency'));
     }
 
     /**
@@ -67,7 +71,7 @@ class AgencyController extends Controller
      */
     public function edit(Agency $agency)
     {
-        //
+        return view('agencies.edit', compact('agency'));
     }
 
     /**
@@ -75,7 +79,18 @@ class AgencyController extends Controller
      */
     public function update(Request $request, Agency $agency)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'city' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'description' => 'required',
+        ]);
+
+        $veagency->update($request->all());
+
+        return redirect()->route('agencies.index')
+            ->with('status', 'Agencyt updated successfully');
     }
 
     /**
@@ -83,6 +98,9 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
-        //
+        $agency->delete();
+
+        return redirect()->route('agencues.index')
+            ->with('status', 'Agency deleted successfully');
     }
 }

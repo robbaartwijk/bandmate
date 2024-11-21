@@ -81,6 +81,12 @@ class ActController extends Controller
             'phone' => 'required',
         ]);
 
+        $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
+        $act->rehearsal_room = $rehearsal_room;
+
+        $active = $request->active == 'yes' ? 1 : 0;
+        $act->active = $active;
+
         $act->save();
 
         return redirect()->route('acts.index')
@@ -112,10 +118,21 @@ class ActController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'number_of_members' => 'required',
             'genre_id' => 'required',
+            'rehearsal_room' => 'required',
+            'number_of_members' => 'required',
+            'active' => 'required',
+            'website' => 'required',
             'description' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
         ]);
+
+        $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
+        $act->rehearsal_room = $rehearsal_room;
+
+        $active = $request->active == 'yes' ? 1 : 0;
+        $act->active = $active;
 
         $act->update($request->all());
 

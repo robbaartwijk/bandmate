@@ -36,9 +36,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($acts->isempty())
+                    @if ($acts->isEmpty())
                         <tr>
-                            <td colspan="6">No acts found</td>
+                            <td colspan="7">No acts found</td>
                         </tr>
                     @else
                         @foreach ($acts as $act)
@@ -46,7 +46,7 @@
                                 <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                                 <td>{{ $act->genre }}</td>
                                 <td><a href="{{ $act->website }}">{{ $act->website }}</a></td>
-                                <td><a href="mailto:{{ $act->email }}">{{ $act->email }}</a< /td>
+                                <td><a href="mailto:{{ $act->email }}">{{ $act->email }}</a></td>
                                 <td>{{ $act->phone }}</td>
                                 <td>{{ $act->created_at }}</td>
                                 <td>{{ $act->updated_at }}</td>
@@ -56,50 +56,7 @@
                 </tbody>
             </table>
         </div>
-
-        <header>
-            <h4><b>Vacancies</b></h4>
-        </header>
-
-        <div class="table-responsive">
-            <table class="table tablesorter" id="">
-                <thead class=" text-primary">
-                    <tr>
-                        <th>Act</th>
-                        <th>Instrument</th>
-                        <th>Description</th>
-                        <th>Date added</th>
-                        <th>Date last update</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($act->vacancies->isEmpty())
-                        <tr>
-                            <td colspan="6">No vacancies found</td>
-                        </tr>
-                    @else
-                        @foreach ($act->vacancies as $act->vacancy)
-                            <tr>
-                                <td><a href="{{ route('vacancies.show', $act->vacancy->id) }}">{{ $act->vacancy->description }}</a>
-                                </td>
-                                <td>{{ $act->vacancy->instrument }}</td>
-                                <td>{{ $act->vacancy->description }}</td>
-                                <td>{{ $act->vacancy->created_at }}</td>
-                                <td>{{ $act->vacancy->updated_at }}</td>
-
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
-
-
-
-
-
-
-
+        
         <header>
             <h4><b>Rehearsal rooms</b></h4>
         </header>
@@ -118,10 +75,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($rehearsalrooms->isempty())
-                        <tr>
-                            <td colspan="6">No rehearsal rooms found</td>
-                        </tr>
+                    @if ($rehearsalrooms->isEmpty())
+                    <tr>
+                        <td colspan="7">No rehearsal rooms found</td>
+                    </tr>
                     @else
                         @foreach ($rehearsalrooms as $rehearsalroom)
                             <tr>
@@ -131,7 +88,7 @@
                                 <td>{{ $rehearsalroom->address }}</td>
                                 <td>{{ $rehearsalroom->city }}</td>
                                 <td><a href="{{ $rehearsalroom->website }}">{{ $rehearsalroom->website }}</a></td>
-                                <td><a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a< /td>
+                                <td><a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a></td>
                                 <td>{{ $rehearsalroom->created_at }}</td>
                                 <td>{{ $rehearsalroom->updated_at }}</td>
 
@@ -142,4 +99,46 @@
             </table>
         </div>
 
+        <header>
+            <h4><b>Vacancies</b></h4>
+        </header>
+
+        <div class="table-responsive">
+            <table class="table tablesorter" id="">
+                <thead class=" text-primary">
+                    <tr>
+                        <th>Description</th>
+                        <th>Instrument</th>
+                        <th>Date added</th>
+                        <th>Date last update</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @php
+                        $hasVacancies = false;
+                    @endphp
+                    @foreach ($acts as $act)
+                        @foreach ($act->vacancies as $vacancy)
+                            @php
+                                $hasVacancies = true;
+                            @endphp
+                            <tr>
+                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a></td>
+                                <td>{{ $vacancy->instrument }}</td>
+                                <td>{{ $vacancy->created_at }}</td>
+                                <td>{{ $vacancy->updated_at }}</td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                    @if (!$hasVacancies)
+                        <tr>
+                            <td colspan="4">No vacancies found</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+
+        </div>
     @endsection

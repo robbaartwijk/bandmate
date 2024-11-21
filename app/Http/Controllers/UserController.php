@@ -52,6 +52,8 @@ class UserController extends Controller
     public function show(User $user)
     {        
         $rehearsalrooms = $user->rehearsalrooms()->get();
+
+        // get acts of user
         $acts = $user->acts()->get();
 
         foreach($acts as $act) {
@@ -64,6 +66,7 @@ class UserController extends Controller
             foreach($vacancies as $vacancy) {
                 $instrument = Instrument::find($vacancy->instrument_id);
                 $vacancy->instrument = $instrument->name;
+                $vacancy->description = substr($vacancy->description, 0, 80).'...';
             }
 
         }

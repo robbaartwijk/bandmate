@@ -1,62 +1,59 @@
-@extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
+@extends('layouts.app', ['page' => __('Agencies'), 'pageSlug' => 'agencies'])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Show act</h4>
+                    <h4 class="card-title"> Show agency</h4>
                 </div>
 
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card-body text-primary">
                             <h1>General information</h1>
-                            <h2>Name : {{ $act->name }}</h2>
-                            <h5><b>Genre : </b> {{ $genre->name }} ( {{ $genre->group }} )</h5>
-                            <h5><b>Number of members : </b> {{ $act->number_of_members }}</h5>
-                            <h5><b>Rehearsal Room : </b> {{ $act->rehearsal_room  ? 'Yes' : 'No' }}</h5>
-                            <h5><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h5>
+                            <h2>Name : {{ $agency->name }}</h2>
+                            <h5>{{ $agency->description }}</h5>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="card-body text-primary">  
                             <h1>Contact and links</h1>  
-                            @if($act->website)
-                                <h5><a href="{{ $act->website }}" target="_blank"><i class="fa fa-anchor"></i> {{ $act->website }}</a></h5>
+                            @if($agency->website)
+                                <h5><a href="{{ $agency->website }}" target="_blank"><i class="fa fa-anchor"></i> {{ $agency->website }}</a></h5>
                             @endif
 
-                            @if($act->email)
-                            <h5><a href="{{ $act->email }}" target="_blank"><i class="	fa fa-envelope"></i> {{ $act->email }}</a></h5>
+                            @if($agency->email)
+                            <h5><a href="{{ $agency->email }}" target="_blank"><i class="	fa fa-envelope"></i> {{ $agency->email }}</a></h5>
                             @endif
 
-                            @if($act->phone)
-                            <h5><i class="	fa fa-phone"></i> {{ $act->phone }}</a></h5>
+                            @if($agency->phone)
+                            <h5><i class="fa fa-phone"></i> {{ $agency->phone }}</a></h5>
                             @endif
 
-                            @if($act->facebook)    
-                            <h5><a href="{{ $act->facebook }}" target="_blank"><i class="fab fa-facebook"></i> {{ $act->facebook }}</a></h5>
+                            @if($agency->facebook)    
+                            <h5><a href="{{ $agency->facebook }}" target="_blank"><i class="fab fa-facebook"></i> {{ $agency->facebook }}</a></h5>
                             @endif
 
-                            @if($act->youtube)  
-                            <h5><a href="{{ $act->youtube }}" target="_blank"><i class="fab fa-youtube"></i> {{ $act->youtube }}</a></h5>
+                            @if($agency->youtube)  
+                            <h5><a href="{{ $agency->youtube }}" target="_blank"><i class="fab fa-youtube"></i> {{ $agency->youtube }}</a></h5>
                             @endif
 
-                            @if($act->twitter)
-                            <h5><a href="{{ $act->twitter }}" target="_blank"><i class="fab fa-twitter"></i> {{ $act->twitter }}</a></h5>
+                            @if($agency->twitter)
+                            <h5><a href="{{ $agency->twitter }}" target="_blank"><i class="fab fa-twitter"></i> {{ $agency->twitter }}</a></h5>
                             @endif
 
-                            @if($act->instagram)
-                            <h5><a href="{{ $act->instagram }}" target="_blank"><i class="fab fa-instagram"></i> {{ $act->instagram }}</a></h5>
+                            @if($agency->instagram)
+                            <h5><a href="{{ $agency->instagram }}" target="_blank"><i class="fab fa-instagram"></i> {{ $agency->instagram }}</a></h5>
                             @endif
 
-                            @if($act->soundcloud)
-                            <h5><a href="{{ $act->soundcloud }}" target="_blank"><i class="fab fa-soundcloud"></i> {{ $act->soundcloud }}</a></h5>
+                            @if($agency->soundcloud)
+                            <h5><a href="{{ $agency->soundcloud }}" target="_blank"><i class="fab fa-soundcloud"></i> {{ $agency->soundcloud }}</a></h5>
                             @endif
 
-                            @if($act->spotify)  
-                            <h5><a href="{{ $act->spotify }}" target="_blank"><i class="fab fa-spotify"></i> {{ $act->spotify }}</a></h5>
+                            @if($agency->spotify)  
+                            <h5><a href="{{ $agency->spotify }}" target="_blank"><i class="fab fa-spotify"></i> {{ $agency->spotify }}</a></h5>
                             @endif
                         </div>
                     </div>
@@ -65,9 +62,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
-                            <h1>Description</h1>
-                            <h5>{{ $act->description }}</h5>
-                            <a href="{{ route('acts.index') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('agencies.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </div>
                 </div>
@@ -76,8 +71,8 @@
                     <div class="col-lg-12">
                         <div class="card-body text-primary">   
                             <h3>History</h3> 
-                            <h5><b>Date added : </b>{{ $act->created_at }}</h5>
-                            <h5><b>Date last update : </b>{{ $act->updated_at }}</h5>
+                            <h5><b>Date added : </b>{{ $agency->created_at }}</h5>
+                            <h5><b>Date last update : </b>{{ $agency->updated_at }}</h5>
                         </div>
                     </div>
                 </div>
