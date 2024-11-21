@@ -29,11 +29,11 @@ class UserController extends Controller
         if (request()->has('search')) {
             $search = request()->input('search');
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                  ->orWhere('email', 'like', '%' . $search . '%');
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%');
             });
         }
-        
+
         $users = $query->get();
 
         foreach ($users as $user) {
@@ -41,13 +41,10 @@ class UserController extends Controller
             $user->rehearsalrooms_count = $user->rehearsalrooms->count();
             $user->vacancies_count = $user->vacancies->count();
         }
-        $usersCount = $users->count();
-        
-        return view('users.index', compact('users', 'usersCount'));
+
+        return view('users.index', compact('users'));
     }
 
-    /**
-     */
     public function show(User $user)
     {
         // $users are already sorted by the query

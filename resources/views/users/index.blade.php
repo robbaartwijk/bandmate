@@ -5,19 +5,32 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title">Users index</h4>
+                    <h3 class="card-title">Users index</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="float-right">
                             <form action="{{ route('users.index') }}" method="get">
                                 <div class="input-group no-border">
-                                    <input type="text" name="search" value="{{ request()->search }}"
-                                        class="form-control" placeholder="Search...">
-                                    <a href="{{ route('users.index', ['sort' => 'name', 'search' => request()->search]) }}" class="btn btn-secondary">Sort
-                                        by name</a>
-                                    <a href="{{ route('users.index', ['sort' => 'email', 'search' => request()->search]) }}" class="btn btn-secondary">Sort
-                                        by email</a>
+                                
+                                    <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
+
+                                    <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" 
+                                        onchange="location.href='{{ route('users.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                        <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                            Sort by name
+                                        </option>
+                                        <option value="email" {{ request()->sort == 'email' ? 'selected' : '' }}>
+                                            Sort by email
+                                        </option>
+                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                            Sort by date added
+                                        </option>
+                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                            Sort by date last update
+                                        </option>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
