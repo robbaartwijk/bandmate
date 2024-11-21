@@ -28,10 +28,7 @@ class ActController extends Controller
 
         $acts = $query->get();
 
-        // dd($acts);
-
         return view('acts.index', compact('acts'));
-
     }
 
     /**
