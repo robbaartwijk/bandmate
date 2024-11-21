@@ -18,44 +18,35 @@ class UserController extends Controller
      */
     public function index()
     {
-        $request = request();
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
+        if (request()->has('sort')) {
+            $sort = request()->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $users = User::with(['acts', 'rehearsalrooms', 'vacancies'])->get()->sortBy($sort);
+        $query = User::with(['acts', 'rehearsalrooms', 'vacancies'])->orderBy($sort);
 
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $users = $users->filter(function ($user) use ($search) {
-                return (stripos($user->name, $search) !== false) ||
-                    (stripos($user->email, $search) !== false);
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
         
-        if (isset($search)) {
-            $users = $users->filter(function ($user) use ($search) {
-                return (stripos($user->name, $search) !== false) ||
-                    (stripos($user->email, $search) !== false);
-            });
-        }
+        $users = $query->get();
 
         foreach ($users as $user) {
             $user->acts_count = $user->acts->count();
             $user->rehearsalrooms_count = $user->rehearsalrooms->count();
             $user->vacancies_count = $user->vacancies->count();
         }
-        
         $usersCount = $users->count();
-        $users->count = $users->count();
-
+        
         return view('users.index', compact('users', 'usersCount'));
     }
 
     /**
-     * Display the specified resource.
      */
     public function show(User $user)
     {
