@@ -10,30 +10,26 @@ class AgencyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $request = request();
-        $query = $request->query();
-
         if ($request->has('sort')) {
             $sort = $request->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $agencies = Agency::all();
+        $query = Agency::query()->orderBy($sort);
 
-        if (request()->has('search')) {
-            $search = request()->input('search');
-            $agencies = $agencies->filter(function ($agency) use ($search) {
-                return (stripos($agency->name, $search) !== false) ||
-                    (stripos($agency->country, $search) !== false);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                ->orWhere('country', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%');
             });
         }
 
-        $agencies = $agencies->sortBy($sort);
-
-        $agencies->count = $agencies->count();
+        $agencies = $query->get();
 
         return view('agencies.index', compact('agencies'));
     }
@@ -87,7 +83,7 @@ class AgencyController extends Controller
             'description' => 'required',
         ]);
 
-        $veagency->update($request->all());
+        $agency->update($request->all());
 
         return redirect()->route('agencies.index')
             ->with('status', 'Agencyt updated successfully');
@@ -100,7 +96,7 @@ class AgencyController extends Controller
     {
         $agency->delete();
 
-        return redirect()->route('agencues.index')
+        return redirect()->route('agencies.index')
             ->with('status', 'Agency deleted successfully');
     }
 }

@@ -15,14 +15,34 @@
 
                                 <form action="{{ route('agencies.index') }}" method="get">
                                     <div class="input-group no-border">
+
                                         <input type="text" name="search" value="{{ request()->search }}"
-                                            class="form-control" placeholder="Search...">
-                                        <a href="{{ route('agencies.index', ['sort' => 'name']) }}"
-                                            class="btn btn-secondary">Sort
-                                            by name</a>
-                                        <a href="{{ route('agencies.index', ['sort' => 'country']) }}"
-                                            class="btn btn-secondary">Sort
-                                            by country</a>
+                                            class="form-control border" style="margin: 10px; width: 300px;"
+                                            placeholder="Search...">
+
+                                        <select name="sort"
+                                            class="form-control btn btn-secondary btn-round rounded border text-center"
+                                            style="margin: 10px; width: 210px;"
+                                            onchange="location.href='{{ route('agencies.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                            <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                                Sort by name
+                                            </option>
+                                            <option value="country" {{ request()->sort == 'country' ? 'selected' : '' }}>
+                                                Sort by country
+                                            </option>
+                                            <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>
+                                                Sort by description
+                                            </option>
+                                            <option value="created_at"
+                                                {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                                Sort by date added
+                                            </option>
+                                            <option value="updated_at"
+                                                {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                                Sort by date last update
+                                            </option>
+                                        </select>
+
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <i class="nc-icon nc-zoom-split"></i>
@@ -56,9 +76,10 @@
                             </thead>
                             <tbody>
 
-                                @foreach ($agencies as $agency)
+                                @forelse ($agencies as $agency)
                                     <tr>
-                                        <td><a href="{{ route('agencies.show', $agency->id) }}">{{ $agency->name }}</a></td>
+                                        <td><a href="{{ route('agencies.show', $agency->id) }}">{{ $agency->name }}</a>
+                                        </td>
                                         <td>{{ $agency->country }}</td>
                                         <td>{{ $agency->description }}</td>
                                         <td>{{ $agency->created_at }}</td>
@@ -78,7 +99,11 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">No agencies found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
