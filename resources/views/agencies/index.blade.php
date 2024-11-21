@@ -5,11 +5,11 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Agencies index</h4>
+                    <h3 class="card-title"> Agencies index</h3>
                     <div class="card-body">
                         <div class="table-responsive">
 
-                            <a href="{{ route('agencies.create') }}" class="btn btn-primary">Add agency</a>
+                            <a href="{{ route('agencies.create') }}" class="btn btn-secondary">Add agency</a>
 
                             <div class="float-right">
 

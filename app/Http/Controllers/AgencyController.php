@@ -12,11 +12,7 @@ class AgencyController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
-        } else {
-            $sort = 'name';
-        }
+        $sort = $request->input('sort') ?? 'name';
 
         $query = Agency::query()->orderBy($sort);
 

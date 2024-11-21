@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Act extends Model
-{ 
-    use SoftDeletes;
+{
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -21,8 +19,9 @@ class Act extends Model
         'website',
         'active',
         'description',
+        'genre_id',
         'email',
-        'phone'
+        'phone',
     ];
 
     public function user()
@@ -30,5 +29,8 @@ class Act extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    
+    public function genre()
+    {
+        return $this->belongsTo('App\Models\Genre');
+    }
 }

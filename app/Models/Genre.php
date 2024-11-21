@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    use SoftDeletes;
-    use HasFactory;
+    use SoftDeletes, HasFactory;
     
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'group',
         'description',
     ];
-
 }

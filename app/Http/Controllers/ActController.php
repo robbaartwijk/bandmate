@@ -12,41 +12,26 @@ class ActController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $request = request();
-        $query = $request->query();
+        $sort = $request->input('sort') ?? 'name';
 
-        if (request()->has('sort')) {
-            $sort = request()->input('sort');
-        } else {
-            $sort = 'name';
-        }
+        $query = Act::with('genre')->orderBy($sort);
 
-        $acts = Act::all();
-
-        foreach ($acts as $act) {
-            $genre = Genre::find($act->genre_id);
-            $act->genre = $genre->name;
-            $act->description = substr($act->description, 0, 50);
-        }
-
-        if (request()->has('search')) {
-            $search = request()->input('search');
-
-            $acts = $acts->filter(function ($act) use ($search) {
-                return (stripos($act->name, $search) !== false) ||
-                    (stripos($act->genre, $search) !== false);
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%');
             });
         }
 
-        if (request()->has('sort')) {
-            $acts = $acts->sortBy($sort);
-        }
+        $acts = $query->get();
 
-        $acts->count = $acts->count();
+        // dd($acts);
 
         return view('acts.index', compact('acts'));
+
     }
 
     /**
