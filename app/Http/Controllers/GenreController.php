@@ -12,27 +12,23 @@ class GenreController extends Controller
      */
     public function index()
     {
-        $request = request();
-        $query = $request->query();
-
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
+        if (request()->has('sort')) {
+            $sort = request()->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $genres = Genre::all()->sortBy($sort);
+        $query = Genre::query()->orderBy($sort);
 
         if (request()->has('search')) {
             $search = request()->input('search');
-
-            // filter name and group
-            $genres = $genres->filter(function ($genre) use ($search) {
-                return stripos($genre->name, $search) !== false || stripos($genre->group, $search) !== false;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('group', 'like', '%'.$search.'%');
             });
         }
-
-        $genres->count = $genres->count();
+    
+        $genres = $query->get();
 
         return view('genres.index', compact('genres'));
     }

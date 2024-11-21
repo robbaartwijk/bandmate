@@ -16,13 +16,32 @@
 
                             <form action="{{ route('genres.index') }}" method="get">
                                 <div class="input-group no-border">
+
                                     <input type="text" name="search" value="{{ request()->search }}"
-                                        class="form-control" placeholder="Search...">
-                                    <a href="{{ route('genres.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort
-                                        by name</a>
-                                    <a href="{{ route('genres.index', ['sort' => 'group']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by group</a>
+                                        class="form-control border" style="margin: 10px; width: 300px;"
+                                        placeholder="Search...">
+
+                                    <select name="sort"
+                                        class="form-control btn btn-secondary btn-round rounded border text-center"
+                                        style="margin: 10px; width: 210px;"
+                                        onchange="location.href='{{ route('genres.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                        <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                            Sort by name
+                                        </option>
+                                        <option value="group" {{ request()->sort == 'group' ? 'selected' : '' }}>
+                                            Sort by group
+                                        </option>
+                                        <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>
+                                            Sort by description
+                                        </option>
+                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                            Sort by date added
+                                        </option>
+                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                            Sort by date last update
+                                        </option>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
@@ -31,7 +50,6 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
 
                     @if (session('status'))
@@ -60,7 +78,7 @@
                                 <tr>
                                     <td><a href="{{ route('genres.show', $genre->id) }}">{{ $genre->name }}</a></td>
                                     <td>{{ $genre->group }}</td>
-                                    <td>{{ $genre->description }}</td>
+                                    <td>{{ Str::limit($genre->description, 50) }}</td>
                                     <td>{{ $genre->created_at }}</td>
                                     <td>{{ $genre->updated_at }}</td>
                                     <td>
