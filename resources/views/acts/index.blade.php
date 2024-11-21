@@ -81,8 +81,9 @@
                 </div>
             </div>
 
-            <div class="float-left" style="color:white">
-                {{ $acts->count }} {{ $acts->count > 1 ? 'acts found' : 'act found' }}
+                    <div class="float-left" style="color:white">
+                        {{ $acts->count }} {{ $acts->count > 1 ? 'acts found' : 'act found' }}
+                    </div>
+                </div>
             </div>
-
         @endsection
