@@ -19,15 +19,13 @@ class UserController extends Controller
     public function index()
     {
         $request = request();
-        $query = $request->query();
-
         if ($request->has('sort')) {
             $sort = $request->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $users = User::with(['acts', 'rehearsalrooms', 'vacancies'])->get();
+        $users = User::with(['acts', 'rehearsalrooms', 'vacancies'])->get()->sortBy($sort);
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -36,22 +34,18 @@ class UserController extends Controller
                     (stripos($user->email, $search) !== false);
             });
         }
-
-        $users = User::orderBy($sort)->get();
         
-        foreach ($users as $user) {
-            $user->acts_count = $user->acts->count();
-            $user->rehearsalrooms_count = $user->rehearsalrooms->count();
-            $user->vacancies_count = $user->vacancies->count();
-        }
-
-        $users = $users->sortBy($sort);
-
         if (isset($search)) {
             $users = $users->filter(function ($user) use ($search) {
                 return (stripos($user->name, $search) !== false) ||
                     (stripos($user->email, $search) !== false);
             });
+        }
+
+        foreach ($users as $user) {
+            $user->acts_count = $user->acts->count();
+            $user->rehearsalrooms_count = $user->rehearsalrooms->count();
+            $user->vacancies_count = $user->vacancies->count();
         }
         
         $usersCount = $users->count();

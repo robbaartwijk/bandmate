@@ -9,16 +9,14 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-
                         <div class="float-right">
-
                             <form action="{{ route('users.index') }}" method="get">
                                 <div class="input-group no-border">
                                     <input type="text" name="search" value="{{ request()->search }}"
                                         class="form-control" placeholder="Search...">
-                                    <a href="{{ route('users.index', ['sort' => 'name']) }}" class="btn btn-secondary">Sort
+                                    <a href="{{ route('users.index', ['sort' => 'name', 'search' => request()->search]) }}" class="btn btn-secondary">Sort
                                         by name</a>
-                                    <a href="{{ route('users.index', ['sort' => 'email']) }}" class="btn btn-secondary">Sort
+                                    <a href="{{ route('users.index', ['sort' => 'email', 'search' => request()->search]) }}" class="btn btn-secondary">Sort
                                         by email</a>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
