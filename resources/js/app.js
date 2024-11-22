@@ -46,6 +46,7 @@ app.component('example-component', ExampleComponent);
 
 app.mount('#app');
 
+
 // .. After imports init TinyMCE ..
 window.addEventListener('DOMContentLoaded', () => {
     tinymce.init({
@@ -60,12 +61,12 @@ window.addEventListener('DOMContentLoaded', () => {
         width: '100%',
         resize: true,
 
-    setup: (editor) => {
-        editor.on('init', () => {
-        editor.getBody().style.backgroundColor = '#0C1646';
-        editor.getBody().style.color = '#B5BCCA';
-        });
-    }
+        setup: (editor) => {
+            editor.on('init', () => {
+                editor.getBody().style.backgroundColor = '#0C1646';
+                editor.getBody().style.color = '#B5BCCA';
+            });
+        }
 
     });
 });
