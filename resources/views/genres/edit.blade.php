@@ -22,15 +22,23 @@
                                     {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                     placeholder="Name" value="{{ $genre->name }}">
 
+                                    <label for="name">Group</label>
                                 <input type="text" name="group"
                                     class="form-control
                                     {{ $errors->has('group') ? 'is-invalid' : '' }}"
                                     placeholder="Group" value="{{ $genre->group }}">
 
-                                <input type="text" name="description"
-                                    class="form-control
-                                    {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                    placeholder="Description" value="{{ $genre->description }}">
+                                    <label for="name">Description</label>
+                                    <br>
+                                    <br>
+                                    
+                                <div>
+                                <textarea name="description" 
+                                    class="tinyMce {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    placeholder="Description" rows="5">{{ $genre->description }}</textarea>
+                                </div>
+                                
+                                <br>
 
                                 <button type="submit" class="btn btn-primary">Update</button>
                                 <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
