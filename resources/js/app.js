@@ -51,6 +51,7 @@ app.mount('#app');
 window.addEventListener('DOMContentLoaded', () => {
     tinymce.init({
         selector: 'textarea',
+         skin: 'oxide-dark',
     
         /* TinyMCE configuration options */
         skin: false,

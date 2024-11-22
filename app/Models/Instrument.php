@@ -8,8 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Instrument extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = ['name', 'type'];
+    protected $fillable = [
+        'name',
+        'type',
+        'created_at',
+        'updated_at'];
+
+    protected $dates = ['deleted_at'];
 }
