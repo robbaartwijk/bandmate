@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Show user</h4>
+                    <h3 class="card-title"> Show user</h3>
                 </div>
 
                 <div class="card-body text-primary">
@@ -107,6 +107,7 @@
             <table class="table tablesorter" id="">
                 <thead class=" text-primary">
                     <tr>
+                        <th>Act</th>
                         <th>Description</th>
                         <th>Instrument</th>
                         <th>Date added</th>
@@ -132,6 +133,7 @@
                     @else
                         @foreach ($act->vacancies as $vacancy)
                             <tr>
+                                <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                                 <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a>
                                 </td>
                                 <td>{{ $vacancy->instrument }}</td>

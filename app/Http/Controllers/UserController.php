@@ -63,6 +63,10 @@ class UserController extends Controller
                 $act->vacancies->count = $act->vacancies->count();
 
                 foreach ($act->vacancies as $vacancy) {
+
+                    $vacancies = Vacancy::where('act_id', $vacancy->act_id)->with('act')->get();
+                    $vacancy->act = $vacancies[0]->act->name;
+
                     $instrument = Instrument::find($vacancy->instrument_id);
                     $vacancy->instrument = $instrument->name;
                     $vacancy->description = substr($vacancy->description, 0, 80).'...';
