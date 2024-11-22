@@ -13,7 +13,7 @@
                         <div class="card-body text-primary">
                             <h1>General information</h1>
                             <h2>Name : {{ $act->name }}</h2>
-                            <h5><b>Genre : </b> {{ $genre->name }} ( {{ $genre->group }} )</h5>
+                            <h5><b>Genre : </b> <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }} ( {{ $act->genre->group }} )</a></h5>
                             <h5><b>Number of members : </b> {{ $act->number_of_members }}</h5>
                             <h5><b>Rehearsal Room : </b> {{ $act->rehearsal_room  ? 'Yes' : 'No' }}</h5>
                             <h5><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h5>

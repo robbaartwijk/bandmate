@@ -108,7 +108,7 @@
                 <thead class=" text-primary">
                     <tr>
                         <th>Act</th>
-                        <th>Description</th>
+                        <th>Vacancy</th>
                         <th>Instrument</th>
                         <th>Date added</th>
                         <th>Date last update</th>
