@@ -5,13 +5,13 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Show genre</h4>
+                    <h3 class="card-title"> Show genre</h3>
                 </div>
 
                 <div class="card-body text-primary">
                     <h5><b>Name : </b>{{ $genre->name }}</h5>
                     <h5><b>Group : </b>{{ $genre->group }}</h5>
-                    <h5><b>Description : </b> {{ $genre->description }}</h5>
+                    <h5><b>Description : </b><br> <br> {!! $genre->description !!}</h5>
                     <h5><b>Date added : </b>{{ $genre->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $genre->updated_at }}</h5>
                     <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
