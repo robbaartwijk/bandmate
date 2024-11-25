@@ -13,7 +13,7 @@
                     <h5><b>Email : </b> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></h5>
                     <h5><b>Date added : </b>{{ $user->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $user->updated_at }}</h5>
-                    <a href="{{ route('users.index') }}" class="btn btn-danger">Back</a>
+                    <a href="{{ route('users.index') }}" class="btn btn-secondary">danger</a>
                 </div>
             </div>
         </div>

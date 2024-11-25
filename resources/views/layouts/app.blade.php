@@ -4,7 +4,27 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const simplemde = new SimpleMDE({
-            element: document.getElementById("description")
+            element: document.getElementById("description"),
+
+            // configure the toolbar
+            toolbar: [
+                "bold", "italic", "heading", "|",
+                "quote", "unordered-list", "ordered-list", "|",
+                "link", "image", "|",
+                "preview", "side-by-side", "fullscreen", "|",
+                "guide,|",
+                {
+                    name: "custom",
+                    action: function customFunction(editor) {
+                        alert("You clicked the custom function icon");
+                    },
+                    className: "fa fa-star",
+                    title: "Custom Function"
+                }
+            ],
+
+
+
         });
     });
 </script>

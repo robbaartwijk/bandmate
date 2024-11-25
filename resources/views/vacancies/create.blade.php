@@ -51,7 +51,7 @@
 
 
                                 <button type="submit" class="btn btn-info">Add</button>
-                                <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
+                                <a href="{{ route('acts.index') }}" class="btn btn-secondary">danger</a>
 
                         </form>
                     </div>

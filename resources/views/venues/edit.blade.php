@@ -77,7 +77,7 @@
                                     placeholder="Description" value="{{ $venue->description }}">
 
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('venues.index') }}" class="btn btn-danger">Back</a>
+                                <a href="{{ route('venues.index') }}" class="btn btn-secondary">danger</a>
 
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>

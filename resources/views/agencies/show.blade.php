@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
-                            <a href="{{ route('agencies.index') }}" class="btn btn-danger">Back</a>
+                            <a href="{{ route('agencies.index') }}" class="btn btn-secondary">danger</a>
                         </div>
                     </div>
                 </div>

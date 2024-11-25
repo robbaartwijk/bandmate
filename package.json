@@ -22,7 +22,10 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "codemirror": "^5.65.18",
+        "codemirror-spell-checker": "^1.1.2",
         "font-awesome": "^4.7.0",
+        "marked": "^15.0.2",
         "simplemde": "^1.11.2"
     }
 }
