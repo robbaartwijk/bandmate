@@ -23,6 +23,6 @@
     },
     "dependencies": {
         "font-awesome": "^4.7.0",
-        "tinymce": "^7.5.1"
+        "simplemde": "^1.11.2"
     }
 }

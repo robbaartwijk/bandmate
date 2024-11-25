@@ -50,8 +50,8 @@
                                 @include('alerts.feedback', ['field' => 'description'])
 
 
-                                <button type="submit" class="btn btn-primary">Add</button>
-                                <a href="{{ route('acts.index') }}" class="btn btn-secondary">Back</a>
+                                <button type="submit" class="btn btn-info">Add</button>
+                                <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
 
                         </form>
                     </div>

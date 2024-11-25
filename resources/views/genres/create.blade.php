@@ -29,22 +29,22 @@
                                 <input type="text" name="group"
                                     class="form-control
                                         {{ $errors->has('group') ? 'is-invalid' : '' }}
-                                    placeholder="Group" value="{{ old('group') }}">
+                                    placeholder="Group"
+                                    value="{{ old('group') }}">
                                 @include('alerts.feedback', ['field' => 'group'])
                             </div>
 
                             <div>
                                 <label for="description">Description</label>
                                 <br><br>
-                                <textarea name="description"
-                                    class="tinyMce {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="Description">{{ old('description') }}</textarea>
-                                    @include('alerts.feedback', ['field' => 'description'])
-                                </div>
-                                <br><br>
-    
-                                <button type="submit" class="btn btn-primary">Add</button>
-                                <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
+                                <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    placeholder="Description">{{ old('description') }}</textarea>
+                                @include('alerts.feedback', ['field' => 'description'])
+                            </div>
+                            <br><br>
+
+                            <button type="submit" class="btn btn-info">Add</button>
+                            <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>
 
                         </form>
                     </div>

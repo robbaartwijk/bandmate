@@ -122,8 +122,8 @@
                                 </div>
 
 
-                                <button type="submit" class="btn btn-primary">Add</button>
-                                <a href="{{ route('venues.index') }}" class="btn btn-secondary">Back</a>
+                                <button type="submit" class="btn btn-info">Add</button>
+                                <a href="{{ route('venues.index') }}" class="btn btn-danger">Back</a>
 
                         </form>
                     </div>

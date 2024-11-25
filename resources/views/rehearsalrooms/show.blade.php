@@ -21,10 +21,10 @@
 
                     <h5><b>Website : </b><a href="{{ $rehearsalroom->website }}">{{ $rehearsalroom->website }}</a></h5>
                     <h5><b>Description : </b> {{ $rehearsalroom->description }}</h5>
-                    
+
                     <h5><b>Date added : </b>{{ $rehearsalroom->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $rehearsalroom->updated_at }}</h5>
-                    <a href="{{ route('rehearsalrooms.index') }}" class="btn btn-secondary">Back</a>
+                    <a href="{{ route('rehearsalrooms.index') }}" class="btn btn-danger">Back</a>
                 </div>
             </div>
         </div>

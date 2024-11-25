@@ -7,14 +7,6 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
-import 'tinymce/tinymce';
-import 'tinymce/skins/ui/oxide/skin.min.css';
-import 'tinymce/skins/content/default/content.min.css';
-import 'tinymce/skins/content/default/content.css';
-import 'tinymce/icons/default/icons';
-import 'tinymce/themes/silver/theme';
-import 'tinymce/models/dom/model';
-
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -46,28 +38,15 @@ app.component('example-component', ExampleComponent);
 
 app.mount('#app');
 
+// after app mount simplemde
+import SimpleMDE from 'simplemde';
+import 'simplemde/dist/simplemde.min.css';
 
-// .. After imports init TinyMCE ..
-window.addEventListener('DOMContentLoaded', () => {
-    tinymce.init({
-        selector: 'textarea',
-         skin: 'oxide-dark',
-    
-        /* TinyMCE configuration options */
-        skin: false,
-        content_css: false,
-        menubar: false,
-        content_css: 'dark',
-        height: 260,
-        width: '100%',
-        resize: true,
-
-        setup: (editor) => {
-            editor.on('init', () => {
-                editor.getBody().style.backgroundColor = '#0C1646';
-                editor.getBody().style.color = '#B5BCCA';
-            });
-        }
-
-    });
+document.addEventListener('DOMContentLoaded', function() {
+	const descriptionElement = document.getElementById('description');
+	if (descriptionElement) {
+		new SimpleMDE({ element: descriptionElement,
+		 });
+	}
 });
+

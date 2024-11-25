@@ -14,7 +14,7 @@
                     <h5><b>Description : </b><span class="description-spacing"><br><br>{!! $genre->description !!}</span></h5>
                     <h5><b>Date added : </b>{{ $genre->created_at }}</h5>
                     <h5><b>Date Last Updated : </b>{{ $genre->updated_at }}</h5>
-                    <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
+                    <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>
                 </div>
             </div>
         </div>

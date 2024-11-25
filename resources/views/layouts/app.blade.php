@@ -1,3 +1,14 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const simplemde = new SimpleMDE({
+            element: document.getElementById("description")
+        });
+    });
+</script>
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 

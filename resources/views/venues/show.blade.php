@@ -21,10 +21,10 @@
 
                     <h5><b>Website : </b><a href="{{ $venue->website }}">{{ $venue->website }}</a></h5>
                     <h5><b>Description : </b> {{ $venue->description }}</h5>
-                    
+
                     <h5><b>Date added : </b>{{ $venue->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $venue->updated_at }}</h5>
-                    <a href="{{ route('venues.index') }}" class="btn btn-secondary">Back</a>
+                    <a href="{{ route('venues.index') }}" class="btn btn-danger">Back</a>
                 </div>
             </div>
         </div>

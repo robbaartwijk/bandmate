@@ -26,8 +26,8 @@
                                     placeholder="Type" value="{{ $instrument->type }}">
 
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('instruments.index') }}" class="btn btn-secondary">Back</a>
-                            
+                                <a href="{{ route('instruments.index') }}" class="btn btn-danger">Back</a>
+
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
                     </div>

@@ -37,10 +37,13 @@
                                 class="form-group
                                     {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
                                 <label for="genre_id">Genre</label>
-                                <select name="genre_id" class="form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}">
+                                <select name="genre_id"
+                                    class="form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}">
                                     <option value="">Select</option>
-                                    @foreach($genres as $genre)
-                                        <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->group }} - {{ $genre->name }}</option>
+                                    @foreach ($genres as $genre)
+                                        <option value="{{ $genre->id }}"
+                                            {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->group }} -
+                                            {{ $genre->name }}</option>
                                     @endforeach
                                 </select>
                                 @include('alerts.feedback', ['field' => 'genre_id'])
@@ -50,10 +53,13 @@
                                 class="form-group
                             {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
                                 <label for="rehearsal_room">Rehearsal Room</label>
-                                <select name="rehearsal_room" class="form-control {{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}">
+                                <select name="rehearsal_room"
+                                    class="form-control {{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('rehearsal_room') == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ old('rehearsal_room') == 'No' ? 'selected' : '' }}>No</option>
+                                    <option value="Yes" {{ old('rehearsal_room') == 'Yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ old('rehearsal_room') == 'No' ? 'selected' : '' }}>No
+                                    </option>
                                 </select>
                                 @include('alerts.feedback', ['field' => 'rehearsal_room'])
                             </div>
@@ -73,7 +79,8 @@
                                 class="form-group
                             {{ $errors->has('active') ? 'has-danger' : '' }}">
                                 <label for="active">Active</label>
-                                <select name="active" class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}">
+                                <select name="active"
+                                    class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}">
                                     <option value="">Select</option>
                                     <option value="Yes" {{ old('active') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ old('active') == 'No' ? 'selected' : '' }}>No</option>
@@ -116,8 +123,8 @@
                                 @include('alerts.feedback', ['field' => 'description'])
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <a href="{{ route('acts.index') }}" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-info">Add</button>
+                            <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
 
                         </form>
                     </div>
