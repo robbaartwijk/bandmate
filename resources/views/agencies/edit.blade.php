@@ -1,16 +1,16 @@
-@extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
+@extends('layouts.app', ['page' => __('agencies'), 'pageSlug' => 'agencies'])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Edit act</h4>
+                    <h3 class="card-title"> Edit agency</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <form action="{{ route('acts.update', $act->id) }}" method="post">
+                        <form action="{{ route('agencies.update', $agency->id) }}" method="post">
                             @csrf
                             @method('put')
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
@@ -19,15 +19,15 @@
                                 <input type="text" name="name"
                                     class="form-control
                                     {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                    placeholder="Name" value="{{ $act->name }}">
+                                    placeholder="Name" value="{{ $agency->name }}">
 
                                 <input type="text" name="description"
                                     class="form-control
                                     {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                    placeholder="Description" value="{{ $act->description }}">
+                                    placeholder="Description" value="{{ $agency->description }}">
 
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('acts.index') }}" class="btn btn-secondary">Back</a>
+                                <a href="{{ route('agencies.index') }}" class="btn btn-secondary">Back</a>
 
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>

@@ -1,7 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import '~font-awesome/css/font-awesome';
+@import "~font-awesome/css/font-awesome";
 
 [x-cloak] {
     display: none;

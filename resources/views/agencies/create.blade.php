@@ -1,15 +1,15 @@
-@extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
+@extends('layouts.app', ['page' => __('Agencies'), 'pageSlug' => 'agencies'])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Add act</h4>
+                    <h3 class="card-title"> Add agency</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <form action="{{ route('acts.store') }}" method="post">
+                        <form action="{{ route('agencies.store') }}" method="post">
                             @csrf
                             <div
                                 class="form-group
