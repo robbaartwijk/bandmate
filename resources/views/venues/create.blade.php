@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Add venue</h4>
+                    <h3 class="card-title"> Add venue</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
