@@ -24,7 +24,7 @@
 
                     <h5><b>Date added : </b>{{ $venue->created_at }}</h5>
                     <h5><b>Date last update : </b>{{ $venue->updated_at }}</h5>
-                    <a href="{{ route('venues.index') }}" class="btn btn-secondary">danger</a>
+                    <a href="{{ route('venues.index') }}" class="btn btn-danger">Back</a>
                 </div>
             </div>
         </div>

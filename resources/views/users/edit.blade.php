@@ -32,7 +32,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary">danger</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-danger">Back</a>
                         </form>
                     </div>
                 </div>

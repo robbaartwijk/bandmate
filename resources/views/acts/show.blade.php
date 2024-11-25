@@ -76,7 +76,7 @@
                         <div class="card-body text-primary">
                             <h1>Description</h1>
                             <h5>{{ $act->description }}</h5>
-                            <a href="{{ route('acts.index') }}" class="btn btn-secondary">danger</a>
+                            <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
                         </div>
                     </div>
                 </div>

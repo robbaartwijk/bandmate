@@ -27,7 +27,7 @@
                                     placeholder="Description" value="{{ $act->description }}">
 
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('acts.index') }}" class="btn btn-secondary">danger</a>
+                                <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
 
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
