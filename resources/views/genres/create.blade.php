@@ -36,12 +36,11 @@
 
                             <div>
                                 <label for="description">Description</label>
-                                <br><br>
+                                <br>
                                 <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     placeholder="Description">{{ old('description') }}</textarea>
                                 @include('alerts.feedback', ['field' => 'description'])
                             </div>
-                            <br><br>
 
                             <button type="submit" class="btn btn-info">Add</button>
                             <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>

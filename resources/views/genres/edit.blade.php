@@ -28,14 +28,22 @@
                                     {{ $errors->has('group') ? 'is-invalid' : '' }}"
                                     placeholder="Group" value="{{ $genre->group }}">
 
-                                <label for="name">Description</label>
+                                {{-- <label for="name">Description</label>
                                 <br>
-                                <br>
+                                <br> --}}
 
                                 <div>
+                                    <label for="description">Description</label>
+                                    <br>
+                                    <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                        placeholder="Description">{{ old('description') }}</textarea>
+                                    @include('alerts.feedback', ['field' => 'description'])
+                                </div>
+
+                                {{-- <div>
                                     <textarea name="description" class=" {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description"
                                         rows="5">{{ $genre->description }}</textarea>
-                                </div>
+                                </div> --}}
 
                                 <br>
 

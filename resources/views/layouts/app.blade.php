@@ -11,23 +11,17 @@
                 "bold", "italic", "heading", "|",
                 "quote", "unordered-list", "ordered-list", "|",
                 "link", "image", "|",
-                "preview", "side-by-side", "fullscreen", "|",
-                "guide,|",
-                {
-                    name: "custom",
-                    action: function customFunction(editor) {
-                        alert("You clicked the custom function icon");
-                    },
-                    className: "fa fa-star",
-                    title: "Custom Function"
-                }
+                "preview", "side-by-side", "fullscreen"
             ],
-
-
-
         });
     });
 </script>
+
+<style>
+    .editor-toolbar {
+        background: lightgrey!important;
+    }
+</style>
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
