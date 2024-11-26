@@ -77,7 +77,7 @@
                                     <tr>
                                         <td><a href="{{ route('venues.show', $venue->id) }}">{{ $venue->name }}</a></td>
                                         <td>{{ $venue->city }}</td>
-                                        <td><a href="{{ $venue->website }}">{{ Str::limit($venue->website, 50) }}</a></td>
+                                        <td><a href="{{ $venue->website }}">{{ Str::limit($venue->website, 30) }}</a></td>
                                         <td>{{ $venue->created_at }}</td>
                                         <td>{{ $venue->updated_at }}</td>
 

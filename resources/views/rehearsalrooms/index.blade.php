@@ -16,14 +16,32 @@
 
                             <form action="{{ route('rehearsalrooms.index') }}" method="get">
                                 <div class="input-group no-border">
+
                                     <input type="text" name="search" value="{{ request()->search }}"
-                                        class="form-control" placeholder="Search...">
-                                    <a href="{{ route('rehearsalrooms.index', ['sort' => 'name']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by name</a>
-                                    <a href="{{ route('rehearsalrooms.index', ['sort' => 'city']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by city</a>
+                                        class="form-control border" style="margin: 10px; width: 300px;"
+                                        placeholder="Search...">
+
+                                    <select name="sort"
+                                        class="form-control btn btn-secondary btn-round rounded border text-center"
+                                        style="margin: 10px; width: 210px;"
+                                        onchange="location.href='{{ route('rehearsalrooms.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                        <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                            Sort by name
+                                        </option>
+                                        <option value="city" {{ request()->sort == 'city' ? 'selected' : '' }}>
+                                            Sort by city
+                                        </option>
+                                        <option value="country" {{ request()->sort == 'country' ? 'selected' : '' }}>
+                                            Sort by country
+                                        </option>
+                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                            Sort by date added
+                                        </option>
+                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                            Sort by date last update
+                                        </option>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
@@ -50,6 +68,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>City</th>
+                                <th>Country</th>
                                 <th>Date added</th>
                                 <th>Date last update</th>
                             </tr>
@@ -61,6 +80,7 @@
                                             href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a>
                                     </td>
                                     <td>{{ $rehearsalroom->city }}</td>
+                                    <td>{{ $rehearsalroom->country }}</td>
                                     <td>{{ $rehearsalroom->created_at }}</td>
                                     <td>{{ $rehearsalroom->updated_at }}</td>
 

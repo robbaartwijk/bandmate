@@ -23,13 +23,16 @@ class RehearsalroomController extends Controller
             $sort = 'name';
         }
 
-        $rehearsalrooms = Rehearsalroom::all()->sortBy($sort);
+        $rehearsalrooms = Rehearsalroom::all();
 
         if (request()->has('search')) {
             $search = request()->input('search');
             $rehearsalrooms = $rehearsalrooms->filter(function ($rehearsalroom) use ($search) {
                 return (stripos($rehearsalroom->name, $search) !== false) ||
-                    (stripos($rehearsalroom->city, $search) !== false);
+                    (stripos($rehearsalroom->city, $search) !== false) ||
+                    (stripos($rehearsalroom->country, $search) !== false) ||
+                    (stripos($rehearsalroom->created_at, $search) !== false) ||
+                    (stripos($rehearsalroom->updated_at, $search) !== false); 
             });
         }
 
