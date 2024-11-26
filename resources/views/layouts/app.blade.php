@@ -19,7 +19,7 @@
 
 <style>
     .editor-toolbar {
-        background: lightgrey!important;
+        background: #e0b0ff !important;
     }
 </style>
 

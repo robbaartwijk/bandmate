@@ -14,22 +14,32 @@
                             @csrf
                             @method('put')
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                <label for="name">Name</label>
+                                <label for="name">
+                                    <h4>Name</h4>
+                                </label>
                                 <input type="text" name="name"
                                     class="form-control
                                     {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                     placeholder="Name" value="{{ $instrument->name }}">
+                                @include('alerts.feedback', ['field' => 'name'])
+                            </div>
 
+                            <div class="form-group {{ $errors->has('type') ? 'has-danger' : '' }}">
+                                <label for="type">
+                                    <h4>Type</h4>
+                                </label>
                                 <input type="text" name="type"
                                     class="form-control
                                     {{ $errors->has('type') ? 'is-invalid' : '' }}"
                                     placeholder="Type" value="{{ $instrument->type }}">
-
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('instruments.index') }}" class="btn btn-danger">Back</a>
-
-                                @include('alerts.feedback', ['field' => 'name'])
+                                @include('alerts.feedback', ['field' => 'type'])
                             </div>
+
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a href="{{ route('instruments.index') }}" class="btn btn-danger">Back</a>
+
+                            @include('alerts.feedback', ['field' => 'name'])
                     </div>
                 </div>
-            @endsection
+            </div>
+        @endsection

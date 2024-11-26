@@ -9,10 +9,10 @@
                 </div>
 
                 <div class="card-body text-primary">
-                    <h5><b>Name : </b>{{ $instrument->name }}</h5>
-                    <h5><b>Type : </b> {{ $instrument->type }}</h5>
-                    <h5><b>Date added : </b>{{ $instrument->created_at }}</h5>
-                    <h5><b>Date last update : </b>{{ $instrument->updated_at }}</h5>
+                    <h4><b>Name : </b>{{ $instrument->name }}</h4>
+                    <h4><b>Type : </b> {{ $instrument->type }}</h4>
+                    <h4><b>Date added : </b>{{ $instrument->created_at }}</h4>
+                    <h4><b>Date last update : </b>{{ $instrument->updated_at }}</h4>
                     <a href="{{ route('instruments.index') }}" class="btn btn-danger">Back</a>
                 </div>
             </div>

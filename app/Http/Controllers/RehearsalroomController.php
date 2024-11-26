@@ -23,7 +23,7 @@ class RehearsalroomController extends Controller
             $sort = 'name';
         }
 
-        $rehearsalrooms = Rehearsalroom::all();
+        $rehearsalrooms = Rehearsalroom::all()->sortBy($sort);
 
         if (request()->has('search')) {
             $search = request()->input('search');

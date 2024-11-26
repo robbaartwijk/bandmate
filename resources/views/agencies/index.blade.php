@@ -80,8 +80,8 @@
                                     <tr>
                                         <td><a href="{{ route('agencies.show', $agency->id) }}">{{ $agency->name }}</a>
                                         </td>
-                                        <td>{{ $agency->country }}</td>
-                                        <td>{{ $agency->description }}</td>
+                                        <td>{{ Str::limit($agency->country, 20 ) }}</td>
+                                        <td>{{ Str::limit($agency->description, 40) }}</td>
                                         <td>{{ $agency->created_at }}</td>
                                         <td>{{ $agency->updated_at }}</td>
                                         <td>

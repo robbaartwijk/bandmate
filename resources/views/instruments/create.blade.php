@@ -14,7 +14,7 @@
                             <div
                                 class="form-group
                                         {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                <label for="name">Name</label>
+                                <label for="name"><h4>Name</h4></label>
                                 <input type="text" name="name"
                                     class="form-control
                                             {{ $errors->has('name') ? 'is-invalid' : '' }}"
@@ -24,7 +24,7 @@
                             <div
                                 class="form-group
                                         {{ $errors->has('type') ? 'has-danger' : '' }}">
-                                <label for="type">Type</label>
+                                <label for="type"><h4>Type</h4></label>
                                 <input type="text" name="type"
                                     class="form-control
                                             {{ $errors->has('type') ? 'is-invalid' : '' }}"
