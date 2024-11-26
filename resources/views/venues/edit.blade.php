@@ -14,7 +14,6 @@
                             @csrf
                             @method('put')
 
-
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
                                 <label for="name">
                                     <h4>Name</h4>
@@ -26,11 +25,7 @@
                                 @include('alerts.feedback', ['field' => 'name'])
                             </div>
 
-
-                            <div
-                                class="form-group
-                                {{ $errors->has('address') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('address') ? 'has-danger' : '' }}">
                                 <label for="address">
                                     <h4>Address</h4>
                                 </label>
@@ -41,10 +36,7 @@
                                 @include('alerts.feedback', ['field' => 'address'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('city') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('city') ? 'has-danger' : '' }}">
                                 <label for="city">
                                     <h4>City</h4>
                                 </label>
@@ -55,10 +47,7 @@
                                 @include('alerts.feedback', ['field' => 'city'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('state') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
                                 <label for="state">
                                     <h4>State</h4>
                                 </label>
@@ -69,10 +58,7 @@
                                 @include('alerts.feedback', ['field' => 'state'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('zip') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('zip') ? 'has-danger' : '' }}">
                                 <label for="zip">
                                     <h4>Postal code</h4>
                                 </label>
@@ -83,10 +69,7 @@
                                 @include('alerts.feedback', ['field' => 'zip'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('country') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
                                 <label for="country">
                                     <h4>Country</h4>
                                 </label>
@@ -97,10 +80,7 @@
                                 @include('alerts.feedback', ['field' => 'country'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('phone') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
                                 <label for="phone">
                                     <h4>Phone</h4>
                                 </label>
@@ -111,10 +91,7 @@
                                 @include('alerts.feedback', ['field' => 'phone'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('email') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
                                 <label for="email">
                                     <h4>Email</h4>
                                 </label>
@@ -125,10 +102,7 @@
                                 @include('alerts.feedback', ['field' => 'email'])
                             </div>
 
-                            <div
-                                class="form-group
-                                {{ $errors->has('website') ? 'has-danger' : '' }}">
-
+                            <div class="form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
                                 <label for="website">
                                     <h4>Website</h4>
                                 </label>
@@ -138,7 +112,7 @@
                                     placeholder="Website" value="{{ $venue->website }}">
                                 @include('alerts.feedback', ['field' => 'website'])
                             </div>
-                            
+
                             <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
                                 <label for="description">
                                     <h4>Description</h4>

@@ -80,7 +80,7 @@
                                     <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                                     <td>{{ $act->number_of_members }}</td>
                                     <td>{{ $act->genre ? $act->genre->name : 'N/A' }}</td>
-                                    <td>{{ Str::limit($act->description, 50) }}</td>
+                                    <td>{{ Str::limit($act->description, 41) }}</td>
                                     <td>{{ $act->created_at }}</td>
                                     <td>{{ $act->updated_at }}</td>
                                     <td>

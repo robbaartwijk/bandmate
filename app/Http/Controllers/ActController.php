@@ -90,7 +90,9 @@ class ActController extends Controller
      */
     public function edit(Act $act)
     {
-        return view('acts.edit', compact('act'));
+        $genres = Genre::all()->sortByDesc(['group', 'name']);
+
+        return view('acts.edit', compact(['act', 'genres']));
     }
 
     /**
@@ -113,8 +115,10 @@ class ActController extends Controller
         $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
         $act->rehearsal_room = $rehearsal_room;
 
-        $active = $request->active == 'yes' ? 1 : 0;
+        $active = $request->active == 'Yes' ? 1 : 0;
         $act->active = $active;
+
+        // dd($act);
 
         $act->update($request->all());
 
