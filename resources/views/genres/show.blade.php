@@ -9,12 +9,12 @@
                 </div>
 
                 <div class="card-body text-primary">
-                    <h5><b>Name : </b>{{ $genre->name }}</h5>
-                    <h5><b>Group : </b>{{ $genre->group }}</h5>
-                    <h5><b>Description : </b><span class="description-spacing"><br><br>{!! $genre->description !!}</span></h5>
-                    <h5><b>Date added : </b>{{ $genre->created_at }}</h5>
-                    <h5><b>Date Last Updated : </b>{{ $genre->updated_at }}</h5>
-                    <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>
+                    <h4><b>Name : </b>{{ $genre->name }}</h4>
+                    <h4><b>Group : </b>{{ $genre->group }}</h4>
+                    <h4><b>Description : </b><span class="description-spacing"><br><br>{!! $genre->description !!}</span></h4>
+                    <h4><b>Date added : </b>{{ $genre->created_at }}</h4>
+                    <h4><b>Date Last Updated : </b>{{ $genre->updated_at }}</h4>
+                    <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
                 </div>
             </div>
         </div>

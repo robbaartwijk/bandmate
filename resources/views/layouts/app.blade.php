@@ -5,7 +5,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const simplemde = new SimpleMDE({
             element: document.getElementById("description"),
-
+            
             // configure the toolbar
             toolbar: [
                 "bold", "italic", "heading", "|",

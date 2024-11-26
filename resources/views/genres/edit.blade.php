@@ -15,47 +15,44 @@
                             @method('put')
 
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                <label for="name">Name</label>
-
+                                <label for="name">
+                                    <h4>Name</h4>
+                                </label>
                                 <input type="text" name="name"
                                     class="form-control
                                     {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                     placeholder="Name" value="{{ $genre->name }}">
+                                @include('alerts.feedback', ['field' => 'name'])
+                            </div>
 
-                                <label for="name">Group</label>
+                            <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
+                                <label for="group">
+                                    <h4>Group</h4>
+                                </label>
                                 <input type="text" name="group"
                                     class="form-control
                                     {{ $errors->has('group') ? 'is-invalid' : '' }}"
                                     placeholder="Group" value="{{ $genre->group }}">
-
-                                {{-- <label for="name">Description</label>
-                                <br>
-                                <br> --}}
-
-                                <div>
-                                    <label for="description">Description</label>
-                                    <br>
-                                    <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                        placeholder="Description">{{ old('description') }}</textarea>
-                                    @include('alerts.feedback', ['field' => 'description'])
-                                </div>
-
-                                {{-- <div>
-                                    <textarea name="description" class=" {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description"
-                                        rows="5">{{ $genre->description }}</textarea>
-                                </div> --}}
-
-                                <br>
-
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>
-
-                                @include('alerts.feedback', ['field' => 'name'])
+                                @include('alerts.feedback', ['field' => 'group'])
                             </div>
-                        </form>
+
+                            <div>
+                                <label for="description"><h4>Description</h4></label>
+                                <br><br>
+                                <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                    placeholder="Description">{{ $genre->description }}</textarea>
+                                @include('alerts.feedback', ['field' => 'description'])
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>
+
+                            @include('alerts.feedback', ['field' => 'name'])
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
