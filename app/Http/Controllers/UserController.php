@@ -6,7 +6,9 @@ use App\Models\Genre;
 use App\Models\Instrument;
 use App\Models\User;
 use App\Models\Vacancy;
+use App\Models\Act;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -47,34 +49,24 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        // $users are already sorted by the query
-        $rehearsalrooms = $user->rehearsalrooms()->get();
+        $user->load(['acts', 'rehearsalrooms', 'vacancies']);
 
-        // get acts of user
-        $acts = $user->acts()->get();
-
-        foreach ($acts as $act) {
-            $genre = Genre::find($act->genre_id);
-            $act->genre = $genre ? $genre->name : 'Unknown';
-
-            $act->vacancies = Vacancy::where('user_id', $act->user_id)->get();
-
-            if ((isset($act->vacancies)) && ($act->vacancies->count() > 0)) {
-                $act->vacancies->count = $act->vacancies->count();
-
-                foreach ($act->vacancies as $vacancy) {
-
-                    $vacancies = Vacancy::where('act_id', $vacancy->act_id)->with('act')->get();
-                    $vacancy->act = $vacancies[0]->act->name;
-
-                    $instrument = Instrument::find($vacancy->instrument_id);
-                    $vacancy->instrument = $instrument->name;
-                    $vacancy->description = substr($vacancy->description, 0, 80).'...';
-                }
-            }
+        foreach ($user->acts as $act) {
+            $act->genre_name = Genre::find($act->genre_id)->name;
+        }
+        
+        foreach ($user->vacancies as $vacancy) {
+            $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
         }
 
-        return view('users.show', compact('user', 'rehearsalrooms', 'acts'));
+        foreach ($user->vacancies as $vacancy) {
+            $act = Act::find($vacancy->act_id);
+            $vacancy->act_name = $act->name;
+        }
+
+        // dd($user);
+
+        return view('users.show', compact('user'));
     }
 
     /**

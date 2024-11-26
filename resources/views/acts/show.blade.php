@@ -91,8 +91,8 @@
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
                             <h4>History</h4>
-                            <h5><b>Date added : </b>{{ $act->created_at }}</h5>
-                            <h5><b>Date last update : </b>{{ $act->updated_at }}</h5>
+                            <h4><b>Date added : </b>{{ $act->created_at }}</h4>
+                            <h4><b>Date last update : </b>{{ $act->updated_at }}</h4>
                         </div>
                     </div>
                 </div>

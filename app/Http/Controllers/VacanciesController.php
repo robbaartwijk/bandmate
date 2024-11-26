@@ -64,6 +64,8 @@ class VacanciesController extends Controller
     {
         $vacancy = new Vacancy;
 
+
+        $vacancy->act_id = $request->input('act_id');
         $vacancy->user_id = Auth::user()->id;
         $vacancy->instrument_id = $request->input('instrument_id');
 
@@ -74,6 +76,8 @@ class VacanciesController extends Controller
         ]);
 
         $vacancy->fill($request->all());
+
+        // dd($vacancy);
 
         $vacancy->save();
 
