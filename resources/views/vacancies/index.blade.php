@@ -14,15 +14,34 @@
 
                         <div class="float-right">
                             <form action="{{ route('vacancies.index') }}" method="get">
+
                                 <div class="input-group no-border">
+
                                     <input type="text" name="search" value="{{ request()->search }}"
-                                        class="form-control" placeholder="Search...">
-                                    <a href="{{ route('vacancies.index', ['sort' => 'act_name']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by user</a>
-                                    <a href="{{ route('vacancies.index', ['sort' => 'instrument_name']) }}"
-                                        class="btn btn-secondary">Sort
-                                        by instrument</a>
+                                        class="form-control border" style="margin: 10px; width: 300px;"
+                                        placeholder="Search...">
+
+                                    <select name="sort"
+                                        class="form-control btn btn-secondary btn-round rounded border text-center"
+                                        style="margin: 10px; width: 210px;"
+                                        onchange="location.href='{{ route('vacancies.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                        <option value="act_name" {{ request()->sort == 'act_name' ? 'selected' : '' }}>
+                                            Sort by act name
+                                        </option>
+                                        <option value="instrument_name" {{ request()->sort == 'instrument_name' ? 'selected' : '' }}>
+                                            Sort by instrument name
+                                        </option>
+                                        <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>
+                                            Sort by description
+                                        </option>
+                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                            Sort by date added
+                                        </option>
+                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                            Sort by date last update
+                                        </option>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <i class="nc-icon nc-zoom-split"></i>
@@ -51,7 +70,6 @@
                             <th>Act name</th>
                             <th>Instrument</th>
                             <th>Description</th>
-                            <th>Created by</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                         </tr>
@@ -61,9 +79,8 @@
                             <tr>
                                 <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
                                 <td>{{ $vacancy->instrument_name }}</td>
-                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ $vacancy->description }}</a>
+                                <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
                                 </td>
-                                <td>{{ $vacancy->user_name }}</td>
                                 <td>{{ $vacancy->created_at }}</td>
                                 <td>{{ $vacancy->updated_at }}</td>
                                 <td><a href="{{ route('vacancies.edit', $vacancy->id) }}"

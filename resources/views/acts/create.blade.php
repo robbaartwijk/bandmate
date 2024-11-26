@@ -7,6 +7,8 @@
                 <div class="card-header">
                     <h3 class="card-title"> Add act</h3>
                 </div>
+
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <form action="{{ route('acts.store') }}" method="post">

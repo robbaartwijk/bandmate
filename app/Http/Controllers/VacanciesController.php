@@ -6,6 +6,8 @@ use App\Models\Act;
 use App\Models\Instrument;
 use App\Models\User;
 use App\Models\Vacancy;
+use Illuminate\Support\Facades\Request as FacadeRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class VacanciesController extends Controller
@@ -15,39 +17,31 @@ class VacanciesController extends Controller
      */
     public function index()
     {
-        $request = request();
-        $query = $request->query();
+        $query = Vacancy::with(['user', 'act']);
 
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
-        } else {
-            $sort = 'act_name';
-        }
-
-        $vacancies = Vacancy::with('user')->get();
+        $vacancies = $query->get();
 
         foreach ($vacancies as $vacancy) {
             $vacancy->user_name = $vacancy->user->name;
             $vacancy->act_name = $vacancy->act->name;
-
-            $instrument = Instrument::find($vacancy->instrument_id);
-            $vacancy->instrument_name = $instrument->name;
-
-            $vacancy->description = substr($vacancy->description, 0, 35).'...';
+            $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
         }
+
+        if (request()->has('sort')) {
+            $sort = request()->input('sort');
+        } else {
+            $sort = 'act_name';
+        }
+        $vacancies = $vacancies->sortBy($sort);
 
         if (request()->has('search')) {
             $search = request()->input('search');
-
             $vacancies = $vacancies->filter(function ($vacancy) use ($search) {
-                return (stripos($vacancy->act_name, $search) !== false) ||
-                    (stripos($vacancy->instrument_name, $search) !== false);
+                return stripos($vacancy->user_name, $search) !== false
+                || stripos($vacancy->act_name, $search) !== false
+                || stripos($vacancy->instrument_name, $search) !== false;
             });
         }
-
-        $vacancies = $vacancies->sortBy($sort);
-
-        $vacancies->count = $vacancies->count();
 
         return view('vacancies.index', compact('vacancies'));
     }
@@ -57,11 +51,10 @@ class VacanciesController extends Controller
      */
     public function create()
     {
-
+        $acts = Auth::user()->acts->sortBy('name');
         $instruments = Instrument::all()->sortBy(['type', 'name']);
 
-        return view('vacancies.create', compact('instruments'));
-
+        return view('vacancies.create', compact(['instruments', 'acts']));
     }
 
     /**
@@ -69,7 +62,24 @@ class VacanciesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vacancy = new Vacancy;
+
+        $vacancy->user_id = Auth::user()->id;
+        $vacancy->instrument_id = $request->input('instrument_id');
+
+        $request->validate([
+            'act_id' => 'required',
+            'instrument_id' => 'required',
+            'description' => 'required',
+        ]);
+
+        $vacancy->fill($request->all());
+
+        $vacancy->save();
+
+        return redirect()
+            ->route('vacancies.index')
+            ->with('status', 'Vacancy created successfully.');
     }
 
     /**

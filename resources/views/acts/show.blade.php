@@ -10,11 +10,17 @@
 
                 <div class="row">
                     <div class="col-lg-6">
+
                         <div class="card-body text-primary">
                             <h1>General information</h1>
                             <h2>Name : {{ $act->name }}</h2>
-                            <h4><b>Genre : </b> <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }}
-                                    ( {{ $act->genre->group }} )</a></h4>
+                            <h4><b>Genre : </b> 
+                            @if ($act->genre)
+                                <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }} ( {{ $act->genre->group }} )</a>
+                            @else
+                                N/A
+                            @endif
+                            </h4>
                             <h4><b>Number of members : </b> {{ $act->number_of_members }}</h4>
                             <h4><b>Rehearsal Room : </b> {{ $act->rehearsal_room ? 'Yes' : 'No' }}</h4>
                             <h4><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h4>
@@ -30,12 +36,12 @@
                             @endif
 
                             @if ($act->email)
-                                <h4><a href="{{ $act->email }}" target="_blank"><i class="	fa fa-envelope"></i>
+                                <h4><a href="mailto:{{ $act->email }}" target="_blank"><i class="fa fa-envelope"></i>
                                         {{ $act->email }}</a></h4>
                             @endif
 
                             @if ($act->phone)
-                                <h4><i class="	fa fa-phone"></i> {{ $act->phone }}</a></h4>
+                                <h4><i class="fa fa-phone"></i> {{ $act->phone }}</h4>
                             @endif
 
                             @if ($act->facebook)
@@ -93,4 +99,5 @@
 
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
