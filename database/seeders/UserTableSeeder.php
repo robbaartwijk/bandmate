@@ -33,7 +33,7 @@ class UserTableSeeder extends Seeder
             'updated_at' => now()
         ]);
 
-        \App\Models\User::factory(100)->create([]);
+        // \App\Models\User::factory(100)->create([]);
 
     }
 }

@@ -34,8 +34,9 @@ class HomeController extends Controller
     {
         $barchartuserregistrations = $this->createChartDataForMonthlyUsers();
         $barchartvacanciesperinstrument = $this->createVacancyChartData();
+        $barchartactregistrations = $this->createChartDataForMonthlyActs();
 
-        return view('dashboard', compact('barchartuserregistrations', 'barchartvacanciesperinstrument'));
+        return view('dashboard', compact('barchartuserregistrations', 'barchartvacanciesperinstrument', 'barchartactregistrations'));
     }
 
     /**
@@ -75,7 +76,7 @@ class HomeController extends Controller
             ->datasets([
                 [
                     "label" => "User Registrations",
-                    "backgroundColor" => "darkblue",
+                    "backgroundColor" => "blue",
                     "borderColor" => "white",
                     "data" => $data
                 ]
@@ -130,7 +131,7 @@ class HomeController extends Controller
             ->datasets([
                 [
                     "label" => "Vacancies per instrument",
-                    "backgroundColor" => "darkblue",
+                    "backgroundColor" => "blue",
                     "borderColor" => "white",
                     "data" => $data
                 ]
@@ -144,6 +145,63 @@ class HomeController extends Controller
                 'title' => [
                     'display' => true,
                     'text' => 'Vacancies per instrument'
+                ]
+            ]);
+
+            return $chart;
+    }
+
+    /**
+     * Generates chart data for monthly act registrations.
+     *
+     * This function creates and returns data that can be used to generate a chart
+     * representing the number of acts registered for each month.
+     *
+     * @return array The chart data for monthly act registrations.
+     */
+    function createChartDataForMonthlyActs() {
+
+        $start = Carbon::parse(User::min("created_at"));
+        $end = Carbon::now();
+        $period = CarbonPeriod::create($start, "1 month", $end);
+
+        $actsPerMonth = collect($period)->map(function ($date) {
+            $endDate = $date->copy()->endOfMonth();
+
+            return [
+                "count" => Act::where("created_at", "<=", $endDate)->count(),
+                "month" => $endDate->format("Y-m-d")
+            ];
+        });
+
+        $data = $actsPerMonth->pluck("count")->toArray();
+
+        $labels = $actsPerMonth->pluck("month")->map(function ($date) {
+            return Carbon::parse($date)->format("F");
+        })->toArray();
+
+        $chart = Chartjs::build()
+            ->name("ActRegistrationsChart")
+            ->type("doughnut")
+            ->size(["width" => "75%", "height" => "50%"])
+            ->labels($labels)
+            ->datasets([
+                [
+                    "label" => "Act Registrations",
+                    "backgroundColor" => "blue",
+                    "borderColor" => "white",
+                    "data" => $data
+                ]
+            ])
+            ->options([
+                'scales' => [
+                    'xAxes' => [[
+                        'type' => 'category',
+                    ]],
+                ],
+                'title' => [
+                    'display' => true,
+                    'text' => 'Monthly Acts Registrations'
                 ]
             ]);
 

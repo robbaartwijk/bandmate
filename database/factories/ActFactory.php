@@ -36,6 +36,8 @@ class ActFactory extends Factory
             'youtube' => $this->faker->url,
             'spotify' => $this->faker->url,
             'soundcloud' => $this->faker->url,
+            'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
         ];
     }
 }

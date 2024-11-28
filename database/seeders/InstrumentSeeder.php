@@ -37,7 +37,37 @@ class InstrumentSeeder extends Seeder
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);
-
+        DB::table('instruments')->insert([
+            'name' => 'Classical Guitar',
+            'type' => 'Strings',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => '12-String Guitar',
+            'type' => 'Strings',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => 'Steel Guitar',
+            'type' => 'Strings',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => 'Resonator Guitar',
+            'type' => 'Strings',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => 'Slide Guitar',
+            'type' => 'Strings',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        
         // Keyboards§
         DB::table('instruments')->insert([
             'name' => 'Piano',
@@ -73,6 +103,24 @@ class InstrumentSeeder extends Seeder
         ]);
         DB::table('instruments')->insert([
             'name' => 'Percussion',
+            'type' => 'Drums and Percussion',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => 'Timpani',
+            'type' => 'Drums and Percussion',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => 'Xylophone',
+            'type' => 'Drums and Percussion',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+        DB::table('instruments')->insert([
+            'name' => 'Marimba',
             'type' => 'Drums and Percussion',
             'created_at' => $createdDate,
             'updated_at' => $createdDate
@@ -195,6 +243,55 @@ class InstrumentSeeder extends Seeder
 
         DB::table('instruments')->insert([
             'name' => 'Background Vocals',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Rap',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Screaming',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Growling',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Whispering',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Yodeling',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Beatboxing',
+            'type' => 'Vocals',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
+
+        DB::table('instruments')->insert([
+            'name' => 'Scatting',
             'type' => 'Vocals',
             'created_at' => $createdDate,
             'updated_at' => $createdDate
