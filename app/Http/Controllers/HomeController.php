@@ -33,10 +33,9 @@ class HomeController extends Controller
     public function index()
     {
         $barchartuserregistrations = $this->createChartDataForMonthlyUsers();
-        $barchartvacanciesperinstrument = $this->createChartDataForVacanciesPerInstrument();
+        $barchartvacanciesperinstrument = $this->createVacancyChartData();
 
         return view('dashboard', compact('barchartuserregistrations', 'barchartvacanciesperinstrument'));
-
     }
 
     /**
@@ -71,7 +70,7 @@ class HomeController extends Controller
         $chart = Chartjs::build()
             ->name("UserRegistrationsChart")
             ->type("bar")
-            ->size(["width" => "75%", "height" => "20%"])
+            ->size(["width" => "75%", "height" => "50%"])
             ->labels($labels)
             ->datasets([
                 [
@@ -105,25 +104,28 @@ class HomeController extends Controller
      *
      * @return array The chart data for vacancies per instrument.
      */
-    function createChartDataForVacanciesPerInstrument() {
+    function createVacancyChartData() {
 
-        $start = Carbon::parse(Vacancy::min("created_at"));
-        
-        $vacanciesPerInstrument = collect(Vacancy::all())->map(function ($vacancy) {
-            $instrument = Instrument::find($vacancy->instrument_id);
+        $vacancies = Vacancy::get();
+
+        foreach ($vacancies as $vacancy) {
+            $vacancy->instrument = Instrument::find($vacancy->instrument_id);
+        }
+
+        $vacanciesPerInstrument = $vacancies->groupBy('instrument_id')->map(function ($group, $instrumentId) {
             return [
-                "count" => Vacancy::where('instrument_id', $vacancy->instrument_id)->count(),
-                "instrument" => $instrument->name
+                "count" => $group->count(),
+                "instrument" => $group->first()->instrument->name
             ];
-        });
+        })->values();
 
         $data = $vacanciesPerInstrument->pluck("count")->toArray();
         $labels = $vacanciesPerInstrument->pluck("instrument")->toArray();
 
         $chart = Chartjs::build()
-            ->name("Vacancies per instrument")
+            ->name("VacanciesPerInstrument")
             ->type("bar")
-            ->size(["width" => "75%", "height" => "20%"])
+            ->size(["width" => "75%", "height" => "50%"])
             ->labels($labels)
             ->datasets([
                 [
@@ -136,12 +138,7 @@ class HomeController extends Controller
             ->options([
                 'scales' => [
                     'xAxes' => [[
-                        'type' => 'time',
-                        'time' => [
-                            'unit' => 'month',
-                            'min' => $start->format("Y-m-d"),
-                            'tooltipFormat' => 'YYYY-MM-DD',
-                        ],
+                        'type' => 'category',
                     ]],
                 ],
                 'title' => [
