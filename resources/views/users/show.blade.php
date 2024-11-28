@@ -9,10 +9,10 @@
             </div>
 
             <div class="card-body text-primary">
-                <h5><b>Name : </b>{{ $user->name }}</h5>
-                <h5><b>Email : </b> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></h5>
-                <h5><b>Date added : </b>{{ $user->created_at }}</h5>
-                <h5><b>Date last update : </b>{{ $user->updated_at }}</h5>
+                <h4><b>Name : </b>{{ $user->name }}</h4>
+                <h4><b>Email : </b> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></h4>
+                <h4><b>Date added : </b>{{ $user->created_at }}</h4>
+                <h4><b>Date last update : </b>{{ $user->updated_at }}</h4>
                 <a href="{{ route('users.index') }}" class="btn btn-danger">Back</a>
             </div>
         </div>
@@ -113,8 +113,6 @@
             </thead>
 
             <tbody>
-
-
                 @if ($user->vacancies->isEmpty())
                 <tr>
                     <td colspan="4">No vacancies found</td>
