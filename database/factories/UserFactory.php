@@ -36,6 +36,8 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'created_at' => fake()->dateTimeBetween('2024-01-01', '2024-09-30'),
+            'updated_at' => fake()->dateTimeBetween('2024-10-01', '2024-12-31'),
         ];
     }
 

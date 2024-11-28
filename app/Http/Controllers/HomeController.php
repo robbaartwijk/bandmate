@@ -10,6 +10,8 @@ use IcehouseVentures\LaravelChartjs\Facades\Chartjs;
 
 use App\Models\Act;
 use App\Models\Genre;
+use App\Models\Instrument;
+use App\Models\Vacancy;
 
 class HomeController extends Controller
 {
@@ -30,6 +32,22 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $barchartuserregistrations = $this->createChartDataForMonthlyUsers();
+        $barchartvacanciesperinstrument = $this->createChartDataForVacanciesPerInstrument();
+
+        return view('dashboard', compact('barchartuserregistrations', 'barchartvacanciesperinstrument'));
+
+    }
+
+    /**
+     * Generates chart data for monthly uer registrations.
+     *
+     * This function creates and returns data that can be used to generate a chart
+     * representing the number of users registered for each month.
+     *
+     * @return array The chart data for monthly user registrations.
+     */
+    function createChartDataForMonthlyUsers() {
 
         $start = Carbon::parse(User::min("created_at"));
         $end = Carbon::now();
@@ -45,18 +63,73 @@ class HomeController extends Controller
         });
 
         $data = $usersPerMonth->pluck("count")->toArray();
-        $labels = $usersPerMonth->pluck("month")->toArray();
+
+        $labels = $usersPerMonth->pluck("month")->map(function ($date) {
+            return Carbon::parse($date)->format("F");
+        })->toArray();
 
         $chart = Chartjs::build()
             ->name("UserRegistrationsChart")
-            ->type("line")
-            ->size(["width" => 400, "height" => 200])
+            ->type("bar")
+            ->size(["width" => "75%", "height" => "20%"])
             ->labels($labels)
             ->datasets([
                 [
                     "label" => "User Registrations",
-                    "backgroundColor" => "rgba(38, 185, 154, 0.31)",
-                    "borderColor" => "rgba(38, 185, 154, 0.7)",
+                    "backgroundColor" => "darkblue",
+                    "borderColor" => "white",
+                    "data" => $data
+                ]
+            ])
+            ->options([
+                'scales' => [
+                    'xAxes' => [[
+                        'type' => 'category',
+                    ]],
+                ],
+                'title' => [
+                    'display' => true,
+                    'text' => 'Monthly User Registrations'
+                ]
+            ]);
+
+            return $chart;
+    }
+
+
+    /**
+     * Generates chart data for vacancies per instrument
+     *
+     * This function creates and returns data that can be used to generate a chart
+     * representing the number of vancaies per instrument.
+     *
+     * @return array The chart data for vacancies per instrument.
+     */
+    function createChartDataForVacanciesPerInstrument() {
+
+        $start = Carbon::parse(Vacancy::min("created_at"));
+        
+        $vacanciesPerInstrument = collect(Vacancy::all())->map(function ($vacancy) {
+            $instrument = Instrument::find($vacancy->instrument_id);
+            return [
+                "count" => Vacancy::where('instrument_id', $vacancy->instrument_id)->count(),
+                "instrument" => $instrument->name
+            ];
+        });
+
+        $data = $vacanciesPerInstrument->pluck("count")->toArray();
+        $labels = $vacanciesPerInstrument->pluck("instrument")->toArray();
+
+        $chart = Chartjs::build()
+            ->name("Vacancies per instrument")
+            ->type("bar")
+            ->size(["width" => "75%", "height" => "20%"])
+            ->labels($labels)
+            ->datasets([
+                [
+                    "label" => "Vacancies per instrument",
+                    "backgroundColor" => "darkblue",
+                    "borderColor" => "white",
                     "data" => $data
                 ]
             ])
@@ -73,15 +146,11 @@ class HomeController extends Controller
                 ],
                 'title' => [
                     'display' => true,
-                    'text' => 'Monthly User Registrations'
+                    'text' => 'Vacancies per instrument'
                 ]
             ]);
-    
-            dd($chart);
 
-            return view('dashboard', compact('chart'));
-
+            return $chart;
     }
-
 
 }
