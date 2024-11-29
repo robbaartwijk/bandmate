@@ -6,18 +6,21 @@ use App\Models\Act;
 use App\Models\Instrument;
 use App\Models\User;
 use App\Models\Vacancy;
-use Illuminate\Support\Facades\Request as FacadeRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class VacanciesController extends Controller
+class VacancyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $query = Vacancy::with(['user', 'act']);
+
+        if ($request->private == true) {
+            $query->where('user_id', Auth::user()->id);
+        }
 
         $vacancies = $query->get();
 
@@ -64,7 +67,6 @@ class VacanciesController extends Controller
     {
         $vacancy = new Vacancy;
 
-
         $vacancy->act_id = $request->input('act_id');
         $vacancy->user_id = Auth::user()->id;
         $vacancy->instrument_id = $request->input('instrument_id');
@@ -108,6 +110,10 @@ class VacanciesController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
+        if (Auth::user()->role !== 'admin' && $vacancy->user_id !== Auth::user()->id) {
+            return redirect()->route('vacancies.index')
+                ->with('status', 'You are not authorized to edit this vacancy.');
+        }
 
         $user = User::find($vacancy->user_id);
         $vacancy->user_name = $user->name;
@@ -126,6 +132,10 @@ class VacanciesController extends Controller
      */
     public function update(Request $request, Vacancy $vacancy)
     {
+        if (Auth::user()->role !== 'admin' && $vacancy->user_id !== Auth::user()->id) {
+            return redirect()->route('vacancies.index')
+                ->with('status', 'You are not authorized to update this vacancy.');
+        }
 
         $vacancy->update($request->all());
 
@@ -137,6 +147,10 @@ class VacanciesController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
+        if (Auth::user()->role !== 'admin' && $vacancy->user_id !== Auth::user()->id) {
+            return redirect()->route('vacancies.index')
+                ->with('status', 'You are not authorized to delete this vacancy.');
+        }
 
         $vacancy->delete();
 

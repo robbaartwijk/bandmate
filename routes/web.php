@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
 		'index' => 'acts.index'
 	]);
 	
-	Route::resource('vacancies', 'App\Http\Controllers\VacanciesController')->names([
+	Route::resource('vacancies', 'App\Http\Controllers\VacancyController')->names([
 		'index' => 'vacancies.index'
 	]);
 

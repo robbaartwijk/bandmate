@@ -27,7 +27,6 @@ class ActSeeder extends Seeder
             'description' => 'Solid Air are a four-piece band from London. They play a mix of rock, blues and soul music.',
             'email' => 'rob.baartwijk@gmail.com',
             'phone' => '020 123 4567',
-
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);
