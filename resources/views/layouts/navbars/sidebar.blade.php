@@ -13,14 +13,14 @@ $user = auth()->user();
             <li @if ($pageSlug=='dashboard' ) class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="fa fa-home"></i>
-                    <p>{{ __('Home') }}</p>
+                    <p><h4>{{ __('Home') }}</h4></p>
                 </a>
             </li>
 
             <li>
                 <a data-toggle="collapse" href="#userdata" aria-expanded="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' || $pageSlug == 'rehearsalrooms' ? 'true' : 'false' }}" class="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' ? '' : 'collapsed' }}">
                     <i class="fa fa-music"></i>
-                    <span class="nav-link-text">{{ __('User data') }}</span>
+                    <span class="nav-link-text"><h4>{{ __('User data') }}</h4></span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -29,19 +29,19 @@ $user = auth()->user();
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
                             <a href="{{ route('acts.index') }}">
                                 <i class="fa fa-music"></i>
-                                <p>{{ __('Acts') }}</p>
+                                <p><h5>{{ __('Acts') }}</h5></p>
                             </a>
                         </li>
                         <li @if ($pageSlug=='vacancies' ) class="active " @endif>
                             <a href="{{ route('vacancies.index') }}">
                                 <i class="fa fa-music"></i>
-                                <p>{{ __('Vacancies') }}</p>
+                                <p><h5>{{ __('Vacancies') }}</h5></p>
                             </a>
                         </li>
                         <li @if ($pageSlug=='rehearsalrooms' ) class="active " @endif>
                             <a href="{{ route('rehearsalrooms.index') }}">
                                 <i class="fa fa-music"></i>
-                                <p>{{ __('Rehearsal rooms') }}</p>
+                                <p><h5>{{ __('Rehearsal rooms') }}</h5></p>
                             </a>
                         </li>
                     </ul>
@@ -53,7 +53,7 @@ $user = auth()->user();
             <li>
                 <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'agencies' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' ? '' : 'collapsed' }}">
                     <i class="fa fa-database"></i>
-                    <span class="nav-link-text">{{ __('Management') }}</span>
+                    <span class="nav-link-text"><h4>{{ __('Management') }}<h4></span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -62,25 +62,25 @@ $user = auth()->user();
                         <li @if ($pageSlug=='instruments' ) class="active " @endif>
                             <a href="{{ route('instruments.index') }}">
                                 <i class="fa fa-database"></i>
-                                <p>{{ __('Instruments') }}</p>
+                                <p><h5>{{ __('Instruments') }}</h5></p>
                             </a>
                         </li>
                         <li @if ($pageSlug=='genres' ) class="active " @endif>
                             <a href="{{ route('genres.index') }}">
                                 <i class="fa fa-database"></i>
-                                <p>{{ __('Genres') }}</p>
+                                <p><h5>{{ __('Genres') }}</h5></p>
                             </a>
                         </li>
                         <li @if ($pageSlug=='venues' ) class="active " @endif>
                             <a href="{{ route('venues.index') }}">
                                 <i class="fa fa-database"></i>
-                                <p>{{ __('Venues') }}</p>
+                                <p><h5>{{ __('Venues') }}</h5></p>
                             </a>
                         </li>
                         <li @if ($pageSlug=='agencies' ) class="active " @endif>
                             <a href="{{ route('agencies.index') }}">
                                 <i class="fa fa-database"></i>
-                                <p>{{ __('Agencies') }}</p>
+                                <p><h5>{{ __('Agencies') }}</h5></p>
                             </a>
                         </li>
                     </ul>
@@ -92,7 +92,7 @@ $user = auth()->user();
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
                     <i class="fa fa-user-circle"></i>
-                    <span class="nav-link-text">{{ __('User managements') }}</span>
+                    <span class="nav-link-text"><h4>{{ __('User management') }}<h4></span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -101,13 +101,13 @@ $user = auth()->user();
                         <li @if ($pageSlug=='profile' ) class="active " @endif>
                             <a href="{{ route('profile.edit') }}">
                                 <i class="fa fa-user-circle"></i>
-                                <p>{{ __('User Profile') }}</p>
+                                <p><h5>{{ __('User Profile') }}</h5></p>
                             </a>
                         </li>
                         <li @if ($pageSlug=='users' ) class="active " @endif>
                             <a href="{{ route('user.index') }}">
                                 <i class="fa fa-user-circle"></i>
-                                <p>{{ __('User Management') }}</p>
+                                <p><h5>{{ __('User Management') }}</h5></p>
                             </a>
                         </li>
                     </ul>

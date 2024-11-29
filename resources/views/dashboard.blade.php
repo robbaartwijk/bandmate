@@ -5,16 +5,13 @@
 <div style="height: 20vh;">
     <div class="col-md-12 text-center">
         <h1>Bandmate Statistics</h1>
+        <h2>Some statistics about Bandmate.<br><br>
+            These statistics do not give a full overview of the site
+            but they do show the usage of our musician's platform</h2>
     </div>
 </div>
 
-
-
-
-
-
-
-<div class="row">
+<div class="row" style=margin-top:20px>
     <div class="col-md-12">
         <div class="row">
             <div class="col-lg-4">
