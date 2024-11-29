@@ -21,8 +21,15 @@ class VenueSeeder extends Seeder {
                 'state' => 'NY',
                 'country' => 'USA',
                 'phone' => '555-1234',
-                'email' => 'info@thevenue.com'
+                'email' => 'info@thevenue.com',
+                'website' => 'http://www.thevenue.com',
+                'description' => 'The Venue is a great place to see live music.'
             ]
         ];
+        
+        \DB::table('venues')->insert($venues);
+
+        \App\Models\Venue::factory(100)->create([]);
+
     }
 }

@@ -26,6 +26,10 @@ class ActController extends Controller
             });
         }
 
+        if ($request->private == true) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
         $acts = $query->get();
 
         return view('acts.index', compact('acts'));
@@ -90,6 +94,13 @@ class ActController extends Controller
      */
     public function edit(Act $act)
     {
+        if (Auth::user()->role !== 'admin') {
+            if ($act->user_id !== Auth::user()->id) {
+                return redirect()->route('acts.index')
+                    ->with('status', 'You are not authorized to edit this act.');
+            }
+        }
+
         $genres = Genre::all()->sortByDesc(['group', 'name']);
 
         return view('acts.edit', compact(['act', 'genres']));
@@ -100,6 +111,13 @@ class ActController extends Controller
      */
     public function update(Request $request, Act $act)
     {
+        if (Auth::user()->role !== 'admin') {
+            if ($act->user_id !== Auth::user()->id) {
+                return redirect()->route('acts.index')
+                    ->with('status', 'You are not authorized to update this act.');
+            }
+        }
+
         $request->validate([
             'name' => 'required',
             'genre_id' => 'required',
@@ -131,8 +149,15 @@ class ActController extends Controller
      */
     public function destroy(Act $act)
     {
-        $act->delete();
+        if (Auth::user()->role !== 'admin') {
+            if ($act->user_id !== Auth::user()->id) {
+                return redirect()->route('acts.index')
+                    ->with('status', 'You are not authorized to delete this act.');
+            }
+        }
 
+        $act->delete();
+        
         return redirect()->route('acts.index')
             ->with('status', 'Act deleted successfully');
     }

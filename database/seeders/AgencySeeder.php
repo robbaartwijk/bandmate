@@ -57,5 +57,7 @@ class AgencySeeder extends Seeder
             'updated_at' => now()
         ]);
 
+        \App\Models\Agency::factory(100)->create([]);
+        
     }
 }

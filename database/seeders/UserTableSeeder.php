@@ -19,6 +19,7 @@ class UserTableSeeder extends Seeder
             'name' => 'Admin Admin',
             'email' => 'admin@black.com',
             'email_verified_at' => now(),
+            'is_admin' => 1,
             'password' => Hash::make('secret'),
             'created_at' => now(),
             'updated_at' => now()
@@ -28,12 +29,13 @@ class UserTableSeeder extends Seeder
             'name' => 'Rob Baartwijk',
             'email' => 'rob.baartwijk@gmail.com',
             'email_verified_at' => now(),
+            'is_admin' => 1,
             'password' => Hash::make('Towelmaster99'),
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
-        // \App\Models\User::factory(100)->create([]);
+        \App\Models\User::factory(100)->create([]);
 
     }
 }

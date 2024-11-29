@@ -81,4 +81,8 @@ class User extends Authenticatable
         return $this->hasMany(Vacancy::class);
     }
 
+    function isAdmin() {
+        return $this->role === 'admin';
+    }
+
 }

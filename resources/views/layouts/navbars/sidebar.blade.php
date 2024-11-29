@@ -1,11 +1,9 @@
 <div class="sidebar">
 
-    {{-- RobB Changed background colour of sidebar --}}
     <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128)">
         
         <div class="logo">
-            <a href="#" class="simple-text logo-mini">{{ __('BM') }}</a>
-            <a href="#" class="simple-text logo-normal">{{ __('Bandmate') }}</a>
+            <img src="{{ asset('images/Logo.png') }}" style="border: solid 2px grey;  width:200px; height: 18%;" /> 
         </div>
         <ul class="nav">
             <li @if ($pageSlug == 'dashboard') class="active " @endif>
