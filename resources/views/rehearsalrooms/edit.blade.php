@@ -120,7 +120,7 @@
                                 </label>
                                 <br><br>
                                 <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                    placeholder="Description">{{ $genre->description }}</textarea>
+                                    placeholder="Description">{{ $rehearsalroom->description }}</textarea>
                                 @include('alerts.feedback', ['field' => 'description'])
                             </div>
 

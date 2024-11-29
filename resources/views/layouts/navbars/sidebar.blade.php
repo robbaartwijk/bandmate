@@ -1,12 +1,16 @@
+@php
+$user = auth()->user();
+@endphp
+
 <div class="sidebar">
 
     <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128)">
-        
+
         <div class="logo">
-            <img src="{{ asset('images/Logo.png') }}" style="border: solid 2px grey;  width:200px; height: 18%;" /> 
+            <img src="{{ asset('images/Logo.png') }}" style="border: solid 2px grey;  width:200px; height: 18%;" />
         </div>
         <ul class="nav">
-            <li @if ($pageSlug == 'dashboard') class="active " @endif>
+            <li @if ($pageSlug=='dashboard' ) class="active " @endif>
                 <a href="{{ route('home') }}">
                     <i class="fa fa-home"></i>
                     <p>{{ __('Home') }}</p>
@@ -22,19 +26,19 @@
 
                 <div class="collapse @if ($pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'rehearsalrooms') show @endif" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'acts') class="active " @endif>
+                        <li @if ($pageSlug=='acts' ) class="active " @endif>
                             <a href="{{ route('acts.index') }}">
                                 <i class="fa fa-music"></i>
                                 <p>{{ __('Acts') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'vacancies') class="active " @endif>
+                        <li @if ($pageSlug=='vacancies' ) class="active " @endif>
                             <a href="{{ route('vacancies.index') }}">
                                 <i class="fa fa-music"></i>
                                 <p>{{ __('Vacancies') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'rehearsalrooms') class="active " @endif>
+                        <li @if ($pageSlug=='rehearsalrooms' ) class="active " @endif>
                             <a href="{{ route('rehearsalrooms.index') }}">
                                 <i class="fa fa-music"></i>
                                 <p>{{ __('Rehearsal rooms') }}</p>
@@ -44,6 +48,8 @@
                 </div>
             </li>
 
+
+            @if($user->is_admin)
             <li>
                 <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'agencies' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' ? '' : 'collapsed' }}">
                     <i class="fa fa-database"></i>
@@ -53,25 +59,25 @@
 
                 <div class="collapse @if ($pageSlug == 'beheer' || $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'venues' || $pageSlug == 'agencies') show @endif" id="beheer" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'instruments') class="active " @endif>
+                        <li @if ($pageSlug=='instruments' ) class="active " @endif>
                             <a href="{{ route('instruments.index') }}">
                                 <i class="fa fa-database"></i>
                                 <p>{{ __('Instruments') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'genres') class="active " @endif>
+                        <li @if ($pageSlug=='genres' ) class="active " @endif>
                             <a href="{{ route('genres.index') }}">
                                 <i class="fa fa-database"></i>
                                 <p>{{ __('Genres') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'venues') class="active " @endif>
+                        <li @if ($pageSlug=='venues' ) class="active " @endif>
                             <a href="{{ route('venues.index') }}">
                                 <i class="fa fa-database"></i>
                                 <p>{{ __('Venues') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'agencies') class="active " @endif>
+                        <li @if ($pageSlug=='agencies' ) class="active " @endif>
                             <a href="{{ route('agencies.index') }}">
                                 <i class="fa fa-database"></i>
                                 <p>{{ __('Agencies') }}</p>
@@ -92,13 +98,13 @@
 
                 <div class="collapse @if ($pageSlug == 'profile' || $pageSlug == 'users') show @endif" id="laravel-examples" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
+                        <li @if ($pageSlug=='profile' ) class="active " @endif>
                             <a href="{{ route('profile.edit') }}">
                                 <i class="fa fa-user-circle"></i>
                                 <p>{{ __('User Profile') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
+                        <li @if ($pageSlug=='users' ) class="active " @endif>
                             <a href="{{ route('user.index') }}">
                                 <i class="fa fa-user-circle"></i>
                                 <p>{{ __('User Management') }}</p>
@@ -107,7 +113,7 @@
                     </ul>
                 </div>
             </li>
-            
+            @endif
         </ul>
     </div>
 </div>

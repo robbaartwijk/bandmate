@@ -12,18 +12,21 @@ class RehearsalroomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $request = request();
-        $query = $request->query();
-
-        if (request()->has('sort')) {
-            $sort = request()->input('sort');
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
         } else {
             $sort = 'name';
         }
 
-        $rehearsalrooms = Rehearsalroom::all();
+        $query = Rehearsalroom::query()->orderBy($sort);
+
+        if ($request->private == true) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        $rehearsalrooms = $query->get();
 
         if (request()->has('search')) {
             $search = request()->input('search');
@@ -69,7 +72,7 @@ class RehearsalroomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(rehearsalroom $rehearsalroom)
+    public function show(Rehearsalroom $rehearsalroom)
     {
         return view('rehearsalrooms.show', compact('rehearsalroom'));
     }
@@ -77,15 +80,20 @@ class RehearsalroomController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(rehearsalroom $rehearsalroom)
+    public function edit(Rehearsalroom $rehearsalroom)
     {
+        if (Auth::user()->role !== 'admin' && $rehearsalroom->user_id !== Auth::user()->id) {
+            return redirect()->route('rehearsalrooms.index')
+                ->with('status', 'You are not authorized to edit this rehearsalroom.');
+        }
+
         return view('rehearsalrooms.edit', compact('rehearsalroom'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, rehearsalroom $rehearsalroom)
+    public function update(Request $request, Rehearsalroom $rehearsalroom)
     {
         $request->validate([
             'name' => 'required',
@@ -97,6 +105,11 @@ class RehearsalroomController extends Controller
 
         $rehearsalroom->update($request->all());
 
+        if (Auth::user()->role !== 'admin' && $rehearsalroom->user_id !== Auth::user()->id) {
+            return redirect()->route('rehearsalrooms.index')
+                ->with('status', 'You are not authorized to update this rehearsalroom.');
+        }
+
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room updated successfully');
     }
@@ -104,8 +117,13 @@ class RehearsalroomController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(rehearsalroom $rehearsalroom)
+    public function destroy(Rehearsalroom $rehearsalroom)
     {
+        if (Auth::user()->role !== 'admin' && $rehearsalroom->user_id !== Auth::user()->id) {
+            return redirect()->route('rehearsalrooms.index')
+                ->with('status', 'You are not authorized to delete this rehearsalroom.');
+        }
+
         $rehearsalroom->delete();
 
         return redirect()->route('rehearsalrooms.index')
