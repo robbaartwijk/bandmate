@@ -28,8 +28,8 @@ class VacancyFactory extends Factory
             'act_id' => $this->faker->randomElement($acts),
             'instrument_id' => $this->faker->randomElement($instruments),
             'description' => $this->faker->paragraph(20),
-            'date_created' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'date_updated' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

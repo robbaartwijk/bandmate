@@ -20,8 +20,8 @@ class VacancySeeder extends Seeder
                 'act_id' => 1,
                 'instrument_id' => 1,
                 'description' => 'This is a dummy vacancy',
-                'date_created' => Carbon::now(),
-                'date_updated' => Carbon::now()
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]
         ];
         

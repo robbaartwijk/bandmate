@@ -71,7 +71,7 @@ class HomeController extends Controller
         $chart = Chartjs::build()
             ->name("UserRegistrationsChart")
             ->type("bar")
-            ->size(["width" => "75%", "height" => "50%"])
+            ->size(["width" => "75%", "height" => "75%"])
             ->labels($labels)
             ->datasets([
                 [
@@ -126,7 +126,7 @@ class HomeController extends Controller
         $chart = Chartjs::build()
             ->name("VacanciesPerInstrument")
             ->type("bar")
-            ->size(["width" => "75%", "height" => "50%"])
+            ->size(["width" => "75%", "height" => "75%"])
             ->labels($labels)
             ->datasets([
                 [
