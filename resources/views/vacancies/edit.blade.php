@@ -15,22 +15,55 @@
                             @method('put')
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
 
-                                <label for="description">Act</label>
-                                <h5><b>{{ $vacancy->act_name }}</b></h5>
+                                <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
+                                    <label for="name">
+                                        <h3>Name</h3>
+                                    </label>
+                                    <input type="text" name="name" class="form-control
+                                        {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ $vacancy->act_name }}">
+                                    @include('alerts.feedback', ['field' => 'name'])
+                                </div>
 
-                                <label for="description">Description</label>
-                                <input type="text" name="description"
-                                    class="form-control
-                                    {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                    placeholder="Description" value="{{ $vacancy->description }}">
-                                @include('alerts.feedback', ['field' => 'description'])
 
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('vacancies.index') }}" class="btn btn-danger">Back</a>
 
-                                @include('alerts.feedback', ['field' => 'name'])
+
+                                <div class="form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
+                                    <label for="instrument_id">
+                                        <h3>Instrument</h3>
+                                    </label>
+                                    <select name="instrument_id" class="form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}">
+                                        <option value="">Select</option>
+                                        @foreach ($instruments as $instrument)
+                                        <option value="{{ $instrument->id }}" {{ $vacancy->instrument_id == $instrument->id ? 'selected' : '' }}>
+                                            {{ $instrument->type }} - {{ $instrument->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @include('alerts.feedback', ['field' => 'instrument_id'])
+                                </div>
+
+
+
+                        
+                                <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
+                                	<label for="description">Description</label>
+                                    <input type="text" name="description"
+                                        class="form-control
+                                        {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                        placeholder="Description" value="{{ $vacancy->description }}">
+                                    @include('alerts.feedback', ['field' => 'description'])
+
+
+
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a href="{{ route('vacancies.index') }}" class="btn btn-danger">Back</a>
+            
+                                            @include('alerts.feedback', ['field' => 'name'])
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             @endsection

@@ -26,7 +26,7 @@
                             </select>
                             @include('alerts.feedback', ['field' => 'act_id'])
                         </div>
-
+ 
                         <div class="form-group
                         {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
                             <label for="instrument_id">

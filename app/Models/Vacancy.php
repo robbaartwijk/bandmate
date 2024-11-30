@@ -18,7 +18,7 @@ class Vacancy extends Model {
     protected $fillable = [
         'user_id',
         'act_id',
-        'inatrument_id',
+        'instrument_id',
         'description'
     ];
 

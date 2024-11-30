@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Act;
+use App\Models\Instrument;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-Use App\Models\User;
-Use App\Models\Act;
-Use App\Models\Instrument;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\vacancies>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vacancy>
  */
 class VacancyFactory extends Factory
 {
@@ -19,13 +19,24 @@ class VacancyFactory extends Factory
      */
     public function definition(): array
     {
-        $users = User::all()->pluck('id')->toArray();
-        $acts = Act::all()->pluck('id')->toArray();
         $instruments = Instrument::all()->pluck('id')->toArray();
 
+        $randomUser = User::inRandomOrder()->first();
+        $randomUserID = $randomUser->id;
+
+        $randomAct = Act::where('user_id', $randomUserID)->first();
+
+        if ($randomAct === null) {
+            $randomActID = Act::factory()->create([
+                'user_id' => $randomUserID,
+            ])->id;
+        } else {
+            $randomActID = $randomAct->id;
+        }
+
         return [
-            'user_id' => $this->faker->randomElement($users),
-            'act_id' => $this->faker->randomElement($acts),
+            'act_id' => $randomActID,
+            'user_id' => $randomUserID,
             'instrument_id' => $this->faker->randomElement($instruments),
             'description' => $this->faker->paragraph(20),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),

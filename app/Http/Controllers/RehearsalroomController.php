@@ -68,7 +68,7 @@ class RehearsalroomController extends Controller
         $rehearsalroom->save();
         return redirect()->route('rehearsalrooms.index');
     }
-
+ 
     /**
      * Display the specified resource.
      */
@@ -82,10 +82,10 @@ class RehearsalroomController extends Controller
      */
     public function edit(Rehearsalroom $rehearsalroom)
     {
-        if (Auth::user()->role !== 'admin' && $rehearsalroom->user_id !== Auth::user()->id) {
-            return redirect()->route('rehearsalrooms.index')
-                ->with('status', 'You are not authorized to edit this rehearsalroom.');
-        }
+        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+            return redirect()->route('acts.index')
+            ->with('status', 'You are not authorized to edit this act.');
+        };
 
         return view('rehearsalrooms.edit', compact('rehearsalroom'));
     }
@@ -119,10 +119,10 @@ class RehearsalroomController extends Controller
      */
     public function destroy(Rehearsalroom $rehearsalroom)
     {
-        if (Auth::user()->role !== 'admin' && $rehearsalroom->user_id !== Auth::user()->id) {
-            return redirect()->route('rehearsalrooms.index')
-                ->with('status', 'You are not authorized to delete this rehearsalroom.');
-        }
+        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+            return redirect()->route('acts.index')
+            ->with('status', 'You are not authorized to edit this act.');
+        };
 
         $rehearsalroom->delete();
 

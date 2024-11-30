@@ -121,10 +121,12 @@ class VacancyController extends Controller
         $act = Act::find($vacancy->act_id);
         $vacancy->act_name = $act->name;
 
-        $instrument = Instrument::find($vacancy->instrument_id);
-        $vacancy->instrument_name = $instrument->name;
+        $instruments = Instrument::all()->sortBy(['type', 'name']);
 
-        return view('vacancies.edit', compact('vacancy'));
+        $instrument = Instrument::find($vacancy->instrument_id);
+        $vacancy->instrument_id = $instrument->id;
+
+        return view('vacancies.edit', compact('vacancy', 'instruments'));
     }
 
     /**

@@ -57,6 +57,7 @@
                                         @include('alerts.feedback', ['field' => 'genre_id'])
                                     </div>
 
+                                    
                                     <div class="form-group
                                     {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
                                         <label for="rehearsal_room">
