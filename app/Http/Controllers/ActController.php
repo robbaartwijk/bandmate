@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Act;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ActController extends Controller
@@ -40,7 +41,7 @@ class ActController extends Controller
      */
     public function create()
     {
-        $genres = Genre::all()->sortByDesc(['group', 'name']);
+        $genres = Genre::all()->sortByDesc('group')->sortBy('name');
 
         return view('acts.create', compact('genres'));
     }
@@ -61,8 +62,6 @@ class ActController extends Controller
             'rehearsal_room' => 'required',
             'number_of_members' => 'required',
             'active' => 'required',
-            'website' => 'required',
-            'description' => 'required',
             'email' => 'required',
             'phone' => 'required',
         ]);
@@ -94,14 +93,12 @@ class ActController extends Controller
      */
     public function edit(Act $act)
     {
-        if (Auth::user()->role !== 'admin') {
-            if ($act->user_id !== Auth::user()->id) {
-                return redirect()->route('acts.index')
-                    ->with('status', 'You are not authorized to edit this act.');
-            }
-        }
+        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+            return redirect()->route('acts.index')
+            ->with('status', 'You are not authorized to edit this act.');
+        };
 
-        $genres = Genre::all()->sortByDesc(['group', 'name']);
+        $genres = Genre::all()->sortBy('name')->sortByDesc('group');
 
         return view('acts.edit', compact(['act', 'genres']));
     }
@@ -111,11 +108,9 @@ class ActController extends Controller
      */
     public function update(Request $request, Act $act)
     {
-        if (Auth::user()->role !== 'admin') {
-            if ($act->user_id !== Auth::user()->id) {
-                return redirect()->route('acts.index')
-                    ->with('status', 'You are not authorized to update this act.');
-            }
+        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+            return redirect()->route('acts.index')
+                ->with('status', 'You are not authorized to update this act.');
         }
 
         $request->validate([
@@ -124,8 +119,6 @@ class ActController extends Controller
             'rehearsal_room' => 'required',
             'number_of_members' => 'required',
             'active' => 'required',
-            'website' => 'required',
-            'description' => 'required',
             'email' => 'required',
             'phone' => 'required',
         ]);
@@ -149,11 +142,9 @@ class ActController extends Controller
      */
     public function destroy(Act $act)
     {
-        if (Auth::user()->role !== 'admin') {
-            if ($act->user_id !== Auth::user()->id) {
-                return redirect()->route('acts.index')
-                    ->with('status', 'You are not authorized to delete this act.');
-            }
+        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+            return redirect()->route('acts.index')
+                ->with('status', 'You are not authorized to delete this act.');
         }
 
         $act->delete();
