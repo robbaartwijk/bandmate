@@ -16,7 +16,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
                 "bold", "italic", "heading", "|",
                 "quote", "unordered-list", "ordered-list", "|",
                 "link", "image", "|",
-                "preview", "side-by-side", "fullscreen"
+                "preview", "side-by-side", "fullscreen",
             ],
         });
     });
@@ -24,7 +24,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 <style>
     .editor-toolbar {
-        background: #e0b0ff !important;
+        background: #eb9b73 !important;
     }
 </style>
 
