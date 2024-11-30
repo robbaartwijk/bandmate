@@ -5,12 +5,12 @@
 <div class="col-container">
 
     <div class="row">
+
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title"> Add act</h3>
                 </div>
-
 
                 <div class="row" style="height: 100vh;">
                     <div class="col-lg-4">
