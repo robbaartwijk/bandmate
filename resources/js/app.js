@@ -1,4 +1,14 @@
 /**
+ * Initializes the Vue application and registers components.
+ * 
+ * - Loads JavaScript dependencies including Vue, SimpleMDE, and Chart.js.
+ * - Creates a Vue application instance.
+ * - Registers Vue components found in the './components' directory.
+ * - Mounts the Vue application to the HTML element with the id 'app'.
+ * 
+ * @module app
+ */
+/**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
@@ -8,6 +18,10 @@ import './bootstrap';
 import { createApp } from 'vue';
 import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css';
+
+import { Chart, Colors } from 'chart.js';
+
+Chart.register(Colors);
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin

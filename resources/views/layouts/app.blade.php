@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+import {Chart}
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

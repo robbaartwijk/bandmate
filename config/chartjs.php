@@ -73,4 +73,12 @@ return [
 
     'custom_chart_types' => [],
 
+    'options' => [
+        'plugins' => [
+          'colors' => [
+            'enabled' => false
+          ]
+        ]
+    ]
+    
 ];
