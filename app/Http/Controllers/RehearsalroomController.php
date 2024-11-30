@@ -61,6 +61,18 @@ class RehearsalroomController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'zip' => 'required',
+            'city' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'description' => 'required',
+        ]);
+
         $rehearsalroom = new Rehearsalroom();
 
         $rehearsalroom->user_id = Auth::user()->id;
@@ -88,13 +100,14 @@ class RehearsalroomController extends Controller
         };
 
         return view('rehearsalrooms.edit', compact('rehearsalroom'));
-    }
+    } 
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Rehearsalroom $rehearsalroom)
     {
+
         $request->validate([
             'name' => 'required',
             'city' => 'required',

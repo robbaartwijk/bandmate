@@ -12,7 +12,7 @@
                     <h3 class="card-title"> Add rehearsalroom</h3>
                 </div>
 
-                <div class="row" style="height: 100vh;">
+                <div class="row" style="height: 68vh;">
                     <div class="col-lg-6">
 
                         <div class="card-body text-primary">
@@ -63,16 +63,26 @@
                         </div>
                     </div>
 
-                    <div class="row" style="height: 100vh;">
+                    <div class="row" style="height: 55;">
 
-                        <div class="card-body text-primary col-lg-6">
+                        
+                        <div class="card-body text-primary">
+
+                            <div class="form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
+                                <label for="state">
+                                    <h3>State</h3>
+                                </label>
+                                <input type="text" name="state" class="form-control
+                                    {{ $errors->has('state') ? 'is-invalid' : '' }}" placeholder="State" value="{{ old('state') }}" style="width: 100%;">
+                                @include('alerts.feedback', ['field' => 'state'])
+                            </div>
 
                             <div class="form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
                                 <label for="country">
                                     <h3>Country</h3>
                                 </label>
                                 <input type="text" name="country" class="form-control
-                                    {{ $errors->has('country') ? 'is-invalid' : '' }}" placeholder="Country" value="{{ old('country') }}">
+                                    {{ $errors->has('country') ? 'is-invalid' : '' }}" placeholder="Country" value="{{ old('country') }}" style="width: 100%;">
                                 @include('alerts.feedback', ['field' => 'country'])
                             </div>
 
@@ -81,7 +91,7 @@
                                     <h3>Phone</h3>
                                 </label>
                                 <input type="text" min="1" name="phone" class="form-control
-                    {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}">
+                                    {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}" style="width: 100%;">
                                 @include('alerts.feedback', ['field' => 'phone'])
                             </div>
 
@@ -102,10 +112,12 @@
                         {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ old('website') }}">
                                 @include('alerts.feedback', ['field' => 'website'])
                             </div>
+
                         </div>
                     </div>
                 </div>
-                
+            </div>
+
                 <div class="row" style="height: 10vh;">
                     <div class="col-md-12">
                         <div class="card-body text-primary">
@@ -129,8 +141,9 @@
 
         </div>
     </div>
+
 </div>
-</div>
-</div>
+
+
 
 @endsection
