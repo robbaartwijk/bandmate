@@ -13,7 +13,7 @@
                         <div class="card-body text-primary">
                             <h1>General information</h1>
                             <h2>Name : {{ $agency->name }}</h2>
-                            <h4>{{ $agency->description }}</h4>
+                            <h4>{!! nl2br(e($agency->description)) !!}</h4>
                         </div>
                     </div>
 

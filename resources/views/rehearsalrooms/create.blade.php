@@ -63,64 +63,64 @@
                         </div>
                     </div>
 
-                    <div class="row" style="height: 55;">
+                    <div>
+                        <div class="row" style="height: 55;">
 
-                        
-                        <div class="card-body text-primary">
+                            <div class="card-body text-primary col-lg-126">
 
-                            <div class="form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
-                                <label for="state">
-                                    <h3>State</h3>
-                                </label>
-                                <input type="text" name="state" class="form-control
+                                <div class="form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
+                                    <label for="state">
+                                        <h3>State</h3>
+                                    </label>
+                                    <input type="text" name="state" class="form-control
                                     {{ $errors->has('state') ? 'is-invalid' : '' }}" placeholder="State" value="{{ old('state') }}" style="width: 100%;">
-                                @include('alerts.feedback', ['field' => 'state'])
-                            </div>
+                                    @include('alerts.feedback', ['field' => 'state'])
+                                </div>
 
-                            <div class="form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
-                                <label for="country">
-                                    <h3>Country</h3>
-                                </label>
-                                <input type="text" name="country" class="form-control
+                                <div class="form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
+                                    <label for="country">
+                                        <h3>Country</h3>
+                                    </label>
+                                    <input type="text" name="country" class="form-control
                                     {{ $errors->has('country') ? 'is-invalid' : '' }}" placeholder="Country" value="{{ old('country') }}" style="width: 100%;">
-                                @include('alerts.feedback', ['field' => 'country'])
-                            </div>
+                                    @include('alerts.feedback', ['field' => 'country'])
+                                </div>
 
-                            <div class="form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
-                                <label for="phone">
-                                    <h3>Phone</h3>
-                                </label>
-                                <input type="text" min="1" name="phone" class="form-control
+                                <div class="form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
+                                    <label for="phone">
+                                        <h3>Phone</h3>
+                                    </label>
+                                    <input type="text" min="1" name="phone" class="form-control
                                     {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}" style="width: 100%;">
-                                @include('alerts.feedback', ['field' => 'phone'])
-                            </div>
+                                    @include('alerts.feedback', ['field' => 'phone'])
+                                </div>
 
-                            <div class="form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                                <label for="email">
-                                    <h3>Email</h3>
-                                </label>
-                                <input type="text" min="1" name="email" class="form-control
+                                <div class="form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
+                                    <label for="email">
+                                        <h3>Email</h3>
+                                    </label>
+                                    <input type="text" min="1" name="email" class="form-control
                     {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ old('email') }}">
-                                @include('alerts.feedback', ['field' => 'email'])
-                            </div>
+                                    @include('alerts.feedback', ['field' => 'email'])
+                                </div>
 
-                            <div class="form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                                <label for="website">
-                                    <h3>Website</h3>
-                                </label>
-                                <input type="text" min="1" name="website" class="form-control
+                                <div class="form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
+                                    <label for="website">
+                                        <h3>Website</h3>
+                                    </label>
+                                    <input type="text" min="1" name="website" class="form-control
                         {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ old('website') }}">
-                                @include('alerts.feedback', ['field' => 'website'])
-                            </div>
+                                    @include('alerts.feedback', ['field' => 'website'])
+                                </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
                 <div class="row" style="height: 10vh;">
                     <div class="col-md-12">
-                        <div class="card-body text-primary">
+                        <div class="card-body text-primary col-lg-23">
                             <div class="form-group
                                         {{ $errors->has('description') ? 'has-danger' : '' }}">
                                 <label for="description">

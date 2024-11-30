@@ -41,7 +41,7 @@ class GenreSeeder extends Seeder
             'updated_at' => $createdDate
         ]);
         DB::table('genres')->insert([
-            'name' => 'Progressive Rok',
+            'name' => 'Progressive Rock',
             'group' => 'Rock',
             'description' => 'Progressive rock (shortened as prog; sometimes called art rock, classical rock or symphonic rock) is a broad genre of rock music that developed in the United Kingdom and United States throughout the mid- to late 1960s. Initially termed "progressive pop", the style was an outgrowth of psychedelic bands who abandoned standard pop traditions in favour of instrumentation and compositional techniques more frequently associated with jazz, folk, or classical music.',
             'created_at' => $createdDate,

@@ -81,7 +81,7 @@
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
                             <h1>Description</h1>
-                            <h4>{{ $act->description }}</h4>
+                            <h4>{!! nl2br(e($act->description)) !!}</h4>
                             <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
                         </div>
                     </div>
