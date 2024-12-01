@@ -113,7 +113,7 @@
                                     placeholder="Website" value="{{ $rehearsalroom->website }}">
                                 @include('alerts.feedback', ['field' => 'website'])
                             </div>
-
+ 
                             <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
                                 <label for="description">
                                     <h4>Description</h4>

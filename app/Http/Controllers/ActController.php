@@ -129,7 +129,6 @@ class ActController extends Controller
         $active = $request->active == 'Yes' ? 1 : 0;
         $act->active = $active;
 
-        // dd($act);
 
         $act->update($request->all());
 

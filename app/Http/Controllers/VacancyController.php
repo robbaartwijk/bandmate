@@ -79,8 +79,6 @@ class VacancyController extends Controller
 
         $vacancy->fill($request->all());
 
-        // dd($vacancy);
-
         $vacancy->save();
 
         return redirect()
@@ -141,7 +139,8 @@ class VacancyController extends Controller
 
         $vacancy->update($request->all());
 
-        return redirect()->route('vacancies.index');
+        return redirect()->route('vacancies.index')
+            ->with('status', 'Vacancy updated successfully');
     }
 
     /**
@@ -156,6 +155,7 @@ class VacancyController extends Controller
 
         $vacancy->delete();
 
-        return redirect()->route('vacancies.index');
+        return redirect()->route('vacancies.index')
+            ->with('status', 'Vancac deleted successfully');
     }
 }

@@ -61,7 +61,7 @@ $user = auth()->user();
                 <script>
                     setTimeout(function() {
                         document.getElementById('status-alert').style.display = 'none';
-                    }, 2000);
+                    }, 1000);
 
                 </script>
                 @endif

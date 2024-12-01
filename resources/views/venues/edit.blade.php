@@ -47,6 +47,7 @@
                                 @include('alerts.feedback', ['field' => 'city'])
                             </div>
 
+
                             <div class="form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
                                 <label for="state">
                                     <h4>State</h4>
@@ -112,12 +113,12 @@
                                     placeholder="Website" value="{{ $venue->website }}">
                                 @include('alerts.feedback', ['field' => 'website'])
                             </div>
-
+ 
                             <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
                                 <label for="description">
                                     <h4>Description</h4>
                                 </label>
-                                <br>
+                                <br><br>
                                 <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     placeholder="Description">{{ $venue->description }}</textarea>
                                 @include('alerts.feedback', ['field' => 'description'])

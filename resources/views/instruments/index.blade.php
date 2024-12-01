@@ -1,73 +1,71 @@
 @extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
-
+ 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <h3 class="card-title"> Instruments index</h34
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h3 class="card-title"> Instruments index</h3> </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
 
-                        <a href="{{ route('instruments.create') }}" class="btn btn-secondary">Add instrument</a>
+                            <a href="{{ route('instruments.create') }}" class="btn btn-secondary">Add instrument</a>
 
-                        <div class="float-right">
-                            <form action="{{ route('instruments.index') }}" method="get">
-                                <div class="input-group no-border">
-                                
-                                    <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
+                            <div class="float-right">
+                                <form action="{{ route('instruments.index') }}" method="get">
+                                    <div class="input-group no-border">
 
-                                    <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" 
-                                        onchange="location.href='{{ route('instruments.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
-                                        <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
-                                            Sort by name
-                                        </option>
-                                        <option value="type" {{ request()->sort == 'type' ? 'selected' : '' }}>
-                                            Sort by type
-                                        </option>
-                                        <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
-                                            Sort by date added
-                                        </option>
-                                        <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
-                                            Sort by date last update
-                                        </option>
-                                    </select>
+                                        <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
 
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="nc-icon nc-zoom-split"></i>
+                                        <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('instruments.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
+                                            <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                                Sort by name
+                                            </option>
+                                            <option value="type" {{ request()->sort == 'type' ? 'selected' : '' }}>
+                                                Sort by type
+                                            </option>
+                                            <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                                Sort by date added
+                                            </option>
+                                            <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                                Sort by date last update
+                                            </option>
+                                        </select>
+
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <i class="nc-icon nc-zoom-split"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                @if (session('status'))
+                    @if (session('status'))
                     <div class="alert alert-success" role="alert" id="status-alert">
                         {{ session('status') }}
                     </div>
                     <script>
                         setTimeout(function() {
                             document.getElementById('status-alert').style.display = 'none';
-                        }, 2000);
-                    </script>
-                @endif
+                        }, 1000);
 
-                <table class="table tablesorter " id="">
-                    <thead class=" text-primary">
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Date added</th>
-                            <th>Date last update</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($instruments as $instrument)
+                    </script>
+                    @endif
+
+                    <table class="table tablesorter " id="">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Date added</th>
+                                <th>Date last update</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($instruments as $instrument)
                             <tr>
                                 <td><a href="{{ route('instruments.show', $instrument->id) }}">{{ $instrument->name }}</a>
                                 </td>
@@ -76,12 +74,10 @@
                                 <td>{{ $instrument->updated_at }}</td>
 
                                 <td>
-                                    <a href="{{ route('instruments.edit', $instrument->id) }}"
-                                        class="btn btn-primary btn-link btn-icon btn-sm">
+                                    <a href="{{ route('instruments.edit', $instrument->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                         <i class="tim-icons icon-pencil"></i>
                                     </a>
-                                    <form action="{{ route('instruments.destroy', $instrument->id) }}" method="post"
-                                        style="display:inline">
+                                    <form action="{{ route('instruments.destroy', $instrument->id) }}" method="post" style="display:inline">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
@@ -90,9 +86,9 @@
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            @endforeach
+                        </tbody>
+                    </table>
             </div>
 
             <div class="float-left" style="color:white">
@@ -101,4 +97,4 @@
 
         </div>
     </div>
-@endsection
+    @endsection
