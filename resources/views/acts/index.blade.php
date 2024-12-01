@@ -2,7 +2,7 @@
 $user = auth()->user();
 @endphp
 
-@extends('layouts.app', ['page' => __('Act'), 'pageSlug' => 'acts'])
+@extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
 
 @section('content')
 <div class="row">
