@@ -14,50 +14,53 @@ class AgencySeeder extends Seeder
     public function run(): void
     {
         DB::table('agencies')->insert([
-            'id' => 1,
-            'name' => 'Acme Agency',
-            'email' => 'info@acme.com',
-            'phone' => '1234567890',
-            'address' => '123 Main St',
-            'zip' => '12345',
-            'city' => 'Anytown',
-            'state' => 'NY',
-            'country' => 'USA',
-            'description' => 'We are the best agency in the world!',
-            'website' => 'https://acme.com',
-            'youtube' => 'https://youtube.com/acme',
-            'facebook' => 'https://facebook.com/acme',
-            'twitter' => 'https://twitter.com/acme',
-            'instagram' => 'https://instagram.com/acme',
-            'soundcloud' => 'https://soundcloud.com/acme',
-            'spotify' => 'https://spotify.com/acme',
+            'name' => 'Interartists Amsterdam',
+            'email' => 'info@hollandmanagement.nl',
+            'phone' => '0172435433',
+            'address' => 'Piet Heinkade 5',
+            'zip' => '1019 BR',
+            'city' => 'Amsterdam',
+            'state' => 'Noord-Holland',
+            'country' => 'Nederland',
+            'description' => 'Interartists Amsterdam',
+            'email' => 'hylke.v.lingen@interartists.nl',
+            'phone' => '+31 6 117 117 20',
+            'website' => 'https://interartists.nl',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        
+        DB::table('agencies')->insert([
+            'name' => 'LIWYN Artist Agency',
+            'address' => 'A-Lab, Overhoeksplein 2, LAB 206',
+            'zip' => '1031 KS',
+            'city' => 'Amsterdam',
+            'state' => 'Noord-Holland',
+            'country' => 'Nederland',
+            'description' => 'LIWYN Artist Agency',
+            'email' => 'leonieke@liwyn.com',
+            'phone' => '+31 (0) 6 2876 3829',
+            'website' => 'https://interartists.nl',
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
         DB::table('agencies')->insert([
-            'id' => 2,
-            'name' => 'Holland Management',
-            'email' => 'info@hollandmanagement.nl',
-            'phone' => '0172435433',
-            'address' => 'Brederodestraat 1',
-            'zip' => '2406LR',
-            'city' => 'Alphen aan den Rijn',
-            'state' => 'Zuid-Holland',
+            'name' => 'International Artists',
+            'address' => 'Kampweg 20',
+            'zip' => '5451 VA',
+            'city' => 'Mill',
+            'state' => 'Noord-Brabant',
             'country' => 'Nederland',
-            'description' => 'We are the best agency in the Netherlands!',
-            'website' => 'https://hollandmanagement.nl',
-            'youtube' => 'https://youtube.com/hollandmanagement',
-            'facebook' => 'https://facebook.com/hollandmanagement',
-            'twitter' => 'https://twitter.com/hollandmanagement',
-            'instagram' => 'https://instagram.com/hollandmanagement',
-            'soundcloud' => 'https://soundcloud.com/hollandmanagement',
-            'spotify' => 'https://spotify.com/hollandmanagement',
+            'description' => 'International Artist',
+            'email' => 'info@international-artists.com',
+            'phone' => '+31 (0) 6 2876 3829',
+            'website' => 'https://www.https://international-artists.com/',
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
-        \App\Models\Agency::factory(100)->create([]);
+        // \App\Models\Agency::factory(100)->create([]);
         
     }
 }

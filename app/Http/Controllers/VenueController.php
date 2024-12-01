@@ -54,6 +54,17 @@ class VenueController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'phone' => $request->phone ?? '',
+            'email' => $request->email ?? '',
+        ]);
+
+        $request->validate([
+            'name' => 'required',
+            'city' => 'required',
+            'description' => 'required',
+        ]);
+
         $venue = new Venue();
 
         $venue->user_id = Auth::user()->id;
@@ -93,13 +104,18 @@ class VenueController extends Controller
             ->with('status', 'You are not authorized to update a venue.');
         };
 
+        $request->merge([
+            'phone' => $request->phone ?? '',
+            'email' => $request->email ?? '',
+        ]);
+
         $request->validate([
             'name' => 'required',
             'city' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
             'description' => 'required',
         ]);
+
+
 
         $venue->update($request->all());
 

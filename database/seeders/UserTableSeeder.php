@@ -14,18 +14,9 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+
         DB::table('users')->insert([
             'id' => 1,
-            'name' => 'Admin Admin',
-            'email' => 'admin@black.com',
-            'email_verified_at' => now(),
-            'is_admin' => 1,
-            'password' => Hash::make('secret'),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        DB::table('users')->insert([
-            'id' => 2,
             'name' => 'Rob Baartwijk',
             'email' => 'rob.baartwijk@gmail.com',
             'email_verified_at' => now(),
@@ -34,8 +25,18 @@ class UserTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Black User',
+            'email' => 'admin@black.com',
+            'email_verified_at' => now(),
+            'is_admin' => 0,
+            'password' => Hash::make('secret'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
-        \App\Models\User::factory(100)->create([]);
+        \App\Models\User::factory(30)->create([]);
 
     }
 }

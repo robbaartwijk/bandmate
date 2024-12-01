@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AgencyController extends Controller
 {
@@ -106,8 +107,8 @@ class AgencyController extends Controller
     public function destroy(Agency $agency)
     {
         if (!Auth::user()->is_admin) {
-            return redirect()->route('acts.index')
-            ->with('status', 'You are not authorized to delete this agency.');
+            return redirect()->route('agencies.index')
+            ->with('status', 'You are not authorized to delete an agency.');
         };
 
         $agency->delete();

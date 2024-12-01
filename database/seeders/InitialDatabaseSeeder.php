@@ -25,22 +25,19 @@ class InitialDatabaseSeeder extends Seeder
             InstrumentSeeder::class,
         ]);
 
-        // Add standard users
+        // Add standard users and fill table with random users
         $this->call([
             UserTableSeeder::class,
+            User::factory(30)->create()
         ]);
 
         // Fill main tables
-        User::factory(30)->create();
-        Act::factory(10)->create();
+        Rehearsalroom::factory(10)->create();
 
         // Fill user data tables
-        Rehearsalroom::factory(10)->create();
-        Venue::factory(24)->create();
+        Act::factory(10)->create();
         Vacancy::factory(20)->create();
-
-        $this->call(AgencySeeder::class);
-        Agency::factory(6)->create();
-
+        VenueSeeder::class;
+        AgencySeeder::class;
     }
 }

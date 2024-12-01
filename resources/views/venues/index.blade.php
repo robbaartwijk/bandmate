@@ -15,9 +15,8 @@ $user = auth()->user();
                 <div class="table-responsive">
 
                     @if($user->is_admin)
-                    <a href="{{ route('venues.create') }}" class="btn btn-secondary">Add venue</a>
+                        <a href="{{ route('venues.create') }}" class="btn btn-secondary">Add venue</a>
                     @endif
-
 
                     <div class="float-right">
 
