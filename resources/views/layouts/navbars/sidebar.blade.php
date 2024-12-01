@@ -23,7 +23,7 @@ $user = auth()->user();
                 <a data-toggle="collapse" href="#userdata" aria-expanded="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' || $pageSlug == 'rehearsalrooms' ? 'true' : 'false' }}" class="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' ? '' : 'collapsed' }}">
                     <i class="fa fa-music"></i>
                     <span class="nav-link-text">
-                        <h4>{{ __('User inquiry') }}</h4>
+                        <h4>{{ __('User Access') }}</h4>
                     </span>
                     <b class="caret mt-1"></b>
                 </a>
@@ -79,11 +79,10 @@ $user = auth()->user();
 
             @if($user->is_admin)
             <li>
-                <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'agencies' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' || $pageSlug == 'rehearsalrooms' ? '' : 'collapsed' }}">
+                <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' ? '' : 'collapsed' }}">
                     <i class="fa fa-database"></i>
                     <span class="nav-link-text">
-                        <h4>{{ __('Support data') }}
-                            <h4>
+                        <h4>{{ __('Support data') }}</h4>
                     </span>
                     <b class="caret mt-1"></b>
                 </a>
@@ -132,9 +131,7 @@ $user = auth()->user();
         <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
             <i class="fa fa-user-circle"></i>
             <span class="nav-link-text">
-                <h4>{{ __('Management') }}
-                    <h4>
-            </span>
+                <h4>{{ __('Management') }}</h4>
             <b class="caret mt-1"></b>
         </a>
 
