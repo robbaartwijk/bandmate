@@ -1,3 +1,7 @@
+@php
+$user = auth()->user();
+@endphp
+
 @extends('layouts.app', ['page' => __('Agency'), 'pageSlug' => 'agencies'])
 
 @section('content')
@@ -9,7 +13,9 @@
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <a href="{{ route('agencies.create') }}" class="btn btn-secondary">Add agency</a>
+                        @if($user->is_admin)
+                            <a href="{{ route('agencies.create') }}" class="btn btn-secondary">Add agency</a>
+                        @endif
 
                         <div class="float-right">
 
@@ -78,6 +84,8 @@
                                 <td>{{ Str::limit($agency->description, 40) }}</td>
                                 <td>{{ $agency->created_at }}</td>
                                 <td>{{ $agency->updated_at }}</td>
+                                
+                                @if($user->is_admin)
                                 <td>
                                     <a href="{{ route('agencies.edit', $agency->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                         <i class="tim-icons icon-pencil"></i>
@@ -90,6 +98,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>

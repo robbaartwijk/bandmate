@@ -41,6 +41,11 @@ class ActController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('acts.index')
+            ->with('status', 'You are not authorized to add an agency.');
+        };
+
         $genres = Genre::all()->sortByDesc('group')->sortBy('name');
 
         return view('acts.create', compact('genres'));

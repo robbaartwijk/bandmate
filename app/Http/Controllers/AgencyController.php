@@ -35,6 +35,11 @@ class AgencyController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('agencies.index')
+            ->with('status', 'You are not authorized to add an agency.');
+        };
+
         return view('agencies.create');
     }
 
@@ -63,6 +68,11 @@ class AgencyController extends Controller
      */
     public function edit(Agency $agency)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('agencies.index')
+            ->with('status', 'You are not authorized to edit an agency.');
+        };
+
         return view('agencies.edit', compact('agency'));
     }
 
@@ -71,6 +81,11 @@ class AgencyController extends Controller
      */
     public function update(Request $request, Agency $agency)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('acts.index')
+            ->with('status', 'You are not authorized to update this agency.');
+        };
+
         $request->validate([
             'name' => 'required',
             'city' => 'required',
@@ -90,6 +105,11 @@ class AgencyController extends Controller
      */
     public function destroy(Agency $agency)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('acts.index')
+            ->with('status', 'You are not authorized to delete this agency.');
+        };
+
         $agency->delete();
 
         return redirect()->route('agencies.index')

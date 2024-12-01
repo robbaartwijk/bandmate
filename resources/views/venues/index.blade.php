@@ -1,3 +1,7 @@
+@php
+$user = auth()->user();
+@endphp
+
 @extends('layouts.app', ['page' => __('Venues'), 'pageSlug' => 'venues'])
 
 @section('content')
@@ -10,7 +14,10 @@
             <div class="card-body">
                 <div class="table-responsive">
 
+                    @if($user->is_admin)
                     <a href="{{ route('venues.create') }}" class="btn btn-secondary">Add venue</a>
+                    @endif
+
 
                     <div class="float-right">
 
@@ -77,6 +84,7 @@
                                 <td>{{ $venue->created_at }}</td>
                                 <td>{{ $venue->updated_at }}</td>
 
+                                @if($user->is_admin || $user->id == $venue->user_id)
                                 <td>
                                     <a href="{{ route('venues.edit', $venue->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                         <i class="tim-icons icon-pencil"></i>
@@ -89,6 +97,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

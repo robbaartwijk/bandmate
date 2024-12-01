@@ -41,6 +41,11 @@ class VenueController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('venues.index')
+            ->with('status', 'You are not authorized to add a venue.');
+        };
+
         return view('venues.create');
     }
 
@@ -70,6 +75,11 @@ class VenueController extends Controller
      */
     public function edit(Venue $venue)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('venues.index')
+            ->with('status', 'You are not authorized to edit a venue.');
+        };
+
         return view('venues.edit', compact('venue'));
     }
 
@@ -78,6 +88,11 @@ class VenueController extends Controller
      */
     public function update(Request $request, Venue $venue)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('venues.index')
+            ->with('status', 'You are not authorized to update a venue.');
+        };
+
         $request->validate([
             'name' => 'required',
             'city' => 'required',
@@ -97,6 +112,11 @@ class VenueController extends Controller
      */
     public function destroy(Venue $venue)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('venues.index')
+            ->with('status', 'You are not authorized to delete a venue.');
+        };
+
         $venue->delete();
 
         return redirect()->route('venues.index')
