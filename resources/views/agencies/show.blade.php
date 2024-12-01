@@ -13,7 +13,14 @@
                         <div class="card-body text-primary">
                             <h1>General information</h1>
                             <h2>Name : {{ $agency->name }}</h2>
-                            <h4>{!! nl2br(e($agency->description)) !!}</h4>
+
+                            <h4><b>Address :</b> {{ $agency->address }}</h4>
+                            <h4><b>Zip :</b> {{ $agency->zip }}</h4>
+                            <h4><b>City :</b> {{ $agency->city }}</h4>
+                            <h4><b>State :</b> {{ $agency->state }}</h4>
+                            <h4><b>Country :</b> {{ $agency->country }}</h4>
+                            <br>
+                            <h2>Description : </h3><h4>{!! nl2br(e($agency->description)) !!}</h2>
                         </div>
                     </div>
 
