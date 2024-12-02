@@ -1,5 +1,17 @@
 @extends('layouts.app', ['class' => 'register-page', 'page' => __('Register Page'), 'contentClass' => 'register-page'])
 
+
+<style>
+    body {
+    background-image: url('{{ asset('images/Background.jpg') }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    }
+</style>
+
+
+
 @section('content')
     <div class="row">
 
@@ -58,7 +70,7 @@
                 </div>
                 </div>
                 <div class="card-footer">
-                <button type="submit" class="btn btn-info btn-round btn-lg">{{ __('Get Started') }}</button>
+                <button type="submit" class="btn btn-info btn-round btn-lg">{{ __('Register and continue') }}</button>
                 </div>
             </form>
             </div>
