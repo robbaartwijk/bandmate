@@ -14,7 +14,7 @@
                             <div
                                 class="form-group
                                         {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                <label for="name"><h4>Name</h4></label>
+                                <label for="name"><h3>Name</h3></label>
                                 <input type="text" name="name"
                                     class="form-control
                                             {{ $errors->has('name') ? 'is-invalid' : '' }}"

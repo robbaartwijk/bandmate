@@ -9,8 +9,8 @@
                 </div>
 
                 <div class="card-body text-primary">
-                    <h4><b>Name : </b>{{ $genre->name }}</h4>
-                    <h4><b>Group : </b>{{ $genre->group }}</h4>
+                    <h3><b>Name : </b>{{ $genre->name }}</h3>
+                    <h3><b>Group : </b>{{ $genre->group }}</h3>
                     <h4><b>Description : </b>{!! nl2br(e($genre->description)) !!}</h4>
                     <h4><b>Date added : </b>{{ $genre->created_at }}</h4>
                     <h4><b>Date Last Updated : </b>{{ $genre->updated_at }}</h4>

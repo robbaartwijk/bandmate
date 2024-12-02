@@ -28,7 +28,6 @@ class InitialDatabaseSeeder extends Seeder
         // Add standard users and fill table with random users
         $this->call([
             UserTableSeeder::class,
-            User::factory(30)->create()
         ]);
 
         // Fill main tables
@@ -37,7 +36,11 @@ class InitialDatabaseSeeder extends Seeder
         // Fill user data tables
         Act::factory(10)->create();
         Vacancy::factory(20)->create();
-        VenueSeeder::class;
-        AgencySeeder::class;
+
+        $this->call([
+            VenueSeeder::class,
+            AgencySeeder::class,
+        ]);
+
     }
 }

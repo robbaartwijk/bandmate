@@ -16,7 +16,7 @@
 
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
                                 <label for="name">
-                                    <h4>Name</h4>
+                                    <h3>Name</h3>
                                 </label>
                                 <input type="text" name="name"
                                     class="form-control
@@ -27,7 +27,7 @@
 
                             <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
                                 <label for="group">
-                                    <h4>Group</h4>
+                                    <h3>Group</h3>
                                 </label>
                                 <input type="text" name="group"
                                     class="form-control
@@ -37,7 +37,7 @@
                             </div>
 
                             <div>
-                                <label for="description"><h4>Description</h4></label>
+                                <label for="description"><h3>Description</h3></label>
                                 <br><br>
                                 <textarea id="description" name="description" class="{{ $errors->has('description') ? 'is-invalid' : '' }}"
                                     placeholder="Description">{{ $genre->description }}</textarea>

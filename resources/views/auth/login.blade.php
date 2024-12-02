@@ -1,11 +1,28 @@
 @extends('layouts.app', ['class' => 'login-page', 'page' => __('Login Page'), 'contentClass' => 'login-page'])
 
-@section('content')
-    <div class="col-md-10 text-center ml-auto mr-auto">
-        <h3 class="mb-5">Log in to see how you can speed up your web development with out of the box CRUD for #User Management and more.</h3>
-    </div>
+@push('css')
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+@endpush
+
+@push('css')
+<style>
+    rob-background {
+        background-image: url('/images/Background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+</style>
+@endpush
+
+<div class="rob-background">
+
+    @section('content')
+
     <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-        <form class="form" method="post" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div class="card card-login card-white">
@@ -14,7 +31,7 @@
                     <h1 class="card-title">{{ __('Log in') }}</h1>
                 </div>
                 <div class="card-body">
-                    <p class="text-dark mb-2">Sign in with <strong>admin@black.com</strong> and the password <strong>secret</strong></p>
+                    <p class="text-dark mb-2"><strong>Sign in with your email and password</strong></p>
                     <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -35,7 +52,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" href="" class="btn btn-primary btn-lg btn-block mb-3">{{ __('Get Started') }}</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-block mb-3">{{ __('Log in') }}</button>
                     <div class="pull-left">
                         <h6>
                             <a href="{{ route('register') }}" class="link footer-link">{{ __('Create Account') }}</a>
@@ -50,4 +67,5 @@
             </div>
         </form>
     </div>
+</div>
 @endsection

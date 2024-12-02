@@ -25,6 +25,7 @@ class UserTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
         DB::table('users')->insert([
             'id' => 2,
             'name' => 'Black User',

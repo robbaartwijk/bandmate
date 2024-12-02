@@ -156,7 +156,7 @@ class HomeController extends Controller
 
         $chart = Chartjs::build()
             ->name('VacanciesPerInstrument')
-            ->type('bar')
+            ->type('doughnut')
             ->size(['width' => '75%', 'height' => '75%'])
             ->labels($labels)
             ->datasets([
@@ -179,6 +179,11 @@ class HomeController extends Controller
                 ],
             ])
             ->options([
+                'legend' => [
+                    'labels' => [
+                      'fontColor' => 'blue',
+                    ],
+                ],  
                 'scales' => [
                     'xAxes' => [[
                         'type' => 'category',
@@ -225,8 +230,8 @@ class HomeController extends Controller
 
         $chart = Chartjs::build()
             ->name('ActRegistrationsChart')
-            ->type('doughnut')
-            ->size(['width' => '75%', 'height' => '50%'])
+            ->type('line')
+            ->size(['width' => '75%', 'height' => '75%'])
             ->labels($labels)
             ->datasets([
                 [
