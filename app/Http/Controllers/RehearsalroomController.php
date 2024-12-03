@@ -61,22 +61,23 @@ class RehearsalroomController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $request->validate([
             'name' => 'required',
             'address' => 'required',
             'zip' => 'required',
             'city' => 'required',
+            'state' => 'required',
+            'country' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'description' => 'required',
+            'website' => ['nullable', 'url'],
         ]);
 
         $rehearsalroom = new Rehearsalroom();
 
         $rehearsalroom->user_id = Auth::user()->id;
         $rehearsalroom->fill($request->all());
+
         $rehearsalroom->save();
         return redirect()->route('rehearsalrooms.index');
     }
@@ -94,9 +95,9 @@ class RehearsalroomController extends Controller
      */
     public function edit(Rehearsalroom $rehearsalroom)
     {
-        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
-            return redirect()->route('acts.index')
-            ->with('status', 'You are not authorized to edit this act.');
+        if (!Auth::user()->is_admin && $rehearsalroom->user_id !== Auth::user()->id) {
+            return redirect()->route('rehearsalrooms.index')
+            ->with('status', 'You are not authorized to edit this rehearsal room.');
         };
 
         return view('rehearsalrooms.edit', compact('rehearsalroom'));
@@ -107,21 +108,22 @@ class RehearsalroomController extends Controller
      */
     public function update(Request $request, Rehearsalroom $rehearsalroom)
     {
+        if (!Auth::user()->is_admin && $rehearsalroom->user_id !== Auth::user()->id) {
+            return redirect()->route('rehearsalrooms.index')
+            ->with('status', 'You are not authorized to edit this rehearsal room.');
+        };
 
         $request->validate([
             'name' => 'required',
             'city' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'description' => 'required',
         ]);
 
-        $rehearsalroom->update($request->all());
+        // dd($request->all());
 
-        if (Auth::user()->role !== 'admin' && $rehearsalroom->user_id !== Auth::user()->id) {
-            return redirect()->route('rehearsalrooms.index')
-                ->with('status', 'You are not authorized to update this rehearsalroom.');
-        }
+
+        $rehearsalroom->update($request->all());
 
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room updated successfully');
@@ -132,9 +134,9 @@ class RehearsalroomController extends Controller
      */
     public function destroy(Rehearsalroom $rehearsalroom)
     {
-        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
-            return redirect()->route('acts.index')
-            ->with('status', 'You are not authorized to edit this act.');
+        if (!Auth::user()->is_admin && $rehearsalroom->user_id !== Auth::user()->id) {
+            return redirect()->route('rehearsalrooms.index')
+            ->with('status', 'You are not authorized to delete this rehearsal room.');
         };
 
         $rehearsalroom->delete();

@@ -63,7 +63,7 @@
                                         <label for="state">
                                             <h3>State</h3>
                                         </label>
-                                        <input type="text" name="city" class="form-control
+                                        <input type="text" name="state" class="form-control
                                             {{ $errors->has('state') ? 'is-invalid' : '' }}" placeholder="State" value="{{ $agency->state }}">
                                         @include('alerts.feedback', ['field' => 'state'])
                                     </div>

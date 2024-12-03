@@ -61,8 +61,14 @@ class VenueController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'address' => 'required',
+            'zip' => 'required',
             'city' => 'required',
-            'description' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'website' => ['nullable', 'url'],
+            'phone' => ['regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
+            'email' => 'email',
         ]);
 
         $venue = new Venue();
@@ -111,11 +117,15 @@ class VenueController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'address' => 'required',
+            'zip' => 'required',
             'city' => 'required',
-            'description' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'website' => ['nullable', 'url'],
+            'phone' => ['regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
+            'email' => 'email',
         ]);
-
-
 
         $venue->update($request->all());
 

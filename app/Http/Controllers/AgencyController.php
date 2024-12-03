@@ -49,6 +49,24 @@ class AgencyController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'zip' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'website' => ['nullable', 'url'],
+            'facebook' => ['nullable', 'url'],
+            'twitter' => ['nullable', 'url'],
+            'instagram' => ['nullable', 'url'],
+            'youtube' => ['nullable', 'url'],
+            'soundcloud' => ['nullable', 'url'],
+            'spotify' => ['nullable', 'url'],
+        ]);
+        
         $agency = new Agency();
 
         $agency->fill($request->all());
@@ -89,10 +107,20 @@ class AgencyController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'address' => 'required',
+            'zip' => 'required',
             'city' => 'required',
+            'state' => 'required',
+            'country' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'description' => 'required',
+            'website' => ['nullable', 'url'],
+            'facebook' => ['nullable', 'url'],
+            'twitter' => ['nullable', 'url'],
+            'instagram' => ['nullable', 'url'],
+            'youtube' => ['nullable', 'url'],
+            'soundcloud' => ['nullable', 'url'],
+            'spotify' => ['nullable', 'url'],
         ]);
 
         $agency->update($request->all());

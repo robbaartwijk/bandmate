@@ -69,6 +69,13 @@ class ActController extends Controller
             'active' => 'required',
             'email' => 'required',
             'phone' => 'required',
+            'website' => ['nullable', 'url'],
+            'facebook' => ['nullable', 'url'],
+            'instagram' => ['nullable', 'url'],
+            'twitter' => ['nullable', 'url'],
+            'youtube' => ['nullable', 'url'],
+            'soundcloud' => ['nullable', 'url'],
+            'spotify' => ['nullable', 'url'],
         ]);
 
         $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
@@ -126,6 +133,13 @@ class ActController extends Controller
             'active' => 'required',
             'email' => 'required',
             'phone' => 'required',
+            'website' => ['nullable', 'url'],
+            'facebook' => ['nullable', 'url'],
+            'instagram' => ['nullable', 'url'],
+            'twitter' => ['nullable', 'url'],
+            'youtube' => ['nullable', 'url'],
+            'soundcloud' => ['nullable', 'url'],
+            'spotify' => ['nullable', 'url'],
         ]);
 
         $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
@@ -133,7 +147,6 @@ class ActController extends Controller
 
         $active = $request->active == 'Yes' ? 1 : 0;
         $act->active = $active;
-
 
         $act->update($request->all());
 
