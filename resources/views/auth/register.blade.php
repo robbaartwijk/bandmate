@@ -1,17 +1,5 @@
 @extends('layouts.app', ['class' => 'register-page', 'page' => __('Register Page'), 'contentClass' => 'register-page'])
 
-
-<style>
-    body {
-    background-image: url('{{ asset('images/Background.jpg') }}');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    }
-</style>
-
-
-
 @section('content')
     <div class="row">
 

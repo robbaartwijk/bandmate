@@ -65,20 +65,14 @@ class VacancyController extends Controller
      */
     public function store(Request $request)
     {
-        $vacancy = new Vacancy;
-
-        $vacancy->act_id = $request->input('act_id');
-        $vacancy->user_id = Auth::user()->id;
-        $vacancy->instrument_id = $request->input('instrument_id');
-
         $request->validate([
             'act_id' => 'required',
             'instrument_id' => 'required',
-            'description' => 'required',
         ]);
 
+        $vacancy = new Vacancy;
         $vacancy->fill($request->all());
-
+        $vacancy->user_id = Auth::user()->id;
         $vacancy->save();
 
         return redirect()
@@ -119,12 +113,14 @@ class VacancyController extends Controller
         $act = Act::find($vacancy->act_id);
         $vacancy->act_name = $act->name;
 
+        $acts = Auth::user()->acts->sortBy('name');
+        
         $instruments = Instrument::all()->sortBy(['type', 'name']);
 
         $instrument = Instrument::find($vacancy->instrument_id);
         $vacancy->instrument_id = $instrument->id;
 
-        return view('vacancies.edit', compact('vacancy', 'instruments'));
+        return view('vacancies.edit', compact('vacancy', 'instruments', 'acts'));
     }
 
     /**
@@ -137,7 +133,12 @@ class VacancyController extends Controller
                 ->with('status', 'You are not authorized to update this vacancy.');
         }
 
-        $vacancy->update($request->all());
+        $vacancy->fill($request->all());
+        if (! $request->filled('description')) {
+            $vacancy->description = '';
+        }
+
+        $vacancy->save();
 
         return redirect()->route('vacancies.index')
             ->with('status', 'Vacancy updated successfully');

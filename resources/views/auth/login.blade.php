@@ -21,7 +21,7 @@
 
     @section('content')
 
-    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+    <div class="col-lg-7 col-md- ml-auto mr-auto">
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -30,7 +30,7 @@
                     <img src="{{ asset('black') }}/img/card-primary.png" alt="">
                     <h1 class="card-title">{{ __('Log in') }}</h1>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="margin-top:90px">
                     <p class="text-dark mb-2"><strong>Sign in with your email and password</strong></p>
                     <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                         <div class="input-group-prepend">

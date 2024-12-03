@@ -2,14 +2,16 @@
 
 <style>
     body {
-    background-image: url('{{ asset('images/Background.jpg') }}');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+        background-image: url('{{ asset('images/Background.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
+
 </style>
-    
+
 @section('content')
+
 <div class="header py-7 py-lg-8">
     <div class="container">
         <div class="header-body text-center mb-7">
@@ -65,6 +67,6 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
 @endsection

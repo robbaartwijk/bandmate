@@ -57,7 +57,7 @@
 
                                     <div class="form-group {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
                                         <label for="rehearsal_room">
-                                            <h3>Rehearsal Room</34>
+                                            <h3>Rehearsal Room</h3>
                                         </label>
                                         <select name="rehearsal_room" class="form-control {{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}">
                                             <option value="">Select</option>

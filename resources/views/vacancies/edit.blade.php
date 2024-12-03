@@ -13,17 +13,25 @@
                     <form action="{{ route('vacancies.update', $vacancy->id) }}" method="post">
                         @csrf
                         @method('put')
+
                         <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
 
-                            <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                <label for="name">
-                                    <h3>Name</h3>
+                            <div class="form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
+                                <label for="act_id">
+                                    <h3>Act</h3>
                                 </label>
-                                <input type="text" name="name" class="form-control
-                                        {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ $vacancy->act_name }}">
-                                @include('alerts.feedback', ['field' => 'name'])
-                            </div>
+                                <select name="act_id" class="form-control {{ $errors->has('act_id') ? 'is-invalid' : '' }}">
+                                    <option value="">Select</option>
+                                    @foreach ($acts as $act)
+                                    <option value="{{ $act->id }}" {{ $act->id == $vacancy->act_id ? 'selected' : '' }}>
+                                        {{ $act->name }}
+                                    </option>
 
+                                    @endforeach
+                                </select>
+                                @include('alerts.feedback', ['field' => 'act_id'])
+                            </div>
+                            
                             <div class="form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
                                 <label for="instrument_id">
                                     <h3>Instrument</h3>
@@ -38,7 +46,7 @@
                                 </select>
                                 @include('alerts.feedback', ['field' => 'instrument_id'])
                             </div>
-
+                            ]
                             <div>
                                 <label for="description">
                                     <h4>Description</h4>
