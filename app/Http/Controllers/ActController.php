@@ -46,7 +46,7 @@ class ActController extends Controller
             ->with('status', 'You are not authorized to add an agency.');
         };
 
-        $genres = Genre::all()->sortByDesc('group')->sortBy('name');
+        $genres = Genre::all()->sortByDesc('name')->sortBy('group');
 
         return view('acts.create', compact('genres'));
     }
@@ -156,8 +156,12 @@ class ActController extends Controller
                 ->with('status', 'You are not authorized to delete this act.');
         }
 
+        $vacancies = $act->vacancy;
+        foreach ($vacancies as $vacancy) {
+            $vacancy->delete();
+        }
         $act->delete();
-        
+
         return redirect()->route('acts.index')
             ->with('status', 'Act deleted successfully');
     }

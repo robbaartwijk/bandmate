@@ -26,7 +26,13 @@ class VacancyController extends Controller
 
         foreach ($vacancies as $vacancy) {
             $vacancy->user_name = $vacancy->user->name;
-            $vacancy->act_name = $vacancy->act->name;
+
+            if (! $vacancy->act) {
+                $vacancy->act_name = '* Act not found, may have been deleted *';
+            } else {
+                $vacancy->act_name = $vacancy->act->name;
+            }
+            
             $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
         }
 
@@ -102,7 +108,7 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        if (Auth::user()->role !== 'admin' && $vacancy->user_id !== Auth::user()->id) {
+        if (!Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
             return redirect()->route('vacancies.index')
                 ->with('status', 'You are not authorized to edit this vacancy.');
         }
@@ -128,7 +134,7 @@ class VacancyController extends Controller
      */
     public function update(Request $request, Vacancy $vacancy)
     {
-        if (Auth::user()->role !== 'admin' && $vacancy->user_id !== Auth::user()->id) {
+        if (!Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
             return redirect()->route('vacancies.index')
                 ->with('status', 'You are not authorized to update this vacancy.');
         }
@@ -149,7 +155,7 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        if (Auth::user()->role !== 'admin' && $vacancy->user_id !== Auth::user()->id) {
+        if (!Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
             return redirect()->route('vacancies.index')
                 ->with('status', 'You are not authorized to delete this vacancy.');
         }

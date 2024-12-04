@@ -39,4 +39,10 @@ class Act extends Model
     {
         return $this->belongsTo('App\Models\Genre');
     }
+
+    public function vacancy()
+    {
+        return $this->hasMany('App\Models\Vacancy');
+    }
+
 }
