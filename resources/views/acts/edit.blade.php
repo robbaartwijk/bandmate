@@ -39,6 +39,7 @@
                                             {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}" placeholder="Number of Members" value="{{ $act->number_of_members }}" style="font-size: 17px; border: 1px solid #d7c4c4;">
                                         @include('alerts.feedback', ['field' => 'number_of_members'])
                                     </div>
+                                    
                                     <div class="form-group {{ $errors->has('genre_id') ? 'has-danger' : '' }}" style="display: flex; align-items: center;">
                                         <label for="genre_id" style="margin-right: 10px; margin-top:10px;">
                                             <h3>Genre</h3>

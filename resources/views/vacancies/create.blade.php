@@ -12,34 +12,34 @@
                     <form action="{{ route('vacancies.store') }}" method="post">
                         @csrf
 
-                        <div class="form-group
-                        {{ $errors->has('act_id') ? 'has-danger' : '' }}">
-                            <label for="act_id">
-                                <h4>Act</h4>
-                            </label>
-                            <select name="act_id" class="form-control {{ $errors->has('act_id') ? 'is-invalid' : '' }}">
-                                <option value="">Select</option>
-                                @foreach ($acts as $act)
-                                <option value="{{ $act->id }}" {{ old('act_id') == $act->id ? 'selected' : '' }}>{{ $act->type }} -
-                                    {{ $act->name }}</option>
-                                @endforeach
-                            </select>
+                        <div class="form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
+                            <div style="display: flex; align-items: center;">
+                                <label for="act_id" style="margin-right: 10px; margin-top:10px;">
+                                    <h3>Act</h3>
+                                </label>
+                                <select name="act_id" class="form-control {{ $errors->has('act_id') ? 'is-invalid' : '' }}" style="font-size: 13px; border: 1px solid #d7c4c4; width:400px;">
+                                    <option value="">Select</option>
+                                    @foreach ($acts as $act)
+                                    <option value="{{ $act->id }}" {{ old('act_id') == $act->id ? 'selected' : '' }}> {{ $act->name }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             @include('alerts.feedback', ['field' => 'act_id'])
                         </div>
- 
-                        <div class="form-group
-                        {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
-                            <label for="instrument_id">
-                                <h4>Instrument</h4>
-                            </label>
-                            <select name="instrument_id" class="form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}">
-                                <option value="">Select</option>
-                                @foreach ($instruments as $instrument)
-                                <option value="{{ $instrument->id }}" {{ old('instrument_id') == $instrument->id ? 'selected' : '' }}>{{ $instrument->type }} -
-                                    {{ $instrument->name }}</option>
-                                @endforeach
-                            </select>
-                            @include('alerts.feedback', ['field' => 'instrument_id'])
+
+                        <div class="form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
+                            <div style="display: flex; align-items: center;">
+                                <label for="instrument_id" style="margin-right: 10px; margin-top:10px;">
+                                    <h3>Instrument</h3>
+                                </label>
+                                <select name="instrument_id" class="form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}" style="font-size: 13px; border: 1px solid #d7c4c4; width:310px;">
+                                    <option value="">Select</option>
+                                    @foreach ($instruments as $instrument)
+                                    <option value="{{ $instrument->id }}" {{ old('instrument_id') == $instrument->id ? 'selected' : '' }}>{{ $instrument->type }} - {{ $instrument->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @include('alerts.feedback', ['field' => 'name'])
                         </div>
 
                         <div>

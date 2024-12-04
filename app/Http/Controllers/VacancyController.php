@@ -139,6 +139,11 @@ class VacancyController extends Controller
                 ->with('status', 'You are not authorized to update this vacancy.');
         }
 
+        $request->validate([
+            'act_id' => 'required',
+            'instrument_id' => 'required',
+        ]);
+
         $vacancy->fill($request->all());
         if (! $request->filled('description')) {
             $vacancy->description = '';
