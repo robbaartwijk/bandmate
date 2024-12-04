@@ -43,7 +43,7 @@
                                         <label for="genre_id" style="margin-right: 10px; margin-top:10px;">
                                             <h3>Genre</h3>
                                         </label>
-                                        <select name="genre_id" class="form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}" style="font-size: 15px; border: 1px solid #d7c4c4;">
+                                        <select name="genre_id" class="form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}" style="font-size: 13px; border: 1px solid #d7c4c4;">
                                             <option value="">Select</option>
                                             @foreach ($genres as $genre)
                                             <option value="{{ $genre->id }}" {{ $act->genre_id == $genre->id ? 'selected' : '' }}>
