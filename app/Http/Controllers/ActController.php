@@ -64,9 +64,7 @@ class ActController extends Controller
         $request->validate([
             'name' => 'required',
             'genre_id' => 'required',
-            'rehearsal_room' => 'required',
             'number_of_members' => 'required',
-            'active' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'website' => ['nullable', 'url'],
@@ -78,11 +76,8 @@ class ActController extends Controller
             'spotify' => ['nullable', 'url'],
         ]);
 
-        $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
-        $act->rehearsal_room = $rehearsal_room;
-
-        $active = $request->active == 'yes' ? 1 : 0;
-        $act->active = $active;
+        $act->rehearsal_room = $request->rehearsal_room == 'on' ? 1 : 0;
+        $act->active = $request->active == 'on' ? 1 : 0;
 
         $act->save();
 
@@ -128,9 +123,7 @@ class ActController extends Controller
         $request->validate([
             'name' => 'required',
             'genre_id' => 'required',
-            'rehearsal_room' => 'required',
             'number_of_members' => 'required',
-            'active' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'website' => ['nullable', 'url'],
@@ -142,14 +135,13 @@ class ActController extends Controller
             'spotify' => ['nullable', 'url'],
         ]);
 
-        $rehearsal_room = $request->rehearsal_room == 'Yes' ? 1 : 0;
-        $act->rehearsal_room = $rehearsal_room;
+        $act->fill($request->all());
 
-        $active = $request->active == 'Yes' ? 1 : 0;
-        $act->active = $active;
+        $act->rehearsal_room = $request->rehearsal_room == 'on' ? 1 : 0;
+        $act->active = $request->active == 'on' ? 1 : 0;
 
-        $act->update($request->all());
-
+        $act->update();
+        
         return redirect()->route('acts.index')
             ->with('status', 'Act updated successfully');
     }

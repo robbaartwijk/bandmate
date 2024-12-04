@@ -68,9 +68,13 @@
                 <tbody>
                     @foreach ($users as $user)
                     <tr>
+                        @if ($user->is_admin)
+                        <td><a href="{{ route('users.show', $user->id) }}" style="color:white;">{{ $user->name }}</a></td>
+                        @else
                         <td><a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a></td>
+                        @endif
+                        
                         <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a< /td>
-
                         <td>{{ $user->acts_count }}</td>
                         <td>{{ $user->rehearsalrooms_count }}</td>
                         <td>{{ $user->vacancies_count }}</td>

@@ -57,44 +57,35 @@
                                         @include('alerts.feedback', ['field' => 'genre_id'])
                                     </div>
 
-                                    
-                                    <div class="form-group
-                                    {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
+                                    <div class="form-group {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
                                         <label for="rehearsal_room">
-                                            <h3>Rehearsal Room</h3>
+                                            <h3>Rehearsal room available?</h3>
                                         </label>
-                                        <select name="rehearsal_room" class="form-control {{ $errors->has('rehearsal_room') ? 'is-invalid' : '' }}">
-                                            <option value="1" {{ $act->rehearsal_room == 1 ? 'selected' : '' }}>Yes
-                                            </option>
-                                            <option value="0" {{ $act->rehearsal_room == 0 ? 'selected' : '' }}>No</option>
-                                        </select>
+                                        <input type="checkbox" class="form-check-input" id="rehearsal_room" name="rehearsal_room" {{ $act->rehearsal_room ? 'checked' : '' }} style="margin-top:10px; margin-left:20px">
                                         @include('alerts.feedback', ['field' => 'rehearsal_room'])
                                     </div>
 
-                                    <div class="form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                                        <label for="website">
-                                            <h3>Website</h3>
+                                    <div class="form-group {{ $errors->has('active') ? 'has-danger' : '' }}">
+                                        <label for="active">
+                                            <h3>Act currently active?</h3>
                                         </label>
-                                        <input type="text" min="1" name="website" class="form-control
-                                    {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ $act->website }}">
-                                        @include('alerts.feedback', ['field' => 'website'])
+                                        <input type="checkbox" class="form-check-input" id="active" name="active" {{ $act->active ? 'checked' : '' }} style="margin-top:10px; margin-left:20px">
+                                        @include('alerts.feedback', ['field' => 'active'])
                                     </div>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body text-primary col-lg-4">
 
-                        <div class="form-group {{ $errors->has('active') ? 'has-danger' : '' }}">
-                            <label for="active">
-                                <h3>Active</h3>
+                        <div class="form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
+                            <label for="website">
+                                <h3>Website</h3>
                             </label>
-                            <select name="active" class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}">
-                                <option value="1" {{ $act->active == 1 ? 'selected' : '' }}>Yes
-                                </option>
-                                <option value="0" {{ $act->active == 0 ? 'selected' : '' }}>No</option>
-                            </select>
-                            @include('alerts.feedback', ['field' => 'active'])
+                            <input type="text" min="1" name="website" class="form-control
+                        {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ $act->website }}">
+                            @include('alerts.feedback', ['field' => 'website'])
                         </div>
 
                         <div class="form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
