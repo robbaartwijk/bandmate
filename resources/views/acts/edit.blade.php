@@ -80,7 +80,7 @@
                             <label for="website" style="margin-right: 10px;">
                                 <h3>Website</h3>
                             </label>
-                            <input type="text" min="1" name="website" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="website" style="margin-bottom:30px; font-size: 17px; border: 2px solid #d7c4c4;" class="form-control
                         {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ $act->website }}">
                             @include('alerts.feedback', ['field' => 'website'])
                         </div>
@@ -89,7 +89,7 @@
                             <label for="email" style="margin-right: 10px;">
                                 <h3>Email</h3>
                             </label>
-                            <input type="text" min="1" name="email" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="email" style="margin-bottom:30px; font-size: 17px; border: 2px solid #d7c4c4;" class="form-control
                         {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ $act->email }}">
                             @include('alerts.feedback', ['field' => 'email'])
                         </div>
@@ -98,7 +98,7 @@
                             <label for="phone" style="margin-right: 10px;">
                                 <h3>Phone</h3>
                             </label>
-                            <input type="text" min="1" name="phone" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="phone" style="margin-bottom:30px; font-size: 17px; border: 2px solid #d7c4c4;" class="form-control
                         {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ $act->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
                         </div>
@@ -107,7 +107,7 @@
                             <label for="facebook" style="margin-right: 10px;">
                                 <h3>Facebook</h3>
                             </label>
-                            <input type="text" min="1" name="facebook" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="facebook" style="margin-bottom:30px; font-size: 17px; border: 2px solid #d7c4c4;" class="form-control
                         {{ $errors->has('facebook') ? 'is-invalid' : '' }}" placeholder="Facebook" value="{{ $act->facebook }}">
                             @include('alerts.feedback', ['field' => 'facebook'])
                         </div>
@@ -116,7 +116,7 @@
                             <label for="youtube" style="margin-right: 10px;">
                                 <h3>Youtube</h3>
                             </label>
-                            <input type="text" min="1" name="youtube" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="youtube" style="margin-bottom:30px; font-size: 17px; border: 2px solid #d7c4c4;" class="form-control
                         {{ $errors->has('youtube') ? 'is-invalid' : '' }}" placeholder="Youtube" value="{{ $act->youtube }}">
                             @include('alerts.feedback', ['field' => 'youtube'])
                         </div>
@@ -129,7 +129,7 @@
                             <label for="twitter" style="margin-right: 10px;">
                                 <h3>Twitter</h3>
                             </label>
-                            <input type="text" min="1" name="twitter" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="twitter" style="margin-bottom:30px; font-size: 17px; border: 1px solid white;" class="form-control
                     {{ $errors->has('twitter') ? 'is-invalid' : '' }}" placeholder="Twitter" value="{{ $act->twitter }}">
                             @include('alerts.feedback', ['field' => 'twitter'])
                         </div>
@@ -138,7 +138,7 @@
                             <label for="instagram" style="margin-right: 10px;">
                                 <h3>Instagram</h3>
                             </label>
-                            <input type="text" min="1" name="instagram" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="instagram" style="margin-bottom:30px; font-size: 17px; border: 1px solid white;" class="form-control
                         {{ $errors->has('instagram') ? 'is-invalid' : '' }}" placeholder="Instagram" value="{{ $act->instagram }}">
                             @include('alerts.feedback', ['field' => 'instagram'])
                         </div>
@@ -147,7 +147,7 @@
                             <label for="soundcloud" style="margin-right: 10px;">
                                 <h3>Soundcloud</h3>
                             </label>
-                            <input type="text" min="1" name="soundcloud" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="soundcloud" style="margin-bottom:30px; font-size: 17px; border: 1px solid white;" class="form-control
                         {{ $errors->has('soundcloud') ? 'is-invalid' : '' }}" placeholder="Soundcloud" value="{{ $act->soundcloud }}">
                             @include('alerts.feedback', ['field' => 'soundcloud'])
                         </div>
@@ -156,7 +156,7 @@
                             <label for="spotify" style="margin-right: 10px;">
                                 <h3>Spotify</h3>
                             </label>
-                            <input type="text" min="1" name="spotify" style="margin-bottom:30px; font-size: 17px; border: 1px solid #d7c4c4;" class="form-control
+                            <input type="text" min="1" name="spotify" style="margin-bottom:30px; font-size: 17px; border: 1px solid white;" class="form-control
                         {{ $errors->has('spotify') ? 'is-invalid' : '' }}" placeholder="Spotify" value="{{ $act->spotify }}">
                             @include('alerts.feedback', ['field' => 'spotify'])
                         </div>
