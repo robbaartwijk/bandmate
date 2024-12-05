@@ -7,7 +7,7 @@ $user = auth()->user();
     <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128)">
 
         <div class="logo">
-            <img src="{{ asset('images/Logo.png') }}" style="border: solid 2px grey;  width:200px; height: 18%;" />
+            <img src="{{ asset('images/Logo.jpg') }}" style="border: solid 2px grey;  width:200px; height: 15%;" />
         </div>
         <ul class="nav">
             <li @if ($pageSlug=='dashboard' ) class="active " @endif>
