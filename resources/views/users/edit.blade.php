@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h3 class="card-title"> Edit user</h3>
+                    <h3 class="card-title"><b>Edit user</b></h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

@@ -9,7 +9,7 @@ $user = auth()->user();
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title"> Agencies index</h3>
+                <h3 class="card-title"><b>Agencies index</b></h3>
                 <div class="card-body">
                     <div class="table-responsive">
 

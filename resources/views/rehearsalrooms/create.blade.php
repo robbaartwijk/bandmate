@@ -2,8 +2,6 @@
 
 @section('content')
 
-<link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
 <div class="col-container">
 
     <div class="row">
@@ -11,7 +9,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> Add rehearsalroom</h3>
+                    <h3 class="card-title"><b>Add rehearsalroom</b></h3>
                 </div>
 
                 <div class="bm_row_layout row" style="height: 55vh;">

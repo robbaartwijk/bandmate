@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title">Users index</h3>
+                <h3 class="card-title"><b>Users index</b></h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
