@@ -26,3 +26,7 @@
 .bm_textarea_layout {
     height: 10px;
 }
+
+.bm_row_layout {
+    height: 100vh;
+}

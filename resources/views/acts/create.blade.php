@@ -14,7 +14,7 @@
                     <h3 class="card-title"><b>Add act</b></h3>
                 </div>
 
-                <div class="row" style="height: 100vh;">
+                <div class="bm_row_layout row">
                     <div class="col-lg-4">
 
                         <div class="card-body text-primary">
@@ -89,8 +89,8 @@
                         <label for="phone" class="bm_label_layout">
                             <h3>Phone</h3>
                         </label>
-                        <input type="text" min="1" class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}">
-                        @include('alerts.feedback', ['field' => 'phone'])
+                        <input type="text" name="phone" class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}">
+                        @include('alerts.feedback', ['field' => 'email'])
                     </div>
 
                     <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
