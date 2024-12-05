@@ -28,8 +28,7 @@
                                         <label for="name" class="bm_label_layout">
                                             <h3>Name</h3>
                                         </label>
-                                        <input type="text" name="name" class="bm_general_input form-control
-                                            {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ $act->name }}">
+                                        <input type="text" name="name" class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ $act->name }}">
                                         @include('alerts.feedback', ['field' => 'name'])
                                     </div>
 
@@ -37,8 +36,7 @@
                                         <label for="number_of_members" class="bm_label_layout">
                                             <h3>Members</h3>
                                         </label>
-                                        <input type="number" min="1" name="number_of_members" class="bm_general_input form-control
-                                            {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}" placeholder="Number of Members" value="{{ $act->number_of_members }}">
+                                        <input type="number" min="1" name="number_of_members" class="bm_general_input form-control {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}" placeholder="Number of Members" value="{{ $act->number_of_members }}">
                                         @include('alerts.feedback', ['field' => 'number_of_members'])
                                     </div>
                                     
