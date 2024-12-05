@@ -38,20 +38,20 @@
                                             <h3>Members</h3>
                                         </label>
                                         <input type="number" min="1" name="number_of_members" class="bm_general_input form-control 
-                                            {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}" placeholder="Number of Members" value="{{ old('number_of_members') }}" >
+                                            {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}" placeholder="Number of Members" value="{{ old('number_of_members') }}">
                                         @include('alerts.feedback', ['field' => 'number_of_members'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
-                                            <label for="genre_id" class="bm_label_layout">
-                                                <h3>Genre</h3>
-                                            </label>
-                                            <select name="genre_id" class="bm_general_input form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}">
-                                                <option value="">Select</option>
-                                                @foreach ($genres as $genre)
-                                                <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->group }} - {{ $genre->name }}</option>
-                                                @endforeach
-                                            </select>
+                                        <label for="genre_id" class="bm_label_layout">
+                                            <h3>Genre</h3>
+                                        </label>
+                                        <select name="genre_id" class="bm_general_input form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}">
+                                            <option value="">Select</option>
+                                            @foreach ($genres as $genre)
+                                            <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->group }} - {{ $genre->name }}</option>
+                                            @endforeach
+                                        </select>
                                         @include('alerts.feedback', ['field' => 'genre_id'])
                                     </div>
 
@@ -77,52 +77,49 @@
 
                     <div class="card-body text-primary col-lg-4">
 
-                    <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                        <label for="email" class="bm_label_layout">
-                            <h3>Email</h3>
-                        </label>
-                        <input type="text" name="email" class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ old('email') }}">
-                        @include('alerts.feedback', ['field' => 'email'])
-                    </div>
+                        <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
+                            <label for="email" class="bm_label_layout">
+                                <h3>Email</h3>
+                            </label>
+                            <input type="text" name="email" class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ old('email') }}">
+                            @include('alerts.feedback', ['field' => 'email'])
+                        </div>
 
-                    <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
-                        <label for="phone" class="bm_label_layout">
-                            <h3>Phone</h3>
-                        </label>
-                        <input type="text" name="phone" class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}">
-                        @include('alerts.feedback', ['field' => 'email'])
-                    </div>
+                        <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
+                            <label for="phone" class="bm_label_layout">
+                                <h3>Phone</h3>
+                            </label>
+                            <input type="text" name="phone" class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ old('phone') }}">
+                            @include('alerts.feedback', ['field' => 'email'])
+                        </div>
 
-                    <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                        <label for="website" class="bm_label_layout">
-                            <h3>Website</h3>
-                        </label>
-                        <input type="text" min="1" name="website" class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="website" value="{{ old('website') }}">
-                        @include('alerts.feedback', ['field' => 'website'])
-                    </div>
+                        <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
+                            <label for="website" class="bm_label_layout">
+                                <h3>Website</h3>
+                            </label>
+                            <input type="text" min="1" name="website" class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="website" value="{{ old('website') }}">
+                            @include('alerts.feedback', ['field' => 'website'])
+                        </div>
 
-                    <div class="bm_form_group form-group {{ $errors->has('facebook') ? 'has-danger' : '' }}">
-                        <label for="facebook" class="bm_label_layout">
-                            <h3>Facebook</h3>
-                        </label>
-                        <input type="text" min="1" name="facebook" class="bm_general_input form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" placeholder="Facebook" value="{{ old('facebook') }}">
-                        @include('alerts.feedback', ['field' => 'facebook'])
-                    </div>
+                        <div class="bm_form_group form-group {{ $errors->has('facebook') ? 'has-danger' : '' }}">
+                            <label for="facebook" class="bm_label_layout">
+                                <h3>Facebook</h3>
+                            </label>
+                            <input type="text" min="1" name="facebook" class="bm_general_input form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" placeholder="Facebook" value="{{ old('facebook') }}">
+                            @include('alerts.feedback', ['field' => 'facebook'])
+                        </div>
 
-                    <div class="bm_form_group form-group {{ $errors->has('youtube') ? 'has-danger' : '' }}">
-                        <label for="youtube" class="bm_label_layout">
-                            <h3>Youtube</h3>
-                        </label>
-                        <input type="text" min="1" name="youtube" class="bm_general_input form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}" placeholder="Youtube" value="{{ old('youtube') }}">
-                        @include('alerts.feedback', ['field' => 'youtube'])
-                    </div>
+                        <div class="bm_form_group form-group {{ $errors->has('youtube') ? 'has-danger' : '' }}">
+                            <label for="youtube" class="bm_label_layout">
+                                <h3>Youtube</h3>
+                            </label>
+                            <input type="text" min="1" name="youtube" class="bm_general_input form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}" placeholder="Youtube" value="{{ old('youtube') }}">
+                            @include('alerts.feedback', ['field' => 'youtube'])
+                        </div>
 
                     </div>
 
                     <div class="card-body text-primary col-lg-4">
-
-
-
 
                         <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
                             <label for="email" class="bm_label_layout">
@@ -149,8 +146,8 @@
                         </div>
 
                         <div class="bm_form_group form-group {{ $errors->has('spotify') ? 'has-danger' : '' }}"">
-                            <label for="spotify" class="bm_label_layout">
-                                <h3>Spotify</h3>
+                            <label for=" spotify" class="bm_label_layout">
+                            <h3>Spotify</h3>
                             </label>
                             <input type="text" name="spotify" class="bm_general_input form-control {{ $errors->has('spotify') ? 'is-invalid' : '' }}" placeholder="Spotify" value="{{ old('spotify') }}">
                             @include('alerts.feedback', ['field' => 'spotify'])
