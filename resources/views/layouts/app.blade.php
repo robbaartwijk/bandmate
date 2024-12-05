@@ -6,6 +6,8 @@
 import {Chart}
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const simplemde = new SimpleMDE({
@@ -15,18 +17,11 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
             toolbar: [
                 "bold", "italic", "heading", "|",
                 "quote", "unordered-list", "ordered-list", "|",
-                "link", "image", "|",
-                "preview", "side-by-side", "fullscreen",
+                "link", "image",
             ],
         });
     });
 </script>
-
-<style>
-    .editor-toolbar {
-        background: #eb9b73 !important;
-    }
-</style>
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

@@ -22,7 +22,7 @@
                             <div class="table-responsive">
 
                                 <form action="{{ route('vacancies.store') }}" method="post">
-                                    @csrf
+                                 @csrf
 
                                     <div class="bm_form_group form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
                                         <label for="act_id" class="bm_label_layout">

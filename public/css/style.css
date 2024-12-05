@@ -3,7 +3,7 @@
     height: 45px;
     margin-bottom: 30px;
     margin-right: 10px;
-    border: 1px solid white;
+    border: 1px solid rgb(200, 130, 130);
     margin-left: auto;
     font-size: 17px;
 }
@@ -31,4 +31,9 @@
 
 .bm_row_layout {
     height: 100vh;
+}
+
+/* simpleMde changes and overrides */
+.editor-toolbar {
+    background: #bda5ec;
 }
