@@ -4,6 +4,7 @@
     margin-right: 10px;
     border: 1px solid white;
     margin-left: auto;
+    font-size: 17px;
 }
 
 .bm_label_layout {
@@ -18,7 +19,7 @@
 }
 
 .bm_checkbox_layout {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 20px;
     border: 1px solid white;
 }

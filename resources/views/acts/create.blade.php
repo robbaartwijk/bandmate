@@ -56,7 +56,7 @@
                                     </div>
 
                                     <div class="form-group {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
-                                        <label for="rehearsal_room" class="bm_label_layout">
+                                        <label for="rehearsal_room">
                                             <h3>Rehearsal room available?</h3>
                                         </label>
                                         <input type="checkbox" class="bm_checkbox_layout form-check-input" id="rehearsal_room" name="rehearsal_room" {{ old('rehearsal_room') ? 'checked' : '' }}>
@@ -64,7 +64,7 @@
                                     </div>
 
                                     <div class="form-group {{ $errors->has('active') ? 'has-danger' : '' }}">
-                                        <label for="active" class="bm_label_layout">
+                                        <label for="active">
                                             <h3>Act currently active?</h3>
                                         </label>
                                         <input type="checkbox" class="bm_checkbox_layout form-check-input" id="active" name="active" {{ old('active') ? 'checked' : '' }}>

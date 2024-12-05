@@ -27,7 +27,7 @@ class ActController extends Controller
             });
         }
 
-        if ($request->private == true) {
+        if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
         }
 
@@ -41,7 +41,7 @@ class ActController extends Controller
      */
     public function create()
     {
-        $genres = Genre::all()->sortByDesc('name')->sortBy('group');
+        $genres = Genre::orderBy('group', 'desc')->orderBy('name')->get();
 
         return view('acts.create', compact('genres'));
     }
@@ -71,8 +71,8 @@ class ActController extends Controller
             'spotify' => ['nullable', 'url'],
         ]);
 
-        $act->rehearsal_room = $request->rehearsal_room == 'on' ? 1 : 0;
-        $act->active = $request->active == 'on' ? 1 : 0;
+        $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
+        $act->active = $request->active === 'on' ? 1 : 0;
 
         $act->save();
 
@@ -98,9 +98,9 @@ class ActController extends Controller
         if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
             return redirect()->route('acts.index')
             ->with('status', 'You are not authorized to edit this act.');
-        };
+        }
 
-        $genres = Genre::all()->sortBy('name')->sortByDesc('group');
+        $genres = Genre::orderBy('group')->orderByDesc('name')->get();
 
         return view('acts.edit', compact(['act', 'genres']));
     }
@@ -132,8 +132,8 @@ class ActController extends Controller
 
         $act->fill($request->all());
 
-        $act->rehearsal_room = $request->rehearsal_room == 'on' ? 1 : 0;
-        $act->active = $request->active == 'on' ? 1 : 0;
+        $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
+        $act->active = $request->active === 'on' ? 1 : 0;
 
         $act->update();
         
