@@ -2,9 +2,10 @@
 
 <style>
     body {
-        background-image: url('{{ asset('images/Background.jpg') }}');
+        background-image: url('{{ asset('images/Background_sharp.jpg') }}');
         background-size: cover;
         background-position: center;
+        background-size: 120%;
         background-repeat: no-repeat;
     }
 
