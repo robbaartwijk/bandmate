@@ -1,8 +1,28 @@
-/* @TODO fix background image so it is displayed under ALL pages */
+.bm_general_input {
+    width: 360px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+    border: 1px solid white;
+    margin-left: auto;
+}
 
-/* body {
-    background-image: url("../images/Background.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-} */
+.bm_label_layout {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.bm_form_group {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.bm_checkbox_layout {
+    margin-top: 20px;
+    margin-left: 20px;
+    border: 1px solid white;
+}
+
+.bm_textarea_layout {
+    height: 10px;
+}
