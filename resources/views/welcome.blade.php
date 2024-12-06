@@ -16,7 +16,7 @@
 <div class="header py-7 py-lg-8">
     <div class="container">
         <div class="header-body text-center mb-7">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" style="margin-top: 120px;">
                 <div class="col-lg-8 col-md-6">
                     <p class="text-lead text-light" style="border: solid 1px; border-color: rgb(190, 190, 208);">
                         <img src="{{ asset('images/Logo2.jpg') }}" />
@@ -25,44 +25,10 @@
                     <h1 class="text-white">{{ __('Welcome to Bandmate') }}</h1>
                     <p>
                         <h4 class="text-white">
-                            The best place to find your bandmates, rehearsal rooms, agencies and venues
+                            The best place to find your bandmates, rehearsal rooms, agencies and venues. 
+                            <br>
+                            You can use the options in the menu on the left to navigate through the website.
                         </h4>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid mt--7" style="margin-top:100px; border: solid 1px; border-color: white;">
-    <div class="row">
-        <div class="col-xl-4">
-            <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                    <div class="row">
-                        <p class="text-lead text-light">
-                            <img src="{{ asset('images/Stats1.png') }}" style="width: 400px; height: 320px;" />
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-4">
-            <div class="card-body">
-                <div class="row">
-                    <p class="text-lead text-light">
-                        <img src="{{ asset('images/Stats2.png') }}" style="width: 400px; height: 320px;" />
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-4">
-            <div class="card-body">
-                <div class="row">
-                    <p class="text-lead text-light">
-                        <img src="{{ asset('images/Stats3.png') }}" style="width: 400px; height: 320px;" />
                     </p>
                 </div>
             </div>

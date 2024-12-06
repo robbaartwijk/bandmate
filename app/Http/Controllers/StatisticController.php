@@ -90,6 +90,19 @@ class StatisticController extends Controller
 
             ])
             ->options([
+                'scales' => [
+                    'myScale' => [
+                        'type' => 'logarithmic',
+                        'position' => 'right',
+                        'ticks' => [
+                            'min' => 1,
+                            'max' => 1000
+                        ]
+                    ]
+                ]
+            ])
+
+            ->options([
                 'plugins' => [
                     'colors' => [
                         'forceOverride'=> true,
@@ -98,7 +111,7 @@ class StatisticController extends Controller
                 ],
                 'scales' => [
                     'xAxes' => [[
-                        'type' => 'category',
+                    'type' => 'category',
                     ]],
                 ],
                 'title' => [
@@ -141,7 +154,7 @@ class StatisticController extends Controller
 
         $chartvacanciesperinstrument = Chartjs::build()
             ->name('VacanciesPerInstrument')
-            ->type('doughnut')
+            ->type('bar')
             ->size(['width' => '75%', 'height' => '75%'])
             ->labels($labels)
             ->datasets([
