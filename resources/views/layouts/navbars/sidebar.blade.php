@@ -10,14 +10,6 @@ $user = auth()->user();
             <img src="{{ asset('images/Logo.jpg') }}" style="border: solid 2px grey;  width:200px; height: 15%;" />
         </div>
         <ul class="nav">
-            <li @if ($pageSlug=='dashboard' ) class="active " @endif>
-                <a href="{{ route('home') }}">
-                    <i class="fa fa-home"></i>
-                    <p>
-                        <h4>{{ __('Home') }}</h4>
-                    </p>
-                </a>
-            </li>
 
             <li>
                 <a data-toggle="collapse" href="#userdata" aria-expanded="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' || $pageSlug == 'rehearsalrooms' ? 'true' : 'false' }}" class="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' ? '' : 'collapsed' }}">
@@ -76,6 +68,49 @@ $user = auth()->user();
                 </div>
             </li>
 
+            <li>
+                <a data-toggle="collapse" href="#statistics" aria-expanded="{{ $pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' ? 'true' : 'false' }}" class="{{ $pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' ? '' : 'collapsed' }}">
+                    <i class="fa fa-chart-bar"></i>
+                    <span class="nav-link-text">
+                        <h4>{{ __('Statistics') }}</h4>
+                    </span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3') show @endif" id="statistics" data-parent=".sidebar-wrapper">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug=='chart1' ) class="active " @endif>
+                            <a href="{{ route('statistics.chart1') }}">
+                                <i class="fa fa-chart-bar"></i>
+                                <p>
+                                    <h5>{{ __('Users') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='chart' ) class="active " @endif>
+                            <a href="{{ route('statistics.chart2') }}">
+                                <i class="fa fa-chart-bar"></i>
+                                <p>
+                                    <h5>{{ __('Vacancies') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                        
+                        <li @if ($pageSlug=='chart' ) class="active " @endif>
+                            <a href="{{ route('statistics.chart3') }}">
+                                <i class="fa fa-chart-bar"></i>
+                                <p>
+                                    <h5>{{ __('Acts') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+            </li>
 
             @if($user->is_admin)
             <li>
@@ -105,58 +140,40 @@ $user = auth()->user();
                                 </p>
                             </a>
                         </li>
-                        {{-- <li @if ($pageSlug=='venues' ) class="active " @endif>
-                            <a href="{{ route('venues.index') }}">
-                        <i class="fa fa-database"></i>
-                        <p>
-                            <h5>{{ __('Venues') }}</h5>
-                        </p>
-                        </a>
+                    </ul>
+                </div>
             </li>
-            <li @if ($pageSlug=='agencies' ) class="active " @endif>
-                <a href="{{ route('agencies.index') }}">
-                    <i class="fa fa-database"></i>
-                    <p>
-                        <h5>{{ __('Agencies') }}</h5>
-                    </p>
+            @endif
+
+            <li>
+                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
+                    <i class="fa fa-user-circle"></i>
+                    <span class="nav-link-text">
+                        <h4>{{ __('Management') }}</h4>
+                        <b class="caret mt-1"></b>
                 </a>
-            </li> --}}
+
+                <div class="collapse @if ($pageSlug == 'profile' || $pageSlug == 'users') show @endif" id="laravel-examples" data-parent=".sidebar-wrapper">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug=='profile' ) class="active " @endif>
+                            <a href="{{ route('profile.edit') }}">
+                                <i class="fa fa-user-circle"></i>
+                                <p>
+                                    <h5>{{ __('User Profile') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug=='users' ) class="active " @endif>
+                            <a href="{{ route('user.index') }}">
+                                <i class="fa fa-user-circle"></i>
+                                <p>
+                                    <h5>{{ __('User Management') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
-    </li>
-
-    </li>
-
-    <li>
-        <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
-            <i class="fa fa-user-circle"></i>
-            <span class="nav-link-text">
-                <h4>{{ __('Management') }}</h4>
-            <b class="caret mt-1"></b>
-        </a>
-
-        <div class="collapse @if ($pageSlug == 'profile' || $pageSlug == 'users') show @endif" id="laravel-examples" data-parent=".sidebar-wrapper">
-            <ul class="nav pl-4">
-                <li @if ($pageSlug=='profile' ) class="active " @endif>
-                    <a href="{{ route('profile.edit') }}">
-                        <i class="fa fa-user-circle"></i>
-                        <p>
-                            <h5>{{ __('User Profile') }}</h5>
-                        </p>
-                    </a>
-                </li>
-                <li @if ($pageSlug=='users' ) class="active " @endif>
-                    <a href="{{ route('user.index') }}">
-                        <i class="fa fa-user-circle"></i>
-                        <p>
-                            <h5>{{ __('User Management') }}</h5>
-                        </p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </li>
-    @endif
-    </ul>
-</div>
 </div>

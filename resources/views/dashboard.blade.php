@@ -74,7 +74,7 @@
             text-align: center;
         }
     </style>
-
+ 
     <div style="height: 20vh;">
         <div class="col-md-12 text-center">
             <h1>Bandmate Statistics</h1>
