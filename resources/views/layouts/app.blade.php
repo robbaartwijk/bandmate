@@ -57,7 +57,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
         background-image: url('{{ asset('images/Background_sharp.jpg') }}');
         background-size: cover;
         background-position: center;
-        background-size: 120%;
         background-repeat: no-repeat;
         opacity: 0.85;
     }
@@ -84,9 +83,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
         <p>
             <h4 class="text-white">
                 The best place to find your bandmates, rehearsal rooms, agencies and venues. You can use the options in the menu on the left to browse through all the available information and add your own information. You will then be able to edit the information you have entered yourself, but only browse through other users' information.
-            </h4>
-        </p>
-
+        </h4>
         <h4>
             <ul class="text-white">
                 <li>
@@ -147,7 +144,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
     <script src="{{ asset('black') }}/js/core/jquery.min.js"></script>
     <script src="{{ asset('black') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('black') }}/js/core/bootstrap.min.js"></script>
-    <script src="{{ asset('black') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <!--  Google Maps Plugin    -->
     <!-- Place this tag in your head or just before your close body tag. -->
     {{-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> --}}
