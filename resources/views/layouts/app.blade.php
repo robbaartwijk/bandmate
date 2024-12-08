@@ -52,7 +52,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
     
 </head>
 
-<body class="{{ $class ?? '' }}">
+<body style="opacity: 0.85;"; class="gloif {{ $class ?? '' }}">
     @auth()
         <div class="wrapper">
             @include('layouts.navbars.sidebar')

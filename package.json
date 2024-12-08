@@ -28,6 +28,7 @@
         "codemirror-spell-checker": "^1.1.2",
         "font-awesome": "^4.7.0",
         "marked": "^15.0.2",
-        "simplemde": "^1.11.2"
+        "simplemde": "^1.11.2",
+        "vuejs": "^3.0.1"
     }
 }
