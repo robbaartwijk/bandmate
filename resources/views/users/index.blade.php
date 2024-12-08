@@ -73,7 +73,7 @@
                         @else
                         <td><a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a></td>
                         @endif
-                        
+
                         <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a< /td>
                         <td>{{ $user->acts_count }}</td>
                         <td>{{ $user->rehearsalrooms_count }}</td>
@@ -105,6 +105,4 @@
     {{ $users->count() }} {{ $users->count() > 1 ? 'users found' : 'user found' }}
 </div>
 
-</div>
-</div>
 @endsection

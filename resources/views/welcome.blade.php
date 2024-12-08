@@ -32,29 +32,6 @@
             </h4>
         </p>
 
-        <h4>
-            <ul class="text-white">
-                <li>
-                    An act is typically either a band or a solo artist. You can of course add your own act.
-                </li>
-                <li>
-                    A vacancy is just what it says; a vacancy in a band. You can add your own vacancies but only for the acts you have entered into the database yourself.
-                </li>
-                <li>
-                    If you are a rehearsal room owner, you can add your own rehearsal rooms.
-                </li>
-                <li>
-                    If you are an agency, you can add your own agency information for artists to find.
-                </li>
-                <li>    
-                    Finally if you are a venue owner, you can add your own venue information.
-                </li>
-            </ul>
-        </h4>
-
-        </h4>
-        </p>
-
     </div>
 </div>
 
