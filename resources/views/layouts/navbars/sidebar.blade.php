@@ -12,7 +12,7 @@ $user = auth()->user();
         <ul class="nav">
 
             <li>
-                <a data-toggle="collapse" href="#userdata" aria-expanded="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' || $pageSlug == 'rehearsalrooms' ? 'true' : 'false' }}" class="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' ? '' : 'collapsed' }}">
+                <a data-toggle="collapse" href="#userdata" aria-expanded="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' || $pageSlug == 'rehearsalrooms' ? 'false' : 'true' }}" class="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' ? 'collapsed' : '' }}">
                     <i class="fa fa-music"></i>
                     <span class="nav-link-text">
                         <h4>{{ __('User Access') }}</h4>
