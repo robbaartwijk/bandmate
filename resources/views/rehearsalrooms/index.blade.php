@@ -114,5 +114,4 @@ $user = auth()->user();
     </div>
 
 </div>
-</div>
 @endsection
