@@ -44,7 +44,10 @@
                     If you are a rehearsal room owner, you can add your own rehearsal rooms.
                 </li>
                 <li>
-                    If you are an agency, you can add your own agency information for artists to find. Finally if you are a venue owner, you can add your own venue information.
+                    If you are an agency, you can add your own agency information for artists to find.
+                </li>
+                <li>    
+                    Finally if you are a venue owner, you can add your own venue information.
                 </li>
             </ul>
         </h4>
@@ -53,9 +56,6 @@
         </p>
 
     </div>
-</div>
-</div>
-</div>
 </div>
 
 @endsection

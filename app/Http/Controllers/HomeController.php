@@ -29,11 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $barchartuserregistrations = $this->createChartDataForMonthlyUsers();
-        $barchartvacanciesperinstrument = $this->createVacancyChartData();
-        $barchartactregistrations = $this->createChartDataForMonthlyActs();
-
-        return view('dashboard', compact('barchartuserregistrations', 'barchartvacanciesperinstrument', 'barchartactregistrations'));
+        return view('dashboard');
     }
 
     /**
