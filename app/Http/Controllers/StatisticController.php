@@ -154,7 +154,7 @@ class StatisticController extends Controller
 
         $chartvacanciesperinstrument = Chartjs::build()
             ->name('VacanciesPerInstrument')
-            ->type('bar')
+            ->type('doughnut')
             ->size(['width' => '75%', 'height' => '75%'])
             ->labels($labels)
             ->datasets([

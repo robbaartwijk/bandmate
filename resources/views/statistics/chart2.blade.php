@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    /* .zoom {
+    .zoom {
             padding: 50px;
             background-color: green;
             transition: transform .2s;
@@ -15,9 +15,8 @@
     }
 
     .zoom:hover {
-        transform: scale(2);
+        transform: scale(1.4);
         position: absolute;
-        /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     }
 
     */
@@ -44,7 +43,7 @@
 
 
 <div class="col-md-12 text-center">
-    <h1>Bandmate registrations per month</h1>
+    <h1>Vacancies per inststrument</h1>
 </div>
 
 <div class="container col-md-12">
@@ -53,7 +52,7 @@
         <div class="grid-container" style="background: #201c24;">
             <div class="col-md-6 text-center">
             </div>
-            <div class="zoom chart-height" style="width: 800px; height:740px; background: rgb(40, 24, 47); border: 2px solid rgb(244, 239, 239); margin: 0 auto;">
+            <div class="zoom chart-height" style="width: 760px; height:740px; background: rgb(40, 24, 47); border: 2px solid rgb(244, 239, 239); margin: 0 auto;">
                 <x-chartjs-component :chart="$chartvacanciesperinstrument" />
                 <div class="col-md-3">
                 </div>
