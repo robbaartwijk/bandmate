@@ -14,9 +14,13 @@ use App\Models\Rehearsalroom;
 use App\Models\Act;
 use App\Models\Vacancy;
 
-class User extends Authenticatable
-{
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+class User extends Authenticatable implements HasMedia {
+
     use HasApiTokens;
+    use InteractsWithMedia;
 
     // use HasFactory<\Database\Factories\UserFactory>
     use HasFactory;
@@ -83,6 +87,10 @@ class User extends Authenticatable
 
     function isAdmin() {
         return $this->role === 'admin';
+    }
+
+    function hasUserMedia() {
+        return $this->media()->count() > 0;
     }
 
 }
