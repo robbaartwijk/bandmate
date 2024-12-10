@@ -73,6 +73,18 @@
                                 <h4><a href="{{ $act->spotify }}" target="_blank"><i class="fab fa-spotify"></i>
                                         {{ $act->spotify }}</a></h4>
                             @endif
+
+                            @if (!empty($publicImageUrl))
+
+                                {{-- @php
+                                    dd($act->publicImageUrl);
+                                @endphp --}}
+
+                                <h4 style="margin-top: 50px;"><img src="{{ $publicImageUrl }}" class="img-fluid"></h4>
+                                
+                            @endif
+
+
                         </div>
                     </div>
                 </div>

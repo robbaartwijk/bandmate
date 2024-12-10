@@ -19,7 +19,7 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('acts.store') }}" method="post">
+                                <form action="{{ route('acts.store') }}" method="post" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
@@ -68,6 +68,9 @@
                                         <input type="checkbox" class="bm_checkbox_layout form-check-input" id="active" name="active" {{ old('active') ? 'checked' : '' }}>
                                         @include('alerts.feedback', ['field' => 'active'])
                                     </div>
+
+                                    <input class="btn btn-info w-100" type="file" id="ActPic" name="ActPic" accept="image/*">
+
 
                             </div>
                         </div>
@@ -119,12 +122,12 @@
 
                     <div class="card-body text-primary col-lg-4">
 
-                        <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                            <label for="email" class="bm_label_layout">
-                                <h3>Email</h3>
+                        <div class="bm_form_group form-group {{ $errors->has('twitter') ? 'has-danger' : '' }}">
+                            <label for="twitter" class="bm_label_layout">
+                                <h3>Twitter</h3>
                             </label>
-                            <input type="text" name="email" class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ old('email') }}">
-                            @include('alerts.feedback', ['field' => 'email'])
+                            <input type="text" name="twitter" class="bm_general_input form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" placeholder="Twitter" value="{{ old('twitter') }}">
+                            @include('alerts.feedback', ['field' => 'twitter'])
                         </div>
 
                         <div class="bm_form_group form-group {{ $errors->has('instagram') ? 'has-danger' : '' }}">
@@ -185,4 +188,5 @@
             </form>
         </div>
     </div>
+
     @endsection

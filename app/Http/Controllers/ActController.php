@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Act;
 use App\Models\Genre;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class ActController extends Controller
 {
@@ -60,7 +60,7 @@ class ActController extends Controller
             'name' => 'required',
             'genre_id' => 'required',
             'number_of_members' => 'required',
-            'email' => 'required', 'email',
+            'email' => ['required', 'email'],
             'website' => ['nullable', 'url'],
             'facebook' => ['nullable', 'url'],
             'instagram' => ['nullable', 'url'],
@@ -75,8 +75,39 @@ class ActController extends Controller
 
         $act->save();
 
+        if ($request->hasFile('ActPic')) {
+            $this->storeActImage($request, $act);
+        }
+
         return redirect()->route('acts.index')
             ->with('status', 'Act created successfully.');
+    }
+
+    /**
+     * Store a newly created image resource in storage.
+     */
+    public function storeActImage(Request $request, Act $act)
+    {
+        $currentUserId = Auth::user()->id;
+
+        $folder = $currentUserId . '/ActPics' . '/' . $act->id;
+
+        $path = storage_path('/app/public/uploads/'.$folder);
+
+        $file = $request->file('ActPic');
+
+        $filename = $file->getClientOriginalName();
+
+        if ($request->hasFile('ActPic')) {
+            $file->move($path, $filename);
+        }
+
+        if (isset($folder)) {
+
+            $folder = $folder . '/' . $filename;
+            $act->addMedia(storage_path('app/public/uploads/' . $folder))->toMediaCollection('images/ActPics');
+        }
+
     }
 
     /**
@@ -84,8 +115,22 @@ class ActController extends Controller
      */
     public function show(Act $act)
     {
+        $currentUserId = Auth::user()->id;
+        
         $genre = Genre::find($act->genre_id);
 
+        $actImage = $act->getFirstMedia($currentUserId . '/ActPics');
+
+        // $actImage = $act->getFirstMedia('uploads/' . $act->id . '/ActPics');
+        
+        // dd($actImage);
+
+        $act->image = $actImage->getUrl(); 
+        $act->imageFullUrl = $actImage->getFullUrl(); 
+        $act->imagePath = $actImage->getPath(); 
+        
+        dd($act);
+        
         return view('acts.show', compact(['act', 'genre']));
     }
 
@@ -94,9 +139,9 @@ class ActController extends Controller
      */
     public function edit(Act $act)
     {
-        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+        if (! Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
             return redirect()->route('acts.index')
-            ->with('status', 'You are not authorized to edit this act.');
+                ->with('status', 'You are not authorized to edit this act.');
         }
 
         $genres = Genre::orderBy('group')->orderByDesc('name')->get();
@@ -109,7 +154,7 @@ class ActController extends Controller
      */
     public function update(Request $request, Act $act)
     {
-        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+        if (! Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
             return redirect()->route('acts.index')
                 ->with('status', 'You are not authorized to update this act.');
         }
@@ -134,7 +179,7 @@ class ActController extends Controller
         $act->active = $request->active === 'on' ? 1 : 0;
 
         $act->update();
-        
+
         return redirect()->route('acts.index')
             ->with('status', 'Act updated successfully');
     }
@@ -144,7 +189,7 @@ class ActController extends Controller
      */
     public function destroy(Act $act)
     {
-        if (!Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
+        if (! Auth::user()->is_admin && $act->user_id !== Auth::user()->id) {
             return redirect()->route('acts.index')
                 ->with('status', 'You are not authorized to delete this act.');
         }
