@@ -72,3 +72,31 @@
     height: 30px;
     z-index: 1000;
 }
+
+.bm_upload {
+    border: 1px solid rgb(200, 130, 130);
+    padding: 10px;
+}
+
+.bm_image {
+    border: 1px solid rgb(231, 219, 219);
+    width: 100%;
+    height: 500px;
+}
+
+.bm_zoom {
+    padding: 5px;
+    /* background-color: green; */
+    transition: transform .2s;
+    /* Animation */
+    /* width: 100%;
+    height: 90%; */
+    margin: 0 auto;
+    z-index: 10;
+}
+
+.bm_zoom:hover {
+    transform: scale(1.5);
+    position: absolute;
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}

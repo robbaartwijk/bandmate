@@ -69,8 +69,13 @@
                                         @include('alerts.feedback', ['field' => 'active'])
                                     </div>
 
-                                    <input class="btn btn-info w-100" type="file" id="ActPic" name="ActPic" accept="image/*">
-
+                                    <div class="bm_upload">
+                                        <label for="ActPic">
+                                            <h3>Add picture</h3>
+                                        </label>
+                                        <input type="file" class="btn btn-info" id="ActPic" name="ActPic" accept="image/*" style="border: 1px solid #ccc; padding: 5px;">
+                                        @include('alerts.feedback', ['field' => 'active'])
+                                    </div>
 
                             </div>
                         </div>

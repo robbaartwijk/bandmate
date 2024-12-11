@@ -6,6 +6,7 @@ use App\Models\Act;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ActController extends Controller
@@ -88,26 +89,9 @@ class ActController extends Controller
      */
     public function storeActImage(Request $request, Act $act)
     {
-        $currentUserId = Auth::user()->id;
-
-        $folder = $currentUserId . '/ActPics' . '/' . $act->id;
-
-        $path = storage_path('/app/public/uploads/'.$folder);
-
-        $file = $request->file('ActPic');
-
-        $filename = $file->getClientOriginalName();
-
         if ($request->hasFile('ActPic')) {
-            $file->move($path, $filename);
+            $act->addMediaFromRequest('ActPic')->toMediaCollection('images/ActPics');
         }
-
-        if (isset($folder)) {
-
-            $folder = $folder . '/' . $filename;
-            $act->addMedia(storage_path('app/public/uploads/' . $folder))->toMediaCollection('images/ActPics');
-        }
-
     }
 
     /**
@@ -116,21 +100,11 @@ class ActController extends Controller
     public function show(Act $act)
     {
         $currentUserId = Auth::user()->id;
-        
+
         $genre = Genre::find($act->genre_id);
 
-        $actImage = $act->getFirstMedia($currentUserId . '/ActPics');
+        $act->image = $act->getFirstMedia('images/ActPics');
 
-        // $actImage = $act->getFirstMedia('uploads/' . $act->id . '/ActPics');
-        
-        // dd($actImage);
-
-        $act->image = $actImage->getUrl(); 
-        $act->imageFullUrl = $actImage->getFullUrl(); 
-        $act->imagePath = $actImage->getPath(); 
-        
-        dd($act);
-        
         return view('acts.show', compact(['act', 'genre']));
     }
 
