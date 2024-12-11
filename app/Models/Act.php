@@ -25,6 +25,7 @@ class Act extends Authenticatable implements HasMedia
         'spotify',
         'soundcloud',
         'youtube',
+        'youtubedemo',
         'twitter',
         'instagram',
         'facebook',

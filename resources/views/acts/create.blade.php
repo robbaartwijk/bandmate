@@ -158,6 +158,15 @@
                             <input type="text" name="spotify" class="bm_general_input form-control {{ $errors->has('spotify') ? 'is-invalid' : '' }}" placeholder="Spotify" value="{{ old('spotify') }}">
                             @include('alerts.feedback', ['field' => 'spotify'])
                         </div>
+
+                        <div class="bm_form_group form-group {{ $errors->has('youtubedemo') ? 'has-danger' : '' }}"">
+                            <label for=" youtubedemo" class="bm_label_layout">
+                            <h3>Video</h3>
+                            </label>
+                            <input type="text" name="youtubedemo" class="bm_general_input form-control {{ $errors->has('youtubedemo') ? 'is-invalid' : '' }}" placeholder="Youtube Demo" value="{{ old('youtubedemo') }}">
+                            @include('alerts.feedback', ['field' => 'youtubedemo'])
+                        </div>
+
                     </div>
 
                     <div class="col-lg-12">

@@ -67,12 +67,15 @@ class ActController extends Controller
             'instagram' => ['nullable', 'url'],
             'twitter' => ['nullable', 'url'],
             'youtube' => ['nullable', 'url'],
+            'youtubedemo' => ['nullable', 'url'],
             'soundcloud' => ['nullable', 'url'],
             'spotify' => ['nullable', 'url'],
         ]);
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
+
+        $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
 
         $act->save();
 
@@ -143,6 +146,7 @@ class ActController extends Controller
             'instagram' => ['nullable', 'url'],
             'twitter' => ['nullable', 'url'],
             'youtube' => ['nullable', 'url'],
+            'youtubedemo' => ['nullable', 'url'],
             'soundcloud' => ['nullable', 'url'],
             'spotify' => ['nullable', 'url'],
         ]);
@@ -151,6 +155,8 @@ class ActController extends Controller
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
+        
+        $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
 
         $act->update();
 

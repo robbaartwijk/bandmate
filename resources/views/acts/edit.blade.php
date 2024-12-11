@@ -69,6 +69,14 @@
                                         @include('alerts.feedback', ['field' => 'active'])
                                     </div>
 
+                                    <div class="bm_upload">
+                                        <label for="ActPic">
+                                            <h3>Add or replace picture</h3>
+                                        </label>
+                                        <input type="file" class="btn btn-info" id="ActPic" name="ActPic" accept="image/*" style="border: 1px solid #ccc; padding: 5px;">
+                                        @include('alerts.feedback', ['field' => 'active'])
+                                    </div>
+
                             </div>
                         </div>
                     </div>
@@ -159,6 +167,15 @@
                         {{ $errors->has('spotify') ? 'is-invalid' : '' }}" placeholder="Spotify" value="{{ $act->spotify }}">
                             @include('alerts.feedback', ['field' => 'spotify'])
                         </div>
+
+                        <div class="bm_form_group form-group {{ $errors->has('youtubedemo') ? 'has-danger' : '' }}"">
+                            <label for=" youtubedemo" class="bm_label_layout">
+                            <h3>Video</h3>
+                            </label>
+                            <input type="text" name="youtubedemo" class="bm_general_input form-control {{ $errors->has('youtubedemo') ? 'is-invalid' : '' }}" placeholder="Youtube Demo" value="{{ $act->youtubedemo }}">
+                            @include('alerts.feedback', ['field' => 'youtubedemo'])
+                        </div>
+
                     </div>
 
                     <div class="col-lg-12">

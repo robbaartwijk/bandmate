@@ -26,7 +26,7 @@
                         <h4><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h4>
 
                         @if (!empty($act->image))
-                            <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}" class="img-fluid bm_image bm_zoom bm_zoom_hover" >
+                        <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}" class="img-fluid bm_image bm_zoom bm_zoom_hover">
                         @endif
 
                     </div>
@@ -93,6 +93,16 @@
                 </div>
             </div>
 
+            @if (!empty($act->youtubedemo))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body text-primary" style="height: 900px;">
+                        <iframe width="100%" height="100%" src="{{ $act->youtubedemo }}"></iframe>
+                    </div>
+                </div>
+            </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card-body text-primary">
@@ -103,7 +113,7 @@
                 </div>
             </div>
 
+
         </div>
     </div>
-</div>
-@endsection
+    @endsection
