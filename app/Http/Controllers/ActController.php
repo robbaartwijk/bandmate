@@ -96,7 +96,7 @@ class ActController extends Controller
             $act->addMediaFromRequest('ActPic')->toMediaCollection('images/ActPics');
         }
     }
-
+    
     /**
      * Display the specified resource.
      */
