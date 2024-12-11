@@ -174,10 +174,13 @@ class ActController extends Controller
                 ->with('status', 'You are not authorized to delete this act.');
         }
 
+        $act->clearMediaCollection('images/ActPics');
+        
         $vacancies = $act->vacancy;
         foreach ($vacancies as $vacancy) {
             $vacancy->delete();
         }
+
         $act->delete();
 
         return redirect()->route('acts.index')
