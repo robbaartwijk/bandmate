@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
 
-class Rehearsalroom extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+class Rehearsalroom extends Authenticatable implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
@@ -30,6 +33,11 @@ class Rehearsalroom extends Model
     public function user()
 {
     return $this->belongsTo('App\Models\User');
+}
+
+public function hasRehearsalroomMedia()
+{
+    return $this->media()->count() > 0;
 }
 
 }

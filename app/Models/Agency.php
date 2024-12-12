@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Agency extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+class Agency extends Authenticatable implements HasMedia
 {
     use HasFactory;
     use SoftDeletes;
@@ -35,4 +38,10 @@ class Agency extends Model
     {
         return $this->hasMany('App\Models\Act');
     }
+
+    public function hasActMedia()
+    {
+        return $this->media()->count() > 0;
+    }
+
 }
