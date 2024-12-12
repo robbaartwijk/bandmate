@@ -79,7 +79,7 @@ class ActController extends Controller
 
         $act->save();
 
-        if ($request->hasFile('ActPic')) {
+        if ($request->hasFile('actpic')) {
             $this->storeActImage($request, $act);
         }
 
@@ -87,16 +87,6 @@ class ActController extends Controller
             ->with('status', 'Act created successfully.');
     }
 
-    /**
-     * Store a newly created image resource in storage.
-     */
-    public function storeActImage(Request $request, Act $act)
-    {
-        if ($request->hasFile('ActPic')) {
-            $act->addMediaFromRequest('ActPic')->toMediaCollection('images/ActPics');
-        }
-    }
-    
     /**
      * Display the specified resource.
      */
@@ -155,8 +145,12 @@ class ActController extends Controller
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
-        
+
         $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
+        if ($request->hasFile('actpic')) {
+            $this->clearActImage($act);
+            $this->storeActImage($request, $act);
+        }
 
         $act->update();
 
@@ -175,7 +169,7 @@ class ActController extends Controller
         }
 
         $act->clearMediaCollection('images/ActPics');
-        
+
         $vacancies = $act->vacancy;
         foreach ($vacancies as $vacancy) {
             $vacancy->delete();
@@ -186,4 +180,21 @@ class ActController extends Controller
         return redirect()->route('acts.index')
             ->with('status', 'Act deleted successfully');
     }
+
+    /**
+     * Store a newly created image resource in storage.
+     */
+    public function storeActImage(Request $request, Act $act)
+    {
+        $act->addMediaFromRequest('actpic')->toMediaCollection('images/ActPics');
+    }
+
+    /**
+     * Remove the specified image resource from storage.
+     */
+    public function clearActImage($act)
+    {
+        $act->clearMediaCollection('images/ActPics');
+    }
+
 }

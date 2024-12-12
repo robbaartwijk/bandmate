@@ -69,12 +69,12 @@
                                         @include('alerts.feedback', ['field' => 'active'])
                                     </div>
 
-                                    <div class="bm_upload">
-                                        <label for="ActPic">
-                                            <h3>Add picture</h3>
+                                    <div class="bm_upload_box">
+                                        <label class="bm_upload_label" for="actpic">
+                                            <h3>Act picture</h3>
                                         </label>
-                                        <input type="file" class="btn btn-info" id="ActPic" name="ActPic" accept="image/*" style="border: 1px solid #ccc; padding: 5px;">
-                                        @include('alerts.feedback', ['field' => 'active'])
+                                        <input type="file" class="bm_upload btn btn-info" id="actpic" name="actpic" accept="image/*" onchange="validateFileSize(this)">
+                                        @include('alerts.feedback', ['field' => 'actpic'])
                                     </div>
 
                             </div>
@@ -202,5 +202,15 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('actpic').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file.size > 1048576) { // 1MB in bytes
+                alert('File size must be less than 1MB');
+                this.value = '';
+            }
+        });
+    </script>
 
     @endsection

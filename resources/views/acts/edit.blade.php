@@ -18,7 +18,7 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('acts.update', $act->id) }}" method="post">
+                                <form action="{{ route('acts.update', $act->id) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('put')
 
@@ -37,7 +37,7 @@
                                         <input type="number" min="1" name="number_of_members" class="bm_general_input form-control {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}" placeholder="Number of Members" value="{{ $act->number_of_members }}">
                                         @include('alerts.feedback', ['field' => 'number_of_members'])
                                     </div>
-                                    
+
                                     <div class="bm_form_group form-group {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
                                         <label for="genre_id" class="bm_label_layout">
                                             <h3>Genre</h3>
@@ -69,12 +69,12 @@
                                         @include('alerts.feedback', ['field' => 'active'])
                                     </div>
 
-                                    <div class="bm_upload">
-                                        <label for="ActPic">
-                                            <h3>Add or replace picture</h3>
+                                    <div class="bm_upload_box">
+                                        <label class="bm_upload_label" for="actpic">
+                                            <h3>Act picture</h3>
                                         </label>
-                                        <input type="file" class="btn btn-info" id="ActPic" name="ActPic" accept="image/*" style="border: 1px solid #ccc; padding: 5px;">
-                                        @include('alerts.feedback', ['field' => 'active'])
+                                        <input type="file" class="bm_upload btn btn-info" id="actpic" name="actpic" accept="image/*" onchange="validateFileSize(this)">
+                                        @include('alerts.feedback', ['field' => 'actpic'])
                                     </div>
 
                             </div>
@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="bm_form_group form-group {{ $errors->has('instagram') ? 'has-danger' : '' }}">
-                            <label for="instagram"class="bm_label_layout">
+                            <label for="instagram" class="bm_label_layout">
                                 <h3>Instagram</h3>
                             </label>
                             <input type="text" min="1" name="instagram" class="bm_general_input form-control
@@ -211,4 +211,16 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function validateFileSize(input) {
+            const file = input.files[0];
+            if (file && file.size > 1048576) {
+                alert('File size must be less than 1MB');
+                input.value = '';
+            }
+        }
+
+    </script>
+
     @endsection
