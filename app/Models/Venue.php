@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\User;
+use Spatie\MediaLibrary\HasMedia;
 
-class Venue extends Model {
-    
-    use SoftDeletes;
+class Venue extends Authenticatable implements HasMedia
+{
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -24,10 +22,17 @@ class Venue extends Model {
         'phone',
         'email',
         'website',
-        'description'
+        'description',
     ];
 
-    public function user() {
-        return $this->belongsTo( 'App\Models\User' );
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
     }
+
+    public function hasVenueMedia()
+{
+    return $this->media()->count() > 0;
+}
+
 }
