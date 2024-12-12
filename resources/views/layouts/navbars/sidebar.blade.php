@@ -12,7 +12,7 @@ $user = auth()->user();
         <ul class="nav">
 
             <li>
-                <a data-toggle="collapse" href="#userdata" aria-expanded="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' || $pageSlug == 'rehearsalrooms' ? 'false' : 'true' }}" class="{{ $pageSlug == 'vacancies' || $pageSlug == 'acts' ? 'collapsed' : '' }}">
+                <a data-toggle="collapse" href="#userdata" aria-expanded="true" class="">
                     <i class="fa fa-music"></i>
                     <span class="nav-link-text">
                         <h4>{{ __('User Access') }}</h4>
@@ -20,8 +20,7 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies') 
-                show @endif" id="userdata" data-parent=".sidebar-wrapper">
+                <div class="collapse show" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
                             <a href="{{ route('acts.index') }}">
