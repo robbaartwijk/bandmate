@@ -93,7 +93,7 @@ $user = auth()->user();
                                 <form action="{{ route('acts.destroy', $act->id) }}" method="post" style="display:inline">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
+                                    <button type="button" class="btn btn-danger btn-link btn-icon btn-sm" onclick="if(confirm('Are you sure you want to delete this act?')) { this.closest('form').submit(); }">
                                         <i class="tim-icons icon-simple-remove"></i>
                                     </button>
                                 </form>

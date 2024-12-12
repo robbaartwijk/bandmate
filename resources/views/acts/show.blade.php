@@ -1,6 +1,13 @@
 @extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
 
 @section('content')
+
+@if(session()->has('status'))
+<div class="alert alert-success" id="status-message">
+    {{ session()->get('status') }}
+</div>
+@endif
+
 <div class="row">
     <div class="col-md-12">
         <div class="card ">
@@ -116,4 +123,12 @@
 
         </div>
     </div>
+
+    <script>
+        setTimeout(function() {
+            document.getElementById('status-message').style.display = 'none';
+        }, 2000);
+
+    </script>
+
     @endsection

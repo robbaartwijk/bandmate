@@ -83,8 +83,7 @@ class ActController extends Controller
             $this->storeActImage($request, $act);
         }
 
-        return redirect()->route('acts.index')
-            ->with('status', 'Act created successfully.');
+        return redirect()->route('acts.show', $act)->withStatus('Act added successfully');
     }
 
     /**
@@ -154,8 +153,7 @@ class ActController extends Controller
 
         $act->update();
 
-        return redirect()->route('acts.index')
-            ->with('status', 'Act updated successfully');
+        return redirect()->route('acts.show', $act)->withStatus('Act updated successfully');
     }
 
     /**

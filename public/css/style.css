@@ -75,14 +75,23 @@
 
 .bm_upload_label {
     height: 50px;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 17px;
+    color: #ffffff;
+    text-align: center;
 }
 
 .bm_upload {
     border: 1px solid rgb(200, 130, 130);
     width: 68%;
-    height: 45px;
-    margin-top: 20px;
+    height: 50px;
     margin-right: auto;
+    margin-left: auto;
+    font-size: 17px;
+    text-align: center;
+
 }
 
 .bm_upload_box {
