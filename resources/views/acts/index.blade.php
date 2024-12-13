@@ -24,19 +24,29 @@ $user = auth()->user();
                         <form action="{{ route('acts.index') }}" method="get">
                             <div class="input-group no-border">
 
+                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('acts.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
+                                    <option value="25">Select 25 acts</option>
+                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
+                                        Select 50 acts
+                                    </option>
+                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
+                                        Select 100 acts
+                                    </option>
+                                </select>
+
                                 <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
 
-                                <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('acts.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
-                                    <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
+                                <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('acts.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
+                                    <option value="name" {{ request()->sort == 'name' ? 'selected' : 'name' }}>
                                         Sort by name
                                     </option>
-                                    <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>
+                                    <option value="description" {{ request()->sort == 'description' ? 'selected' : 'name' }}>
                                         Sort by description
                                     </option>
-                                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
+                                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : 'name' }}>
                                         Sort by date added
                                     </option>
-                                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
+                                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : 'name' }}>
                                         Sort by date last update
                                     </option>
                                 </select>
@@ -107,9 +117,13 @@ $user = auth()->user();
             </div>
         </div>
 
-        <div class="float-left" style="color:white">
+        {{ $acts->links() }}
+
+        @if($acts->count() < 20) <div class="float-left" style="color:white">
             {{ $acts->count() }} {{ $acts->count() > 1 ? 'acts found' : 'act found' }}
-        </div>
     </div>
+    @endif
+
+</div>
 </div>
 @endsection

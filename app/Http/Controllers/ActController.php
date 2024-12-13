@@ -17,6 +17,7 @@ class ActController extends Controller
     public function index(Request $request)
     {
         $sort = $request->input('sort') ?? 'name';
+        $select = $request->input('selectrecords') ?? 25;
 
         $query = Act::with('genre')->orderBy($sort);
 
@@ -32,7 +33,7 @@ class ActController extends Controller
             $query->where('user_id', Auth::user()->id);
         }
 
-        $acts = $query->get();
+        $acts = $query->paginate($select)->onEachSide(1);
 
         return view('acts.index', compact('acts'));
     }
