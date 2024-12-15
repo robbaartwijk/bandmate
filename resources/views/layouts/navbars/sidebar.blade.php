@@ -95,7 +95,7 @@ $user = auth()->user();
                                 </p>
                             </a>
                         </li>
-                        
+
                         <li @if ($pageSlug=='chart' ) class="active " @endif>
                             <a href="{{ route('statistics.chart3') }}">
                                 <i class="fa fa-chart-bar"></i>
@@ -144,6 +144,7 @@ $user = auth()->user();
             </li>
             @endif
 
+            @if($user->is_admin)
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
                     <i class="fa fa-user-circle"></i>
@@ -173,6 +174,7 @@ $user = auth()->user();
                     </ul>
                 </div>
             </li>
+            @endif
         </ul>
     </div>
 </div>
