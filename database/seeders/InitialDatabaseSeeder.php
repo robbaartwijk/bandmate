@@ -31,11 +31,16 @@ class InitialDatabaseSeeder extends Seeder
         ]);
 
         // Fill main tables
-        Rehearsalroom::factory(10)->create();
+        Rehearsalroom::factory(5)->create();
 
         // Fill user data tables
-        Act::factory(10)->create();
-        Vacancy::factory(20)->create();
+
+        // Add standard users and fill table with random users
+        $this->call([
+            ActSeeder::class,
+        ]);
+
+        Vacancy::factory(15)->create();
 
         $this->call([
             VenueSeeder::class,
