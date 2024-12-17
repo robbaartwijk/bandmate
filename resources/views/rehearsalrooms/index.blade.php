@@ -17,15 +17,25 @@ $user = auth()->user();
                     <a href="{{ route('rehearsalrooms.create') }}" class="btn btn-primary">Add rehearsal room</a>
 
                     @if(request()->has('private') && request()->private)
-                        <a href="{{ route('rehearsalrooms.index', ['private' => false]) }}" class="btn btn-info">Show all rehearsalrooms</a>
+                    <a href="{{ route('rehearsalrooms.index', ['private' => false]) }}" class="btn btn-info">Show all rehearsalrooms</a>
                     @else
-                        <a href="{{ route('rehearsalrooms.index', ['private' => true]) }}" class="btn btn-info">Show only my rehearsalrooms</a>
+                    <a href="{{ route('rehearsalrooms.index', ['private' => true]) }}" class="btn btn-info">Show only my rehearsalrooms</a>
                     @endif
 
                     <div class="float-right">
 
                         <form action="{{ route('rehearsalrooms.index') }}" method="get">
                             <div class="input-group no-border">
+
+                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('rehearsalrooms.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
+                                    <option value="25">Select 25 acts</option>
+                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
+                                        Select 50 rehearsalrooms
+                                    </option>
+                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
+                                        Select 100 rehearsalrooms
+                                    </option>
+                                </select>
 
                                 <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
 
@@ -109,12 +119,16 @@ $user = auth()->user();
                 </table>
             </div>
         </div>
-    </div>
 
-    <div class="float-left" style="color:white">
-        {{ $rehearsalrooms->count() }}
-        {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
-    </div>
+        {{ $rehearsalrooms->links() }}
 
+        {{-- </div> --}}
+
+        @if($rehearsalrooms->count() < 25) <div class="float-left" style="color:white">
+            {{ $rehearsalrooms->count() }} {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
+    </div>
+    @endif
+
+</div>
 </div>
 @endsection

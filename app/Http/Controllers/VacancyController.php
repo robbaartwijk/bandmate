@@ -16,13 +16,15 @@ class VacancyController extends Controller
      */
     public function index(Request $request)
     {
+        $select = $request->input('selectrecords') ?? 25;
+
         $query = Vacancy::with(['user', 'act']);
 
         if ($request->private == true) {
             $query->where('user_id', Auth::user()->id);
         }
 
-        $vacancies = $query->get();
+        $vacancies = $query->paginate($select)->onEachSide(1);
 
         foreach ($vacancies as $vacancy) {
             $vacancy->user_name = $vacancy->user->name;

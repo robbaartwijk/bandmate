@@ -35,7 +35,7 @@ class ActController extends Controller
 
         $acts = $query->paginate($select)->onEachSide(1);
 
-        return view('acts.index', compact('acts'));
+        return view('acts.index', compact(['acts']));
     }
 
     /**

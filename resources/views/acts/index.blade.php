@@ -17,9 +17,9 @@ $user = auth()->user();
                     <a href="{{ route('acts.create') }}" class="btn btn-primary">Add act</a>
 
                     @if(request()->has('private') && request()->private)
-                        <a href="{{ route('acts.index', ['private' => false]) }}" class="btn btn-info">Show all acts</a>
+                    <a href="{{ route('acts.index', ['private' => false]) }}" class="btn btn-info">Show all acts</a>
                     @else
-                        <a href="{{ route('acts.index', ['private' => true]) }}" class="btn btn-info">Show only my acts</a>
+                    <a href="{{ route('acts.index', ['private' => true]) }}" class="btn btn-info">Show only my acts</a>
                     @endif
 
                     <div class="float-right">
@@ -122,7 +122,7 @@ $user = auth()->user();
 
         {{ $acts->links() }}
 
-        @if($acts->count() < 20) <div class="float-left" style="color:white">
+        @if($acts->count() < 25) <div class="float-left" style="color:white">
             {{ $acts->count() }} {{ $acts->count() > 1 ? 'acts found' : 'act found' }}
     </div>
     @endif

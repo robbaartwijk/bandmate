@@ -14,38 +14,34 @@ class RehearsalroomController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
-        } else {
-            $sort = 'name';
-        }
+        $select = $request->input('selectrecords') ?? 25;
 
-        $query = Rehearsalroom::query()->orderBy($sort);
+        $sort = $request->input('sort') ?? 'name';
 
-        if ($request->private == true) {
+        $query = Rehearsalroom::query();
+
+        $query->orderBy($sort);
+
+        if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
         }
 
-        $rehearsalrooms = $query->get();
-
-        if (request()->has('search')) {
-            $search = request()->input('search');
-            $rehearsalrooms = $rehearsalrooms->filter(function ($rehearsalroom) use ($search) {
-                return (stripos($rehearsalroom->name, $search) !== false) ||
-                    (stripos($rehearsalroom->city, $search) !== false) ||
-                    (stripos($rehearsalroom->country, $search) !== false) ||
-                    (stripos($rehearsalroom->created_at, $search) !== false) ||
-                    (stripos($rehearsalroom->updated_at, $search) !== false); 
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('country', 'like', "%{$search}%")
+                    ->orWhere('created_at', 'like', "%{$search}%")
+                    ->orWhere('updated_at', 'like', "%{$search}%");
             });
         }
 
-        if (request()->has('sort')) {
-            $rehearsalrooms = $rehearsalrooms->sortBy($sort);
-        }
-
-        $rehearsalrooms->count = $rehearsalrooms->count();
+        $rehearsalrooms = $query->paginate($select)->onEachSide(1);
+        $rehearsalrooms->appends(['selectrecords' => $select]);
 
         return view('rehearsalrooms.index', compact('rehearsalrooms'));
+
     }
 
     /**
@@ -77,7 +73,9 @@ class RehearsalroomController extends Controller
 
         $rehearsalroom->user_id = Auth::user()->id;
         $rehearsalroom->fill($request->all());
-
+        $rehearsalroom->fill($request->only([
+            'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website'
+        ]));
         $rehearsalroom->save();
         return redirect()->route('rehearsalrooms.index');
     }
@@ -95,23 +93,23 @@ class RehearsalroomController extends Controller
      */
     public function edit(Rehearsalroom $rehearsalroom)
     {
-        if (!Auth::user()->is_admin && $rehearsalroom->user_id !== Auth::user()->id) {
+        if (!$this->isAuthorized($rehearsalroom)) {
             return redirect()->route('rehearsalrooms.index')
             ->with('status', 'You are not authorized to edit this rehearsal room.');
-        };
+        }
 
         return view('rehearsalrooms.edit', compact('rehearsalroom'));
-    } 
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Rehearsalroom $rehearsalroom)
     {
-        if (!Auth::user()->is_admin && $rehearsalroom->user_id !== Auth::user()->id) {
+        if (!$this->isAuthorized($rehearsalroom)) {
             return redirect()->route('rehearsalrooms.index')
             ->with('status', 'You are not authorized to edit this rehearsal room.');
-        };
+        }
 
         $request->validate([
             'name' => 'required',
@@ -120,7 +118,6 @@ class RehearsalroomController extends Controller
             'email' => 'required',
         ]);
 
-        // dd($request->all());
 
 
         $rehearsalroom->update($request->all());
@@ -134,14 +131,23 @@ class RehearsalroomController extends Controller
      */
     public function destroy(Rehearsalroom $rehearsalroom)
     {
-        if (!Auth::user()->is_admin && $rehearsalroom->user_id !== Auth::user()->id) {
+        if (!$this->isAuthorized($rehearsalroom)) {
             return redirect()->route('rehearsalrooms.index')
             ->with('status', 'You are not authorized to delete this rehearsal room.');
-        };
+        }
 
         $rehearsalroom->delete();
 
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room deleted successfully');
     }
+
+    /**
+     * Check if the user is authorized to perform an action on the rehearsal room.
+     */
+    private function isAuthorized(Rehearsalroom $rehearsalroom)
+    {
+        return Auth::user()->is_admin || $rehearsalroom->user_id === Auth::user()->id;
+    }
+
 }
