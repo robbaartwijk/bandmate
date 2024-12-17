@@ -92,8 +92,6 @@ class ActController extends Controller
      */
     public function show(Act $act)
     {
-        $currentUserId = Auth::user()->id;
-
         $genre = Genre::find($act->genre_id);
 
         $act->image = $act->getFirstMedia('images/ActPics');
