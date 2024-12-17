@@ -17,8 +17,11 @@ $user = auth()->user();
 
                     <a href="{{ route('vacancies.create') }}" class="btn btn-primary">Add vacancy</a>
 
-                    <a href="{{ route('vacancies.index', ['private' => false]) }}" class="btn btn-info">Show all vacancies</a>
-                    <a href="{{ route('vacancies.index', ['private' => true]) }}" class="btn btn-info">Show only my vacancies</a>
+                    @if(request()->has('private') && request()->private)
+                        <a href="{{ route('vacancies.index', ['private' => false]) }}" class="btn btn-info">Show all vacancies</a>
+                    @else
+                        <a href="{{ route('vacancies.index', ['private' => true]) }}" class="btn btn-info">Show only my vacancies</a>
+                    @endif
 
                     <div class="float-right">
                         <form action="{{ route('vacancies.index') }}" method="get">

@@ -16,8 +16,11 @@ $user = auth()->user();
 
                     <a href="{{ route('rehearsalrooms.create') }}" class="btn btn-primary">Add rehearsal room</a>
 
-                    <a href="{{ route('rehearsalrooms.index', ['private' => false]) }}" class="btn btn-info">Show all rehearsalrooms</a>
-                    <a href="{{ route('rehearsalrooms.index', ['private' => true]) }}" class="btn btn-info">Show only my rehearsalrooms</a>
+                    @if(request()->has('private') && request()->private)
+                        <a href="{{ route('rehearsalrooms.index', ['private' => false]) }}" class="btn btn-info">Show all rehearsalrooms</a>
+                    @else
+                        <a href="{{ route('rehearsalrooms.index', ['private' => true]) }}" class="btn btn-info">Show only my rehearsalrooms</a>
+                    @endif
 
                     <div class="float-right">
 
