@@ -10,7 +10,7 @@
 
                 <div class="card-body text-primary">
 
-                    <h4><b>Act name : </b>{{ $vacancy->act_name }}</h4>
+                    <h4><b>Act name : </b><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></h4>
                     <h4><b>Instrument : </b>{{ $vacancy->instrument_name }}</h4>
                     <h4><b>Description : </b>{{ $vacancy->description }}</h4>
 
