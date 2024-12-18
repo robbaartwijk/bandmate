@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use IcehouseVentures\LaravelChartjs\Facades\Chartjs;
 
-
 class StatisticController extends Controller
 {
     /**
@@ -70,23 +69,23 @@ class StatisticController extends Controller
                         'brown',
                         'grey',
                         'cyan',
-                        'lime'
+                        'lime',
                     ],
                     'borderColor' => 'white',
                     'data' => $data,
                 ],
 
-                ])
-                ->options([
-                    'plugins' => [
-                        'datalabels' => [
-                            'color' => '#FFCE56',
-                        ],
-                        'colors' => [
-                            'forceOverride'=> true,
-                            'enabled' => false,
-                        ],
+            ])
+            ->options([
+                'plugins' => [
+                    'datalabels' => [
+                        'color' => '#FFCE56',
                     ],
+                    'colors' => [
+                        'forceOverride' => true,
+                        'enabled' => false,
+                    ],
+                ],
 
             ])
             ->options([
@@ -96,22 +95,22 @@ class StatisticController extends Controller
                         'position' => 'right',
                         'ticks' => [
                             'min' => 1,
-                            'max' => 1000
-                        ]
-                    ]
-                ]
+                            'max' => 1000,
+                        ],
+                    ],
+                ],
             ])
 
             ->options([
                 'plugins' => [
                     'colors' => [
-                        'forceOverride'=> true,
+                        'forceOverride' => true,
                         'enabled' => false,
                     ],
                 ],
                 'scales' => [
                     'xAxes' => [[
-                    'type' => 'category',
+                        'type' => 'category',
                     ]],
                 ],
                 'title' => [
@@ -120,10 +119,10 @@ class StatisticController extends Controller
                 ],
                 'datalabels' => [
                     'color' => '#36A2EB',
-                ]
+                ],
             ]);
 
-            return view('statistics.chart1', compact('chartuserregistrations')); 
+        return view('statistics.chart1', compact('chartuserregistrations'));
     }
 
     /**
@@ -154,7 +153,7 @@ class StatisticController extends Controller
 
         $chartvacanciesperinstrument = Chartjs::build()
             ->name('VacanciesPerInstrument')
-            ->type('doughnut')
+            ->type('bar')
             ->size(['width' => '75%', 'height' => '75%'])
             ->labels($labels)
             ->datasets([
@@ -169,31 +168,48 @@ class StatisticController extends Controller
                         'brown',
                         'grey',
                         'cyan',
-                        'lime'
+                        'lime',
                     ],
-                    'label' => 'Vacancies per instrument',
+                    'label' => 'Vacancies for instrument',
                     'borderColor' => 'white',
                     'data' => $data,
                 ],
             ])
             ->options([
-                'legend' => [
-                    'labels' => [
-                      'fontColor' => 'blue',
+                'plugins' => [
+                    'legend' => [
+                        'labels' => [
+                            'fontColor' => 'white',
+                        ],
+                        'display' => true,
+                        'labels' => [
+                            'color' => 'white',
+                        ],
                     ],
-                ],  
+                    'colors' => [
+                        'forceOverride' => true,
+                        'enabled' => false,
+                    ],
+                ],
                 'scales' => [
-                    'xAxes' => [[
-                        'type' => 'category',
-                    ]],
+                    'y' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                    ],
+                    'x' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                    ],
+                ],
+                'xAxes' => [
+                    'type' => 'category',
                 ],
                 'title' => [
                     'display' => true,
                     'text' => 'Vacancies per instrument',
+                    'fontsize' => '60',
                 ],
             ]);
 
-            return view('statistics.chart2', compact('chartvacanciesperinstrument')); 
+        return view('statistics.chart2', compact('chartvacanciesperinstrument'));
     }
 
     /**
@@ -244,7 +260,7 @@ class StatisticController extends Controller
                         'grey',
                         'cyan',
                         'magenta',
-                        'lime'
+                        'lime',
                     ],
                     'label' => 'Act Registrations',
                     'borderColor' => 'white',
@@ -263,6 +279,6 @@ class StatisticController extends Controller
                 ],
             ]);
 
-            return view('statistics.chart3', compact('chartactregistrations')); 
+        return view('statistics.chart3', compact('chartactregistrations'));
     }
 }

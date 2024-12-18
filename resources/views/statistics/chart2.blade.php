@@ -43,7 +43,7 @@
 
 
 <div class="col-md-12 text-center">
-    <h1>Vacancies per inststrument</h1>
+    <h1>Vacancies per instrument</h1>
 </div>
 
 <div class="container col-md-12">
@@ -59,6 +59,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 @endsection
