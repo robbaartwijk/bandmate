@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Instrument;
 use App\Models\Act;
+use App\Models\Instrument;
+use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class VacancyController extends Controller
+class VacancyController extends Authenticatable
 {
     /**
      * Display a listing of the resource.
@@ -17,34 +18,13 @@ class VacancyController extends Controller
     public function index(Request $request)
     {
         $select = $request->input('selectrecords') ?? 25;
-        $sort = $request->input('sort') ?? 'description';
 
-        $query = Vacancy::with('user');
+        $query = Vacancy::with(['user', 'act'])->orderBy('description');
 
-        if ($request->boolean('private')) {
+        if ($request->private == true) {
             $query->where('user_id', Auth::user()->id);
         }
 
-        // @TODO - Add search functionality
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($query) use ($search) {
-                $query->where('vacancies.description', 'like', "%{$search}%")
-                    ->orWhere('vacancies.created_at', 'like', "%{$search}%")
-                    ->orWhere('vacancies.updated_at', 'like', "%{$search}%");
-            });
-        }
-
-        if ($sort === 'instrument_name') {
-            $query->join('instruments', 'vacancies.instrument_id', '=', 'instruments.id')
-                  ->orderBy('instruments.name');
-        } else if ($sort === 'act_name') {
-            $query->join('acts', 'vacancies.act_id', '=', 'acts.id')
-                  ->orderBy('acts.name');
-        } else {
-            $query->orderBy($sort);
-        };
-        
         $vacancies = $query->paginate($select)->onEachSide(1);
         $vacancies->appends(['selectrecords' => $select]);
 
@@ -60,8 +40,26 @@ class VacancyController extends Controller
             $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
         }
 
-        return view('vacancies.index', compact('vacancies'));
+        if (request()->has('sort')) {
+            $sort = request()->input('sort');
+        } else {
+            $sort = 'act_name';
+        }
 
+        $vacancies = $vacancies->sortBy($sort);
+
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $vacancies = $vacancies->filter(function ($vacancy) use ($search) {
+                return stripos($vacancy->user_name, $search) !== false
+                || stripos($vacancy->act_name, $search) !== false
+                || stripos($vacancy->instrument_name, $search) !== false;
+            });
+        }
+
+        // dd($vacancies);
+
+        return view('vacancies.index', compact('vacancies'));
     }
 
     /**
@@ -94,7 +92,7 @@ class VacancyController extends Controller
             ->route('vacancies.index')
             ->with('status', 'Vacancy created successfully.');
     }
- 
+
     /**
      * Display the specified resource.
      */
@@ -179,13 +177,4 @@ class VacancyController extends Controller
         return redirect()->route('vacancies.index')
             ->with('status', 'Vacancy deleted successfully');
     }
-
-    /**
-     * Check if the user is authorized to perform an action on the vacancy.
-     */
-    private function isAuthorized(Vacancy $vacancy)
-    {
-        return Auth::user()->is_admin || $vacancy->user_id === Auth::user()->id;
-    }
-
 }
