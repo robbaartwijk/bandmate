@@ -27,7 +27,7 @@
                                             <h3>Act</h3>
                                         </label>
                                         <select name="act_id" class="bm_general_input form-control {{ $errors->has('act_id') ? 'is-invalid' : '' }}">
-                                            <option value="">Select</option>
+                                            <option value="{{ $vacancy->act_id }}">{{ $vacancy->act_name }}</option>
                                             @foreach ($acts as $act)
                                             <option value="{{ $act->id }}" {{ $vacancy->act_id == $act->id ? 'selected' : '' }}>
                                                 {{ $act->name }}

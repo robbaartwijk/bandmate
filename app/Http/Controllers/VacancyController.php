@@ -32,7 +32,6 @@ class VacancyController extends Controller
             ->onEachSide(1);
 
         return view('vacancies.index', compact('vacancies'));
-
     }
 
     /**
