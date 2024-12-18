@@ -41,7 +41,7 @@
 
 
 <div class="col-md-12 text-center">
-    <h1>Act registrations per month</h1>
+    <h1>Acts registration growth</h1>
 </div>
 
 <div class="container col-md-12">

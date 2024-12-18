@@ -53,12 +53,12 @@ class StatisticController extends Controller
 
         $chartuserregistrations = Chartjs::build()
             ->name('UserRegistrationsChart')
-            ->type('bar')
+            ->type('line')
             ->size(['width' => '75%', 'height' => '75%'])
             ->labels($labels)
             ->datasets([
                 [
-                    'label' => 'User Registrations',
+                    'label' => 'Registered Users',
                     'backgroundColor' => [
                         'blue',
                         'red',
@@ -103,22 +103,36 @@ class StatisticController extends Controller
 
             ->options([
                 'plugins' => [
+                    'legend' => [
+                        'labels' => [
+                            'fontColor' => 'white',
+                        ],
+                        'display' => true,
+                        'labels' => [
+                            'color' => 'white',
+                        ],
+                    ],
                     'colors' => [
                         'forceOverride' => true,
                         'enabled' => false,
                     ],
                 ],
                 'scales' => [
-                    'xAxes' => [[
-                        'type' => 'category',
-                    ]],
+                    'y' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                        'grid' => ['color' => 'grey'],
+                    ],
+                    'x' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                    ],
+                ],
+                'xAxes' => [
+                    'type' => 'category',
                 ],
                 'title' => [
                     'display' => true,
-                    'text' => 'Monthly User Registrations',
-                ],
-                'datalabels' => [
-                    'color' => '#36A2EB',
+                    'text' => 'Vacancies per instrument',
+                    'fontsize' => '60',
                 ],
             ]);
 
@@ -148,9 +162,11 @@ class StatisticController extends Controller
             ];
         })->values();
 
+        $vacanciesPerInstrument = $vacanciesPerInstrument->sortBy('instrument')->values();
+        
         $data = $vacanciesPerInstrument->pluck('count')->toArray();
         $labels = $vacanciesPerInstrument->pluck('instrument')->toArray();
-
+        
         $chartvacanciesperinstrument = Chartjs::build()
             ->name('VacanciesPerInstrument')
             ->type('bar')
@@ -194,6 +210,7 @@ class StatisticController extends Controller
                 'scales' => [
                     'y' => [
                         'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                        'grid' => ['color' => 'grey'],
                     ],
                     'x' => [
                         'ticks' => ['color' => 'white', 'beginAtZero' => true],
@@ -268,14 +285,37 @@ class StatisticController extends Controller
                 ],
             ])
             ->options([
+                'plugins' => [
+                    'legend' => [
+                        'labels' => [
+                            'fontColor' => 'white',
+                        ],
+                        'display' => true,
+                        'labels' => [
+                            'color' => 'white',
+                        ],
+                    ],
+                    'colors' => [
+                        'forceOverride' => true,
+                        'enabled' => false,
+                    ],
+                ],
                 'scales' => [
-                    'xAxes' => [[
-                        'type' => 'category',
-                    ]],
+                    'y' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                        'grid' => ['color' => 'grey'],
+                    ],
+                    'x' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                    ],
+                ],
+                'xAxes' => [
+                    'type' => 'category',
                 ],
                 'title' => [
                     'display' => true,
-                    'text' => 'Monthly Acts Registrations',
+                    'text' => 'Vacancies per instrument',
+                    'fontsize' => '60',
                 ],
             ]);
 
