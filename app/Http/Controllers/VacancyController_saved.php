@@ -57,8 +57,6 @@ class VacancyController extends Authenticatable
             });
         }
 
-        // dd($vacancies);
-
         return view('vacancies.index', compact('vacancies'));
     }
 
