@@ -33,7 +33,7 @@ class Vacancy extends Model
 
     public function instrument()
     {
-        return $this->hasOne('App\Models\Instrument');
+        return $this->belongsTo('App\Models\Instrument');
     }
 
 }

@@ -17,48 +17,19 @@ class VacancyController extends Controller
     public function index(Request $request)
     {
         $select = $request->input('selectrecords') ?? 25;
-        $sort = $request->input('sort') ?? 'description';
+        $sort = $request->input('sort') ?? 'act_name';
+        $search = $request->input('search') ?? '';
 
-        $query = Vacancy::with('user');
-
-        if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
-        }
-
-        // @TODO - Add search functionality
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($query) use ($search) {
-                $query->where('vacancies.description', 'like', "%{$search}%")
-                    ->orWhere('vacancies.created_at', 'like', "%{$search}%")
-                    ->orWhere('vacancies.updated_at', 'like', "%{$search}%");
-            });
-        }
-
-        if ($sort === 'instrument_name') {
-            $query->join('instruments', 'vacancies.instrument_id', '=', 'instruments.id')
-                  ->orderBy('instruments.name');
-        } else if ($sort === 'act_name') {
-            $query->join('acts', 'vacancies.act_id', '=', 'acts.id')
-                  ->orderBy('acts.name');
-        } else {
-            $query->orderBy($sort);
-        };
-        
-        $vacancies = $query->paginate($select)->onEachSide(1);
-        $vacancies->appends(['selectrecords' => $select]);
-
-        foreach ($vacancies as $vacancy) {
-            $vacancy->user_name = $vacancy->user->name;
-
-            if (! $vacancy->act) {
-                $vacancy->act_name = '* Act not found, may have been deleted *';
-            } else {
-                $vacancy->act_name = $vacancy->act->name;
-            }
-            
-            $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
-        }
+        $vacancies = Vacancy::with(['instrument', 'act'])
+            ->select('vacancies.*', 'instruments.name as instrument_name', 'acts.name as act_name')
+            ->join('instruments', 'vacancies.instrument_id', '=', 'instruments.id')
+            ->join('acts', 'vacancies.act_id', '=', 'acts.id')
+            ->where('vacancies.description', 'like', "%{$search}%")
+            ->orWhere('instruments.name', 'like', "%{$search}%")
+            ->orWhere('acts.name', 'like', "%{$search}%")
+            ->orderBy($sort, 'asc')
+            ->paginate($select)
+            ->onEachSide(1);
 
         return view('vacancies.index', compact('vacancies'));
 
