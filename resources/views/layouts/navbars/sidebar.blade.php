@@ -12,7 +12,7 @@ $user = auth()->user();
         <ul class="nav">
 
             <li>
-                <a data-toggle="collapse" href="#userdata" aria-expanded="true" class="">
+                <a data-toggle="collapse" href="#userdata" aria-expanded="true" class="show">
                     <i class="fa fa-music"></i>
                     <span class="nav-link-text">
                         <h4>{{ __('User Access') }}</h4>
@@ -20,7 +20,7 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse show" id="userdata" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' ) show @endif" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
                             <a href="{{ route('acts.index') }}">
@@ -95,7 +95,7 @@ $user = auth()->user();
                                 </p>
                             </a>
                         </li>
-
+                        
                         <li @if ($pageSlug=='chart' ) class="active " @endif>
                             <a href="{{ route('statistics.chart3') }}">
                                 <i class="fa fa-chart-bar"></i>
@@ -144,7 +144,6 @@ $user = auth()->user();
             </li>
             @endif
 
-            @if($user->is_admin)
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
                     <i class="fa fa-user-circle"></i>
@@ -174,7 +173,6 @@ $user = auth()->user();
                     </ul>
                 </div>
             </li>
-            @endif
         </ul>
     </div>
 </div>
