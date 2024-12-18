@@ -37,7 +37,7 @@
 
                                     <div class="bm_form_group form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
                                         <label for="instrument_id" class="bm_label_layout">
-                                            <h3>Genre</h3>
+                                            <h3>Instrument</h3>
                                         </label>
                                         <select name="instrument_id" class="bm_general_input form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}">
                                             <option value="">Select</option>

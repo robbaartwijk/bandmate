@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Instrument;
 use App\Models\Act;
+use App\Models\Instrument;
+use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,14 +19,20 @@ class VacancyController extends Controller
         $select = $request->input('selectrecords') ?? 25;
         $sort = $request->input('sort') ?? 'act_name';
         $search = $request->input('search') ?? '';
+        $private = $request->input('private') ?? false;
 
         $vacancies = Vacancy::with(['instrument', 'act'])
             ->select('vacancies.*', 'instruments.name as instrument_name', 'acts.name as act_name')
             ->join('instruments', 'vacancies.instrument_id', '=', 'instruments.id')
             ->join('acts', 'vacancies.act_id', '=', 'acts.id')
-            ->where('vacancies.description', 'like', "%{$search}%")
-            ->orWhere('instruments.name', 'like', "%{$search}%")
-            ->orWhere('acts.name', 'like', "%{$search}%")
+            ->where(function ($query) use ($search) {
+            $query->where('vacancies.description', 'like', "%{$search}%")
+                ->orWhere('instruments.name', 'like', "%{$search}%")
+                ->orWhere('acts.name', 'like', "%{$search}%");
+            })
+            ->when($private, function ($query) {
+            return $query->where('vacancies.user_id', '=' , Auth::user()->id);
+            })
             ->orderBy($sort, 'asc')
             ->paginate($select)
             ->onEachSide(1);
@@ -64,7 +70,7 @@ class VacancyController extends Controller
             ->route('vacancies.index')
             ->with('status', 'Vacancy created successfully.');
     }
- 
+
     /**
      * Display the specified resource.
      */
@@ -87,7 +93,7 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        if (!Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
+        if (! Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
             return redirect()->route('vacancies.index')
                 ->with('status', 'You are not authorized to edit this vacancy.');
         }
@@ -99,7 +105,7 @@ class VacancyController extends Controller
         $vacancy->act_name = $act->name;
 
         $acts = Auth::user()->acts->sortBy('name');
-        
+
         $instruments = Instrument::all()->sortBy(['type', 'name']);
 
         $instrument = Instrument::find($vacancy->instrument_id);
@@ -113,7 +119,7 @@ class VacancyController extends Controller
      */
     public function update(Request $request, Vacancy $vacancy)
     {
-        if (!Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
+        if (! Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
             return redirect()->route('vacancies.index')
                 ->with('status', 'You are not authorized to update this vacancy.');
         }
@@ -124,9 +130,7 @@ class VacancyController extends Controller
         ]);
 
         $vacancy->fill($request->all());
-        if (! $request->filled('description')) {
-            $vacancy->description = '';
-        }
+        $vacancy->description = $request->input('description');
 
         $vacancy->save();
 
@@ -139,7 +143,7 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        if (!Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
+        if (! Auth::user()->is_admin && $vacancy->user_id !== Auth::user()->id) {
             return redirect()->route('vacancies.index')
                 ->with('status', 'You are not authorized to delete this vacancy.');
         }
@@ -157,5 +161,4 @@ class VacancyController extends Controller
     {
         return Auth::user()->is_admin || $vacancy->user_id === Auth::user()->id;
     }
-
 }

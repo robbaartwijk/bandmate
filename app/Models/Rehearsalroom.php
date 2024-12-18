@@ -12,7 +12,6 @@ use App\Models\User;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
 class Rehearsalroom extends Authenticatable implements HasMedia
 {
     use HasFactory;

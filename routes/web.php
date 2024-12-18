@@ -6,8 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/genres/{genre}', 'App\Http\Controllers\GenreController@show')->name('genres.show');
-Route::get('/acts/{act}', 'App\Http\Controllers\ActController@show')->name('acts.show');
+// Route::get('/genres/{genre}', 'App\Http\Controllers\GenreController@show')->name('genres.show');
+// Route::get('/acts/{act}', 'App\Http\Controllers\ActController@show')->name('acts.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -31,9 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
 		'index' => 'instruments.index'
 	]);
 
-	Route::resource('genres', 'App\Http\Controllers\GenreController', ['except' => ['show']])->names([
+	Route::resource('genres', 'App\Http\Controllers\GenreController')->names([
 		'index' => 'genres.index'
-	]);
+	]);	
 
 	Route::resource('rehearsalrooms', 'App\Http\Controllers\RehearsalroomController')->names([
 		'index' => 'rehearsalrooms.index'
@@ -43,8 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
 		'index' => 'users.index'
 	]);
 
-	Route::resource('acts', 'App\Http\Controllers\ActController', ['except' => ['show']])->names([
-		'index' => 'acts.index'
+	Route::resource('acts', 'App\Http\Controllers\ActController')->names([
+		'index' => 'acts.index',
 	]);
 	
 	Route::resource('vacancies', 'App\Http\Controllers\VacancyController')->names([

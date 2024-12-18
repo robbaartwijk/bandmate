@@ -40,4 +40,9 @@ class Vacancy extends Authenticatable implements HasMedia
         return $this->belongsTo('App\Models\Instrument');
     }
 
+    public function hasVacancyMedia()
+{
+    return $this->media()->count() > 0;
+}
+
 }

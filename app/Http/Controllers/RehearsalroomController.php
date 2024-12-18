@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Rehearsalroom;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,29 +14,26 @@ class RehearsalroomController extends Controller
      */
     public function index(Request $request)
     {
-        $select = $request->input('selectrecords') ?? 25;
         $sort = $request->input('sort') ?? 'name';
+        $select = $request->input('selectrecords') ?? 25;
 
-        $query = Rehearsalroom::with('user');
+        $query = Rehearsalroom::with('user')->orderBy($sort);
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                ->orWhere('city', 'like', '%'.$search.'%')
+                ->orWhere('country', 'like', '%'.$search.'%');
+            });
+        }
 
         if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
         }
 
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('city', 'like', "%{$search}%")
-                    ->orWhere('country', 'like', "%{$search}%")
-                    ->orWhere('created_at', 'like', "%{$search}%")
-                    ->orWhere('updated_at', 'like', "%{$search}%");
-            });
-        }
-
         $rehearsalrooms = $query->paginate($select)->onEachSide(1);
-        $rehearsalrooms->appends(['selectrecords' => $select]);
-        
+
         return view('rehearsalrooms.index', compact('rehearsalrooms'));
 
     }
@@ -66,17 +63,18 @@ class RehearsalroomController extends Controller
             'website' => ['nullable', 'url'],
         ]);
 
-        $rehearsalroom = new Rehearsalroom();
+        $rehearsalroom = new Rehearsalroom;
 
         $rehearsalroom->user_id = Auth::user()->id;
         $rehearsalroom->fill($request->all());
         $rehearsalroom->fill($request->only([
-            'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website'
+            'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website',
         ]));
         $rehearsalroom->save();
+
         return redirect()->route('rehearsalrooms.index');
     }
- 
+
     /**
      * Display the specified resource.
      */
@@ -90,9 +88,9 @@ class RehearsalroomController extends Controller
      */
     public function edit(Rehearsalroom $rehearsalroom)
     {
-        if (!$this->isAuthorized($rehearsalroom)) {
+        if (! $this->isAuthorized($rehearsalroom)) {
             return redirect()->route('rehearsalrooms.index')
-            ->with('status', 'You are not authorized to edit this rehearsal room.');
+                ->with('status', 'You are not authorized to edit this rehearsal room.');
         }
 
         return view('rehearsalrooms.edit', compact('rehearsalroom'));
@@ -103,9 +101,9 @@ class RehearsalroomController extends Controller
      */
     public function update(Request $request, Rehearsalroom $rehearsalroom)
     {
-        if (!$this->isAuthorized($rehearsalroom)) {
+        if (! $this->isAuthorized($rehearsalroom)) {
             return redirect()->route('rehearsalrooms.index')
-            ->with('status', 'You are not authorized to edit this rehearsal room.');
+                ->with('status', 'You are not authorized to edit this rehearsal room.');
         }
 
         $request->validate([
@@ -115,9 +113,8 @@ class RehearsalroomController extends Controller
             'email' => 'required',
         ]);
 
-
-
-        $rehearsalroom->update($request->all());
+        $rehearsalroom->description = $request->description;
+        $rehearsalroom->save($request->all());
 
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room updated successfully');
@@ -128,9 +125,9 @@ class RehearsalroomController extends Controller
      */
     public function destroy(Rehearsalroom $rehearsalroom)
     {
-        if (!$this->isAuthorized($rehearsalroom)) {
+        if (! $this->isAuthorized($rehearsalroom)) {
             return redirect()->route('rehearsalrooms.index')
-            ->with('status', 'You are not authorized to delete this rehearsal room.');
+                ->with('status', 'You are not authorized to delete this rehearsal room.');
         }
 
         $rehearsalroom->delete();
@@ -146,5 +143,4 @@ class RehearsalroomController extends Controller
     {
         return Auth::user()->is_admin || $rehearsalroom->user_id === Auth::user()->id;
     }
-
 }
