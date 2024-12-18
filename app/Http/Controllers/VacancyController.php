@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Act;
-use App\Models\Instrument;
 use App\Models\User;
+use App\Models\Instrument;
+use App\Models\Act;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,14 +17,25 @@ class VacancyController extends Controller
     public function index(Request $request)
     {
         $select = $request->input('selectrecords') ?? 25;
+        $sort = $request->input('sort') ?? 'name';
 
-        $query = Vacancy::with(['user', 'act']);
+        $query = Vacancy::with('user');
 
-        if ($request->private == true) {
+        if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
         }
 
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('description', 'like', "%{$search}%")
+                    ->orWhere('created_at', 'like', "%{$search}%")
+                    ->orWhere('updated_at', 'like', "%{$search}%");
+            });
+        }
+
         $vacancies = $query->paginate($select)->onEachSide(1);
+        $vacancies->appends(['selectrecords' => $select]);
 
         foreach ($vacancies as $vacancy) {
             $vacancy->user_name = $vacancy->user->name;
@@ -38,23 +49,8 @@ class VacancyController extends Controller
             $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
         }
 
-        if (request()->has('sort')) {
-            $sort = request()->input('sort');
-        } else {
-            $sort = 'act_name';
-        }
-        $vacancies = $vacancies->sortBy($sort);
-
-        if (request()->has('search')) {
-            $search = request()->input('search');
-            $vacancies = $vacancies->filter(function ($vacancy) use ($search) {
-                return stripos($vacancy->user_name, $search) !== false
-                || stripos($vacancy->act_name, $search) !== false
-                || stripos($vacancy->instrument_name, $search) !== false;
-            });
-        }
-
         return view('vacancies.index', compact('vacancies'));
+
     }
 
     /**
@@ -87,7 +83,7 @@ class VacancyController extends Controller
             ->route('vacancies.index')
             ->with('status', 'Vacancy created successfully.');
     }
-
+ 
     /**
      * Display the specified resource.
      */
@@ -170,6 +166,15 @@ class VacancyController extends Controller
         $vacancy->delete();
 
         return redirect()->route('vacancies.index')
-            ->with('status', 'Vancac deleted successfully');
+            ->with('status', 'Vacancy deleted successfully');
     }
+
+    /**
+     * Check if the user is authorized to perform an action on the vacancy.
+     */
+    private function isAuthorized(Vacancy $vacancy)
+    {
+        return Auth::user()->is_admin || $vacancy->user_id === Auth::user()->id;
+    }
+
 }

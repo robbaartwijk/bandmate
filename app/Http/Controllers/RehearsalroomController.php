@@ -15,12 +15,9 @@ class RehearsalroomController extends Controller
     public function index(Request $request)
     {
         $select = $request->input('selectrecords') ?? 25;
-
         $sort = $request->input('sort') ?? 'name';
 
-        $query = Rehearsalroom::query();
-
-        $query->orderBy($sort);
+        $query = Rehearsalroom::with('user');
 
         if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
@@ -39,7 +36,7 @@ class RehearsalroomController extends Controller
 
         $rehearsalrooms = $query->paginate($select)->onEachSide(1);
         $rehearsalrooms->appends(['selectrecords' => $select]);
-
+        
         return view('rehearsalrooms.index', compact('rehearsalrooms'));
 
     }

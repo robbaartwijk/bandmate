@@ -28,6 +28,18 @@ $user = auth()->user();
 
                             <div class="input-group no-border">
 
+                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('vacancies.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
+                                    <option value="25" {{ request()->selectrecords == '25' ? 'selected' : '25' }}>
+                                        Select 25 vacancies
+                                    </option>
+                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
+                                        Select 50 vacancies
+                                    </option>
+                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
+                                        Select 100 vacancies
+                                    </option>
+                                </select>
+
                                 <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
 
                                 <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('vacancies.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
@@ -112,7 +124,11 @@ $user = auth()->user();
     </div>
 </div>
 
-<div class="float-left" style="color:white">
+{{ $vacancies->links() }}
+
+@if($vacancies->count() < 25) <div class="float-left" style="color:white">
     {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
 </div>
+@endif
+
 @endsection
