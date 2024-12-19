@@ -14,6 +14,7 @@ class AgencySeeder extends Seeder
     public function run(): void
     {
         DB::table('agencies')->insert([
+            'user_id' => 1,
             'name' => 'Interartists Amsterdam',
             'email' => 'info@hollandmanagement.nl',
             'phone' => '0172435433',
@@ -31,6 +32,7 @@ class AgencySeeder extends Seeder
         ]);
         
         DB::table('agencies')->insert([
+            'user_id' => 1,
             'name' => 'LIWYN Artist Agency',
             'address' => 'A-Lab, Overhoeksplein 2, LAB 206',
             'zip' => '1031 KS',
@@ -46,6 +48,7 @@ class AgencySeeder extends Seeder
         ]);
 
         DB::table('agencies')->insert([
+            'user_id' => 1,
             'name' => 'International Artists',
             'address' => 'Kampweg 20',
             'zip' => '5451 VA',
@@ -60,7 +63,7 @@ class AgencySeeder extends Seeder
             'updated_at' => now()
         ]);
 
-        // \App\Models\Agency::factory(100)->create([]);
+        \App\Models\Agency::factory(100)->create([]);
         
     }
 }

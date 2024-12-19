@@ -14,19 +14,23 @@ class AgencyController extends Controller
     public function index(Request $request)
     {
         $sort = $request->input('sort') ?? 'name';
+        $select = $request->input('selectrecords') ?? 25;
 
-        $query = Agency::query()->orderBy($sort);
+        $query = Agency::with('user')->orderBy($sort);
 
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%'.$search.'%')
-                ->orWhere('country', 'like', '%'.$search.'%')
                     ->orWhere('description', 'like', '%'.$search.'%');
             });
         }
 
-        $agencies = $query->get();
+        if ($request->boolean('private')) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        $agencies = $query->paginate($select)->onEachSide(1);
 
         return view('agencies.index', compact('agencies'));
     }

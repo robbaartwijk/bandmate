@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class VenueController extends Controller
 {
@@ -14,24 +16,24 @@ class VenueController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('sort')) {
-            $sort = $request->input('sort');
-        } else {
-            $sort = 'name';
-        }
+        $sort = $request->input('sort') ?? 'name';
+        $select = $request->input('selectrecords') ?? 25;
 
-        $query = Venue::query()->orderBy($sort);
+        $query = Venue::orderBy($sort);
 
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('website', 'like', '%'.$search.'%')
-                    ->orWhere('city', 'like', '%'.$search.'%');
+                    ->orWhere('description', 'like', '%'.$search.'%');
             });
         }
 
-        $venues = $query->get();
+        if ($request->boolean('private')) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        $venues = $query->paginate($select)->onEachSide(1);
 
         return view('venues.index', compact('venues'));
     }

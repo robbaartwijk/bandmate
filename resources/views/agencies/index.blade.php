@@ -17,10 +17,28 @@ $user = auth()->user();
                             <a href="{{ route('agencies.create') }}" class="btn btn-secondary">Add agency</a>
                         @endif
 
+                        @if($user->is_admin)
+                            @if(request()->has('private') && request()->private)
+                                <a href="{{ route('agencies.index', ['private' => false]) }}" class="btn btn-info">Show all agencies</a>
+                            @else
+                                <a href="{{ route('agencies.index', ['private' => true]) }}" class="btn btn-info">Show only my agencies</a>
+                            @endif
+                        @endif
+
                         <div class="float-right">
 
                             <form action="{{ route('agencies.index') }}" method="get">
                                 <div class="input-group no-border">
+
+                                    <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('agencies.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
+                                        <option value="25">Select 25 agencies</option>
+                                        <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
+                                            Select 50 venues
+                                        </option>
+                                        <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
+                                            Select 100 venues
+                                        </option>
+                                    </select>
 
                                     <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
 
@@ -72,6 +90,11 @@ $user = auth()->user();
                                 <th>Description</th>
                                 <th>Date added</th>
                                 <th>Date last update</th>
+
+                                @if($user->is_admin)
+                                    <th>Added by</th>
+                                @endif
+                           
                             </tr>
                         </thead>
                         <tbody>
@@ -84,6 +107,10 @@ $user = auth()->user();
                                 <td>{{ Str::limit($agency->description, 40) }}</td>
                                 <td>{{ $agency->created_at }}</td>
                                 <td>{{ $agency->updated_at }}</td>
+
+                                @if($user->is_admin)
+                                    <td><a href="{{ route('users.show', $agency->user->id) }}">{{ $agency->user->name }}</a></td>
+                                @endif
                                 
                                 @if($user->is_admin)
                                 <td>
@@ -111,10 +138,12 @@ $user = auth()->user();
             </div>
         </div>
 
-        <div class="float-left" style="color:white">
-            {{ $agencies->count() }} {{ $agencies->count() > 1 ? 'agencies found' : 'agency found' }}
-        </div>
+        {{ $agencies->links() }}
 
+        @if($agencies->count() < 25) <div class="float-left" style="color:white">
+            {{ $agencies->count() }} {{ $agencies->count() > 1 ? 'agencies found' : 'agency found' }}
+    </div>
+    @endif
     </div>
 </div>
 @endsection

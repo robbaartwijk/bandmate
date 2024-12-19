@@ -17,6 +17,7 @@ class AgencyFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'phone' => $this->faker->phoneNumber,

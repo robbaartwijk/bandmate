@@ -23,6 +23,16 @@ $user = auth()->user();
                         <form action="{{ route('venues.index') }}" method="get">
                             <div class="input-group no-border">
 
+                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('venues.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
+                                    <option value="25">Select 25 venues</option>
+                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
+                                        Select 50 venues
+                                    </option>
+                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
+                                        Select 100 venues
+                                    </option>
+                                </select>
+
                                 <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
 
                                 <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('venues.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
@@ -105,9 +115,12 @@ $user = auth()->user();
             </div>
         </div>
 
-        <div class="float-left" style="color:white">
+        {{ $venues->links() }}
+
+        @if($venues->count() < 25) <div class="float-left" style="color:white">
             {{ $venues->count() }} {{ $venues->count() > 1 ? 'venues found' : 'venue found' }}
-        </div>
+    </div>
+    @endif
 
     </div>
 </div>

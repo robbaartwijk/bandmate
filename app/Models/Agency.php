@@ -37,6 +37,11 @@ class Agency extends Authenticatable implements HasMedia
         'spotify'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    
     public function act()
     {
         return $this->hasMany('App\Models\Act');
