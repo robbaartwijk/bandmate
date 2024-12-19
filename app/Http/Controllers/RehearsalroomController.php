@@ -113,8 +113,9 @@ class RehearsalroomController extends Controller
             'email' => 'required',
         ]);
 
-        $rehearsalroom->description = $request->description;
-        $rehearsalroom->save($request->all());
+        $rehearsalroom->fill($request->only([
+            'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website', 'description'
+        ]))->save();
 
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room updated successfully');
