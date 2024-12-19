@@ -93,7 +93,13 @@ $user = auth()->user();
                         <tr>
                             <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                             <td>{{ $act->number_of_members }}</td>
-                            <td>{{ $act->genre ? $act->genre->name : 'N/A' }}</td>
+                            <td>
+                                @if($act->genre)
+                                    <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }}</a>
+                                @else
+                                    N/A
+                                @endif
+                            </td>
                             <td>{{ Str::limit($act->description, 41) }}</td>
                             <td>{{ $act->created_at }}</td>
                             <td>{{ $act->updated_at }}</td>

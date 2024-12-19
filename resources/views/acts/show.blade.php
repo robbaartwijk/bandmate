@@ -95,7 +95,7 @@
                     <div class="card-body text-primary">
                         <h1>Description</h1>
                         <h4>{!! nl2br(e($act->description)) !!}</h4>
-                        <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
             </div>

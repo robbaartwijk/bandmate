@@ -14,7 +14,9 @@
                     <h4><b>Description : </b>{!! nl2br(e($genre->description)) !!}</h4>
                     <h4><b>Date added : </b>{{ $genre->created_at }}</h4>
                     <h4><b>Date Last Updated : </b>{{ $genre->updated_at }}</h4>
-                    <a href="{{ route('genres.index') }}" class="btn btn-secondary">Back</a>
+
+                    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+
                 </div>
             </div>
         </div>
