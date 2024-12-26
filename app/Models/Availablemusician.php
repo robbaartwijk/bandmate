@@ -24,7 +24,6 @@ class Availablemusician extends Authenticatable implements HasMedia
         'description',
     ];
 
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -32,7 +31,7 @@ class Availablemusician extends Authenticatable implements HasMedia
 
     public function genre()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsTo('App\Models\Genre');
     }
 
     public function instrument()

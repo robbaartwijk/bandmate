@@ -22,4 +22,8 @@ class Genre extends Model
 
     protected $dates = ['deleted_at'];
     
+    public function availableMusician() {
+        return $this->hasMany(AvailableMusician::class);
+    }
+    
 }

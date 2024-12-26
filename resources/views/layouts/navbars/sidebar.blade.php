@@ -20,7 +20,7 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' ) show @endif" id="userdata" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'availablemusicians' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' ) show @endif" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
                             <a href="{{ route('acts.index') }}">
@@ -35,6 +35,14 @@ $user = auth()->user();
                                 <i class="fa fa-music"></i>
                                 <p>
                                     <h5>{{ __('Vacancies') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug=='availablemusicians' ) class="active " @endif>
+                            <a href="{{ route('availablemusicians.index') }}">
+                                <i class="fa fa-music"></i>
+                                <p>
+                                    <h5>{{ __('Available musicians') }}</h5>
                                 </p>
                             </a>
                         </li>

@@ -24,4 +24,9 @@ class Instrument extends Model
     public function vacancy() {
         return $this->hasMany(Vacancy::class);
     }
+
+    public function availablemusician() {
+        return $this->hasMany(availablemusician::class);
+    }
+
 }

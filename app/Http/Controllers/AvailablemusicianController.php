@@ -4,15 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\Availablemusician;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class AvailablemusicianController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $sort = $request->input('sort') ?? 'description';
+        $select = $request->input('selectrecords') ?? 25;
+
+        $query = Availablemusician::with(['genre', 'instrument', 'user']);
+
+        if($sort == 'instrument_name') {
+            $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id')
+                  ->select('availablemusicians.*')
+                  ->orderBy('instruments.name');
+        } else {
+            $query->orderBy($sort);
+        }
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('description', 'like', '%'.$search.'%');
+            });
+        }
+
+        if ($request->boolean('private')) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        // dd($query);
+
+        $availablemusicians = $query->paginate($select)->onEachSide(1);
+
+        return view('availablemusicians.index', compact(['availablemusicians']));
     }
 
     /**
