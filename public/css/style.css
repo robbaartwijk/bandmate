@@ -20,6 +20,10 @@
     font-size: 17px;
 }
 
+.bm_display_green {
+    color: rgb(58, 242, 58);
+}
+
 .bm_label_layout {
     margin-top: 10px;
     margin-right: 10px;

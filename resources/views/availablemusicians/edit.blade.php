@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Vanancies'), 'pageSlug' => 'vacancies'])
+@extends('layouts.app', ['page' => __('Availablemusicians'), 'pageSlug' => 'availablemusicians'])
 
 @section('content')
 
@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><b>Edit vacancy</h3>
+                    <h3 class="card-title"><b>Edit available musician</h3>
                 </div>
 
                 <div class="bm_row_layout row">
@@ -18,23 +18,17 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('vacancies.update', $vacancy->id) }}" method="post">
+                                <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post">
                                     @csrf
                                     @method('put')
-                                    
-                                    <div class="bm_form_group form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
-                                        <label for="act_id" class="bm_label_layout">
-                                            <h3>Act</h3>
+
+                                    <div class="bm_form_group form-group {{ $errors->has('musiciansname') ? 'has-danger' : '' }}">
+                                        <label for="musiciansname" class="bm_label_layout">
+                                            <h3>Musician name</h3>
                                         </label>
-                                        <select name="act_id" class="bm_general_input form-control {{ $errors->has('act_id') ? 'is-invalid' : '' }}">
-                                            <option value="{{ $vacancy->act_id }}">{{ $vacancy->act_name }}</option>
-                                            @foreach ($acts as $act)
-                                            <option value="{{ $act->id }}" {{ $vacancy->act_id == $act->id ? 'selected' : '' }}>
-                                                {{ $act->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'act_id'])
+
+                                        <input type="text" name="musiciansname" id="musiciansname"  style="color: lightgreen;" class="bm_general_input bm_display_green form-control {{ $errors->has('musiciansname') ? 'is-invalid' : '' }}" placeholder="Musician name" value="{{ $availablemusician->user->name }}" readonly>
+                                        @include('alerts.feedback', ['field' => 'musiciansname'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
@@ -43,9 +37,24 @@
                                         </label>
                                         <select name="instrument_id" class="bm_general_input form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}">
                                             <option value="">Select</option>
-                                            @foreach ($instruments as $instrument)
-                                            <option value="{{ $instrument->id }}" {{ $vacancy->instrument_id == $instrument->id ? 'selected' : '' }}>
-                                                {{ $instrument->name }} -  {{ $instrument->name }}
+                                            @foreach ($availablemusician->instruments as $instrument)
+                                            <option value="{{ $instrument->id }}" {{ $availablemusician->instrument->id == $instrument->id ? 'selected' : '' }}>
+                                                {{ $instrument->type }} - {{ $instrument->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'instrument_id'])
+                                    </div>
+
+                                    <div class="bm_form_group form-group {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
+                                        <label for="genre_id" class="bm_label_layout">
+                                            <h3>Genre</h3>
+                                        </label>
+                                        <select name="genre_id" class="bm_general_input form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}">
+                                            <option value="">Select</option>
+                                            @foreach ($availablemusician->genres as $genre)
+                                            <option value="{{ $genre->id }}" {{ $availablemusician->genre->id == $genre->id ? 'selected' : '' }}>
+                                                {{ $genre->group }} - {{ $genre->name }}
                                             </option>
                                             @endforeach
                                         </select>
@@ -56,7 +65,7 @@
                         </div>
                     </div>
 
-                   
+
 
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
@@ -72,11 +81,11 @@
                                                     <label for="description" class="bm_label_layout">
                                                         <h3>Description</h3>
                                                     </label>
-                                                    <textarea id="description" name="description" class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description">{{ $act->description }}</textarea>
+                                                    <textarea id="description" name="description" class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description">{{ $availablemusician->description }}</textarea>
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('availablemusicians.index') }}" class="btn btn-danger">Back</a>
 
                                                 </div>
                                             </div>

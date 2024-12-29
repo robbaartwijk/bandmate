@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Availablemusician;
+use App\Models\Instrument;
+use App\Models\Genre;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -66,8 +69,8 @@ class AvailablemusicianController extends Controller
      * Display the specified resource.
      */
     public function show(Availablemusician $availablemusician)
-    {
-        //
+    {;
+        return view('availablemusicians.show', compact('availablemusician'));
     }
 
     /**
@@ -75,7 +78,16 @@ class AvailablemusicianController extends Controller
      */
     public function edit(Availablemusician $availablemusician)
     {
-        //
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('availablemusicians.index')
+            ->with('status', 'You are not authorized to edit an avilable musician.');
+        };
+
+        $availablemusician->instruments = Instrument::all();
+        $availablemusician->genres = Genre::all();
+        $availablemusician->user = User::find($availablemusician->user_id);
+        
+        return view('availablemusicians.edit', compact('availablemusician'));
     }
 
     /**
