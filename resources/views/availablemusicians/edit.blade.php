@@ -26,7 +26,6 @@
                                         <label for="musiciansname" class="bm_label_layout">
                                             <h3>Musician name</h3>
                                         </label>
-
                                         <input type="text" name="musiciansname" id="musiciansname"  style="color: lightgreen;" class="bm_general_input bm_display_green form-control {{ $errors->has('musiciansname') ? 'is-invalid' : '' }}" placeholder="Musician name" value="{{ $availablemusician->user->name }}" readonly>
                                         @include('alerts.feedback', ['field' => 'musiciansname'])
                                     </div>
@@ -59,6 +58,22 @@
                                             @endforeach
                                         </select>
                                         @include('alerts.feedback', ['field' => 'instrument_id'])
+                                    </div>
+
+                                    <div class="bm_form_group form-group {{ $errors->has('available_from') ? 'has-danger' : '' }}">
+                                        <label for="available_from" class="bm_label_layout">
+                                            <h3>Available From</h3>
+                                        </label>
+                                        <input type="date" name="available_from" id="available_from" class="bm_general_input form-control {{ $errors->has('available_from') ? 'is-invalid' : '' }}" value="{{ old('available_from', $availablemusician->available_from ? $availablemusician->available_from : '') }}">
+                                        @include('alerts.feedback', ['field' => 'available_from'])
+                                    </div>
+
+                                    <div class="bm_form_group form-group {{ $errors->has('available_until') ? 'has-danger' : '' }}">
+                                        <label for="available_until" class="bm_label_layout">
+                                            <h3>Available Until</h3>
+                                        </label>
+                                        <input type="date" name="available_until" id="available_until" class="bm_general_input form-control {{ $errors->has('available_until') ? 'is-invalid' : '' }}" value="{{ old('available_until', $availablemusician->available_until ? $availablemusician->available_until : '') }}">
+                                        @include('alerts.feedback', ['field' => 'available_until'])
                                     </div>
 
                             </div>

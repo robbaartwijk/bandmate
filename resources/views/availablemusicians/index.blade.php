@@ -49,11 +49,17 @@ $user = auth()->user();
                                     <option value="instrument_name" {{ request()->sort == 'instrument_name' ? 'selected' : '' }}>
                                         Sort by instrument
                                     </option>
-                                    <option value="genre" {{ request()->sort == 'genre' ? 'selected' : '' }}>
+                                    <option value="genre_name" {{ request()->sort == 'genre_name' ? 'selected' : '' }}>
                                         Sort by genre
                                     </option>
                                     <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>
                                         Sort by description
+                                    </option>
+                                    <option value="available_from" {{ request()->sort == 'available_from' ? 'selected' : '' }}>
+                                        Sort by available from
+                                    </option>
+                                    <option value="available_until" {{ request()->sort == 'available_until' ? 'selected' : '' }}>
+                                        Sort by available until
                                     </option>
                                     <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
                                         Sort by date added
@@ -96,6 +102,8 @@ $user = auth()->user();
                         <th>Description</th>
                         <th>Available from</th>
                         <th>Available until</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,6 +115,8 @@ $user = auth()->user();
                         <td><a href="{{ route('availablemusicians.show', $availablemusician->id) }}">{{ Str::limit($availablemusician->description, 42) }}</a></td>
                         <td>{{ $availablemusician->available_from }}</td>
                         <td>{{ $availablemusician->available_until }}</td>
+                        <td>{{ $availablemusician->created_at }}</td>
+                        <td>{{ $availablemusician->updated_at }}</td>
 
                         @if ($user->is_admin || $user->id == $availablemusician->user_id)
                         <td><a href="{{ route('availablemusicians.edit', $availablemusician->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">

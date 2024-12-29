@@ -15,6 +15,9 @@
                     <h4><b>Genre : </b>{{  $availablemusician->genre->name }}</h4>
                     <h4><b>Description : </b>{{ $availablemusician->description}}</h4>
                 
+                    <h4><b>Available from : </b>{{ $availablemusician->available_from}}</h4>
+                    <h4><b>Available until : </b>{{ $availablemusician->available_until }}</h4>
+
                     <h4><b>Date added : </b>{{ $availablemusician->created_at }}</h4>
                     <h4><b>Date last update : </b>{{ $availablemusician->updated_at }}</h4>
 
