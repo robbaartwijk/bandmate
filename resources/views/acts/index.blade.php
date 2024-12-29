@@ -95,9 +95,9 @@ $user = auth()->user();
                             <td>{{ $act->number_of_members }}</td>
                             <td>
                                 @if($act->genre)
-                                    <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }}</a>
+                                <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }}</a>
                                 @else
-                                    N/A
+                                N/A
                                 @endif
                             </td>
                             <td>{{ Str::limit($act->description, 41) }}</td>
@@ -133,6 +133,5 @@ $user = auth()->user();
     </div>
     @endif
 
-</div>
 </div>
 @endsection

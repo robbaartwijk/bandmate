@@ -71,12 +71,12 @@ $user = auth()->user();
 
 
                                 <div class="input-group-append">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <i class="nc-icon nc-zoom-split"></i>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="nc-icon nc-zoom-split"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -137,13 +137,15 @@ $user = auth()->user();
             </table>
         </div>
     </div>
+
+
+    {{ $availablemusicians->links() }}
+
+
+    @if($availablemusicians->count() < 25) <div class="float-left" style="color:white">
+        {{ $availablemusicians->count() }} {{ $availablemusicians->count() > 1 ? 'availablemusicians found' : 'availablemusician found' }}
 </div>
+@endif
 
-{{ $availablemusicians->links() }}
 
-@if($availablemusicians->count() < 25) <div class="float-left" style="color:white">
-    {{ $availablemusicians->count() }} {{ $availablemusicians->count() > 1 ? 'availablemusicians found' : 'availablemusician found' }}
-    </div>
-    @endif
-
-    @endsection
+@endsection
