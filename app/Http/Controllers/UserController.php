@@ -42,6 +42,7 @@ class UserController extends Controller
             $user->acts_count = $user->acts->count();
             $user->rehearsalrooms_count = $user->rehearsalrooms->count();
             $user->vacancies_count = $user->vacancies->count();
+            $user->availablemusicians_count = $user->availablemusicians->count();
         }
 
         return view('users.index', compact('users'));
@@ -49,22 +50,17 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        $user->load(['acts', 'rehearsalrooms', 'vacancies']);
+        $user->load(['acts', 'rehearsalrooms', 'vacancies', 'availablemusicians']);
 
         foreach ($user->acts as $act) {
             $act->genre_name = Genre::find($act->genre_id)->name;
         }
-        
-        foreach ($user->vacancies as $vacancy) {
-            $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
-        }
 
         foreach ($user->vacancies as $vacancy) {
+            $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
             $act = Act::find($vacancy->act_id);
             $vacancy->act_name = $act->name;
         }
-
-        // dd($user);
 
         return view('users.show', compact('user'));
     }

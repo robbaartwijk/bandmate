@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Rehearsalroom;
 use App\Models\Act;
 use App\Models\Vacancy;
+use App\Models\Availablemusician;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -83,6 +84,11 @@ class User extends Authenticatable implements HasMedia {
     public function vacancies(): HasMany
     {
         return $this->hasMany(Vacancy::class);
+    }
+
+    public function availablemusicians(): HasMany
+    {
+        return $this->hasMany(Availablemusician::class);
     }
 
     function isAdmin() {

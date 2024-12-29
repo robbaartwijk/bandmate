@@ -134,5 +134,55 @@
         </table>
     </div>
 
+    <header>
+        <h4><b>Available</b></h4>
+    </header>
+
+    <div class="table-responsive">
+        <table class="table tablesorter" id="">
+            <thead class=" text-primary">
+                <tr>
+                    <th>Name</th>
+                    <th>Instrument</th>
+                    <th>Genre</th>
+                    <th>Description</th>
+                    <th>Available from</th>
+                    <th>Available until</th>
+                    <th>Date added</th>
+                    <th>Date last update</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if ($user->availablemusicians->isEmpty())
+                <tr>
+                    <td colspan="4">No available musician notifications found</td>
+                </tr>
+                @else
+
+                @foreach ($user->availablemusicians as $musician)
+                <tr>
+                    <td><a href="{{ route('availablemusicians.show', $musician->id) }}">{{ $musician->user->name }}</a>
+                    </td>
+
+                    <td>{{ $musician->instrument->name }}</td>
+                    <td>{{ $musician->genre->name }}</td>
+
+                    <td><a href="{{ route('availablemusicians.show', $musician->id) }}">{{ Str::limit($musician->description, 30) }}</a></td>
+                    </td>
+
+                    <td>{{ $musician->available_from }}</td>
+                    <td>{{ $musician->available_until }}</td>
+
+                    <td>{{ $musician->created_at }}</td>
+                    <td>{{ $musician->updated_at }}</td>
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+
+
 </div>
 @endsection

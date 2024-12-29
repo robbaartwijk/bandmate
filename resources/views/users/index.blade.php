@@ -61,6 +61,7 @@
                         <th>Acts</th>
                         <th>Rehearsal rooms</th>
                         <th>Vacancies</th>
+                        <th>Available</th>
                         <th>Date added</th>
                         <th>Date last update</th>
                     </tr>
@@ -78,6 +79,7 @@
                         <td>{{ $user->acts_count }}</td>
                         <td>{{ $user->rehearsalrooms_count }}</td>
                         <td>{{ $user->vacancies_count }}</td>
+                        <td>{{ $user->availablemusicians_count }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
 

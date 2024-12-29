@@ -147,5 +147,6 @@ $user = auth()->user();
 </div>
 @endif
 
+</div>
 
 @endsection
