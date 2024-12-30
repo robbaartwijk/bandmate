@@ -151,9 +151,11 @@ class AvailablemusicianController extends Controller
 
     public function buildJoinParameters($query)
     {
-        $query->join('users', 'availablemusicians.user_id', '=', 'users.id');
-        $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id');
-        $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
+        $query = Availablemusician::with(['genre', 'instrument', 'user'])
+        ->select('availablemusicians.*', 'users.name as musician_name', 'instruments.name as instrument_name', 'genres.name as genre_name')
+        ->join('users', 'availablemusicians.user_id', '=', 'users.id')
+        ->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
+        ->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
 
         return $query;
     }

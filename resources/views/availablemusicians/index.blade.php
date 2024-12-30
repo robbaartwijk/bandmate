@@ -143,7 +143,7 @@ $user = auth()->user();
 
 
     @if($availablemusicians->count() < 25) <div class="float-left" style="color:white">
-        {{ $availablemusicians->count() }} {{ $availablemusicians->count() > 1 ? 'availablemusicians found' : 'availablemusician found' }}
+        {{ $availablemusicians->count() }} {{ $availablemusicians->count() > 1 ? 'available musicians found' : 'available musician found' }}
 </div>
 @endif
 
