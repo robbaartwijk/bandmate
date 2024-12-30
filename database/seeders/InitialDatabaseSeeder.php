@@ -40,6 +40,10 @@ class InitialDatabaseSeeder extends Seeder
             ActSeeder::class,
         ]);
 
+        $this->call([
+            AvailablemusicianSeeder::class,
+        ]);
+
         Vacancy::factory(15)->create();
 
         $this->call([

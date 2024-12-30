@@ -112,7 +112,7 @@ $user = auth()->user();
                         <td>{{ $availablemusician->user->name }}</td>
                         <td>{{ $availablemusician->instrument->name }}</td>
                         <td><a href="{{ route('genres.show', $availablemusician->genre->id) }}">{{ $availablemusician->genre->name }}</a></td>
-                        <td><a href="{{ route('availablemusicians.show', $availablemusician->id) }}">{{ Str::limit($availablemusician->description, 42) }}</a></td>
+                        <td><a href="{{ route('availablemusicians.show', $availablemusician->id) }}">{{ Str::limit($availablemusician->description, 35) }}</a></td>
                         <td>{{ $availablemusician->available_from }}</td>
                         <td>{{ $availablemusician->available_until }}</td>
                         <td>{{ $availablemusician->created_at }}</td>

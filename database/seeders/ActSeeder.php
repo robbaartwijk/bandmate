@@ -39,6 +39,27 @@ class ActSeeder extends Seeder
             'updated_at' => $createdDate
         ]);
 
+        DB::table('acts')->insert([
+
+            'user_id' => 1,
+            'name' => 'Timelock',
+            'number_of_members' => 8,
+            'genre_id' => 1,
+            'rehearsal_room' => 1,
+            'website' => 'http://www.timelock.com',
+            'active' => 1,
+            'description' => 'Solid Air are a four-piece band from London. They play a mix of rock, blues and soul music.',
+            'email' => 'rob.baartwijk@gmail.com',
+            'phone' => '020 123 4567',
+            'facebook' => 'https://www.facebook.com/SolidAir',
+            'instagram' => 'https://www.instagram.com/SolidAir',
+            'twitter' => 'https://www.twitter.com/SolidAir',
+            'youtube' => 'https://www.youtube.com/SolidAir',
+            'spotify' => 'https://www.spotify.com/SolidAir',
+            'soundcloud' => 'https://www.soundcloud.com/SolidAir',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
 
         DB::table('acts')->insert([
 
