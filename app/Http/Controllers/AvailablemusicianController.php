@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Availablemusician;
-use App\Models\Genre;
-use App\Models\Instrument;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -20,15 +17,7 @@ class AvailablemusicianController extends Controller
         $sort = $request->input('sort') ?? 'musician_name';
         $select = $request->input('selectrecords') ?? 25;
 
-        $query = Availablemusician::with(['genre', 'instrument', 'user']);
-        $query = $this->buildJoinParameters($query);
-        $query = $this->buildSortParameters($query, $sort);
-        $query = $this->buildSearchParameter($request, $query);
-
-        if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
-        }
-
+        $query = $this->buildQuerySelection($request, $sort);
         $availablemusicians = $query->paginate($select)->onEachSide(1);
 
         return view('availablemusicians.index', compact(['availablemusicians']));
@@ -140,31 +129,61 @@ class AvailablemusicianController extends Controller
             ->with('status', 'Available musician deleted successfully');
     }
 
+    public function buildQuerySelection($request, $sort)
+    {
+        $query = Availablemusician::with(['genre', 'instrument', 'user']);
+
+        $query = $this->buildQuerySelect($query);
+        $query = $this->buildJoinParameters($query);
+        $query = $this->buildSortParameters($query, $sort);
+        $query = $this->buildSearchParameter($request, $query);
+        $query = $this->buildPrivateParameter($request, $query);
+
+        return $query;
+    }
+
+    public function buildQuerySelect($query)
+    {        
+        $query->select('availablemusicians.*', 'users.name as musician_name', 'instruments.name as instrument_name', 'genres.name as genre_name');
+
+        return $query;
+    }
+
+    public function buildJoinParameters($query)
+    {
+        $query->join('users', 'availablemusicians.user_id', '=', 'users.id');
+        $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id');
+        $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
+
+        return $query;
+    }
+
     public function buildSortParameters($query, $sort)
     {
         switch ($sort) {
             case 'description':
-                $query->orderBy('description');
+                $query->orderBy('availablemusicians.description');
                 break;
             case 'genre_name':
-                $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
-                    ->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'genres.name as genre_name')
-                    ->orderBy('genres.name');
+                $query->orderBy('genres.name');
                 break;
             case 'instrument_name':
-                $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id')
-                    ->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'instruments.name as instrument_name')
-                    ->orderBy('instruments.name');
+                $query->orderBy('instruments.name');
                 break;
             case 'musician_name':
-                $query->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'users.name as musician_name')
-                    ->orderBy('users.name');
+                $query->orderBy('users.name');
                 break;
             case 'available_from':
                 $query->orderBy('available_from');
                 break;
             case 'available_until':
                 $query->orderBy('available_until');
+                break;
+            case 'created_at':
+                $query->orderBy('created_at');
+                break;
+            case 'updated_at':
+                $query->orderBy('updated_at');
                 break;
         }
 
@@ -186,11 +205,11 @@ class AvailablemusicianController extends Controller
         return $query;
     }
 
-    public function buildJoinParameters($query)
+    public function buildPrivateParameter($request, $query)
     {
-        $query->join('users', 'availablemusicians.user_id', '=', 'users.id');
-        $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id');
-        $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
+        if ($request->boolean('private')) {
+            $query->where('user_id', Auth::user()->id);
+        }
 
         return $query;
     }
