@@ -22,7 +22,8 @@ class AgencyController extends Controller
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('description', 'like', '%'.$search.'%');
+                ->orWhere('country', 'like', '%'.$search.'%')
+                ->orWhere('description', 'like', '%'.$search.'%');
             });
         }
 

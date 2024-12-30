@@ -25,7 +25,7 @@ $user = auth()->user();
 
                     <div class="float-right">
                         <form action="{{ route('availablemusicians.index') }}" method="get">
-
+ 
                             <div class="input-group no-border">
 
                                 <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('availablemusicians.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + this.value">
@@ -68,7 +68,6 @@ $user = auth()->user();
                                         Sort by date last update
                                     </option>
                                 </select>
-
 
                                 <div class="input-group-append">
                                     <div class="input-group-append">
@@ -119,7 +118,8 @@ $user = auth()->user();
                         <td>{{ $availablemusician->updated_at }}</td>
 
                         @if ($user->is_admin || $user->id == $availablemusician->user_id)
-                        <td><a href="{{ route('availablemusicians.edit', $availablemusician->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
+                        <td>
+                            <a href="{{ route('availablemusicians.edit', $availablemusician->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                 <i class="tim-icons icon-pencil"></i>
                             </a>
                             <form action="{{ route('availablemusicians.destroy', $availablemusician->id) }}" method="post" style="display:inline">

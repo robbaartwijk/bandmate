@@ -19,19 +19,17 @@ class ActController extends Controller
         $sort = $request->input('sort') ?? 'name';
         $select = $request->input('selectrecords') ?? 25;
 
-        $query = Act::with('genre')->orderBy($sort);
+        // $query = Act::with('genre')->orderBy($sort);
 
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('description', 'like', '%'.$search.'%');
-            });
-        }
+        $query = $this->buildQuerySelection($request, $sort);
 
-        if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
-        }
+        // if ($request->has('search')) {
+        //     $search = $request->input('search');
+        //     $query->where(function ($q) use ($search) {
+        //         $q->where('name', 'like', '%'.$search.'%')
+        //             ->orWhere('description', 'like', '%'.$search.'%');
+        //     });
+        // }
 
         $acts = $query->paginate($select)->onEachSide(1);
 
@@ -192,6 +190,80 @@ class ActController extends Controller
     public function clearActImage($act)
     {
         $act->clearMediaCollection('images/ActPics');
+    }
+
+    public function buildQuerySelection($request, $sort)
+    {
+        $query = Act::with(['genre']);
+
+        $query = $this->buildQuerySelect($query);
+        $query = $this->buildJoinParameters($query);
+        $query = $this->buildSortParameters($query, $sort);
+        $query = $this->buildSearchParameter($request, $query);
+        $query = $this->buildPrivateParameter($request, $query);
+
+        return $query;
+    }
+
+    public function buildQuerySelect($query)
+    {
+        $query->select('acts.*', 'genres.name as genre_name');
+
+        return $query;
+    }
+
+    public function buildJoinParameters($query)
+    {
+        $query = Act::with(['genre'])
+            ->select('acts.*', 'genres.name as genre_name')
+            ->join('genres', 'acts.genre_id', '=', 'genres.id');
+
+        return $query;
+    }
+
+    public function buildSortParameters($query, $sort)
+    {
+        switch ($sort) {
+            case 'name':
+                $query->orderBy('name');
+                break;
+            case 'description':
+                $query->orderBy('description');
+                break;
+            case 'genre_name':
+                $query->orderBy('genres.name');
+                break;
+            case 'created_at':
+                $query->orderBy('created_at');
+                break;
+            case 'updated_at':
+                $query->orderBy('updated_at');
+                break;
+        }
+
+        return $query;
+    }
+
+    public function buildSearchParameter($request, $query)
+    {
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('acts.description', 'like', '%'.$search.'%')
+                    ->orWhere('genres.name', 'like', '%'.$search.'%');
+            });
+        }
+
+        return $query;
+    }
+
+    public function buildPrivateParameter($request, $query)
+    {
+        if ($request->boolean('private')) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        return $query;
     }
 
 }

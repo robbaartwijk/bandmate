@@ -43,6 +43,9 @@ $user = auth()->user();
                                     <option value="name" {{ request()->sort == 'name' ? 'selected' : 'name' }}>
                                         Sort by name
                                     </option>
+                                    <option value="genre_name" {{ request()->sort == 'genre_name' ? 'selected' : 'name' }}>
+                                        Sort by genre
+                                    </option>
                                     <option value="description" {{ request()->sort == 'description' ? 'selected' : 'name' }}>
                                         Sort by description
                                     </option>

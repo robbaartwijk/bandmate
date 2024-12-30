@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Availablemusician;
+use App\Models\Genre;
+use App\Models\Instrument;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -78,10 +81,13 @@ class AvailablemusicianController extends Controller
             return redirect()->route('availablemusicians.index')
                 ->with('status', 'You are not authorized to edit an avilable musician.');
         }
-
+        
         $availablemusician->instruments = Instrument::all();
         $availablemusician->genres = Genre::all();
+
         $availablemusician->user = User::find($availablemusician->user_id);
+
+        // dd($availablemusician);
 
         return view('availablemusicians.edit', compact('availablemusician'));
     }
@@ -151,9 +157,7 @@ class AvailablemusicianController extends Controller
 
     public function buildJoinParameters($query)
     {
-        $query = Availablemusician::with(['genre', 'instrument', 'user'])
-            ->select('availablemusicians.*', 'users.name as musician_name', 'instruments.name as instrument_name', 'genres.name as genre_name')
-            ->join('users', 'availablemusicians.user_id', '=', 'users.id')
+        $query->join('users', 'availablemusicians.user_id', '=', 'users.id')
             ->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
             ->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
 
