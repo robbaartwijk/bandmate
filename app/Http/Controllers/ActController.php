@@ -19,17 +19,7 @@ class ActController extends Controller
         $sort = $request->input('sort') ?? 'name';
         $select = $request->input('selectrecords') ?? 25;
 
-        // $query = Act::with('genre')->orderBy($sort);
-
         $query = $this->buildQuerySelection($request, $sort);
-
-        // if ($request->has('search')) {
-        //     $search = $request->input('search');
-        //     $query->where(function ($q) use ($search) {
-        //         $q->where('name', 'like', '%'.$search.'%')
-        //             ->orWhere('description', 'like', '%'.$search.'%');
-        //     });
-        // }
 
         $acts = $query->paginate($select)->onEachSide(1);
 

@@ -18,7 +18,7 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post">
+                                <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('put')
 
@@ -76,10 +76,17 @@
                                         @include('alerts.feedback', ['field' => 'available_until'])
                                     </div>
 
+                                    <div class="bm_upload_box">
+                                        <label class="bm_upload_label" for="availablemusicianpic">
+                                            <h3>Picture</h3>
+                                        </label>
+                                        <input type="file" class="bm_upload btn btn-info" id="availablemusicianpic" name="availablemusicianpic" accept="image/*" onchange="validateFileSize(this)">
+                                        @include('alerts.feedback', ['field' => 'availablemusicianpic'])
+                                    </div>
+
                             </div>
                         </div>
                     </div>
-
 
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
@@ -114,4 +121,15 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function validateFileSize(input) {
+            const file = input.files[0];
+            if (file && file.size > 1048576) {
+                alert('File size must be less than 1MB');
+                input.value = '';
+            }
+        }
+    </script>
+
     @endsection

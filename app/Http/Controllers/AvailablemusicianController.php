@@ -6,6 +6,7 @@ use App\Models\Availablemusician;
 use App\Models\Genre;
 use App\Models\Instrument;
 use App\Models\User;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +60,10 @@ class AvailablemusicianController extends Controller
         $availablemusician->updated_at = now();
         $availablemusician->save();
 
+        if ($request->hasFile('availablemusicianpic')) {
+            $availablemusician->addMediaFromRequest('availablemusicianpic')->toMediaCollection('images/AvailablemusicianPics');
+        }
+
         return redirect()
             ->route('availablemusicians.index')
             ->with('status', 'Available musician created successfully.');
@@ -69,6 +74,8 @@ class AvailablemusicianController extends Controller
      */
     public function show(Availablemusician $availablemusician)
     {
+        $availablemusician->image = $availablemusician->getFirstMedia('images/AvailablemusicianPics');
+
         return view('availablemusicians.show', compact('availablemusician'));
     }
 
@@ -79,15 +86,13 @@ class AvailablemusicianController extends Controller
     {
         if (! Auth::user()->is_admin) {
             return redirect()->route('availablemusicians.index')
-                ->with('status', 'You are not authorized to edit an avilable musician.');
+                ->with('status', 'You are not authorized to edit an available musician.');
         }
         
         $availablemusician->instruments = Instrument::all();
         $availablemusician->genres = Genre::all();
 
         $availablemusician->user = User::find($availablemusician->user_id);
-
-        // dd($availablemusician);
 
         return view('availablemusicians.edit', compact('availablemusician'));
     }
@@ -115,6 +120,11 @@ class AvailablemusicianController extends Controller
 
         $availablemusician->save();
 
+        if ($request->hasFile('availablemusicianpic')) {
+            $this->clearAvailablemusicianImage($availablemusician);
+            $this->storeAvailablemusicianImage($request, $availablemusician);
+        }
+
         return redirect()->route('availablemusicians.index')
             ->with('status', 'Available musician updated successfully');
     }
@@ -129,10 +139,28 @@ class AvailablemusicianController extends Controller
                 ->with('status', 'You are not authorized to delete this available musician.');
         }
 
+        $availablemusician->clearMediaCollection('images/AvailablemusicianPics');
+
         $availablemusician->delete();
 
         return redirect()->route('availablemusicians.index')
             ->with('status', 'Available musician deleted successfully');
+    }
+
+    /**
+     * Store a newly created image resource in storage.
+     */
+    public function storeAvailablemusicianImage(Request $request, Availablemusician $availablemusician)
+    {
+        $availablemusician->addMediaFromRequest('availablemusicianpic')->toMediaCollection('images/AvailablemusicianPics');
+    }
+
+    /**
+     * Remove the specified image resource from storage.
+     */
+    public function clearAvailablemusicianImage($availablemusician)
+    {
+        $availablemusician->clearMediaCollection('images/AvailablemusicianPics');
     }
 
     public function buildQuerySelection($request, $sort)

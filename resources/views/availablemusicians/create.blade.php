@@ -19,7 +19,7 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('availablemusicians.store') }}" method="post">
+                                <form action="{{ route('availablemusicians.store') }}" method="post" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="bm_form_group form-group {{ $errors->has('musiciansname') ? 'has-danger' : '' }}">
@@ -71,7 +71,13 @@
                                         @include('alerts.feedback', ['field' => 'available_until'])
                                     </div>
 
-
+                                    <div class="bm_upload_box">
+                                        <label class="bm_upload_label" for="availablemusicianpic">
+                                            <h3>Picture</h3>
+                                        </label>
+                                        <input type="file" class="bm_upload btn btn-info" id="availablemusicianpic" name="availablemusicianpic" accept="image/*">
+                                        @include('alerts.feedback', ['field' => 'availablemusicianpic'])
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -106,7 +112,20 @@
                     </div>
                 </div>
             </div>
-            </form>
         </div>
     </div>
+    </form>
+</div>
+
+    <script>
+        document.getElementById('availablemusicianpic').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file.size > 1048576) { // 1MB in bytes
+                alert('File size must be less than 1MB');
+                this.value = '';
+            }
+        });
+
+    </script>
+
     @endsection
