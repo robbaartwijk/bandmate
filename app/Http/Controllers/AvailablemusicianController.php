@@ -21,40 +21,16 @@ class AvailablemusicianController extends Controller
         $select = $request->input('selectrecords') ?? 25;
 
         $query = Availablemusician::with(['genre', 'instrument', 'user']);
-        $query->join('users', 'availablemusicians.user_id', '=', 'users.id');
-
-        if ($sort == 'description') {
-            $query->orderBy('description');
-        } elseif ($sort == 'genre_name') {
-            $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
-            ->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'genres.name as genre_name')
-            ->orderBy('genres.name');
-        } elseif ($sort == 'instrument_name') {
-            $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id')
-            ->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'instruments.name as instrument_name')
-            ->orderBy('instruments.name');
-        } elseif ($sort == 'musician_name') {
-            $query->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'users.name as musician_name')
-            ->orderBy('users.name');
-        } elseif ($sort == 'available_from') {
-            $query->orderBy('available_from');
-        } elseif ($sort == 'available_until') {
-            $query->orderBy('available_until');
-        }
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('availablemusicians.description', 'like', '%'.$search.'%')
-                    ->orWhere('users.name', 'like', '%'.$search.'%');
-            });
-        }
+        $query = $this->buildJoinParameters($query);
+        $query = $this->buildSortParameters($query, $sort);
+        $query = $this->buildSearchParameter($request, $query);
 
         if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
         }
 
         $availablemusicians = $query->paginate($select)->onEachSide(1);
-        
+
         return view('availablemusicians.index', compact(['availablemusicians']));
     }
 
@@ -162,5 +138,60 @@ class AvailablemusicianController extends Controller
 
         return redirect()->route('availablemusicians.index')
             ->with('status', 'Available musician deleted successfully');
+    }
+
+    public function buildSortParameters($query, $sort)
+    {
+        switch ($sort) {
+            case 'description':
+                $query->orderBy('description');
+                break;
+            case 'genre_name':
+                $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
+                    ->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'genres.name as genre_name')
+                    ->orderBy('genres.name');
+                break;
+            case 'instrument_name':
+                $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id')
+                    ->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'instruments.name as instrument_name')
+                    ->orderBy('instruments.name');
+                break;
+            case 'musician_name':
+                $query->select('availablemusicians.id', 'availablemusicians.description', 'availablemusicians.available_from', 'availablemusicians.available_until', 'availablemusicians.user_id', 'availablemusicians.genre_id', 'availablemusicians.instrument_id', 'availablemusicians.created_at', 'availablemusicians.updated_at', 'users.name as musician_name')
+                    ->orderBy('users.name');
+                break;
+            case 'available_from':
+                $query->orderBy('available_from');
+                break;
+            case 'available_until':
+                $query->orderBy('available_until');
+                break;
+        }
+
+        return $query;
+    }
+
+    public function buildSearchParameter($request, $query)
+    {
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('availablemusicians.description', 'like', '%'.$search.'%')
+                    ->orWhere('users.name', 'like', '%'.$search.'%')
+                    ->orWhere('instruments.name', 'like', '%'.$search.'%')
+                    ->orWhere('genres.name', 'like', '%'.$search.'%');
+            });
+        }
+
+        return $query;
+    }
+
+    public function buildJoinParameters($query)
+    {
+        $query->join('users', 'availablemusicians.user_id', '=', 'users.id');
+        $query->join('genres', 'availablemusicians.genre_id', '=', 'genres.id');
+        $query->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
+
+        return $query;
     }
 }
