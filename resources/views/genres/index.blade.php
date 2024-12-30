@@ -74,7 +74,7 @@
                         <tr>
                             <td><a href="{{ route('genres.show', $genre->id) }}">{{ $genre->name }}</a></td>
                             <td>{{ $genre->group }}</td>
-                            <td>{!! Str::limit($genre->description, 30) !!}</td>
+                            <td>{!! Str::limit($genre->description, 80) !!}</td>
                             <td>{{ $genre->created_at }}</td>
                             <td>{{ $genre->updated_at }}</td>
                             <td>

@@ -84,7 +84,7 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3') show @endif" id="statistics" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' || $pageSlug == 'chart4') show @endif" id="statistics" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='chart1' ) class="active " @endif>
                             <a href="{{ route('statistics.chart1') }}">
@@ -95,7 +95,7 @@ $user = auth()->user();
                             </a>
                         </li>
 
-                        <li @if ($pageSlug=='chart' ) class="active " @endif>
+                        <li @if ($pageSlug=='chart2' ) class="active " @endif>
                             <a href="{{ route('statistics.chart2') }}">
                                 <i class="fa fa-chart-bar"></i>
                                 <p>
@@ -104,11 +104,20 @@ $user = auth()->user();
                             </a>
                         </li>
 
-                        <li @if ($pageSlug=='chart' ) class="active " @endif>
+                        <li @if ($pageSlug=='chart3' ) class="active " @endif>
                             <a href="{{ route('statistics.chart3') }}">
                                 <i class="fa fa-chart-bar"></i>
                                 <p>
                                     <h5>{{ __('Acts') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='chart4' ) class="active " @endif>
+                            <a href="{{ route('statistics.chart4') }}">
+                                <i class="fa fa-chart-bar"></i>
+                                <p>
+                                    <h5>{{ __('Available musicians') }}</h5>
                                 </p>
                             </a>
                         </li>

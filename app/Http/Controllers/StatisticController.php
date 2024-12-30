@@ -6,6 +6,7 @@ use App\Models\Act;
 use App\Models\Instrument;
 use App\Models\User;
 use App\Models\Vacancy;
+use App\Models\AvailableMusician;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use IcehouseVentures\LaravelChartjs\Facades\Chartjs;
@@ -320,5 +321,97 @@ class StatisticController extends Controller
             ]);
 
         return view('statistics.chart3', compact('chartactregistrations'));
+    }
+
+    /**
+     * Generates chart data for available musicians
+     *
+     * This function creates and returns data that can be used to generate a chart
+     * representing the number of available musicians registered for each month.
+     *
+     * @return array The chart data for monthly available musicians registrations.
+     */
+    public function chart4()
+    {
+        $start = Carbon::parse(User::min('created_at'));
+        $end = Carbon::now();
+        $period = CarbonPeriod::create($start, '1 month', $end);
+
+        $availablemusiciansPerMonth = collect($period)->map(function ($date) {
+            $endDate = $date->copy()->endOfMonth();
+
+            return [
+                'count' => Act::where('created_at', '<=', $endDate)->count(),
+                'month' => $endDate->format('Y-m-d'),
+            ];
+        });
+
+        $data = $availablemusiciansPerMonth->pluck('count')->toArray();
+
+        $labels = $availablemusiciansPerMonth->pluck('month')->map(function ($date) {
+            return Carbon::parse($date)->format('F');
+        })->toArray();
+
+        $chartavailablemusiciansregistrations = Chartjs::build()
+            ->name('AvailablemusiciansRegistrationsChart')
+            ->type('bar')
+            ->size(['width' => '75%', 'height' => '75%'])
+            ->labels($labels)
+            ->datasets([
+                [
+                    'backgroundColor' => [
+                        'blue',
+                        'red',
+                        'green',
+                        'yellow',
+                        'purple',
+                        'orange',
+                        'brown',
+                        'grey',
+                        'cyan',
+                        'magenta',
+                        'lime',
+                    ],
+                    'label' => 'Available musicians Registrations',
+                    'borderColor' => 'white',
+                    'data' => $data,
+                ],
+            ])
+            ->options([
+                'plugins' => [
+                    'legend' => [
+                        'labels' => [
+                            'fontColor' => 'white',
+                        ],
+                        'display' => true,
+                        'labels' => [
+                            'color' => 'white',
+                        ],
+                    ],
+                    'colors' => [
+                        'forceOverride' => true,
+                        'enabled' => false,
+                    ],
+                ],
+                'scales' => [
+                    'y' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                        'grid' => ['color' => 'grey'],
+                    ],
+                    'x' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                    ],
+                ],
+                'xAxes' => [
+                    'type' => 'category',
+                ],
+                'title' => [
+                    'display' => true,
+                    'text' => 'Available musicians',
+                    'fontsize' => '60',
+                ],
+            ]);
+
+        return view('statistics.chart4', compact('chartavailablemusiciansregistrations'));
     }
 }
