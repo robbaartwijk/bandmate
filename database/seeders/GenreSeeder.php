@@ -208,6 +208,12 @@ class GenreSeeder extends Seeder
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);
-
+        DB::table('genres')->insert([
+            'name' => 'TripHop',
+            'group' => 'Electronic',
+            'description' => 'Triphop is a genre of electronic dance music that is characterized by a repetitive beat which is generally produced for use in a continuous DJ set. The central rhythm is often in common time (4/4), while the tempo typically varies between 120 and 150 beats per minute (bpm). Artists may use electronic instruments such as drum machines, sequencers, and synthesizers, as well as digital audio workstations.',
+            'created_at' => $createdDate,
+            'updated_at' => $createdDate
+        ]);
     }
 }
