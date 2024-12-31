@@ -19,13 +19,16 @@
 
                 </script>
                 @endif
-                
+
                 <div class="card-header">
                     <h3 class="card-title"><b>Edit profile</h3>
                 </div>
 
                 <div class="bm_row_layout row">
-                    <div class="col-lg-5">
+
+                    <div class="col-lg-6">
+
+                        <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
 
                         <div class="card-body text-primary">
 
@@ -92,29 +95,6 @@
                                         @include('alerts.feedback', ['field' => 'street_number'])
                                     </div>
 
-                                    <div class="bm_upload_box">
-                                        <label class="bm_upload_label_small" for="userpic">
-                                            <h4>Avatar</h4>
-                                        </label>
-                                        <input type="file" class="bm_upload btn btn-info" id="userpic" name="userpic" accept="image/*" onchange="validateFileSize(this)" style="position: absolute; right: 45px; height:38px; width:350px;">
-                                        @include('alerts.feedback', ['field' => 'userpic'])
-                                    </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-5">
-
-                        <div class="card-body text-primary">
-
-                            <div class="table-responsive">
-
-                                <form action="{{ route('profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('put')
-
                                     <div class="bm_form_group form-group {{ $errors->has('zip') ? 'has-danger' : '' }}">
                                         <label for="zip" class="bm_label_layout_small">
                                             <h4>Zip</h4>
@@ -167,92 +147,100 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-container">
-                <div class="col-lg-12">
-                    <div class="card-body text-primary">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-lg-12">
-
-                                    <div class="card-body text-primary">
-
-                                        <div class="table-responsive">
-
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_all') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_all" class="bm_label_layout_small">
-                                                    <h4>Receive all emails</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_all" class="bm_general_input_small form-control {{ $errors->has('email_notification_all') ? 'is-invalid' : '' }}" {{ $user->email_notification_all ? 'checked' : 'unchecked' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_all'])
-                                            </div>
-
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_acts') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_acts" class="bm_label_layout_small">
-                                                    <h4>Receive notification of new registered acts</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_acts" class="bm_general_input_small form-control {{ $errors->has('email_notification_acts') ? 'is-invalid' : '' }}" {{ $user->email_notification_acts ? 'checked' : 'unchecked' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_acts'])
-                                            </div>
-                                            
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_vacancies') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_vacancies" class="bm_label_layout_small">
-                                                    <h4>Receive notification of new registered vacancies</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_vacancies" class="bm_general_input_small form-control {{ $errors->has('email_notification_vacancies') ? 'is-invalid' : '' }}" {{ $user->email_notification_vacancies ? 'checked' : 'unchecked' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_vacancies'])
-                                            </div>
-
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_availablemusicians') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_availablemusicians" class="bm_label_layout_small">
-                                                    <h4>Receive notification of new registered available musicians</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_availablemusicians" class="bm_general_input_small form-control {{ $errors->has('email_notification_availablemusicians') ? 'is-invalid' : '' }}" {{ $user->email_notification_availablemusicians ? 'checked' : 'unchecked' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_availablemusicians'])
-                                            </div>
-
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_rehearsalrooms') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_rehearsalrooms" class="bm_label_layout_small">
-                                                    <h4>Receive notification of new registered rehearsal rooms</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_rehearsalrooms" class="bm_general_input_small form-control {{ $errors->has('email_notification_rehearsalrooms') ? 'is-invalid' : '' }}" {{ $user->email_notification_rehearsalrooms ? 'checked' : '' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_rehearsalrooms'])
-                                            </div>
-
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_venues') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_venues" class="bm_label_layout_small">
-                                                    <h4>Receive notification of new registered venues</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_venues" class="bm_general_input_small form-control {{ $errors->has('email_notification_venues') ? 'is-invalid' : '' }}" {{ $user->email_notification_venues ? 'checked' : '' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_venues'])
-                                            </div>
-
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_agencies') ? 'has-danger' : '' }}">
-                                                <label for="email_notification_agencies" class="bm_label_layout_small">
-                                                    <h4>Receive notification of new registered agencies</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_agencies" class="bm_general_input_small form-control {{ $errors->has('email_notification_agencies') ? 'is-invalid' : '' }}" {{ $user->email_notification_agencies ? 'checked' : '' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_agencies'])
-                                            </div>
 
 
-                                            <div class="bm_form_group form-group {{ $errors->has('email_notification_newsletter') ? 'has-danger' : '' }}">
-                                                <label for="email_notifiemail_notification_newslettercation_agencies" class="bm_label_layout_small">
-                                                    <h4>Receive newsletters</h4>
-                                                </label>
-                                                <input type="checkbox" name="email_notification_newsletter" class="bm_general_input_small form-control {{ $errors->has('email_notification_newsletter') ? 'is-invalid' : '' }}" {{ $user->email_notification_newsletter ? 'checked' : '' }}>
-                                                @include('alerts.feedback', ['field' => 'email_notification_newsletter'])
-                                            </div>
+                    <div class="col-lg-6">
 
+                        <div class="card-body text-primary">
 
+                            <div class="table-responsive">
+
+                                <form action="{{ route('profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('put')
+
+                                    <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_all') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_all" class="bm_label_layout_small">
+                                                <h4>Receive all emails</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_all" class="bm_general_input_small form-control {{ $errors->has('email_notification_all') ? 'is-invalid' : '' }}" {{ $user->email_notification_all ? 'checked' : 'unchecked' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_all'])
                                         </div>
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_acts') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_acts" class="bm_label_layout_small">
+                                                <h4>Receive notification of new registered acts</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_acts" class="bm_general_input_small form-control {{ $errors->has('email_notification_acts') ? 'is-invalid' : '' }}" {{ $user->email_notification_acts ? 'checked' : 'unchecked' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_acts'])
+                                        </div>
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_vacancies') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_vacancies" class="bm_label_layout_small">
+                                                <h4>Receive notification of new registered vacancies</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_vacancies" class="bm_general_input_small form-control {{ $errors->has('email_notification_vacancies') ? 'is-invalid' : '' }}" {{ $user->email_notification_vacancies ? 'checked' : 'unchecked' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_vacancies'])
+                                        </div>
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_availablemusicians') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_availablemusicians" class="bm_label_layout_small">
+                                                <h4>Receive notification of new registered available musicians</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_availablemusicians" class="bm_general_input_small form-control {{ $errors->has('email_notification_availablemusicians') ? 'is-invalid' : '' }}" {{ $user->email_notification_availablemusicians ? 'checked' : 'unchecked' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_availablemusicians'])
+                                        </div>
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_rehearsalrooms') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_rehearsalrooms" class="bm_label_layout_small">
+                                                <h4>Receive notification of new registered rehearsal rooms</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_rehearsalrooms" class="bm_general_input_small form-control {{ $errors->has('email_notification_rehearsalrooms') ? 'is-invalid' : '' }}" {{ $user->email_notification_rehearsalrooms ? 'checked' : '' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_rehearsalrooms'])
+                                        </div>
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_venues') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_venues" class="bm_label_layout_small">
+                                                <h4>Receive notification of new registered venues</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_venues" class="bm_general_input_small form-control {{ $errors->has('email_notification_venues') ? 'is-invalid' : '' }}" {{ $user->email_notification_venues ? 'checked' : '' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_venues'])
+                                        </div>
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_agencies') ? 'has-danger' : '' }}">
+                                            <label for="email_notification_agencies" class="bm_label_layout_small">
+                                                <h4>Receive notification of new registered agencies</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_agencies" class="bm_general_input_small form-control {{ $errors->has('email_notification_agencies') ? 'is-invalid' : '' }}" {{ $user->email_notification_agencies ? 'checked' : '' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_agencies'])
+                                        </div>
+
+
+                                        <div class="bm_form_group form-group {{ $errors->has('email_notification_newsletter') ? 'has-danger' : '' }}">
+                                            <label for="email_notifiemail_notification_newslettercation_agencies" class="bm_label_layout_small">
+                                                <h4>Receive newsletters</h4>
+                                            </label>
+                                            <input type="checkbox" name="email_notification_newsletter" class="bm_general_input_small form-control {{ $errors->has('email_notification_newsletter') ? 'is-invalid' : '' }}" {{ $user->email_notification_newsletter ? 'checked' : '' }}>
+                                            @include('alerts.feedback', ['field' => 'email_notification_newsletter'])
+                                        </div>
+
                                     </div>
-                                </div>
                             </div>
+
+                            <div class="bm_upload_box">
+                                <label class="bm_upload_label_small" for="userpic">
+                                    <h4>Avatar</h4>
+                                </label>
+                                <input type="file" class="bm_upload btn btn-info" id="userpic" name="userpic" accept="image/*" onchange="validateFileSize(this)" style="position: absolute; right: 45px; height:38px; width:350px;">
+                                @include('alerts.feedback', ['field' => 'userpic'])
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-container">
