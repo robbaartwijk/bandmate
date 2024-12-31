@@ -36,8 +36,27 @@ class User extends Authenticatable implements HasMedia {
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
+        'stage_name',
         'email',
+        'street',
+        'street_number',
+        'zip',
+        'city',
+        'state',
+        'country',
+        'phone',
+        'website',
         'password',
+        'email_notification_all',
+        'email_notification_acts',
+        'email_notification_vacancies',
+        'email_notification_availablemusicians',
+        'email_notification_rehearsalrooms',
+        'email_notification_venues',
+        'email_notification_agencies',
+        'email_notification_newsletter',
     ];
 
     /**

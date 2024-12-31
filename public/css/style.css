@@ -20,12 +20,26 @@
     font-size: 17px;
 }
 
+.bm_general_input_small {
+    width: 360px;
+    height: 30px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+    border: 1px solid rgb(200, 130, 130);
+    margin-left: auto;
+    font-size: 17px;
+}
+
 .bm_display_green {
     color: rgb(58, 242, 58);
 }
 
 .bm_label_layout {
     margin-top: 10px;
+    margin-right: 10px;
+}
+
+.bm_label_layout_small {
     margin-right: 10px;
 }
 
@@ -80,6 +94,15 @@
 .bm_upload_label {
     height: 50px;
     margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 17px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.bm_upload_label_small {
+    height: 40px;
     margin-right: auto;
     margin-left: auto;
     font-size: 17px;
