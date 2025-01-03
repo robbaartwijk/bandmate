@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Instrument;
 use Illuminate\Http\Request;
 
-class InstrumentController extends Controller
+class InstrumentController extends BaseController
 {
     /**
      * Display a listing of the resource.

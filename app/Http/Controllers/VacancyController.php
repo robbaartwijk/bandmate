@@ -9,7 +9,7 @@ use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VacancyController extends Controller
+class VacancyController extends BaseController
 {
     /**
      * Display a listing of the resource.

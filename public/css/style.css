@@ -60,7 +60,7 @@
 }
 
 .bm_row_layout {
-    height: 100vh;
+    height:auto;
 }
 
 /* simpleMde changes and overrides */
@@ -114,6 +114,7 @@
     border: 1px solid rgb(200, 130, 130);
     width: 68%;
     height: 50px;
+    margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
     font-size: 17px;
@@ -152,4 +153,12 @@
     transform: scale(1.5);
     position: absolute;
     /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.bm_thumbnail {
+    border: 1px solid rgb(130, 89, 89);
+    width: 55px;
+    height: 55px;
+    margin: 0 auto;
+    z-index: 10;
 }

@@ -11,18 +11,8 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use IcehouseVentures\LaravelChartjs\Facades\Chartjs;
 
-class StatisticController extends Controller
+class StatisticController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Generates chart data for monthly uer registrations.
      *

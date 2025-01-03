@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class AvailablemusicianController extends Controller
+class AvailablemusicianController extends BaseController
 {
     /**
      * Display a listing of the resource.

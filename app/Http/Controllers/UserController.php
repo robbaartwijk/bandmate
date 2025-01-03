@@ -10,7 +10,7 @@ use App\Models\Act;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * Display a listing of the users

@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-class ActController extends Controller
-{
+class ActController extends BaseController
+{ 
     /**
      * Display a listing of the resource.
      */

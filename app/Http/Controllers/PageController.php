@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 
-class PageController extends Controller
+class PageController extends BaseController
 {
     /**
      * Display icons page

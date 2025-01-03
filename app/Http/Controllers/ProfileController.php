@@ -6,8 +6,10 @@ use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
     /**
      * Show the form for editing the profile.
@@ -17,6 +19,8 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = User::find(auth()->user()->id);
+
+        $user->avatar = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.edit', compact(['user']));
     }
@@ -33,6 +37,11 @@ class ProfileController extends Controller
         $user = $this->processEmailNotifications($user);
 
         $user->save();
+
+        if ($request->hasFile('AvatarThumbnailPic')) {
+            $this->clearUserImage($user);
+            $this->storeThumbnailImage($request, $user);
+        }
 
         return back()->withStatus(__('Profile successfully updated.'));
     }
@@ -101,4 +110,29 @@ class ProfileController extends Controller
 
         return $user;
     }
+
+    /**
+     * Store a newly created image resource in storage.
+     */
+    public function storeThumbnailImage(Request $request, User $user)
+    {
+        $user->addMediaFromRequest('AvatarThumbnailPic')
+             ->toMediaCollection('images/AvatarThumbnailPics');
+
+        // Create a thumbnail of the image
+        $user->getFirstMedia('images/AvatarThumbnailPics')
+             ->manipulations(['AvatarThumbnailPic' => ['width' => 100, 'height' => 100]])
+             ->save();
+
+    }
+
+    /**
+     * Remove the specified image resource from storage.
+     */
+    public function clearUserImage($user)
+    {
+        $user->clearMediaCollection('images/AvatarPics');
+        $user->clearMediaCollection('images/AvatarThumbnailPics');
+    }
+
 }

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RehearsalroomController extends Controller
+class RehearsalroomController extends BaseController
 {
     /**
      * Display a listing of the resource.

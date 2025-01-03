@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 
-class GenreController extends Controller
+class GenreController extends BaseController
 {
     /**
      * Display a listing of the resource.

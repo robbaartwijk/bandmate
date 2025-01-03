@@ -17,6 +17,7 @@ use App\Models\Availablemusician;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements HasMedia {
 
@@ -118,4 +119,12 @@ class User extends Authenticatable implements HasMedia {
         return $this->media()->count() > 0;
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(200)  // Thumbnail width
+            ->height(200) // Thumbnail height
+            ->sharpen(10); // Optional: sharpen the image
+    }
+    
 }

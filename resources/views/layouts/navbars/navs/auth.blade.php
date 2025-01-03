@@ -8,7 +8,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a class="navbar-brand" href="/"> {{ Auth::user()->name }} </a> 
+            <a class="navbar-brand" href="/"> {{ Auth::user()->name }} </a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -17,16 +17,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto">
-                <li class="search-bar input-group">
+                {{-- <li class="search-bar input-group">
                     <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
                         <span class="d-lg-none d-md-block">{{ __('Search') }}</span>
                     </button>
-                </li>
+                </li> --}}
                 <li class="dropdown nav-item">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        
+                        @if (!empty($userAvatar))
+                            <img src="{{ asset('/storage/' . $userAvatar->id . '/' . $userAvatar->file_name) }}" class="bm_thumbnail">
+                        @else
                         <div class="photo">
                             <img src="{{ asset('black') }}/img/anime3.png" alt="{{ __('Profile Photo') }}">
                         </div>
+                        @endif
+
                         <b class="caret d-none d-lg-block d-xl-block"></b>
                         <p class="d-lg-none">{{ __('Log out') }}</p>
                     </a>
@@ -55,7 +61,7 @@
                 <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="{{ __('SEARCH') }}">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('Close') }}">
                     <i class="tim-icons icon-simple-remove"></i>
-              </button>
+                </button>
             </div>
         </div>
     </div>

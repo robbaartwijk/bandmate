@@ -6,7 +6,7 @@ use App\Models\Agency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AgencyController extends Controller
+class AgencyController extends BaseController
 {
     /**
      * Display a listing of the resource.
