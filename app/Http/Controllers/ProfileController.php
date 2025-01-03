@@ -120,9 +120,11 @@ class ProfileController extends BaseController
              ->toMediaCollection('images/AvatarThumbnailPics');
 
         // Create a thumbnail of the image
-        $user->getFirstMedia('images/AvatarThumbnailPics')
-             ->manipulations(['AvatarThumbnailPic' => ['width' => 100, 'height' => 100]])
-             ->save();
+        $media = $user->getFirstMedia('images/AvatarThumbnailPics');
+        $image = \Spatie\Image\Image::load($media->getPath())
+            ->width(100)
+            ->height(100)
+            ->save();
 
     }
 

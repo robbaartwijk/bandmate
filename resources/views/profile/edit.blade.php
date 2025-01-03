@@ -230,7 +230,7 @@
                             <div class="row bm_upload_box">
                                 {{-- <label class="bm_upload_label" for="AvatarThumbnailPic"><h4>Avatar</h4></label> --}}
                                 @if (!empty($user->avatar))
-                                <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}" class="thumbnail" style="width: 100px; height: 100px;">
+                                <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}" class="bm_zoom thumbnail" style="width: 100px; height: 100px;">
                             @endif
                                 <input type="file" class="bm_upload btn btn-info" id="AvatarThumbnailPic" name="AvatarThumbnailPic" accept="image/*" onchange="validateFileSize(this)">
                                 @include('alerts.feedback', ['field' => 'AvatarThumbnailPic'])
