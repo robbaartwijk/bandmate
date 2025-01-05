@@ -125,11 +125,6 @@ class ProfileController extends BaseController
         $user->clearMediaCollection('images/AvatarThumbnailPics');
     }
 
-
-    /**
-     * @TODO NEW UPDATE PASSWORD FUNCTION
-     */
-
     /**
      * Show the form for editing the profile.
      *
@@ -144,7 +139,7 @@ class ProfileController extends BaseController
         return view('profile.editpassword', compact(['user']));
     }
 
-        /**
+    /**
      * Change the password
      *
      * @return \Illuminate\Http\RedirectResponse
