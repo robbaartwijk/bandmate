@@ -9,13 +9,22 @@
             </div>
 
             <div class="card-body text-primary">
+
+                @if (!empty($user->image))
+                <div style="float: left; margin-right: 20px;">
+                    <img src="{{ asset('/storage/' . $user->image->id . '/' . $user->image->file_name) }}" class="img-fluid bm_image">
+                </div>
+                @endif
+                
                 <h4><b>Name : </b>{{ $user->name }}</h4>
                 <h4><b>Email : </b> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></h4>
                 <h4><b>Date added : </b>{{ $user->created_at }}</h4>
                 <h4><b>Date last update : </b>{{ $user->updated_at }}</h4>
                 <a href="{{ route('users.index') }}" class="btn btn-danger">Back</a>
             </div>
+            
         </div>
+        
     </div>
 
     <header>

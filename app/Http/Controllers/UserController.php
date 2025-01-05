@@ -56,6 +56,8 @@ class UserController extends BaseController
             $act->genre_name = Genre::find($act->genre_id)->name;
         }
 
+        $user->image = $user->getFirstMedia('images/AvatarThumbnailPics');
+
         foreach ($user->vacancies as $vacancy) {
             $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
             $act = Act::find($vacancy->act_id);

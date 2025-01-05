@@ -10,7 +10,7 @@
 
             <div class="bm_row_layout row">
 
-                <div class="col-lg-6" style="position: relative; left: 50%; transform: translateX(-50%);">
+                <div class="col-lg-3" style="position: relative; left: 50%; transform: translateX(-50%);">
 
                     <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px; margin-left:15px;"">
 
