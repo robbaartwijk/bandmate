@@ -3,7 +3,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
-import {Chart}
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">

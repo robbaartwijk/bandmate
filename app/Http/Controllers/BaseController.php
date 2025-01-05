@@ -12,8 +12,12 @@ class BaseController extends Controller
     {
         // Add data to be passed to all views
         $this->middleware(function ($request, $next) {
-            $userAvatar = Auth::user()->getFirstMedia('images/AvatarThumbnailPics');;
-            view()->share('userAvatar', $userAvatar);
+
+            if (Auth::check()) {
+                $userAvatar = Auth::user()->getFirstMedia('images/AvatarThumbnailPics');;
+                view()->share('userAvatar', $userAvatar);
+            }
+
             return $next($request);
         });
     }
