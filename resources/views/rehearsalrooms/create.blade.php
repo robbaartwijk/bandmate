@@ -19,7 +19,7 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('rehearsalrooms.store') }}" method="post">
+                                <form action="{{ route('rehearsalrooms.store') }}" method="post" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
@@ -30,7 +30,6 @@
                                             {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ old('name') }}">
                                         @include('alerts.feedback', ['field' => 'name'])
                                     </div>
-
 
                                     <div class="bm_form_group form-group {{ $errors->has('address') ? 'has-danger' : '' }}" style="display: flex; align-items: center;">
                                         <label for="address" class="bm_label_layout">
@@ -60,7 +59,6 @@
                                         @include('alerts.feedback', ['field' => 'city'])
                                     </div>
 
-
                                     <div class="bm_form_group form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
                                         <label for="state" class="bm_label_layout">
                                             <h3>State</h3>
@@ -69,7 +67,6 @@
                                             {{ $errors->has('state') ? 'is-invalid' : '' }}" placeholder="State" value="{{ old('state') }}">
                                         @include('alerts.feedback', ['field' => 'state'])
                                     </div>
-
 
                             </div>
 
@@ -122,12 +119,21 @@
                                         @include('alerts.feedback', ['field' => 'website'])
                                     </div>
 
+                                    <div>
+                                        <label class="bm_label_layout" for="rehearsalroompic">
+                                            <h3>Add picture</h3>
+                                        </label>
+                                        <input type="file" class="bm_upload_box bm_upload btn btn-info" id="rehearsalroompic" name="rehearsalroompic" accept="image/*" onchange="validateFileSize(this)" style="width: 360px; margin-top:15px; margin-right:10px; float: right;">
+                                        @include('alerts.feedback', ['field' => 'rehearsalroompic'])
+                                    </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="row" style="height: 10vh;">
@@ -152,5 +158,15 @@
     </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('rehearsalroompic').addEventListener('change', function() {
+        const file = this.files[0];
+        if (file.size > 1048576) { // 1MB in bytes
+            alert('File size must be less than 1MB');
+            this.value = '';
+        }
+    });
+</script>
 
 @endsection

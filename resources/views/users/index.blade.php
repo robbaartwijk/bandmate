@@ -84,7 +84,7 @@
                         <td>{{ $user->updated_at }}</td>
 
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
+                            <a href="{{ route('profile.edit', $user->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                 <i class="tim-icons icon-pencil"></i>
                             </a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="post" style="display:inline">

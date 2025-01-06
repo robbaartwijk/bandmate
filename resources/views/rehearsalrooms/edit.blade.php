@@ -18,7 +18,7 @@
 
                             <div class="table-responsive">
 
-                                <form action="{{ route('rehearsalrooms.update', $rehearsalroom->id) }}" method="post">
+                                <form action="{{ route('rehearsalrooms.update', $rehearsalroom->id) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('put')
 
@@ -100,6 +100,14 @@
                             @include('alerts.feedback', ['field' => 'website'])
                         </div>  
 
+                        <div style="height:80px;"class="bm_upload_box">
+                            <label class="bm_upload_label" for="rehearsalroompic">
+                                <h3>Add picture</h3>
+                            </label>
+                            <input type="file" class="bm_upload btn btn-info" id="rehearsalroompic" name="rehearsalroompic" accept="image/*" onchange="validateFileSize(this)" style="width: 360px; margin-top:15px; margin-right:10px; float: right;">
+                            @include('alerts.feedback', ['field' => 'rehearsalroompic'])
+                        </div>
+
                     </div>
 
                     <div class="col-lg-12">
@@ -135,4 +143,17 @@
             </form>
         </div>
     </div>
+
+
+    <script>
+        function validateFileSize(input) {
+            const file = input.files[0];
+            if (file && file.size > 1048576) {
+                alert('File size must be less than 1MB');
+                input.value = '';
+            }
+        }
+
+    </script>
+
     @endsection

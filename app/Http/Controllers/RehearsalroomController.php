@@ -6,6 +6,8 @@ use App\Models\Rehearsalroom;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class RehearsalroomController extends BaseController
 {
@@ -72,6 +74,11 @@ class RehearsalroomController extends BaseController
         ]));
         $rehearsalroom->save();
 
+        if ($request->hasFile('rehearsalroompic')) {
+            $this->storeRehearsalroomImage($request, $rehearsalroom);
+        }
+
+
         return redirect()->route('rehearsalrooms.index');
     }
 
@@ -80,6 +87,8 @@ class RehearsalroomController extends BaseController
      */
     public function show(Rehearsalroom $rehearsalroom)
     {
+        $rehearsalroom->image = $rehearsalroom->getFirstMedia('images/RehearsalroomPics');
+
         return view('rehearsalrooms.show', compact('rehearsalroom'));
     }
 
@@ -117,6 +126,11 @@ class RehearsalroomController extends BaseController
             'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website', 'description'
         ]))->save();
 
+        if ($request->hasFile('rehearsalroompic')) {
+            $this->clearRehearsalroomImage($rehearsalroom);
+            $this->storeRehearsalroomImage($request, $rehearsalroom);
+        }
+
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room updated successfully');
     }
@@ -131,6 +145,8 @@ class RehearsalroomController extends BaseController
                 ->with('status', 'You are not authorized to delete this rehearsal room.');
         }
 
+        $rehearsalroom->clearMediaCollection('images/RehearsalroomPics');
+        
         $rehearsalroom->delete();
 
         return redirect()->route('rehearsalrooms.index')
@@ -144,4 +160,21 @@ class RehearsalroomController extends BaseController
     {
         return Auth::user()->is_admin || $rehearsalroom->user_id === Auth::user()->id;
     }
+
+        /**
+     * Store a newly created image resource in storage.
+     */
+    public function storeRehearsalroomImage(Request $request, Rehearsalroom $rehearsalroom)
+    {
+        $rehearsalroom->addMediaFromRequest('rehearsalroompic')->toMediaCollection('images/RehearsalroomPics');
+    }
+
+    /**
+     * Remove the specified image resource from storage.
+     */
+    public function clearRehearsalroomImage($rehearsalroom)
+    {
+        $rehearsalroom->clearMediaCollection('images/RehearsalroomPics');
+    }
+
 }

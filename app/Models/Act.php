@@ -50,7 +50,7 @@ class Act extends Authenticatable implements HasMedia
     {
         return $this->hasMany('App\Models\Vacancy');
     }
-    
+     
     public function hasAnyMedia()
     {
         return $this->media()->count() > 0;

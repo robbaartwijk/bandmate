@@ -133,6 +133,7 @@ class ActController extends BaseController
         $act->active = $request->active === 'on' ? 1 : 0;
 
         $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
+        
         if ($request->hasFile('actpic')) {
             $this->clearActImage($act);
             $this->storeActImage($request, $act);

@@ -9,6 +9,17 @@
                 </div>
 
                 <div class="card-body text-primary">
+
+                    @if (!empty($rehearsalroom->image))
+                    <div style="float: left; margin-right: 20px;">
+                        <img src="{{ asset('/storage/' . $rehearsalroom->image->id . '/' . $rehearsalroom->image->file_name) }}" class="img-fluid bm_image">
+                    </div>
+                    @else
+                    <div style="float: left; margin-right: 20px;">
+                        <img src="{{ asset('storage/defaults/defaultrehearsalroom.jpg') }}" style="width:480px; height:480px;" class="img-fluid bm_image">
+                    </div>
+                    @endif
+
                     <h4><b>Name : </b>{{ $rehearsalroom->name }}</h4>
                     <h4><b>Address : </b>{{ $rehearsalroom->address }}</h4>
                     <h4><b>City : </b>{{ $rehearsalroom->city }}</h4>

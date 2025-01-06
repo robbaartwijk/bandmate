@@ -49,6 +49,7 @@
                             <h4><b>Available venues notifications : </b>{{ $user->email_notification_venues ? 'Yes' : 'No' }}</h4>
                             <h4><b>Available agencies notifications : </b>{{ $user->email_notification_agencies ? 'Yes' : 'No' }}</h4>
                             <h4><b>Receive newsletter : </b>{{ $user->email_notification_newsletter ? 'Yes' : 'No' }}</h4>
+                        <br/>
                             <h4><b>Date added : </b>{{ $user->created_at }}</h4>
                             <h4><b>Date last update : </b>{{ $user->updated_at }}</h4>
                         </div>

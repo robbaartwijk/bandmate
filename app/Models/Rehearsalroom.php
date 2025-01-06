@@ -37,7 +37,7 @@ class Rehearsalroom extends Authenticatable implements HasMedia
     return $this->belongsTo('App\Models\User');
 }
 
-public function hasRehearsalroomMedia()
+public function hasAnyMedia()
 {
     return $this->media()->count() > 0;
 }
