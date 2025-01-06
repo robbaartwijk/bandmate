@@ -151,5 +151,11 @@ class ProfileController extends BaseController
         return back()->withPasswordStatus(__('Password successfully updated.'));
     }
 
+    public function userdata(): \Illuminate\Http\JsonResponse
+    {
+        $user = User::find(auth()->user()->id);
+
+        return response()->json($user);
+    }
 
 }
