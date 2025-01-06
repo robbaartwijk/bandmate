@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h3 class="card-title"> Show rehearsal room</h3>
+                    <h3 class="card-title"><b>Show rehearsal room</b></h3>
                 </div>
 
                 <div class="card-body text-primary">
@@ -30,7 +30,7 @@
                     <h4><b>Phone : </b>{{ $rehearsalroom->phone }}</h4>
                     <h4><b>Email : </b> <a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a></h4>
 
-                    <h4><b>Website : </b><a href="{{ $rehearsalroom->website }}">{{ $rehearsalroom->website }}</a></h4>
+                    <h4><b>Website : </b><a href="{{ $rehearsalroom->website }}" target="_blank">{{ $rehearsalroom->website }}</a></h4>
                     <h4><b>Description : </b> {{ $rehearsalroom->description }}</h4>
 
                     <h4><b>Date added : </b>{{ $rehearsalroom->created_at }}</h4>
