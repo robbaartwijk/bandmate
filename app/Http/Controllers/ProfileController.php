@@ -151,11 +151,13 @@ class ProfileController extends BaseController
         return back()->withPasswordStatus(__('Password successfully updated.'));
     }
 
-    public function userdata(): \Illuminate\Http\JsonResponse
+    public function userdata(): \Illuminate\View\View
     {
-        $user = User::find(auth()->user()->id);
+        $user = User::with('acts', 'vacancies', 'rehearsalrooms', 'availablemusicians')->find(auth()->user()->id);
 
-        return response()->json($user);
+        $user->image = $user->getFirstMedia('images/AvatarThumbnailPics');
+
+        return view('profile.userdata', compact(['user']));
     }
 
 }
