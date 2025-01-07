@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card-body text-primary">
-                        <a href="{{ route('agencies.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
             </div>

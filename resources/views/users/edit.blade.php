@@ -28,7 +28,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update</button>
-                        <a href="{{ route('users.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                     </form>
                 </div>
             </div>

@@ -18,7 +18,7 @@
 
                 <h4><b>Date added : </b>{{ $vacancy->created_at }}</h4>
                 <h4><b>Date last update : </b>{{ $vacancy->updated_at }}</h4>
-                <a href="{{ route('vacancies.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>

@@ -106,7 +106,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('availablemusicians.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                                                    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>

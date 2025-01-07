@@ -33,7 +33,7 @@
                         <h4><b>Phone : </b>{{ $user->phone}}</h4>
                         <h4><b>Email : </b> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></h4>
                         <h4><b>Website : </b><a href="{{ $user->website }}">{{ $user->website }}</a></h4>
-                        <a href="{{ route('users.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
 

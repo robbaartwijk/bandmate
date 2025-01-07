@@ -26,7 +26,7 @@ class ActSeeder extends Seeder
             'rehearsal_room' => 1,
             'website' => 'http://www.solidair.com',
             'active' => 1,
-            'description' => 'Solid Air are a four-piece band from London. They play a mix of rock, blues and soul music.',
+            'description' => 'Hailing from the vibrant city of Alphen aan den Rijn, Solid Air is a band that masterfully blends the cinematic intensity of trip-hop with the fluid grooves of drum and bass. Drawing inspiration from legendary acts like Massive Attack, Portishead, and LTJ Bukem, Solid Air creates an immersive sonic experience that is both hypnotic and energizing',
             'email' => 'rob.baartwijk@gmail.com',
             'phone' => '020 123 4567',
             'facebook' => 'https://www.facebook.com/SolidAir',
@@ -35,6 +35,7 @@ class ActSeeder extends Seeder
             'youtube' => 'https://www.youtube.com/SolidAir',
             'spotify' => 'https://www.spotify.com/SolidAir',
             'soundcloud' => 'https://www.soundcloud.com/SolidAir',
+            'youtubedemo' => 'https://www.youtube.com/watch?v=OEvY6iypWGk',
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);

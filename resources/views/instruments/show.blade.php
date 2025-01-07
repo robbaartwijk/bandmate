@@ -13,7 +13,7 @@
                 <h3><b>Type : </b> {{ $instrument->type }}</h3>
                 <h4><b>Date added : </b>{{ $instrument->created_at }}</h4>
                 <h4><b>Date last update : </b>{{ $instrument->updated_at }}</h4>
-                <a href="{{ route('instruments.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>
