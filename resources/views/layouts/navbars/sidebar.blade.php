@@ -163,14 +163,16 @@ $user = auth()->user();
 
             @if($user->is_admin)
             <li>
-                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'profile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
+
+                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
                     <i class="fa fa-user-circle"></i>
                     <span class="nav-link-text">
                         <h4>{{ __('Management') }}</h4>
                         <b class="caret mt-1"></b>
+                    </span>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'profile' || $pageSlug == 'users') show @endif" id="laravel-examples" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'userprofile' || $pageSlug == 'users') show @endif" id="laravel-examples" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='profile' ) class="active " @endif>
                             <a href="{{ route('profile.edit') }}">

@@ -83,7 +83,7 @@
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
 
-                        <td>
+                        {{-- <td>
                             <a href="{{ route('profile.edit', $user->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                 <i class="tim-icons icon-pencil"></i>
                             </a>
@@ -94,7 +94,8 @@
                                     <i class="tim-icons icon-simple-remove"></i>
                                 </button>
                             </form>
-                        </td>
+                        </td> --}}
+                        
                     </tr>
                     @endforeach
                 </tbody>
