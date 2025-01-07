@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('statistics/chart2', 'App\Http\Controllers\StatisticController@chart2')->name('statistics.chart2');
     Route::get('statistics/chart3', 'App\Http\Controllers\StatisticController@chart3')->name('statistics.chart3');
     Route::get('statistics/chart4', 'App\Http\Controllers\StatisticController@chart4')->name('statistics.chart4');
+    Route::get('statistics/chart5', 'App\Http\Controllers\StatisticController@chart5')->name('statistics.chart5');
 
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);

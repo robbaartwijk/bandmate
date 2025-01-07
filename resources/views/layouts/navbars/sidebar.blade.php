@@ -84,7 +84,7 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' || $pageSlug == 'chart4') show @endif" id="statistics" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' || $pageSlug == 'chart4' || $pageSlug == 'chart5') show @endif" id="statistics" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='chart1' ) class="active " @endif>
                             <a href="{{ route('statistics.chart1') }}">
@@ -117,7 +117,16 @@ $user = auth()->user();
                             <a href="{{ route('statistics.chart4') }}">
                                 <i class="fa fa-chart-bar"></i>
                                 <p>
-                                    <h5>{{ __('Available musicians') }}</h5>
+                                    <h5>{{ __('Available musicians(AM)') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='chart5' ) class="active " @endif>
+                            <a href="{{ route('statistics.chart5') }}">
+                                <i class="fa fa-chart-bar"></i>
+                                <p>
+                                    <h5>{{ __('(AM) Per instrument') }}</h5>
                                 </p>
                             </a>
                         </li>

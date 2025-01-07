@@ -404,4 +404,94 @@ class StatisticController extends BaseController
 
         return view('statistics.chart4', compact('chartavailablemusiciansregistrations'));
     }
+
+    /**
+     * Generates chart data for available musicians per instrument
+     *
+     * This function creates and returns data that can be used to generate a chart
+     * representing the number of available musicians per instrument.
+     *
+     * @return array The chart data for available musicians per instrument.
+     */
+    public function chart5()
+    {
+        $availablemusicians = Availablemusician::get();
+
+        foreach ($availablemusicians as $availablemusician) {
+            $availablemusician->instrument = Instrument::find($availablemusician->instrument_id);
+        }
+
+        $availablemusiciansPerInstrument = $availablemusicians->groupBy('instrument_id')->map(function ($group, $instrumentId) {
+            return [
+                'count' => $group->count(),
+                'instrument' => $group->first()->instrument->name,
+            ];
+        })->values();
+
+        $availablemusiciansPerInstrument =  $availablemusiciansPerInstrument->sortBy('instrument')->values();
+        
+        $data =  $availablemusiciansPerInstrument->pluck('count')->toArray();
+        $labels =  $availablemusiciansPerInstrument->pluck('instrument')->toArray();
+        
+        $chartavailablemusiciansperinstrument = Chartjs::build()
+            ->name('AvailablemusiciansPerInstrument')
+            ->type('bar')
+            ->size(['width' => '75%', 'height' => '75%'])
+            ->labels($labels)
+            ->datasets([
+                [
+                    'backgroundColor' => [
+                        'blue',
+                        'red',
+                        'green',
+                        'yellow',
+                        'purple',
+                        'orange',
+                        'brown',
+                        'grey',
+                        'cyan',
+                        'lime',
+                    ],
+                    'label' => 'Available musicians per instrument',
+                    'borderColor' => 'white',
+                    'data' => $data,
+                ],
+            ])
+            ->options([
+                'plugins' => [
+                    'legend' => [
+                        'labels' => [
+                            'fontColor' => 'white',
+                        ],
+                        'display' => true,
+                        'labels' => [
+                            'color' => 'white',
+                        ],
+                    ],
+                    'colors' => [
+                        'forceOverride' => true,
+                        'enabled' => false,
+                    ],
+                ],
+                'scales' => [
+                    'y' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                        'grid' => ['color' => 'grey'],
+                    ],
+                    'x' => [
+                        'ticks' => ['color' => 'white', 'beginAtZero' => true],
+                    ],
+                ],
+                'xAxes' => [
+                    'type' => 'category',
+                ],
+                'title' => [
+                    'display' => true,
+                    'text' => 'Available musicians per instrument',
+                    'fontsize' => '60',
+                ],
+            ]);
+
+        return view('statistics.chart5', compact('chartavailablemusiciansperinstrument'));
+    }
 }
