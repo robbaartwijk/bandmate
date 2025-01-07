@@ -215,7 +215,7 @@
                                         </div>
 
                                         <div class="bm_form_group form-group {{ $errors->has('email_notification_newsletter') ? 'has-danger' : '' }}">
-                                            <label for="email_notifiemail_notification_newslettercation_agencies" class="bm_label_layout_small">
+                                            <label for="email_notifiemail_notification_newslettercation_newsletter" class="bm_label_layout_small">
                                                 <h4>Newsletters</h4>
                                             </label>
                                             <input type="checkbox" name="email_notification_newsletter" class="bm_general_input_small form-control {{ $errors->has('email_notification_newsletter') ? 'is-invalid' : '' }}" {{ $user->email_notification_newsletter ? 'checked' : '' }}>
