@@ -26,7 +26,7 @@
                                         <label for="musiciansname" class="bm_label_layout">
                                             <h3>Musician name</h3>
                                         </label>
-                                        <input type="text" name="musiciansname" id="musiciansname"  style="color: lightgreen;" class="bm_general_input bm_display_green form-control {{ $errors->has('musiciansname') ? 'is-invalid' : '' }}" placeholder="Musician name" value="{{ $availablemusician->user->name }}" readonly>
+                                        <input type="text" name="musiciansname" id="musiciansname" style="color: lightgreen;" class="bm_general_input bm_display_green form-control {{ $errors->has('musiciansname') ? 'is-invalid' : '' }}" placeholder="Musician name" value="{{ $availablemusician->user->name }}" readonly>
                                         @include('alerts.feedback', ['field' => 'musiciansname'])
                                     </div>
 
@@ -106,7 +106,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('availablemusicians.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('availablemusicians.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>
@@ -130,6 +130,7 @@
                 input.value = '';
             }
         }
+
     </script>
 
     @endsection

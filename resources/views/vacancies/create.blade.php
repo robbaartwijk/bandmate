@@ -20,7 +20,7 @@
                             <div class="table-responsive">
 
                                 <form action="{{ route('vacancies.store') }}" method="post">
-                                 @csrf
+                                    @csrf
 
                                     <div class="bm_form_group form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
                                         <label for="act_id" class="bm_label_layout">
@@ -69,7 +69,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Add</button>
-                                                    <a href="{{ route('vacancies.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('vacancies.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>

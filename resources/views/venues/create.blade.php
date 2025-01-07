@@ -134,21 +134,21 @@
                 <div class="card-header">
                     <h3 class="card-title
                         
-            <div class="card-body text-primary col-lg-12">
-                <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                    <label for="description">
-                        <h3>Description</h3>
-                    </label>
-                    <textarea id="description" name="description" class="bm_general_input form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description" style="height: 10px;">{{ old('description') }}</textarea>
-                    @include('alerts.feedback', ['field' => 'description'])
+            <div class=" card-body text-primary col-lg-12">
+                        <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
+                            <label for="description">
+                                <h3>Description</h3>
+                            </label>
+                            <textarea id="description" name="description" class="bm_general_input form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description" style="height: 10px;">{{ old('description') }}</textarea>
+                            @include('alerts.feedback', ['field' => 'description'])
+                        </div>
+                        <button type="submit" class="btn btn-info">Add</button>
+                        <a href="{{ route('venues.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                 </div>
-                <button type="submit" class="btn btn-info">Add</button>
-                <a href="{{ route('venues.index') }}" class="btn btn-danger">Back</a>
             </div>
+
         </div>
-
+        </form>
     </div>
-    </form>
-</div>
 
-@endsection
+    @endsection

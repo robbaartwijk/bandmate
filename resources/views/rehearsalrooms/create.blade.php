@@ -142,31 +142,32 @@
                 <div class="card-header">
                     <h3 class="card-title
                         
-            <div class="card-body text-primary col-lg-12">
-                <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                    <label for="description">
-                        <h3>Description</h3>
-                    </label>
-                    <textarea id="description" name="description" class="bm_general_input form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description" style="height: 10px;">{{ old('description') }}</textarea>
-                    @include('alerts.feedback', ['field' => 'description'])
+            <div class=" card-body text-primary col-lg-12">
+                        <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
+                            <label for="description">
+                                <h3>Description</h3>
+                            </label>
+                            <textarea id="description" name="description" class="bm_general_input form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description" style="height: 10px;">{{ old('description') }}</textarea>
+                            @include('alerts.feedback', ['field' => 'description'])
+                        </div>
+                        <button type="submit" class="btn btn-info">Add</button>
+                        <a href="{{ route('rehearsalrooms.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                 </div>
-                <button type="submit" class="btn btn-info">Add</button>
-                <a href="{{ route('rehearsalrooms.index') }}" class="btn btn-danger">Back</a>
             </div>
+
         </div>
-
+        </form>
     </div>
-    </form>
-</div>
 
-<script>
-    document.getElementById('rehearsalroompic').addEventListener('change', function() {
-        const file = this.files[0];
-        if (file.size > 1048576) { // 1MB in bytes
-            alert('File size must be less than 1MB');
-            this.value = '';
-        }
-    });
-</script>
+    <script>
+        document.getElementById('rehearsalroompic').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file.size > 1048576) { // 1MB in bytes
+                alert('File size must be less than 1MB');
+                this.value = '';
+            }
+        });
 
-@endsection
+    </script>
+
+    @endsection

@@ -1,42 +1,38 @@
 @extends('layouts.app', ['page' => __('Users'), 'pageSlug' => 'users'])
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card ">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Edit user</b></h3>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header">
+                <h3 class="card-title"><b>Edit user</b></h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
 
-                        <form action="{{ route('users.update', $user->id) }}" method="post">
-                            @csrf
-                            @method('put')
+                    <form action="{{ route('users.update', $user->id) }}" method="post">
+                        @csrf
+                        @method('put')
 
-                            <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                <label for="name">Name</label>
-                                <input type="text" name="name"
-                                    class="form-control
-                                    {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                    placeholder="Name" value="{{ $user->name }}">
+                        <div class="form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" class="form-control
+                                    {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ $user->name }}">
 
-                                <label for="email">Email</label>
-                                <input type="text" name="email"
-                                    class="form-control
-                                    {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                    placeholder="Email" value="{{ $user->email }}">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" class="form-control
+                                    {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ $user->email }}">
 
-                                @include('alerts.feedback', ['field' => 'name'])
-                                @include('alerts.feedback', ['field' => 'email'])
-                            </div>
+                            @include('alerts.feedback', ['field' => 'name'])
+                            @include('alerts.feedback', ['field' => 'email'])
+                        </div>
 
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-danger">Back</a>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a href="{{ route('users.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection

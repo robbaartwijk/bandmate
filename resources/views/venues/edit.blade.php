@@ -53,15 +53,15 @@
                                         <input type="text" name="city" class="bm_general_input form-control {{ $errors->has('city') ? 'is-invalid' : '' }}" placeholder="City" value="{{ $venue->city }}">
                                         @include('alerts.feedback', ['field' => 'city'])
                                     </div>
-            
+
                                     <div class="bm_form_group form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
                                         <label for="state" class="bm_label_layout">
                                             <h3>State</h3>
                                         </label>
                                         <input type="text" name="state" class="bm_general_input form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" placeholder="State" value="{{ $venue->state }}">
                                         @include('alerts.feedback', ['field' => 'state'])
-                                    </div>    
-                                    
+                                    </div>
+
                             </div>
                         </div>
                     </div>
@@ -74,23 +74,23 @@
                             </label>
                             <input type="text" name="country" class="bm_general_input form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" placeholder="Country" value="{{ $venue->country }}">
                             @include('alerts.feedback', ['field' => 'country'])
-                        </div>   
-     
+                        </div>
+
                         <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
                             <label for="phone" class="bm_label_layout">
                                 <h3>Phone</h3>
                             </label>
                             <input type="text" name="phone" class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ $venue->phone }}">
                             @include('alerts.feedback', ['field' => 'phone'])
-                        </div>   
-                    
+                        </div>
+
                         <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
                             <label for="email" class="bm_label_layout">
                                 <h3>Email</h3>
                             </label>
                             <input type="text" name="email" class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ $venue->email }}">
                             @include('alerts.feedback', ['field' => 'email'])
-                        </div>  
+                        </div>
 
                         <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
                             <label for="website" class="bm_label_layout">
@@ -98,7 +98,7 @@
                             </label>
                             <input type="text" name="website" class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ $venue->website }}">
                             @include('alerts.feedback', ['field' => 'website'])
-                        </div>  
+                        </div>
 
                     </div>
 
@@ -120,7 +120,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('venues.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('venues.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>

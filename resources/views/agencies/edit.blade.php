@@ -150,22 +150,6 @@
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
                             <div class="form-group">
@@ -184,7 +168,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('agencies.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>

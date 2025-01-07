@@ -100,7 +100,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Add</button>
-                                                    <a href="{{ route('availablemusicians.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('availablemusicians.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>
@@ -117,15 +117,15 @@
     </form>
 </div>
 
-    <script>
-        document.getElementById('availablemusicianpic').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file.size > 1048576) { // 1MB in bytes
-                alert('File size must be less than 1MB');
-                this.value = '';
-            }
-        });
+<script>
+    document.getElementById('availablemusicianpic').addEventListener('change', function() {
+        const file = this.files[0];
+        if (file.size > 1048576) { // 1MB in bytes
+            alert('File size must be less than 1MB');
+            this.value = '';
+        }
+    });
 
-    </script>
+</script>
 
-    @endsection
+@endsection

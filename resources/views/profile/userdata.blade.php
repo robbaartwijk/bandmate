@@ -33,7 +33,7 @@
                         <h4><b>Phone : </b>{{ $user->phone}}</h4>
                         <h4><b>Email : </b> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a></h4>
                         <h4><b>Website : </b><a href="{{ $user->website }}">{{ $user->website }}</a></h4>
-                        <a href="{{ route('users.index') }}" class="btn btn-danger">Back</a>
+                        <a href="{{ route('users.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                             <h4><b>Available venues notifications : </b>{{ $user->email_notification_venues ? 'Yes' : 'No' }}</h4>
                             <h4><b>Available agencies notifications : </b>{{ $user->email_notification_agencies ? 'Yes' : 'No' }}</h4>
                             <h4><b>Receive newsletter : </b>{{ $user->email_notification_newsletter ? 'Yes' : 'No' }}</h4>
-                        <br/>
+                            <br />
                             <h4><b>Date added : </b>{{ $user->created_at }}</h4>
                             <h4><b>Date last update : </b>{{ $user->updated_at }}</h4>
                         </div>
@@ -101,7 +101,7 @@
                 <h4 style="margin-top: 40px; margin-left: 20px;"><b>Rehearsal rooms</b></h4>
             </header>
 
-            <div  style="margin-left: 20px;" class="table-responsive">
+            <div style="margin-left: 20px;" class="table-responsive">
                 <table class="table tablesorter" id="">
                     <thead class=" text-primary">
                         <tr>

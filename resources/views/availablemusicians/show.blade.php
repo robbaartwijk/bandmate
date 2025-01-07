@@ -26,7 +26,7 @@
                 @endif
 
                 @if (!empty($availablemusician->user->phone))
-                    <h4><b>Phone : </b>{{ $availablemusician->user->phone }}</h4>
+                <h4><b>Phone : </b>{{ $availablemusician->user->phone }}</h4>
                 @endif
 
                 <h4><b>Description : </b>{{ $availablemusician->description}}</h4>
@@ -37,7 +37,7 @@
                 <h4><b>Date added : </b>{{ $availablemusician->created_at }}</h4>
                 <h4><b>Date last update : </b>{{ $availablemusician->updated_at }}</h4>
 
-                <a href="{{ route('availablemusicians.index') }}" class="btn btn-danger">Back</a>
+                <a href="{{ route('availablemusicians.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>

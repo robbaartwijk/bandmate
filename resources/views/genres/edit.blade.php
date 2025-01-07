@@ -60,7 +60,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('genres.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('genres.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>

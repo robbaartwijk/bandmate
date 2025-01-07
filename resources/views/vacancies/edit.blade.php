@@ -21,7 +21,7 @@
                                 <form action="{{ route('vacancies.update', $vacancy->id) }}" method="post">
                                     @csrf
                                     @method('put')
-                                    
+
                                     <div class="bm_form_group form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
                                         <label for="act_id" class="bm_label_layout">
                                             <h3>Act</h3>
@@ -45,7 +45,7 @@
                                             <option value="">Select</option>
                                             @foreach ($instruments as $instrument)
                                             <option value="{{ $instrument->id }}" {{ $vacancy->instrument_id == $instrument->id ? 'selected' : '' }}>
-                                                {{ $instrument->name }} -  {{ $instrument->name }}
+                                                {{ $instrument->name }} - {{ $instrument->name }}
                                             </option>
                                             @endforeach
                                         </select>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                   
+
 
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
@@ -76,7 +76,7 @@
                                                     @include('alerts.feedback', ['field' => 'description'])
 
                                                     <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ route('acts.index') }}" class="btn btn-danger">Back</a>
+                                                    <a href="{{ route('acts.index') }}" <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
 
                                                 </div>
                                             </div>
