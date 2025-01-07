@@ -123,10 +123,6 @@
                             @include('alerts.feedback', ['field' => 'youtube'])
                         </div>
 
-                    </div>
-
-                    <div class="card-body text-primary col-lg-4">
-
                         <div class="bm_form_group form-group {{ $errors->has('twitter') ? 'has-danger' : '' }}">
                             <label for="twitter" class="bm_label_layout">
                                 <h3>Twitter</h3>
@@ -134,6 +130,10 @@
                             <input type="text" name="twitter" class="bm_general_input form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}" placeholder="Twitter" value="{{ old('twitter') }}">
                             @include('alerts.feedback', ['field' => 'twitter'])
                         </div>
+
+                    </div>
+
+                    <div class="card-body text-primary col-lg-4">
 
                         <div class="bm_form_group form-group {{ $errors->has('instagram') ? 'has-danger' : '' }}">
                             <label for="instagram" class="bm_label_layout">
@@ -157,6 +157,14 @@
                             </label>
                             <input type="text" name="spotify" class="bm_general_input form-control {{ $errors->has('spotify') ? 'is-invalid' : '' }}" placeholder="Spotify" value="{{ old('spotify') }}">
                             @include('alerts.feedback', ['field' => 'spotify'])
+                        </div>
+
+                        <div class="bm_form_group form-group {{ $errors->has('bluesky') ? 'has-danger' : '' }}"">
+                            <label for="bluesky" class="bm_label_layout">
+                            <h3>Bluesky</h3>
+                            </label>
+                            <input type="text" name="bluesky" class="bm_general_input form-control {{ $errors->has('bluesky') ? 'is-invalid' : '' }}" placeholder="Bluesky" value="{{ old('bluesky') }}">
+                            @include('alerts.feedback', ['field' => 'bluesky'])
                         </div>
 
                         <div class="bm_form_group form-group {{ $errors->has('youtubedemo') ? 'has-danger' : '' }}"">

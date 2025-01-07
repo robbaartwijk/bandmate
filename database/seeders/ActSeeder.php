@@ -36,6 +36,7 @@ class ActSeeder extends Seeder
             'spotify' => 'https://www.spotify.com/SolidAir',
             'soundcloud' => 'https://www.soundcloud.com/SolidAir',
             'youtubedemo' => 'https://www.youtube.com/watch?v=OEvY6iypWGk',
+            'bluesky' => 'https://www.bluesky.com/SolidAir',
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);
@@ -58,6 +59,7 @@ class ActSeeder extends Seeder
             'youtube' => 'https://www.youtube.com/SolidAir',
             'spotify' => 'https://www.spotify.com/SolidAir',
             'soundcloud' => 'https://www.soundcloud.com/SolidAir',
+            'bluesky' => 'https://www.bluesky.com/Timelock',
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);
@@ -80,6 +82,7 @@ class ActSeeder extends Seeder
             'youtube' => 'https://www.youtube.com/AAABand',
             'spotify' => 'https://www.spotify.com/AAABand',
             'soundcloud' => 'https://www.soundcloud.com/AAABand',
+            'bluesky' => 'https://www.bluesky.com/AAABand',
             'created_at' => $createdDate,
             'updated_at' => $createdDate
         ]);

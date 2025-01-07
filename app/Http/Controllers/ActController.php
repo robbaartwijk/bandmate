@@ -61,6 +61,7 @@ class ActController extends BaseController
             'youtubedemo' => ['nullable', 'url'],
             'soundcloud' => ['nullable', 'url'],
             'spotify' => ['nullable', 'url'],
+            'bluesky' => ['nullable', 'url'],
         ]);
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
@@ -129,6 +130,7 @@ class ActController extends BaseController
             'youtubedemo' => ['nullable', 'url'],
             'soundcloud' => ['nullable', 'url'],
             'spotify' => ['nullable', 'url'],
+            'bluesky' => ['nullable', 'url'],
         ]);
 
         $act->fill($request->all());

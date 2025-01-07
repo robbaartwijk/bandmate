@@ -36,11 +36,9 @@
     </div>
 </div>
 
-
-
 <div class="row">
     <div class="col-md-12">
-        <div class="card ">
+        <div style="border: solid 2px"; class="card ">
             <div class="card-header">
                 <h3 class="card-title"><b>Recently added</b></h3>
             </div>

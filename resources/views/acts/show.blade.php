@@ -86,6 +86,9 @@
                                 {{ $act->spotify }}</a></h4>
                         @endif
 
+                        @if ($act->bluesky)
+                            <h4><a href="{{ $act->bluesky }}" target="_blank"><img src="{{ asset('images/bluesky.jpg') }}" style="position:absolute; width:16px; height: 16px; margin-top: 5px;">"         " {{ $act->bluesky }}</a></h4>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -168,6 +168,14 @@
                             @include('alerts.feedback', ['field' => 'spotify'])
                         </div>
 
+                        <div class="bm_form_group form-group {{ $errors->has(' bluesky') ? 'has-danger' : '' }}"">
+                            <label for=" bluesky" class="bm_label_layout">
+                            <h3>Bluesky</h3>
+                            </label>
+                            <input type="text" name="bluesky" class="bm_general_input form-control {{ $errors->has('bluesky') ? 'is-invalid' : '' }}" placeholder="Bluesky" value="{{ $act->bluesky }}">
+                            @include('alerts.feedback', ['field' => 'bluesky'])
+                        </div>
+                        
                         <div class="bm_form_group form-group {{ $errors->has('youtubedemo') ? 'has-danger' : '' }}"">
                             <label for=" youtubedemo" class="bm_label_layout">
                             <h3>Video</h3>
@@ -175,6 +183,7 @@
                             <input type="text" name="youtubedemo" class="bm_general_input form-control {{ $errors->has('youtubedemo') ? 'is-invalid' : '' }}" placeholder="Youtube Demo" value="{{ $act->youtubedemo }}">
                             @include('alerts.feedback', ['field' => 'youtubedemo'])
                         </div>
+
 
                     </div>
 

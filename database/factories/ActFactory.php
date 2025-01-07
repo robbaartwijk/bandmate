@@ -36,6 +36,7 @@ class ActFactory extends Factory
             'youtube' => 'https://www.youtube.com/' .  $this->faker->url,
             'spotify' => 'https://www.spotify.com/' . $this->faker->uuid,
             'soundcloud' => 'https://www.soundcloud.com/' .  $this->faker->url,
+            'bluesky' => 'https://bsky.app/' . $this->faker->url,
             'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
         ];

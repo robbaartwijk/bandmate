@@ -24,7 +24,15 @@ class VacancyFactory extends Factory
         $randomUser = User::inRandomOrder()->first();
         $randomUserID = $randomUser->id;
 
-        $randomAct = Act::where('user_id', $randomUserID)->first();
+        $randomAct = Act::where('user_id', $randomUserID)->inRandomOrder()->first();
+
+        if ($randomAct === null) {
+            $randomAct = Act::factory()->create([
+            'user_id' => $randomUserID,
+            ]);
+        }
+
+        // var_dump($randomAct->id);
 
         if ($randomAct === null) {
             $randomActID = Act::factory()->create([
@@ -34,13 +42,15 @@ class VacancyFactory extends Factory
             $randomActID = $randomAct->id;
         }
 
+        // var_dump($randomActID);
+
         return [
             'act_id' => $randomActID,
             'user_id' => $randomUserID,
             'instrument_id' => $this->faker->randomElement($instruments),
             'description' => $this->faker->paragraph(20),
-            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'created_at' => NOW(),
+            'updated_at' => NOW(),
         ];
     }
 }
