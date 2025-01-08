@@ -148,11 +148,6 @@
                 </table>
             </div>
 
-
-
-
-
-
             <header>
                 <h4 style="margin-top: 40px; margin-left: 20px;"><b>Rehearsal rooms</b></h4>
             </header>

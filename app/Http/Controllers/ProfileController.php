@@ -152,6 +152,7 @@ class ProfileController extends BaseController
 
         auth()->user()->update(['password' => Hash::make($request->get('newpassword'))]);
 
+        
         return redirect()->route('home')->with('status', 'Password has been updated.');
     }
 

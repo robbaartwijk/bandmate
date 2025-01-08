@@ -106,7 +106,7 @@ class AgencyController extends BaseController
     public function update(Request $request, Agency $agency)
     {
         if (!Auth::user()->is_admin) {
-            return redirect()->route('acts.index')
+            return redirect()->route('agencies.index')
             ->with('status', 'You are not authorized to update this agency.');
         };
 
