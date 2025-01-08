@@ -69,7 +69,7 @@
                             <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
                             <td>{{ $act->genre->name}}</td>
                             <td>{{ $act->number_of_members }}</td>
-                            <td>{{ Str::limit($act->description, 50) }}</td>
+                            <td>{{ Str::limit($act->description, 41) }}</td>
                             <td>{{ $act->created_at }}</td>
                         </tr>
                         @endforeach
@@ -102,10 +102,9 @@
                         @foreach ($recentVacancies as $vacancy)
                         <tr>
                             <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
-                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
                             <td>{{ $vacancy->genre_name}}</td>
                             <td>{{ $vacancy->instrument->name }}</td>
-                            <td>{{ Str::limit($vacancy->description, 30) }}</td>
+                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
                             <td>{{ $vacancy->created_at }}</td>
                         </tr>
                         @endforeach
@@ -113,11 +112,6 @@
                     </tbody>
                 </table>
             </div>
-
-
-
-
-
 
             <header>
                 <h4 style="margin-top: 40px; margin-left: 20px;"><b>Available musicians</b></h4>
@@ -145,7 +139,7 @@
                             <td>{{ $recentAvailablemusician->user->name }}</td>
                             <td>{{ $recentAvailablemusician->genre->name}}</td>
                             <td>{{ $recentAvailablemusician->instrument->name }}</td>
-                            <td><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}">{{ Str::limit($recentAvailablemusician->description, 42) }}</a>
+                            <td><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}">{{ Str::limit($recentAvailablemusician->description, 35) }}</a>
                             <td>{{ $recentAvailablemusician->created_at }}</td>
                         </tr>
                         @endforeach
@@ -185,7 +179,7 @@
                             <td>{{ $recentRehearsalroom->name }}</td>
                             <td>{{ $recentRehearsalroom->city}}</td>
                             <td>{{ $recentRehearsalroom->country }}</td>
-                            <td><a href="{{ route('rehearsalrooms.show', $recentRehearsalroom->id) }}">{{ Str::limit($recentRehearsalroom->description, 42) }}</a>
+                            <td><a href="{{ route('rehearsalrooms.show', $recentRehearsalroom->id) }}">{{ Str::limit($recentRehearsalroom->description, 30) }}</a>
                             <td>{{ $recentRehearsalroom->created_at }}</td>
                         </tr>
                         @endforeach

@@ -13,6 +13,18 @@
 
 @section('content')
 
+@if (session('status'))
+<div id="status-alert" class="alert alert-success">
+    {{ session('status') }}
+</div>
+<script>
+    setTimeout(function() {
+        document.getElementById('status-alert').style.display = 'none';
+    }, 2000);
+
+</script>
+@endif
+
 <div class="header py-7 py-lg-8">
     <div class="container">
         <div class="header-body text-center mb-7">

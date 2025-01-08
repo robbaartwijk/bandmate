@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends BaseController
 {
     /**
      * Show the form for editing the profile.
-     *
-     * @return \Illuminate\View\View
      */
     public function edit(): \Illuminate\View\View
     {
         $user = User::find(auth()->user()->id);
-
         $user->avatar = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.edit', compact(['user']));
@@ -27,8 +22,6 @@ class ProfileController extends BaseController
 
     /**
      * Update the profile
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProfileRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -105,7 +98,7 @@ class ProfileController extends BaseController
     public function storeThumbnailImage(Request $request, User $user): void
     {
         $user->addMediaFromRequest('AvatarThumbnailPic')
-             ->toMediaCollection('images/AvatarThumbnailPics');
+            ->toMediaCollection('images/AvatarThumbnailPics');
 
         // Create a thumbnail of the image
         $media = $user->getFirstMedia('images/AvatarThumbnailPics');
@@ -127,13 +120,10 @@ class ProfileController extends BaseController
 
     /**
      * Show the form for editing the profile.
-     *
-     * @return \Illuminate\View\View
      */
     public function editPassword(): \Illuminate\View\View
     {
         $user = User::find(auth()->user()->id);
-
         $user->avatar = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.editpassword', compact(['user']));
@@ -141,23 +131,35 @@ class ProfileController extends BaseController
 
     /**
      * Change the password
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function updatePassword(PasswordRequest $request): \Illuminate\Http\RedirectResponse
+    public function updatePassword(Request $request): \Illuminate\Http\RedirectResponse
     {
-        auth()->user()->update(['password' => Hash::make($request->get('password'))]);
+        $request->validate([
+            'currentpassword' => ['required', 'string', 'min:8'],
+            'newpassword' => ['required', 'string', 'min:8'],
+            'confirmpassword' => ['required', 'string', 'min:8'],
+        ]);
 
-        return back()->withPasswordStatus(__('Password successfully updated.'));
+        if (! Hash::check($request->get('currentpassword'), auth()->user()->password)) {
+            return redirect()->route('profile.editPassword')
+                ->with('status', 'Current password is incorrect.');
+        }
+
+        if ($request->get('newpassword') !== $request->get('confirmpassword')) {
+            return redirect()->route('profile.editPassword')
+                ->with('status', 'New password mismatch.');
+        }
+
+        auth()->user()->update(['password' => Hash::make($request->get('newpassword'))]);
+
+        return redirect()->route('home')->with('status', 'Password has been updated.');
     }
 
     public function userdata(): \Illuminate\View\View
     {
         $user = User::with('acts', 'vacancies', 'rehearsalrooms', 'availablemusicians')->find(auth()->user()->id);
-
         $user->image = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.userdata', compact(['user']));
     }
-
 }

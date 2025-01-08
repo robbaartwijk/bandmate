@@ -6,9 +6,6 @@ Route::resource('/', 'App\Http\Controllers\IndexController')->names([
     'index' => 'index.index',
 ]);
 
-// Route::get('/genres/{genre}', 'App\Http\Controllers\GenreController@show')->name('genres.show');
-// Route::get('/acts/{act}', 'App\Http\Controllers\ActController@show')->name('acts.show');
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

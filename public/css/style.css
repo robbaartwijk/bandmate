@@ -162,3 +162,26 @@
     margin: 0 auto;
     z-index: 10;
 }
+
+.bm_password_input {
+    width: 360px;
+    height: 30px;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 1px solid rgb(182, 164, 164);
+    background-color: rgb(62, 29, 30);
+    margin-left: auto;
+    font-size: 17px;
+    color: white;
+}
+
+.bm_userbox {
+    width: 360px;
+    height: 32px;
+    margin-top: 10px;
+    margin-right: 28px;
+    margin-left: auto;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+}

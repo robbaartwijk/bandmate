@@ -28,31 +28,49 @@
                                         <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}" class="bm_zoom thumbnail" style="width: 150px; height: 150px;">
                                         @endif
 
-                                        <div class="col-span-6 sm:col-span-4">
-                                            <x-label for="current_password" value="{{ __('Current Password') }}" />
-                                            <x-input id="current_password" type="password" class="mt-1 block w-full" wire:model="state.current_password" autocomplete="current-password" />
-                                            <x-input-error for="current_password" class="mt-2" />
+                                        <div class="bm_userbox">
+                                            {{ $user->name}}
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-4">
-                                            <x-label for="password" value="{{ __('New Password') }}" />
-                                            <x-input id="password" type="password" class="mt-1 block w-full" wire:model="state.password" autocomplete="new-password" />
-                                            <x-input-error for="password" class="mt-2" />
+                                        <br />
+
+                                        <div class="input-group{{ $errors->has('currentpassword') ? ' has-danger' : '' }}">
+                                            <input type="password" placeholder="{{ __('  Current password') }}" name="currentpassword" class=bm_password_input form-control{{ $errors->has('currentpassword') ? ' is-invalid' : '' }}">
+                                            @include('alerts.feedback', ['field' => 'currentpassword'])
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-4">
-                                            <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                                            <x-input id="password_confirmation" type="password" class="mt-1 block w-full" wire:model="state.password_confirmation" autocomplete="new-password" />
-                                            <x-input-error for="password_confirmation" class="mt-2" />
+                                        <div class="input-group{{ $errors->has('newpassword') ? ' has-danger' : '' }}">
+                                            <input type="password" placeholder="{{ __('  New password') }}" name="newpassword" class=bm_password_input form-control{{ $errors->has('newpassword') ? ' is-invalid' : '' }}">
+                                            @include('alerts.feedback', ['field' => 'newpassword'])
                                         </div>
 
-                                        <div style="margin-top:30px">
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        <div class="input-group{{ $errors->has('confirmpassword') ? ' has-danger' : '' }}">
+                                            <input type="password" placeholder="{{ __('  Confirm password') }}" name="confirmpassword" class=bm_password_input form-control{{ $errors->has('confirmpassword') ? ' is-invalid' : '' }}">
+                                            @include('alerts.feedback', ['field' => 'confirmpassword'])
+                                        </div>
+                                    
+                                        @if (session('status'))
+                                        <div class="alert alert-danger">
+                                            {{ session('status') }}
+                                        </div>
+                                        @endif
+                                        
+                                        @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @endif
+
+                                        <div style="margin-top:30px; margin-left:80px;">
+                                            <button type="submit" class="btn btn-danger">Update</button>
                                             <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                                         </div>
 
                                     </form>
-
 
                                 </div>
                             </div>
