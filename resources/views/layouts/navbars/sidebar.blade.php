@@ -20,7 +20,7 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'availablemusicians' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' ) show @endif" id="userdata" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'availablemusicians' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' || $pageSlug == 'about') show @endif" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
                             <a href="{{ route('acts.index') }}">
@@ -135,6 +135,92 @@ $user = auth()->user();
                 </div>
             </li>
 
+            <li>
+                <a data-toggle="collapse" href="#about" aria-expanded="{{ $pageSlug == 'aboutus' || $pageSlug == 'aboutdatausage' || $pageSlug == 'aboutacts' || $pageSlug == 'aboutvacancies' || $pageSlug == 'aboutavailablemusicians' || $pageSlug == 'aboutrehearsalrooms'  || $pageSlug == 'aboutagencies' || $pageSlug == 'aboutvenues' ? 'true' : 'false' }}" class="{{ $pageSlug == 'aboutus' || $pageSlug == 'aboutdatausage' || $pageSlug == 'aboutacts' ? '' : 'collapsed' }}">
+                    <i class="fa fa-chevron-circle-right"></i>
+                    <span class="nav-link-text">
+                        <h4>{{ __('About') }}</h4>
+                    </span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if ($pageSlug == 'aboutus' || $pageSlug == 'aboutdatausage' || $pageSlug == 'aboutacts' || $pageSlug == 'aboutvacancies' || $pageSlug == 'aboutavailablemusicians' || $pageSlug == 'aboutrehearsalrooms' || $pageSlug == 'aboutvenues' || $pageSlug == 'aboutagencies' ) show @endif" id="about" data-parent=".sidebar-wrapper">
+                    <ul class="nav pl-4">
+
+                        <li @if ($pageSlug=='aboutacts' ) class="active " @endif>
+                            <a href="{{ route('about.acts') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Acts') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutvacancies' ) class="active " @endif>
+                            <a href="{{ route('about.vacancies') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Vacancies') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutavailablemusicians' ) class="active " @endif>
+                            <a href="{{ route('about.availablemusicians') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Available musicians') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutrehearsalrooms' ) class="active " @endif>
+                            <a href="{{ route('about.rehearsalrooms') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Rehearsal rooms') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutagencies' ) class="active " @endif>
+                            <a href="{{ route('about.agencies') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Agencies') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutvenues' ) class="active " @endif>
+                            <a href="{{ route('about.venues') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Venues') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutus' ) class="active " @endif>
+                            <a href="{{ route('about.us') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('About us') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                        <li @if ($pageSlug=='aboutdatausage' ) class="active " @endif>
+                            <a href="{{ route('about.datausage') }}">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                <p>
+                                    <h5>{{ __('Data usage') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
             </li>
 
             @if($user->is_admin)

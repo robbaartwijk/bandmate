@@ -185,3 +185,8 @@
     text-align: center;
     color: white;
 }
+
+.bm_help_textbox {
+    border:solid 1px;
+    height: 80vh;
+}

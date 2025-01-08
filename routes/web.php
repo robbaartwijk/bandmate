@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('agencies', 'App\Http\Controllers\AgencyController')->names([
         'index' => 'agencies.index',
     ]);
-
+ 
     Route::resource('availablemusicians', 'App\Http\Controllers\AvailablemusicianController')->names([
         'index' => 'availablemusicians.index',
     ]);
@@ -66,13 +66,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('statistics/chart4', 'App\Http\Controllers\StatisticController@chart4')->name('statistics.chart4');
     Route::get('statistics/chart5', 'App\Http\Controllers\StatisticController@chart5')->name('statistics.chart5');
 
+    Route::get('about/us', 'App\Http\Controllers\AboutController@aboutus')->name('about.us');
+    Route::get('about/datausage', 'App\Http\Controllers\AboutController@aboutdatausage')->name('about.datausage');
+    Route::get('about/acts', 'App\Http\Controllers\AboutController@aboutacts')->name('about.acts');
+    Route::get('about/vacancies', 'App\Http\Controllers\AboutController@aboutvacancies')->name('about.vacancies');
+    Route::get('about/availablemusicians', 'App\Http\Controllers\AboutController@aboutavailablemusicians')->name('about.availablemusicians');
+    Route::get('about/rehearsalrooms', 'App\Http\Controllers\AboutController@aboutrehearsalrooms')->name('about.rehearsalrooms');
+    Route::get('about/venues', 'App\Http\Controllers\AboutController@aboutvenues')->name('about.venues');
+    Route::get('about/agencies', 'App\Http\Controllers\AboutController@aboutagencies')->name('about.agencies');
+    Route::get('about/statistics', 'App\Http\Controllers\AboutController@aboutstatistics')->name('about.statistics');
+
+
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('editpassword', ['as' => 'profile.editPassword', 'uses' => 'App\Http\Controllers\ProfileController@editPassword']);
     Route::get('updatepassword', ['as' => 'profile.updatePassword', 'uses' => 'App\Http\Controllers\ProfileController@updatePassword']);
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+    // Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::get('userdata', ['as' => 'profile.userdata', 'uses' => 'App\Http\Controllers\ProfileController@userdata']);
-
 
 });
