@@ -76,13 +76,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('about/agencies', 'App\Http\Controllers\AboutController@aboutagencies')->name('about.agencies');
     Route::get('about/statistics', 'App\Http\Controllers\AboutController@aboutstatistics')->name('about.statistics');
 
-
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('editpassword', ['as' => 'profile.editPassword', 'uses' => 'App\Http\Controllers\ProfileController@editPassword']);
     Route::get('updatepassword', ['as' => 'profile.updatePassword', 'uses' => 'App\Http\Controllers\ProfileController@updatePassword']);
-    // Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::get('userdata', ['as' => 'profile.userdata', 'uses' => 'App\Http\Controllers\ProfileController@userdata']);
 
 });
