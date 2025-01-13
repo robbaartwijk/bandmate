@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('about/agencies', 'App\Http\Controllers\AboutController@aboutagencies')->name('about.agencies');
     Route::get('about/statistics', 'App\Http\Controllers\AboutController@aboutstatistics')->name('about.statistics');
 
+
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
