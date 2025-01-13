@@ -9,8 +9,8 @@
 
                 <div class="card-header">
                     <h1 class="card-title">{{ __('Reset password') }}</h1>
-
                 </div>
+
                 <div class="card-body">
                     @include('alerts.success')
 
@@ -20,7 +20,7 @@
                                 <i class="tim-icons icon-email-85"></i>
                             </div>
                         </div>
-                        <input type="email" name="email" class="bm_general_input form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}">
+                        <input type="email" name="email" style="border: solid 1px; background: white; color: black;" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}">
                         @include('alerts.feedback', ['field' => 'email'])
                     </div>
                 </div>
