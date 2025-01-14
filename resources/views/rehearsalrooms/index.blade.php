@@ -122,15 +122,12 @@ $user = auth()->user();
             </div>
         </div>
 
-        {{ $rehearsalrooms->links() }}
-
-        {{-- </div> --}}
+        <?php echo $rehearsalrooms->appends(array('sort' => request()->sort))->links(); ?>
 
         @if($rehearsalrooms->count() < 25) <div class="float-left" style="color:white">
             {{ $rehearsalrooms->count() }} {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
     </div>
     @endif
 
-</div>
 </div>
 @endsection

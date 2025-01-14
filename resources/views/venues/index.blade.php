@@ -115,7 +115,7 @@ $user = auth()->user();
             </div>
         </div>
 
-        {{ $venues->links() }}
+        <?php echo $venues->appends(array('sort' => request()->sort))->links(); ?>
 
         @if($venues->count() < 25) <div class="float-left" style="color:white">
             {{ $venues->count() }} {{ $venues->count() > 1 ? 'venues found' : 'venue found' }}

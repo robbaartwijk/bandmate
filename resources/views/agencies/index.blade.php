@@ -138,7 +138,7 @@ $user = auth()->user();
             </div>
         </div>
 
-        {{ $agencies->links() }}
+        <?php echo $agencies->appends(array('sort' => request()->sort))->links(); ?>
 
         @if($agencies->count() < 25) <div class="float-left" style="color:white">
             {{ $agencies->count() }} {{ $agencies->count() > 1 ? 'agencies found' : 'agency found' }}

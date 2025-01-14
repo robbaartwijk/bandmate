@@ -138,10 +138,8 @@ $user = auth()->user();
         </div>
     </div>
 
-
-    {{ $availablemusicians->links() }}
-
-
+    <?php echo $availablemusicians->appends(array('sort' => request()->sort))->links(); ?>
+    
     @if($availablemusicians->count() < 25) <div class="float-left" style="color:white">
         {{ $availablemusicians->count() }} {{ $availablemusicians->count() > 1 ? 'available musicians found' : 'available musician found' }}
 </div>

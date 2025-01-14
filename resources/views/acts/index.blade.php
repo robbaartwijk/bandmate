@@ -129,7 +129,7 @@ $user = auth()->user();
             </div>
         </div>
 
-        {{ $acts->links() }}
+        <?php echo $acts->appends(array('sort' => request()->sort))->links(); ?>
 
         @if($acts->count() < 25) <div class="float-left" style="color:white">
             {{ $acts->count() }} {{ $acts->count() > 1 ? 'acts found' : 'act found' }}
