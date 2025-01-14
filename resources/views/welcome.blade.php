@@ -33,12 +33,33 @@
             </h4>
         </p>
 
+        <p>
+            <h4 class="text-white">
+                This website is a labour of love and it is not sponsored by anyone. Your data is necessary for you to log in and for other musicians to find you, but the information will never be shared with any other person or organisation.
+                The site is meant for musicians, NOT for the music business.
+            </h4>
+        </p>
+
+        <p>
+            <h4 class="text-white">
+                If you wish to support me in paying the hosting cost of this site you can donate via Paypal by clicking on the icon below.
+            </h4>
+        </p>
+
+        <div style="margin-top:50px; margin-bottom:50px; text-align: center;">
+            <form action="https://www.paypal.com/donate" method="post" target="_top">
+            <input type="hidden" name="business" value="48VGHAS7GVRPW" />
+            <input type="hidden" name="no_recurring" value="0" />
+            <input type="hidden" name="item_name" value="These donations help keep the website onine, you help yourself and your colleagues by supporting us. Thank you!" />
+            <input type="hidden" name="currency_code" value="EUR" />
+            <input type="image" src="https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+            <img alt="" border="0" src="https://www.paypal.com/en_N">
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <div style="border: solid 2px"; class="card ">
+        <div class="bm_card card">
             <div class="card-header">
                 <h3 class="card-title"><b>Recently added</b></h3>
             </div>
