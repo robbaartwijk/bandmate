@@ -2,9 +2,9 @@
 $user = auth()->user();
 @endphp
 
-<div class="sidebar">
+<div class="bm_card bm_sidebar_card_margin_top sidebar">
 
-    <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128)">
+    <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128);">
 
         <div class="logo">
             <img src="{{ asset('images/Logo.jpg') }}" style="border: solid 2px grey;  width:200px; height: 15%;" />

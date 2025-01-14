@@ -6,7 +6,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="bm_card bm_card_height_large card">
                 <div class="card-header">
                     <h3 class="card-title"><b>Edit available musician</h3>
                 </div>

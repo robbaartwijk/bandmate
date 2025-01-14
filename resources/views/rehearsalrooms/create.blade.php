@@ -7,7 +7,7 @@
     <div class="row">
 
         <div class="col-md-12">
-            <div class="card">
+            <div class="bm_card card ">
                 <div class="card-header">
                     <h3 class="card-title"><b>Add rehearsalroom</b></h3>
                 </div>
@@ -138,7 +138,7 @@
 
     <div class="row" style="height: 10vh;">
         <div class="col-md-12">
-            <div class="card">
+            <div class="bm_card card ">
                 <div class="card-header">
                     <h3 class="card-title
                         

@@ -7,7 +7,7 @@ $user = auth()->user();
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card ">
+        <div class="bm_card card ">
             <div class="card-header">
                 <h3 class="card-title"><b> Acts index</b></h3>
             </div>
@@ -79,6 +79,8 @@ $user = auth()->user();
                 </script>
                 @endif
 
+
+                
                 <table class="table tablesorter " id="">
                     <thead class=" text-primary">
                         <tr>

@@ -195,3 +195,19 @@
 .bm_card {
     border: 1px solid rgb(182, 164, 164);
 }
+
+.bm_sidebar_card_margin_top {
+    margin-top: 100px;
+}
+
+.bm_card_height_large {
+    height: 175vh;
+}
+
+.bm_card_height_medium {
+    height: 140vh;
+}
+
+.bm_card_height_small {
+    height: 120vh;
+}

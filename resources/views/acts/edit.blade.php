@@ -5,11 +5,12 @@
 <div class="col-container">
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
+        <div class="col-md-12";>
+            <div class="bm_card_height_large bm_card card">
                 <div class="card-header">
                     <h3 class="card-title"><b>Edit act</h3>
                 </div>
+
 
                 <div class="bm_row_layout row">
                     <div class="col-lg-4">
@@ -184,9 +185,9 @@
                             @include('alerts.feedback', ['field' => 'youtubedemo'])
                         </div>
 
-
                     </div>
 
+                
                     <div class="col-lg-12">
                         <div class="card-body text-primary">
                             <div class="form-group">
