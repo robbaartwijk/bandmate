@@ -1,16 +1,5 @@
 @extends('layouts.app', ['pageSlug' => 'dashboard'])
 
-<style>
-    body {
-        background-image: url('{{ asset('images/Background_sharp.jpg') }}');
-        background-size: cover;
-        background-position: center;
-        background-size: 120%;
-        background-repeat: no-repeat;
-    }
-
-</style>
-
 @section('content')
 
 <div class="header py-7 py-lg-8">
