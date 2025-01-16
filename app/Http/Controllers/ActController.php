@@ -247,7 +247,8 @@ class ActController extends BaseController
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('acts.description', 'like', '%'.$search.'%')
-                    ->orWhere('genres.name', 'like', '%'.$search.'%');
+                  ->orWhere('acts.name', 'like', '%'.$search.'%')
+                  ->orWhere('genres.name', 'like', '%'.$search.'%');
             });
         }
 
