@@ -15,6 +15,10 @@
                 </div>
             </div>
         </div>
+        
+
+        {{-- @livewire('Greeter') --}}
+
 
         <p>
             <h4 class="text-white">

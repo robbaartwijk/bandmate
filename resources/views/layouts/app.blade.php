@@ -26,8 +26,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-@vite(['resources/js/app.js'])
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
