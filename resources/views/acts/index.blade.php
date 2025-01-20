@@ -27,7 +27,7 @@ $user = auth()->user();
                     <div class="float-right">
 
                         <form action="{{ route('acts.index') }}" method="get">
-                            
+
                             <div class="input-group no-border">
 
                                 <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('acts.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">

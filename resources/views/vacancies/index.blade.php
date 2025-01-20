@@ -13,6 +13,7 @@ $user = auth()->user();
             </div>
 
             <div class="card-body">
+
                 <div class="table-responsive">
 
                     <a href="{{ route('vacancies.create') }}" class="btn btn-primary">Add vacancy</a>
@@ -24,7 +25,7 @@ $user = auth()->user();
                     @endif
 
                     <div class="float-right">
-                        
+
                         <form action="{{ route('vacancies.index') }}" method="get">
 
                             <div class="input-group no-border">
@@ -70,66 +71,65 @@ $user = auth()->user();
                         </form>
                     </div>
                 </div>
+
+                @if (session('status'))
+                <div class="alert alert-success" role="alert" id="status-alert">
+                    {{ session('status') }}
+                </div>
+                <script>
+                    setTimeout(function() {
+                        document.getElementById('status-alert').style.display = 'none';
+                    }, 1000);
+
+                </script>
+                @endif
+
+                <table class="table tablesorter" id="">
+                    <thead class=" text-primary">
+                        <tr>
+                            <th>Act name</th>
+                            <th>Instrument</th>
+                            <th>Description</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($vacancies as $vacancy)
+                        <tr>
+                            <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
+                            <td>{{ $vacancy->instrument_name }}</td>
+                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
+                            </td>
+                            <td>{{ $vacancy->created_at }}</td>
+                            <td>{{ $vacancy->updated_at }}</td>
+
+                            @if ($user->is_admin || $user->id == $vacancy->user_id)
+                            <td><a href="{{ route('vacancies.edit', $vacancy->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
+                                    <i class="tim-icons icon-pencil"></i>
+                                </a>
+                                <form action="{{ route('vacancies.destroy', $vacancy->id) }}" method="post" style="display:inline">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
+                                        <i class="tim-icons icon-simple-remove"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-
-            @if (session('status'))
-            <div class="alert alert-success" role="alert" id="status-alert">
-                {{ session('status') }}
-            </div>
-            <script>
-                setTimeout(function() {
-                    document.getElementById('status-alert').style.display = 'none';
-                }, 1000);
-
-            </script>
-            @endif
-
-            <table class="table tablesorter" id="">
-                <thead class=" text-primary">
-                    <tr>
-                        <th>Act name</th>
-                        <th>Instrument</th>
-                        <th>Description</th>
-                        <th>Created at</th>
-                        <th>Updated at</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($vacancies as $vacancy)
-                    <tr>
-                        <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
-                        <td>{{ $vacancy->instrument_name }}</td>
-                        <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
-                        </td>
-                        <td>{{ $vacancy->created_at }}</td>
-                        <td>{{ $vacancy->updated_at }}</td>
-
-                        @if ($user->is_admin || $user->id == $vacancy->user_id)
-                        <td><a href="{{ route('vacancies.edit', $vacancy->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
-                                <i class="tim-icons icon-pencil"></i>
-                            </a>
-                            <form action="{{ route('vacancies.destroy', $vacancy->id) }}" method="post" style="display:inline">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
-                                    <i class="tim-icons icon-simple-remove"></i>
-                                </button>
-                            </form>
-                        </td>
-                        @endif
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
     </div>
+
+    <?php echo $vacancies->appends(array('sort' => request()->sort))->links(); ?>
+
+    @if($vacancies->count() < 25) <div class="float-left" style="color:white">
+        {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
 </div>
+@endif
 
-<?php echo $vacancies->appends(array('sort' => request()->sort))->links(); ?>
-
-@if($vacancies->count() < 25) <div class="float-left" style="color:white">
-    {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
-    </div>
-    @endif
-
-    @endsection
+@endsection
