@@ -17,30 +17,20 @@
             </div>
         </div>
         
+        <div class="bm_card card">
         <table class="table tablesorter " id="subscribers">
             <thead class=" text-primary">
                 <tr>
-                    <th>
-                        <h4>User name</h4>
-                    </th>
-                    <th>
-                        <h4>Email</h4>
-                    </th>
-                    <th>
-                        <h4>City</h4>
-                    </th>
-                    <th>
-                        <h4>Country</h4>
-                    </th>
-                    <th>
-                        <h4>Registered at</h4>
-                    </th>
+                    <th><h4><b>User name</b></h4></th>
+                    <th><h4><b>Email</b></h4></th>
+                    <th><h4><b>City</b></h4></th>
+                    <th><h4><b>Country</b></h4></th>
+                    <th><h4><b>Registered at</b></h4></th>
                 </tr>
             </thead>
+
             <tbody>
-
                 @foreach ($subscribedUsers as $subscribedUser)
-
                 <tr>
                     <td>{{ $subscribedUser->name }}</td>
                     <td>{{ $subscribedUser->email }}</td>
@@ -48,11 +38,11 @@
                     <td>{{ $subscribedUser->country }}</td>
                     <td>{{ $subscribedUser->created_at }}</td>
                 </tr>
-
                 @endforeach
-
             </tbody>
+            
         </table>
+    </div>
 
 
 
