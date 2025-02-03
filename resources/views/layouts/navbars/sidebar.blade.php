@@ -259,7 +259,7 @@ $user = auth()->user();
             @if($user->is_admin)
             <li>
 
-                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' ? 'true' : 'false' }}" class="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' ? '' : 'collapsed' }}">
+                <a data-toggle="collapse" href="#admin" aria-expanded="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' || $pageSlug == 'mailings' ? 'true' : 'false' }}" class="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' || $pageSlug == 'mailings' ? '' : 'collapsed' }}">
                     <i class="fa fa-user-circle"></i>
                     <span class="nav-link-text">
                         <h4>{{ __('Management') }}</h4>
@@ -267,7 +267,7 @@ $user = auth()->user();
                     </span>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'userprofile' || $pageSlug == 'users') show @endif" id="laravel-examples" data-parent=".sidebar-wrapper">
+                <div class="collapse @if ($pageSlug == 'userprofile' || $pageSlug == 'users' || $pageSlug == 'mailings') show @endif" id="admin" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='profile' ) class="active " @endif>
                             <a href="{{ route('profile.edit') }}">
@@ -282,6 +282,14 @@ $user = auth()->user();
                                 <i class="fa fa-user-circle"></i>
                                 <p>
                                     <h5>{{ __('User Management') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug=='mailings' ) class="active " @endif>
+                            <a href="{{ route('mailing.index') }}">
+                                <i class="fa fa-user-circle"></i>
+                                <p>
+                                    <h5>{{ __('Mailing list Management') }}</h5>
                                 </p>
                             </a>
                         </li>

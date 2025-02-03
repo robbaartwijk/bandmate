@@ -60,6 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
         'index' => 'availablemusicians.index',
     ]);
 
+    Route::resource('mailing', 'App\Http\Controllers\MailingController')->names([
+        'index' => 'mailing.index',
+    ]);
+
     Route::get('statistics/chart1', 'App\Http\Controllers\StatisticController@chart1')->name('statistics.chart1');
     Route::get('statistics/chart2', 'App\Http\Controllers\StatisticController@chart2')->name('statistics.chart2');
     Route::get('statistics/chart3', 'App\Http\Controllers\StatisticController@chart3')->name('statistics.chart3');
