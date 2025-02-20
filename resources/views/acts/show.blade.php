@@ -1,3 +1,7 @@
+@php
+$user = auth()->user();
+@endphp
+
 @extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
 
 @section('content')
@@ -13,6 +17,9 @@
         <div class="bm_card card ">
             <div class="card-header">
                 <h3 class="card-title"><b> Show act</b></h3>
+                @if($user->is_admin || $user->id == $act->user_id)
+                    <a href="{{ route('acts.edit', $act->id) }}" class="btn btn-warning">Edit Act</a>
+                @endif
             </div>
 
             <div class="row">
