@@ -84,11 +84,11 @@ class AvailablemusicianController extends BaseController
      */
     public function edit(Availablemusician $availablemusician)
     {
-        if (! Auth::user()->is_admin) {
+        if (! Auth::user()->is_admin && $availablemusician->user_id !== Auth::user()->id) {
             return redirect()->route('availablemusicians.index')
                 ->with('status', 'You are not authorized to edit an available musician.');
         }
-        
+
         $availablemusician->instruments = Instrument::all();
         $availablemusician->genres = Genre::all();
 

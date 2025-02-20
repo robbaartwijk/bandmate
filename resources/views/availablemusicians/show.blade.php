@@ -1,3 +1,7 @@
+@php
+$user = auth()->user();
+@endphp
+
 @extends('layouts.app', ['page' => __('Availablemusicians'), 'pageSlug' => 'availablemusicians'])
 
 @section('content')
@@ -6,6 +10,9 @@
         <div class="bm_card card ">
             <div class="card-header">
                 <h3 class="card-title"><b>Show available musician</b></h3>
+                @if($user->is_admin || $user->id == $availablemusician->user_id)
+                <a href="{{ route('availablemusicians.edit', $availablemusician->id) }}" class="btn btn-warning">Edit Available Musician</a>
+                @endif
             </div>
 
             <div class="card-body text-primary">
