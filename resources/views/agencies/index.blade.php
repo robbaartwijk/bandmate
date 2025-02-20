@@ -107,10 +107,6 @@ $user = auth()->user();
                                 <td>{{ Str::limit($agency->description, 40) }}</td>
                                 <td>{{ $agency->created_at }}</td>
                                 <td>{{ $agency->updated_at }}</td>
-
-                                @if($user->is_admin)
-                                    <td><a href="{{ route('users.show', $agency->user->id) }}">{{ $agency->user->name }}</a></td>
-                                @endif
                                 
                                 @if($user->is_admin)
                                 <td>
