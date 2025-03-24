@@ -1,3 +1,18 @@
+## Get up and running with bandmate
+
+To set up bandmate do the following :
+
+- Clone this repository.
+- Create a mySql database named 'bandmate'
+- Check your access to the new database and if required alter the database values in .env
+- Use a terminal session to run all migrations included in the repository
+- Use a terminal session to run the initialDatabaseSeeder in folder database/seeders
+- Enter in terminal ; php artisan serve
+
+You will have a default admin user called admin@bandmate.online with password Admin99
+The exact details of both an admin and a user can be found in database/seeders/UserTableSeeder.php
+The database should now contain plenty of test data for you to work with
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
