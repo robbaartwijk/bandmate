@@ -293,6 +293,14 @@ $user = auth()->user();
                                 </p>
                             </a>
                         </li>
+                        <li @if ($pageSlug=='docs' ) class="active " @endif>
+                            <a href="/docs" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-user-circle"></i>
+                                <p>
+                                    <h5>{{ __('Technical Documentation') }}</h5>
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
