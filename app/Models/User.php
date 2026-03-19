@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -89,6 +90,7 @@ class User extends Authenticatable implements HasMedia {
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'boolean',
     ];
 
     public function rehearsalrooms(): HasMany
@@ -109,10 +111,6 @@ class User extends Authenticatable implements HasMedia {
     public function availablemusicians(): HasMany
     {
         return $this->hasMany(Availablemusician::class);
-    }
-
-    function isAdmin() {
-        return $this->role === 'admin';
     }
 
     function hasUserMedia() {

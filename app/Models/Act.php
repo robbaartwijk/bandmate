@@ -30,8 +30,6 @@ class Act extends Model implements HasMedia
         'instagram',
         'facebook',
         'active',
-        'description',
-        'genre_id',
         'email',
         'phone',
     ];

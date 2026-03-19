@@ -2,6 +2,8 @@
  
 namespace App\Http\Controllers;
  
+use App\Http\Requests\StoreActRequest;
+use App\Http\Requests\UpdateActRequest;
 use App\Models\Act;
 use App\Models\Genre;
 use Illuminate\Http\Request;
@@ -39,31 +41,13 @@ class ActController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreActRequest $request)
     {
-        $this->authorize('create', Act::class);
- 
-        $request->validate([
-            'name' => 'required',
-            'genre_id' => 'required',
-            'number_of_members' => 'required',
-            'phone' => 'required',
-            'email' => ['required', 'email'],
-            'website' => ['nullable', 'url'],
-            'description' => 'required',
-            'facebook' => ['nullable', 'url'],
-            'instagram' => ['nullable', 'url'],
-            'twitter' => ['nullable', 'url'],
-            'youtube' => ['nullable', 'url'],
-            'youtubedemo' => ['nullable', 'url'],
-            'soundcloud' => ['nullable', 'url'],
-            'spotify' => ['nullable', 'url'],
-            'bluesky' => ['nullable', 'url'],
-        ]);
- 
+        // Authorization is handled by StoreActRequest::authorize()
+
         $act = new Act;
         $act->user_id = Auth::user()->id;
-        $act->fill($request->all());
+        $act->fill($request->validated());
  
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
@@ -107,29 +91,11 @@ class ActController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Act $act)
+    public function update(UpdateActRequest $request, Act $act)
     {
-        $this->authorize('update', $act);
- 
-        $request->validate([
-            'name' => 'required',
-            'genre_id' => 'required',
-            'number_of_members' => 'required',
-            'phone' => 'required',
-            'email' => ['required', 'email'],
-            'website' => ['nullable', 'url'],
-            'description' => 'required',
-            'facebook' => ['nullable', 'url'],
-            'instagram' => ['nullable', 'url'],
-            'twitter' => ['nullable', 'url'],
-            'youtube' => ['nullable', 'url'],
-            'youtubedemo' => ['nullable', 'url'],
-            'soundcloud' => ['nullable', 'url'],
-            'spotify' => ['nullable', 'url'],
-            'bluesky' => ['nullable', 'url'],
-        ]);
- 
-        $act->fill($request->all());
+        // Authorization is handled by UpdateActRequest::authorize()
+
+        $act->fill($request->validated());
  
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;

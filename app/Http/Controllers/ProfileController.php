@@ -27,7 +27,7 @@ class ProfileController extends BaseController
     {
         $user = auth()->user();       
         $user->fill($request->all());
-        $user = $this->processEmailNotifications($user);
+        $user = $this->processEmailNotifications($user, $request);
 
         $user->save();
 
@@ -39,18 +39,18 @@ class ProfileController extends BaseController
         return back()->withStatus(__('Profile successfully updated.'));
     }
 
-    public function processEmailNotifications($user): User
+    public function processEmailNotifications(User $user, Request $request): User   
     {
-    $flags = [
-        'email_notification_all', 'email_notification_acts',
-        'email_notification_vacancies', 'email_notification_availablemusicians',
-        'email_notification_rehearsalrooms', 'email_notification_venues',
-        'email_notification_agencies', 'email_notification_newsletter',
-        ];
+        $flags = [
+          'email_notification_all', 'email_notification_acts',
+           'email_notification_vacancies', 'email_notification_availablemusicians',
+           'email_notification_rehearsalrooms', 'email_notification_venues',
+           'email_notification_agencies', 'email_notification_newsletter',
+           ];
 
-    foreach ($flags as $flag) {
-        $user->$flag = $request->input($flag) === 'on' ? 1 : 0;
-    }
+        foreach ($flags as $flag) {
+           $user->$flag = $request->input($flag) === 'on' ? 1 : 0;
+        }
     
         return $user;
     }

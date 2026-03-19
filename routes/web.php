@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailTemplateController;
+use App\Http\Controllers\EmailJobController;
+use App\Http\Controllers\EmailLogController;
 
 Route::resource('/', 'App\Http\Controllers\IndexController')->names([
     'index' => 'index.index',
@@ -85,7 +88,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('editpassword', ['as' => 'profile.editPassword', 'uses' => 'App\Http\Controllers\ProfileController@editPassword']);
-    Route::get('updatepassword', ['as' => 'profile.updatePassword', 'uses' => 'App\Http\Controllers\ProfileController@updatePassword']);
+    Route::post('updatepassword', ['as' => 'profile.updatePassword', 'uses' => 'App\Http\Controllers\ProfileController@updatePassword']);
     Route::get('userdata', ['as' => 'profile.userdata', 'uses' => 'App\Http\Controllers\ProfileController@userdata']);
+
+
+
+    Route::middleware(['auth'])->group(function () {
+        Route::resource('email-templates', EmailTemplateController::class);
+        Route::resource('email-jobs', EmailJobController::class);
+        Route::resource('email-logs', EmailLogController::class)->only([
+            'index', 'show', 'destroy',
+       ]);
+
+    });
 
 });
