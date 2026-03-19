@@ -1,16 +1,13 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use App\Models\Availablemusician;
 use App\Models\Genre;
 use App\Models\Instrument;
-use App\Models\User;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-
+ 
 class AvailablemusicianController extends BaseController
 {
     /**
@@ -20,178 +17,171 @@ class AvailablemusicianController extends BaseController
     {
         $sort = $request->input('sort') ?? 'musician_name';
         $select = $request->input('selectrecords') ?? 25;
-
+ 
         $query = $this->buildQuerySelection($request, $sort);
         $availablemusicians = $query->paginate($select)->onEachSide(1);
-
+ 
         return view('availablemusicians.index', compact(['availablemusicians']));
     }
-
+ 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        $this->authorize('create', Availablemusician::class);
+ 
         $availablemusician = new Availablemusician;
         $availablemusician->instruments = Instrument::all();
         $availablemusician->genres = Genre::all();
         $availablemusician->user = Auth::user();
-
+ 
         return view('availablemusicians.create', compact('availablemusician'));
     }
-
+ 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Availablemusician::class);
+ 
         $request->validate([
             'instrument_id' => 'required',
             'genre_id' => 'required',
         ]);
-
+ 
         $availablemusician = new Availablemusician;
         $availablemusician->fill($request->all());
         $availablemusician->user_id = Auth::user()->id;
         $availablemusician->description = $request->input('description');
         $availablemusician->available_from = $request->input('available_from');
         $availablemusician->available_until = $request->input('available_until');
-        $availablemusician->created_at = now();
-        $availablemusician->updated_at = now();
         $availablemusician->save();
-
+ 
         if ($request->hasFile('availablemusicianpic')) {
-            $availablemusician->addMediaFromRequest('availablemusicianpic')->toMediaCollection('images/AvailablemusicianPics');
+            $availablemusician->addMediaFromRequest('availablemusicianpic')
+                ->toMediaCollection('images/AvailablemusicianPics');
         }
-
+ 
         return redirect()
             ->route('availablemusicians.index')
             ->with('status', 'Available musician created successfully.');
     }
-
+ 
     /**
      * Display the specified resource.
      */
     public function show(Availablemusician $availablemusician)
     {
+        $this->authorize('view', $availablemusician);
+ 
         $availablemusician->image = $availablemusician->getFirstMedia('images/AvailablemusicianPics');
-
+ 
         return view('availablemusicians.show', compact('availablemusician'));
     }
-
+ 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Availablemusician $availablemusician)
     {
-        if (! Auth::user()->is_admin && $availablemusician->user_id !== Auth::user()->id) {
-            return redirect()->route('availablemusicians.index')
-                ->with('status', 'You are not authorized to edit an available musician.');
-        }
-
+        $this->authorize('update', $availablemusician);
+ 
         $availablemusician->instruments = Instrument::all();
         $availablemusician->genres = Genre::all();
-
-        $availablemusician->user = User::find($availablemusician->user_id);
-
+        $availablemusician->user = $availablemusician->user;
+ 
         return view('availablemusicians.edit', compact('availablemusician'));
     }
-
+ 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Availablemusician $availablemusician)
     {
-        if (! Auth::user()->is_admin && $availablemusician->user_id !== Auth::user()->id) {
-            return redirect()->route('availablemusicians.index')
-                ->with('status', 'You are not authorized to update this available musician.');
-        }
-
+        $this->authorize('update', $availablemusician);
+ 
         $request->validate([
             'instrument_id' => 'required',
             'genre_id' => 'required',
         ]);
-
+ 
         $availablemusician->fill($request->all());
         $availablemusician->description = $request->input('description');
         $availablemusician->available_from = $request->input('available_from');
         $availablemusician->available_until = $request->input('available_until');
-        $availablemusician->updated_at = now();
-
         $availablemusician->save();
-
+ 
         if ($request->hasFile('availablemusicianpic')) {
             $this->clearAvailablemusicianImage($availablemusician);
             $this->storeAvailablemusicianImage($request, $availablemusician);
         }
-
+ 
         return redirect()->route('availablemusicians.index')
             ->with('status', 'Available musician updated successfully');
     }
-
+ 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Availablemusician $availablemusician)
     {
-        if (! Auth::user()->is_admin && $availablemusician->user_id !== Auth::user()->id) {
-            return redirect()->route('availablemusicians.index')
-                ->with('status', 'You are not authorized to delete this available musician.');
-        }
-
+        $this->authorize('delete', $availablemusician);
+ 
         $availablemusician->clearMediaCollection('images/AvailablemusicianPics');
-
         $availablemusician->delete();
-
+ 
         return redirect()->route('availablemusicians.index')
             ->with('status', 'Available musician deleted successfully');
     }
-
+ 
     /**
      * Store a newly created image resource in storage.
      */
-    public function storeAvailablemusicianImage(Request $request, Availablemusician $availablemusician)
+    public function storeAvailablemusicianImage(Request $request, Availablemusician $availablemusician): void
     {
-        $availablemusician->addMediaFromRequest('availablemusicianpic')->toMediaCollection('images/AvailablemusicianPics');
+        $availablemusician->addMediaFromRequest('availablemusicianpic')
+            ->toMediaCollection('images/AvailablemusicianPics');
     }
-
+ 
     /**
      * Remove the specified image resource from storage.
      */
-    public function clearAvailablemusicianImage($availablemusician)
+    public function clearAvailablemusicianImage(Availablemusician $availablemusician): void
     {
         $availablemusician->clearMediaCollection('images/AvailablemusicianPics');
     }
-
+ 
     public function buildQuerySelection($request, $sort)
     {
         $query = Availablemusician::with(['genre', 'instrument', 'user']);
-
+ 
         $query = $this->buildQuerySelect($query);
         $query = $this->buildJoinParameters($query);
         $query = $this->buildSortParameters($query, $sort);
         $query = $this->buildSearchParameter($request, $query);
         $query = $this->buildPrivateParameter($request, $query);
-
+ 
         return $query;
     }
-
+ 
     public function buildQuerySelect($query)
     {
         $query->select('availablemusicians.*', 'users.name as musician_name', 'instruments.name as instrument_name', 'genres.name as genre_name');
-
+ 
         return $query;
     }
-
+ 
     public function buildJoinParameters($query)
     {
         $query->join('users', 'availablemusicians.user_id', '=', 'users.id')
             ->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
             ->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
-
+ 
         return $query;
     }
-
+ 
     public function buildSortParameters($query, $sort)
     {
         switch ($sort) {
@@ -220,10 +210,10 @@ class AvailablemusicianController extends BaseController
                 $query->orderBy('updated_at');
                 break;
         }
-
+ 
         return $query;
     }
-
+ 
     public function buildSearchParameter($request, $query)
     {
         if ($request->has('search')) {
@@ -235,16 +225,17 @@ class AvailablemusicianController extends BaseController
                     ->orWhere('genres.name', 'like', '%'.$search.'%');
             });
         }
-
+ 
         return $query;
     }
-
+ 
     public function buildPrivateParameter($request, $query)
     {
         if ($request->boolean('private')) {
             $query->where('user_id', Auth::user()->id);
         }
-
+ 
         return $query;
     }
 }
+ 

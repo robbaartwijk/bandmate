@@ -14,7 +14,7 @@ class ProfileController extends BaseController
      */
     public function edit(): \Illuminate\View\View
     {
-        $user = User::find(auth()->user()->id);
+        $user = auth()->user();
         $user->avatar = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.edit', compact(['user']));
@@ -25,7 +25,7 @@ class ProfileController extends BaseController
      */
     public function update(ProfileRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $user = User::find(auth()->user()->id);
+        $user = auth()->user();       
         $user->fill($request->all());
         $user = $this->processEmailNotifications($user);
 
@@ -41,54 +41,17 @@ class ProfileController extends BaseController
 
     public function processEmailNotifications($user): User
     {
-        if ($user->email_notification_all == 'on') {
-            $user->email_notification_all = 1;
-        } else {
-            $user->email_notification_all = 0;
-        }
+    $flags = [
+        'email_notification_all', 'email_notification_acts',
+        'email_notification_vacancies', 'email_notification_availablemusicians',
+        'email_notification_rehearsalrooms', 'email_notification_venues',
+        'email_notification_agencies', 'email_notification_newsletter',
+        ];
 
-        if ($user->email_notification_acts == 'on') {
-            $user->email_notification_acts = 1;
-        } else {
-            $user->email_notification_acts = 0;
-        }
-
-        if ($user->email_notification_vacancies == 'on') {
-            $user->email_notification_vacancies = 1;
-        } else {
-            $user->email_notification_vacancies = 0;
-        }
-
-        if ($user->email_notification_availablemusicians == 'on') {
-            $user->email_notification_availablemusicians = 1;
-        } else {
-            $user->email_notification_availablemusicians = 0;
-        }
-
-        if ($user->email_notification_rehearsalrooms == 'on') {
-            $user->email_notification_rehearsalrooms = 1;
-        } else {
-            $user->email_notification_rehearsalrooms = 0;
-        }
-
-        if ($user->email_notification_venues == 'on') {
-            $user->email_notification_venues = 1;
-        } else {
-            $user->email_notification_venues = 0;
-        }
-
-        if ($user->email_notification_agencies == 'on') {
-            $user->email_notification_agencies = 1;
-        } else {
-            $user->email_notification_agencies = 0;
-        }
-
-        if ($user->email_notification_newsletter == 'on') {
-            $user->email_notification_newsletter = 1;
-        } else {
-            $user->email_notification_newsletter = 0;
-        }
-
+    foreach ($flags as $flag) {
+        $user->$flag = $request->input($flag) === 'on' ? 1 : 0;
+    }
+    
         return $user;
     }
 
@@ -123,7 +86,7 @@ class ProfileController extends BaseController
      */
     public function editPassword(): \Illuminate\View\View
     {
-        $user = User::find(auth()->user()->id);
+        $user = auth()->user();        
         $user->avatar = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.editpassword', compact(['user']));
@@ -158,7 +121,8 @@ class ProfileController extends BaseController
 
     public function userdata(): \Illuminate\View\View
     {
-        $user = User::with('acts', 'vacancies', 'rehearsalrooms', 'availablemusicians')->find(auth()->user()->id);
+        $user = auth()->user()->load('acts', 'vacancies', 'rehearsalrooms', 'availablemusicians');
+
         $user->image = $user->getFirstMedia('images/AvatarThumbnailPics');
 
         return view('profile.userdata', compact(['user']));

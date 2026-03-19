@@ -1,56 +1,52 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+ 
 use App\Models\Act;
-use App\Models\Vacancy;
-use App\Models\Genre;
-use App\Models\Instrument;
 use App\Models\Availablemusician;
 use App\Models\Rehearsalroom;
-
+use App\Models\Vacancy;
+use Illuminate\Http\Request;
+ 
 class IndexController extends BaseController
 {
     /**
-     * Display a listing of the resource.
+     * Display the public landing page.
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\View\View
     {
         $recentActs = $this->getRecentActs();
         $recentVacancies = $this->getRecentVacancies();
         $recentAvailablemusicians = $this->getRecentAvailablemusicians();
         $recentRehearsalrooms = $this->getRecentRehearsalrooms();
-
-        return view('welcome' , compact(['recentActs', 'recentVacancies', 'recentAvailablemusicians', 'recentRehearsalrooms']));
+ 
+        return view('welcome', compact([
+            'recentActs',
+            'recentVacancies',
+            'recentAvailablemusicians',
+            'recentRehearsalrooms',
+        ]));
     }
-
-    public function getRecentActs()
+ 
+    private function getRecentActs()
     {
-        $recentActs = Act::orderBy('created_at', 'desc')->with('genre')->take(5)->get();
-        return $recentActs;
+        return Act::with('genre')->latest()->take(5)->get();
     }
-
-    public function getRecentVacancies()
+ 
+    private function getRecentVacancies()
     {
-        $recentVacancies = Vacancy::orderBy('created_at', 'desc')->with(['act', 'instrument'])->take(5)->get();
-        foreach ($recentVacancies as $vacancy) {
-            $vacancy->genre_name = Genre::find($vacancy->act->genre_id)->name;
-            $vacancy->instrument_name = Instrument::find($vacancy->instrument_id)->name;
-        }
-        return $recentVacancies;
+        // Eager load act.genre and instrument — no N+1 queries
+        return Vacancy::with(['act.genre', 'instrument'])->latest()->take(5)->get();
     }
-
-    public function getRecentAvailablemusicians()
+ 
+    private function getRecentAvailablemusicians()
     {
-
-        $recentAvailablemusicians = Availablemusician::orderBy('created_at', 'desc')->with(['user', 'instrument', 'genre'])->take(5)->get();
-        return $recentAvailablemusicians;
+        return Availablemusician::with(['user', 'instrument', 'genre'])->latest()->take(5)->get();
     }
-
-    public function getRecentRehearsalrooms()
+ 
+    private function getRecentRehearsalrooms()
     {
-        $recentRehearsalrooms = Rehearsalroom::orderBy('created_at', 'desc')->take(5)->get();
-        return $recentRehearsalrooms;
+        return Rehearsalroom::latest()->take(5)->get();
     }
 }
+ 
