@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-class Venue extends Authenticatable implements HasMedia
+class Venue extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;

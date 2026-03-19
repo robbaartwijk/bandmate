@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Agency extends Authenticatable implements HasMedia
+class Agency extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;

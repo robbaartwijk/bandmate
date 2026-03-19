@@ -12,7 +12,7 @@ use App\Models\User;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-class Vacancy extends Authenticatable implements HasMedia
+class Vacancy extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
