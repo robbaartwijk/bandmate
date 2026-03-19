@@ -54,6 +54,8 @@ class UserController extends BaseController
      */
     public function edit(User $user): \Illuminate\View\View
     {
+        $this->authorize('update', $user);
+
         return view('users.edit', compact('user'));
     }
  
@@ -62,6 +64,9 @@ class UserController extends BaseController
      */
     public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
+
+        $this->authorize('update', $user);
+
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -78,6 +83,8 @@ class UserController extends BaseController
      */
     public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('delete', $user);
+        
         $user->delete();
  
         return redirect()->route('users.index')

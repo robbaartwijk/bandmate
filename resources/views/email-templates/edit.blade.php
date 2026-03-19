@@ -1,71 +1,90 @@
-@extends('layouts.app')
+@extends('layouts.app', ['page' => __('Email Templates'), 'pageSlug' => 'email-templates'])
 
 @section('content')
-<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="col-container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bm_card_height_large bm_card card">
+                <div class="card-header">
+                    <h3 class="card-title"><b>Edit email template</b></h3>
+                </div>
 
-    <div class="mb-6">
-        <a href="{{ route('email-templates.index') }}" class="text-sm text-indigo-600 hover:underline">&larr; Back to templates</a>
-        <h1 class="text-2xl font-semibold text-gray-900 mt-2">Edit Template</h1>
+                <form action="{{ route('email-templates.update', $emailTemplate) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="bm_row_layout row">
+                    <div class="col-lg-6">
+                        <div class="card-body text-primary">
+                            <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+
+                                <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
+                                    <label for="name" class="bm_label_layout"><h3>Internal name</h3></label>
+                                    <input type="text" id="name" name="name" value="{{ old('name', $emailTemplate->name) }}"
+                                           class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}">
+                                    @include('alerts.feedback', ['field' => 'name'])
+                                </div>
+
+                                <div class="bm_form_group form-group {{ $errors->has('subject') ? 'has-danger' : '' }}">
+                                    <label for="subject" class="bm_label_layout"><h3>Subject line</h3></label>
+                                    <input type="text" id="subject" name="subject" value="{{ old('subject', $emailTemplate->subject) }}"
+                                           class="bm_general_input form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}">
+                                    @include('alerts.feedback', ['field' => 'subject'])
+                                </div>
+
+                                <div class="bm_form_group form-group {{ $errors->has('status') ? 'has-danger' : '' }}">
+                                    <label for="status" class="bm_label_layout"><h3>Status</h3></label>
+                                    <select id="status" name="status"
+                                            class="bm_general_input form-control {{ $errors->has('status') ? 'is-invalid' : '' }}">
+                                        @foreach(['draft', 'active', 'inactive'] as $s)
+                                            <option value="{{ $s }}" @selected(old('status', $emailTemplate->status) === $s)>{{ ucfirst($s) }}</option>
+                                        @endforeach
+                                    </select>
+                                    @include('alerts.feedback', ['field' => 'status'])
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card-body text-primary">
+                            <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+
+                                <div class="bm_form_group form-group {{ $errors->has('body_html') ? 'has-danger' : '' }}">
+                                    <label for="body_html" class="bm_label_layout"><h3>HTML body</h3></label>
+                                    <textarea id="body_html" name="body_html" rows="12"
+                                              class="bm_textarea_layout form-control {{ $errors->has('body_html') ? 'is-invalid' : '' }}"
+                                              style="border: 1px solid rgb(200, 130, 130);">{{ old('body_html', $emailTemplate->body_html) }}</textarea>
+                                    @include('alerts.feedback', ['field' => 'body_html'])
+                                </div>
+
+                                <div class="bm_form_group form-group">
+                                    <label for="body_text" class="bm_label_layout">
+                                        <h3>Plain text body <small style="font-weight:normal;">(optional)</small></h3>
+                                    </label>
+                                    <textarea id="body_text" name="body_text" rows="6"
+                                              class="bm_textarea_layout form-control"
+                                              style="border: 1px solid rgb(200, 130, 130);">{{ old('body_text', $emailTemplate->body_text) }}</textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card-body text-primary">
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                            <a href="{{ route('email-templates.show', $emailTemplate) }}" class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-
-    <form action="{{ route('email-templates.update', $emailTemplate) }}" method="POST" class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
-        @csrf
-        @method('PUT')
-
-        {{-- Name --}}
-        <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Internal name</label>
-            <input type="text" id="name" name="name" value="{{ old('name', $emailTemplate->name) }}"
-                   class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 @error('name') border-red-400 @enderror">
-            @error('name') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Subject --}}
-        <div>
-            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject line</label>
-            <input type="text" id="subject" name="subject" value="{{ old('subject', $emailTemplate->subject) }}"
-                   class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 @error('subject') border-red-400 @enderror">
-            @error('subject') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Status --}}
-        <div>
-            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select id="status" name="status"
-                    class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 @error('status') border-red-400 @enderror">
-                @foreach(['draft', 'active', 'inactive'] as $s)
-                    <option value="{{ $s }}" @selected(old('status', $emailTemplate->status) === $s)>{{ ucfirst($s) }}</option>
-                @endforeach
-            </select>
-            @error('status') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- HTML Body --}}
-        <div>
-            <label for="body_html" class="block text-sm font-medium text-gray-700 mb-1">HTML body</label>
-            <p class="text-xs text-gray-500 mb-2">Use <code class="bg-gray-100 px-1 rounded">&#123;&#123;variable_name&#125;&#125;</code> for per-recipient merge tags.</p>
-            <textarea id="body_html" name="body_html" rows="10"
-                      class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500 @error('body_html') border-red-400 @enderror">{{ old('body_html', $emailTemplate->body_html) }}</textarea>
-            @error('body_html') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        {{-- Plain text body --}}
-        <div>
-            <label for="body_text" class="block text-sm font-medium text-gray-700 mb-1">Plain text body <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="body_text" name="body_text" rows="5"
-                      class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500">{{ old('body_text', $emailTemplate->body_text) }}</textarea>
-        </div>
-
-        {{-- Actions --}}
-        <div class="flex items-center justify-end gap-3 pt-2">
-            <a href="{{ route('email-templates.show', $emailTemplate) }}"
-               class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900">Cancel</a>
-            <button type="submit"
-                    class="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition">
-                Save changes
-            </button>
-        </div>
-
-    </form>
 </div>
 @endsection

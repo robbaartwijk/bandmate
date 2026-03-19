@@ -20,6 +20,8 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
+                @php $pageSlug = $pageSlug ?? ''; @endphp
+
                 <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'availablemusicians' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' || $pageSlug == 'about') show @endif" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
@@ -278,7 +280,7 @@ $user = auth()->user();
                             </a>
                         </li>
                         <li @if ($pageSlug=='users' ) class="active " @endif>
-                            <a href="{{ route('user.index') }}">
+                            <a href="{{ route('users.index') }}">
                                 <i class="fa fa-user-circle"></i>
                                 <p>
                                     <h5>{{ __('User Management') }}</h5>
