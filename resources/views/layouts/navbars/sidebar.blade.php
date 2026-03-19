@@ -20,8 +20,6 @@ $user = auth()->user();
                     <b class="caret mt-1"></b>
                 </a>
 
-                @php $pageSlug = $pageSlug ?? ''; @endphp
-
                 <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'availablemusicians' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' || $pageSlug == 'about') show @endif" id="userdata" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug=='acts' ) class="active " @endif>
@@ -261,7 +259,7 @@ $user = auth()->user();
             @if($user->is_admin)
             <li>
 
-                <a data-toggle="collapse" href="#admin" aria-expanded="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' || $pageSlug == 'mailings' ? 'true' : 'false' }}" class="{{ $pageSlug == 'userprofile' || $pageSlug == 'users' || $pageSlug == 'mailings' ? '' : 'collapsed' }}">
+                <a data-toggle="collapse" href="#admin" aria-expanded="{{ in_array($pageSlug, ['userprofile', 'users', 'email-templates', 'email-jobs', 'email-logs']) ? 'true' : 'false' }}" class="{{ in_array($pageSlug, ['userprofile', 'users', 'email-templates', 'email-jobs', 'email-logs']) ? '' : 'collapsed' }}">
                     <i class="fa fa-user-circle"></i>
                     <span class="nav-link-text">
                         <h4>{{ __('Management') }}</h4>
@@ -269,9 +267,9 @@ $user = auth()->user();
                     </span>
                 </a>
 
-                <div class="collapse @if ($pageSlug == 'userprofile' || $pageSlug == 'users' || $pageSlug == 'mailings') show @endif" id="admin" data-parent=".sidebar-wrapper">
+                <div class="collapse @if (in_array($pageSlug, ['userprofile', 'users', 'email-templates', 'email-jobs', 'email-logs'])) show @endif" id="admin" data-parent=".sidebar-wrapper">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug=='profile' ) class="active " @endif>
+                        <li @if ($pageSlug=='profile') class="active" @endif>
                             <a href="{{ route('profile.edit') }}">
                                 <i class="fa fa-user-circle"></i>
                                 <p>
@@ -279,7 +277,7 @@ $user = auth()->user();
                                 </p>
                             </a>
                         </li>
-                        <li @if ($pageSlug=='users' ) class="active " @endif>
+                        <li @if ($pageSlug=='users') class="active" @endif>
                             <a href="{{ route('users.index') }}">
                                 <i class="fa fa-user-circle"></i>
                                 <p>
@@ -287,15 +285,31 @@ $user = auth()->user();
                                 </p>
                             </a>
                         </li>
-                        <li @if ($pageSlug=='mailings' ) class="active " @endif>
-                            <a href="{{ route('mailing.index') }}">
-                                <i class="fa fa-user-circle"></i>
+                        <li @if ($pageSlug=='email-templates') class="active" @endif>
+                            <a href="{{ route('email-templates.index') }}">
+                                <i class="fa fa-envelope"></i>
                                 <p>
-                                    <h5>{{ __('Mailing list Management') }}</h5>
+                                    <h5>{{ __('Email Templates') }}</h5>
                                 </p>
                             </a>
                         </li>
-                        <li @if ($pageSlug=='docs' ) class="active " @endif>
+                        <li @if ($pageSlug=='email-jobs') class="active" @endif>
+                            <a href="{{ route('email-jobs.index') }}">
+                                <i class="fa fa-paper-plane"></i>
+                                <p>
+                                    <h5>{{ __('Email Jobs') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug=='email-logs') class="active" @endif>
+                            <a href="{{ route('email-logs.index') }}">
+                                <i class="fa fa-list"></i>
+                                <p>
+                                    <h5>{{ __('Email Logs') }}</h5>
+                                </p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug=='docs') class="active" @endif>
                             <a href="/docs" target="_blank" rel="noopener noreferrer">
                                 <i class="fa fa-user-circle"></i>
                                 <p>
