@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\User;
-
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+
 class Vacancy extends Model implements HasMedia
 {
     use HasFactory;
@@ -39,8 +38,8 @@ class Vacancy extends Model implements HasMedia
     }
 
     public function hasVacancyMedia()
-{
-    return $this->media()->count() > 0;
-}
+    {
+        return $this->media()->count() > 0;
+    }
 
 }

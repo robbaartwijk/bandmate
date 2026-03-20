@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+
 class Venue extends Model implements HasMedia
 {
     use HasFactory;
@@ -34,8 +35,8 @@ class Venue extends Model implements HasMedia
     }
 
     public function hasVenueMedia()
-{
-    return $this->media()->count() > 0;
-}
+    {
+        return $this->media()->count() > 0;
+    }
 
 }
