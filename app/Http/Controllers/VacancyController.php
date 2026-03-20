@@ -63,6 +63,7 @@ class VacancyController extends BaseController
         $request->validate([
             'act_id' => 'required',
             'instrument_id' => 'required',
+            'description'   => 'nullable|string',
         ]);
  
         $vacancy = new Vacancy;
@@ -116,6 +117,7 @@ class VacancyController extends BaseController
         $request->validate([
             'act_id' => 'required',
             'instrument_id' => 'required',
+            'description'   => 'nullable|string',
         ]);
  
         $vacancy->fill($request->validated());

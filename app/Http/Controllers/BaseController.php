@@ -14,7 +14,7 @@ class BaseController extends Controller
         $this->middleware(function ($request, $next) {
 
             if (Auth::check()) {
-                $userAvatar = Auth::user()->getFirstMedia('images/AvatarThumbnailPics');;
+                $userAvatar = Auth::user()->getFirstMedia('images/AvatarThumbnailPics');
                 view()->share('userAvatar', $userAvatar);
             }
 

@@ -49,6 +49,9 @@ class AvailablemusicianController extends BaseController
         $request->validate([
             'instrument_id' => 'required',
             'genre_id' => 'required',
+            'description'     => 'nullable|string',
+            'available_from'  => 'nullable|date',
+            'available_until' => 'nullable|date|after:available_from',
         ]);
  
         $availablemusician = new Availablemusician;
@@ -105,6 +108,9 @@ class AvailablemusicianController extends BaseController
         $request->validate([
             'instrument_id' => 'required',
             'genre_id' => 'required',
+            'description'     => 'nullable|string',     
+            'available_from'  => 'nullable|date',
+            'available_until' => 'nullable|date|after:available_from',
         ]);
  
         $availablemusician->fill($request->validated());
