@@ -71,7 +71,7 @@ class VenueController extends BaseController
  
         $venue = new Venue;
         $venue->user_id = Auth::user()->id;
-        $venue->fill($request->all());
+        $venue->fill($request->validated());
         $venue->save();
  
         return redirect()->route('venues.index')
@@ -120,7 +120,7 @@ class VenueController extends BaseController
             'email' => 'email',
         ]);
  
-        $venue->update($request->all());
+        $venue->update($request->validated());
  
         return redirect()->route('venues.index')
             ->with('status', 'Venue updated successfully');

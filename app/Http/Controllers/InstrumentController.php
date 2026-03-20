@@ -51,7 +51,7 @@ class InstrumentController extends BaseController
             'type' => 'required',
         ]);
  
-        Instrument::create($request->all());
+        Instrument::create($request->validated());
  
         return redirect()->route('instruments.index')
             ->with('status', 'Instrument created successfully.');
@@ -87,7 +87,7 @@ class InstrumentController extends BaseController
             'type' => 'required',
         ]);
  
-        $instrument->update($request->all());
+        $instrument->update($request->validated());
  
         return redirect()->route('instruments.index')
             ->with('status', 'Instrument updated successfully');

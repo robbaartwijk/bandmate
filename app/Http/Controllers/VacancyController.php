@@ -66,7 +66,7 @@ class VacancyController extends BaseController
         ]);
  
         $vacancy = new Vacancy;
-        $vacancy->fill($request->all());
+        $vacancy->fill($request->validated());
         $vacancy->user_id = Auth::user()->id;
         $vacancy->save();
  
@@ -118,7 +118,7 @@ class VacancyController extends BaseController
             'instrument_id' => 'required',
         ]);
  
-        $vacancy->fill($request->all());
+        $vacancy->fill($request->validated());
         $vacancy->description = $request->input('description');
         $vacancy->save();
  

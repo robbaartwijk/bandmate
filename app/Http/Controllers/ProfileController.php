@@ -26,7 +26,7 @@ class ProfileController extends BaseController
     public function update(ProfileRequest $request): \Illuminate\Http\RedirectResponse
     {
         $user = auth()->user();       
-        $user->fill($request->all());
+        $user->fill($request->validated());
         $user = $this->processEmailNotifications($user, $request);
 
         $user->save();

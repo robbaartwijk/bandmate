@@ -72,7 +72,7 @@ class AgencyController extends BaseController
         ]);
  
         $agency = new Agency;
-        $agency->fill($request->all());
+        $agency->fill($request->validated());
         $agency->save();
  
         return redirect()->route('agencies.index')
@@ -122,7 +122,7 @@ class AgencyController extends BaseController
             'spotify' => ['nullable', 'url'],
         ]);
  
-        $agency->update($request->all());
+        $agency->update($request->validated());
  
         return redirect()->route('agencies.index')
             ->with('status', 'Agency updated successfully');

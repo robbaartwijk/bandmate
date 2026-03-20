@@ -51,7 +51,7 @@ class GenreController extends BaseController
             'group' => 'required',
         ]);
 
-        Genre::create($request->all());
+        Genre::create($request->validated());
 
         return redirect()->route('genres.index')
             ->with('status', 'Genre created successfully.');
@@ -83,7 +83,7 @@ class GenreController extends BaseController
             'group' => 'required',
         ]);
 
-        $genre->update($request->all());
+        $genre->update($request->validated());
 
         return redirect()->route('genres.index')
             ->with('status', 'Genre updated successfully');

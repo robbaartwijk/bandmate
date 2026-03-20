@@ -52,7 +52,7 @@ class AvailablemusicianController extends BaseController
         ]);
  
         $availablemusician = new Availablemusician;
-        $availablemusician->fill($request->all());
+        $availablemusician->fill($request->validated());
         $availablemusician->user_id = Auth::user()->id;
         $availablemusician->description = $request->input('description');
         $availablemusician->available_from = $request->input('available_from');
@@ -107,7 +107,7 @@ class AvailablemusicianController extends BaseController
             'genre_id' => 'required',
         ]);
  
-        $availablemusician->fill($request->all());
+        $availablemusician->fill($request->validated());
         $availablemusician->description = $request->input('description');
         $availablemusician->available_from = $request->input('available_from');
         $availablemusician->available_until = $request->input('available_until');
