@@ -2,12 +2,9 @@
  
 namespace App\Http\Controllers;
  
-use App\Models\Act;
 use App\Models\Instrument;
-use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
  
 class VacancyController extends BaseController
 {
@@ -31,7 +28,7 @@ class VacancyController extends BaseController
                     ->orWhere('acts.name', 'like', "%{$search}%");
             })
             ->when($private, function ($query) {
-                return $query->where('vacancies.user_id', '=', Auth::user()->id);
+                return $query->where('vacancies.user_id', '=', auth()->id());
             })
             ->orderBy($sort, 'asc')
             ->paginate($select)
@@ -47,7 +44,7 @@ class VacancyController extends BaseController
     {
         $this->authorize('create', Vacancy::class);
  
-        $acts = Auth::user()->acts->sortBy('name');
+        $acts = auth()->user()->acts->sortBy('name');
         $instruments = Instrument::all()->sortBy(['type', 'name']);
  
         return view('vacancies.create', compact(['instruments', 'acts']));
@@ -68,7 +65,7 @@ class VacancyController extends BaseController
  
         $vacancy = new Vacancy;
         $vacancy->fill($request->validated());
-        $vacancy->user_id = Auth::user()->id;
+        $vacancy->user_id = auth()->id();
         $vacancy->save();
  
         return redirect()
@@ -100,7 +97,7 @@ class VacancyController extends BaseController
         $vacancy->user_name = $vacancy->user->name;
         $vacancy->act_name = $vacancy->act->name;
  
-        $acts = Auth::user()->acts->sortBy('name');
+        $acts = auth()->user()->acts->sortBy('name');
         $instruments = Instrument::all()->sortBy(['type', 'name']);
         $vacancy->instrument_id = $vacancy->instrument->id;
  
