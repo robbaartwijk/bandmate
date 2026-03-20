@@ -4,10 +4,11 @@
         <h1>Hello {{ $greetername }}</h1>
     </div>
 
-    <form wire:submit="changeName(document.querySelector('#greetername').value)">
+    <form wire:submit="changeName">
 
         <div class="mt-2">
-            <input id="greetername" type="text" class="block w-full p-4 border rounded-md bg-gray-700 text-white">
+            <input id="greetername" type="text" wire:model="greetername"
+                class="block w-full p-4 border rounded-md bg-gray-700 text-white">
         </div>
 
         <div class="mt-2">

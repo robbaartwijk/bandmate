@@ -127,7 +127,7 @@ $user = auth()->user();
 
     <?php echo $vacancies->appends(array('sort' => request()->sort))->links(); ?>
 
-    @if($vacancies->count() < 25) <div class="float-left" style="color:white">
+    @if(isset($vacancies) && $vacancies->count() < 25) <div class="float-left" style="color:white">
         {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
 </div>
 @endif

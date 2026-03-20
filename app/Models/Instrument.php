@@ -26,7 +26,7 @@ class Instrument extends Model
     }
 
     public function availablemusician() {
-        return $this->hasMany(availablemusician::class);
+        return $this->hasMany(Availablemusician::class);
     }
 
 }
