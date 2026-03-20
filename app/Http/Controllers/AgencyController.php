@@ -28,7 +28,7 @@ class AgencyController extends BaseController
         }
  
         if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', auth()->id());
         }
  
         $agencies = $query->paginate($select)->onEachSide(1);

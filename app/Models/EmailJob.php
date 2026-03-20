@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
  
+use App\Models\EmailTemplate;
+use App\Models\EmailJobRecipient;
+
 class EmailJob extends Model
 {
     use HasFactory;

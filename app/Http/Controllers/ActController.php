@@ -46,7 +46,7 @@ class ActController extends BaseController
         // Authorization is handled by StoreActRequest::authorize()
 
         $act = new Act;
-        $act->user_id = Auth::user()->id;
+        $act->user_id = auth()->id();
         $act->fill($request->validated());
  
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
@@ -215,7 +215,7 @@ class ActController extends BaseController
     public function buildPrivateParameter($request, $query)
     {
         if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', auth()->id());
         }
  
         return $query;

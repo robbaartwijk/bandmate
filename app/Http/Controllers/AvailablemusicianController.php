@@ -56,7 +56,7 @@ class AvailablemusicianController extends BaseController
  
         $availablemusician = new Availablemusician;
         $availablemusician->fill($request->validated());
-        $availablemusician->user_id = Auth::user()->id;
+        $availablemusician->user_id = auth()->id();
 
         $availablemusician->save();
  
@@ -233,7 +233,7 @@ class AvailablemusicianController extends BaseController
     public function buildPrivateParameter($request, $query)
     {
         if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', auth()->id());
         }
  
         return $query;

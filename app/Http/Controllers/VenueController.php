@@ -27,7 +27,7 @@ class VenueController extends BaseController
         }
  
         if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', auth()->id());
         }
  
         $venues = $query->paginate($select)->onEachSide(1);
@@ -70,7 +70,7 @@ class VenueController extends BaseController
         ]);
  
         $venue = new Venue;
-        $venue->user_id = Auth::user()->id;
+        $venue->user_id = auth()->id();
         $venue->fill($request->validated());
         $venue->save();
  

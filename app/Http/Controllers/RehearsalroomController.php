@@ -28,7 +28,7 @@ class RehearsalroomController extends BaseController
         }
  
         if ($request->boolean('private')) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', auth()->id());
         }
  
         $rehearsalrooms = $query->paginate($select)->onEachSide(1);
@@ -66,7 +66,7 @@ class RehearsalroomController extends BaseController
         ]);
  
         $rehearsalroom = new Rehearsalroom;
-        $rehearsalroom->user_id = Auth::user()->id;
+        $rehearsalroom->user_id = auth()->id();
         $rehearsalroom->fill($request->only([
             'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website',
         ]));

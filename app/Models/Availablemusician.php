@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
  
+use App\Models\User;
+use App\Models\Genre;
+use App\Models\Instrument;
+
 class Availablemusician extends Model implements HasMedia
 {
     use HasFactory;
