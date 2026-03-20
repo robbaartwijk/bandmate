@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Vacancy;
 use App\Models\Availablemusician;
 
-class Instrument extends Model {
+class Instrument extends Model
+{
     use HasFactory;
     use SoftDeletes;
 
@@ -21,12 +22,14 @@ class Instrument extends Model {
         'deleted_at' => 'datetime',
     ];
 
-    public function vacancy() {
-        return $this->hasMany( Vacancy::class );
+    public function vacancy()
+    {
+        return $this->hasMany(Vacancy::class);
     }
 
-    public function availablemusician() {
-        return $this->hasMany( Availablemusician::class );
+    public function availablemusician()
+    {
+        return $this->hasMany(Availablemusician::class);
     }
 
 }
