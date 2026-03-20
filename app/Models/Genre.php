@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Availablemusician;
 
-class Genre extends Model
-{
+class Genre extends Model {
     use HasFactory;
     use SoftDeletes;
 
@@ -23,9 +22,8 @@ class Genre extends Model
         'deleted_at' => 'datetime',
     ];
 
-    public function availableMusician() 
-    {
-        return $this->hasMany(Availablemusician::class);
+    public function availableMusician() {
+        return $this->hasMany( Availablemusician::class );
     }
-    
+
 }
