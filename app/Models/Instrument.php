@@ -22,11 +22,13 @@ class Instrument extends Model
         'deleted_at' => 'datetime',
     ];
 
-    public function vacancy() {
+    public function vacancy() 
+    {
         return $this->hasMany(Vacancy::class);
     }
 
-    public function availablemusician() {
+    public function availablemusician() 
+    {
         return $this->hasMany(Availablemusician::class);
     }
 

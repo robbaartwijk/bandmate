@@ -45,7 +45,7 @@ class Act extends Model implements HasMedia
 
     public function genre()
     {
-       return $this->belongsTo(Genre::class);
+        return $this->belongsTo(Genre::class);
     }
 
     public function vacancy()

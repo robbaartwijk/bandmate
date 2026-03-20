@@ -21,6 +21,7 @@ class EmailJob extends Model
         'scheduled_at',
         'started_at',
         'completed_at',
+        'created_by',
     ];
  
     protected $casts = [

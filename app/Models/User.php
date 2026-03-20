@@ -113,7 +113,8 @@ class User extends Authenticatable implements HasMedia {
         return $this->hasMany(Availablemusician::class);
     }
 
-    function hasUserMedia() {
+    public function hasUserMedia(): bool
+    {
         return $this->media()->count() > 0;
     }
 
