@@ -40,12 +40,13 @@ class TemplatedEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            htmlString: $this->mergeVariables(
-                $this->recipient->job->template->body_html
-            ),
-            textString: $this->recipient->job->template->body_text
-                ? $this->mergeVariables($this->recipient->job->template->body_text)
-                : null,
+            view: 'emails.templated',
+            with: [
+                'htmlContent' => $this->mergeVariables($this->recipient->job->template->body_html),
+                'textContent' => $this->recipient->job->template->body_text
+                    ? $this->mergeVariables($this->recipient->job->template->body_text)
+                    : null,
+            ],
         );
     }
  
@@ -62,4 +63,3 @@ class TemplatedEmail extends Mailable
         }, $content);
     }
 }
- 
