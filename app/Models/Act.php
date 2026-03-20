@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\User;
+use App\Models\Genre;
+use App\Models\Vacancy;
+
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -36,17 +40,17 @@ class Act extends Model implements HasMedia
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function genre()
     {
-        return $this->belongsTo('App\Models\Genre');
+       return $this->belongsTo(Genre::class);
     }
 
     public function vacancy()
     {
-        return $this->hasMany('App\Models\Vacancy');
+        return $this->hasMany(Vacancy::class);
     }
      
     public function hasAnyMedia()
