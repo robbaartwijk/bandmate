@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Models\User;
 
@@ -32,13 +31,13 @@ class Rehearsalroom extends Model implements HasMedia
     ];
 
     public function user()
-{
-    return $this->belongsTo('App\Models\User');
-}
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 
-public function hasAnyMedia()
-{
-    return $this->media()->count() > 0;
-}
+    public function hasAnyMedia()
+    {
+        return $this->media()->count() > 0;
+    }
 
 }
