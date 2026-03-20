@@ -121,7 +121,7 @@ class VacancyController extends BaseController
         ]);
  
         $vacancy->fill($request->validated());
-        $vacancy->description = $request->input('description');
+
         $vacancy->save();
  
         return redirect()->route('vacancies.index')

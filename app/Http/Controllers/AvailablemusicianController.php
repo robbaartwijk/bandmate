@@ -57,9 +57,7 @@ class AvailablemusicianController extends BaseController
         $availablemusician = new Availablemusician;
         $availablemusician->fill($request->validated());
         $availablemusician->user_id = Auth::user()->id;
-        $availablemusician->description = $request->input('description');
-        $availablemusician->available_from = $request->input('available_from');
-        $availablemusician->available_until = $request->input('available_until');
+
         $availablemusician->save();
  
         if ($request->hasFile('availablemusicianpic')) {
@@ -114,9 +112,6 @@ class AvailablemusicianController extends BaseController
         ]);
  
         $availablemusician->fill($request->validated());
-        $availablemusician->description = $request->input('description');
-        $availablemusician->available_from = $request->input('available_from');
-        $availablemusician->available_until = $request->input('available_until');
         $availablemusician->save();
  
         if ($request->hasFile('availablemusicianpic')) {

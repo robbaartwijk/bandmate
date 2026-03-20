@@ -64,7 +64,6 @@ class UserController extends BaseController
      */
     public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
-        
         $this->authorize('update', $user);
         
         $validated = $request->validate([
@@ -74,8 +73,7 @@ class UserController extends BaseController
 
         $user->update($validated);
 
-        return redirect()->route('users.index')
-        ->with('status', 'User updated successfully');
+        return redirect()->route('users.index')->with('status', 'User updated successfully');
     }
  
     /**

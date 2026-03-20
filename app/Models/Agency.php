@@ -17,6 +17,7 @@ class Agency extends Model implements HasMedia
     use SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'act_id',
         'name',
         'address',
@@ -39,11 +40,6 @@ class Agency extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo('App\Models\User');
-    }
-    
-    public function act()
-    {
-        return $this->hasMany('App\Models\Act');
     }
 
     public function hasActMedia()
