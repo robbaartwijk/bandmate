@@ -48,7 +48,6 @@ class NotificationService {
         $recipients = $moduleSubscribers->merge($allSubscribers);
 
         if ( $recipients->isEmpty() ) {
-            \Log::info( 'NotificationService: no recipients, aborting' );
             return null;
         }
 
