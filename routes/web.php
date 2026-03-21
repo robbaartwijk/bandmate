@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('email-templates', EmailTemplateController::class);
     Route::resource('email-jobs', EmailJobController::class);
+    Route::get('email-jobs-subscribers/{type}', [EmailJobController::class, 'subscribers'])->name('email-jobs.subscribers');
     Route::resource('email-logs', EmailLogController::class)->only([
         'index', 'show', 'destroy',
     ]);
