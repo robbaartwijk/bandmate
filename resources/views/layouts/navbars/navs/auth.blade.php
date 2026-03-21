@@ -36,21 +36,28 @@
                         <b class="caret d-none d-lg-block d-xl-block"></b>
                         <p class="d-lg-none">{{ __('Log out') }}</p>
                     </a>
-                    <ul class="dropdown-menu dropdown-navbar">
+
+                    <ul class="dropdown-menu dropdown-navbar" style="background: rgba(35, 37, 51, 0.95); border: 1px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 8px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.4); min-width: 180px;">
                         <li class="nav-link">
-                            <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item">{{ __('Profile') }}</a>
+                            <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item" style="color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; transition: background 0.2s;">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-link">
-                            <a href="{{ route('profile.editPassword') }}" class="nav-item dropdown-item">{{ __('Change password') }}</a>
+                            <a href="{{ route('profile.editPassword') }}" class="nav-item dropdown-item" style="color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; transition: background 0.2s;">{{ __('Change password') }}</a>
                         </li>
                         <li class="nav-link">
-                            <a href="{{ route('profile.userdata') }}" class="nav-item dropdown-item">{{ __('User data') }}</a>
+                            <a href="{{ route('profile.userdata') }}" class="nav-item dropdown-item" style="color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; transition: background 0.2s;">{{ __('User data') }}</a>
                         </li>
-                        <li class="dropdown-divider"></li>
+                        <li class="dropdown-divider" style="border-color: rgba(255,255,255,0.1); margin: 4px 0;"></li>
                         <li class="nav-link">
-                            <a href="{{ route('logout') }}" class="nav-item dropdown-item" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">{{ __('Log out') }}</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="nav-item dropdown-item" style="background:none; border:none; color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; width: 100%; text-align: left; cursor: pointer; transition: background 0.2s;">
+                                    {{ __('Log out') }}
+                                </button>
+                            </form>
                         </li>
                     </ul>
+
                 </li>
                 <li class="separator d-lg-none"></li>
             </ul>

@@ -39,13 +39,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
- 
-        // Example: grant admins access to everything, bypassing all policy checks.
-        // Remove or adjust this if you want fine-grained control per policy.
-        Gate::before(function ($user, $ability) {
-            if ($user->is_admin) {
-                return true;
-            }
-        });
     }
 }

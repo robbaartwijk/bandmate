@@ -38,12 +38,12 @@ Route::middleware([
 
 Auth::routes(['logout' => false]);
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    
     Route::resource('instruments', InstrumentController::class)->names([
         'index' => 'instruments.index',
     ]);
