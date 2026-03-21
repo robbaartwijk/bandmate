@@ -7,9 +7,16 @@ use App\Http\Requests\UpdateActRequest;
 use App\Models\Act;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
  
 class ActController extends BaseController
 {
+    public function __construct(
+        private readonly NotificationService $notificationService
+    ) {
+    parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -41,26 +48,44 @@ class ActController extends BaseController
      * Store a newly created resource in storage.
      */
     public function store(StoreActRequest $request)
-    {
-        // Authorization is handled by StoreActRequest::authorize()
-
+{
         $act = new Act;
         $act->user_id = auth()->id();
         $act->fill($request->validated());
- 
+
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
         $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
- 
+
         $act->save();
- 
+
         if ($request->hasFile('actpic')) {
             $this->storeActImage($request, $act);
         }
- 
-        return redirect()->route('acts.show', $act)->withStatus('Act added successfully');
+
+        $template = \App\Models\EmailTemplate::where('name', 'email_notification_acts')
+            ->where('status', 'active')
+            ->first();
+
+        $recipients = \App\Models\User::where('email_notification_acts', true)
+            ->orWhere('email_notification_all', true)
+            ->whereNotNull('email')
+            ->get(['email', 'name']);
+
+        $this->notificationService->dispatchModuleNotification(
+            templateName: 'email_notification_acts',
+            moduleColumn: 'email_notification_acts',
+            variables: [
+                'act_name' => $act->name,
+                'act_genre' => $act->genre?->name ?? '',
+                'act_url'  => route('acts.show', $act),
+            ]
+        );
+
+    return redirect()->route('acts.show', $act)->withStatus('Act added successfully');
     }
- 
+
+
     /**
      * Display the specified resource.
      */
