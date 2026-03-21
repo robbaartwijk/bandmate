@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BaseController;
+
 use App\Models\EmailLog;
 use App\Models\EmailJob;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class EmailLogController extends Controller
+class EmailLogController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
         $this->authorizeResource(EmailLog::class, 'email_log');
     }
 

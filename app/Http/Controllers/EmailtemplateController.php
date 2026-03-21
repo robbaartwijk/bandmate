@@ -2,15 +2,18 @@
  
 namespace App\Http\Controllers;
  
+use App\Http\Controllers\BaseController;
+
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
  
-class EmailTemplateController extends Controller
+class EmailTemplateController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
         $this->authorizeResource(EmailTemplate::class, 'email_template');
     }
  

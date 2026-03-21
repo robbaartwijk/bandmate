@@ -2,16 +2,19 @@
  
 namespace App\Http\Controllers;
  
+use App\Http\Controllers\BaseController;
+
 use App\Models\EmailJob;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
  
-class EmailJobController extends Controller
+class EmailJobController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
         $this->authorizeResource(EmailJob::class, 'email_job');
     }
  

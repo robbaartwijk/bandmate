@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateActRequest;
 use App\Models\Act;
 use App\Models\Genre;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
  
 class ActController extends BaseController
 {
