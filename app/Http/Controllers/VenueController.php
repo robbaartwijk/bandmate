@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
  
 use App\Models\Venue;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
  
 class VenueController extends BaseController
 {
+    public function __construct(
+        private readonly NotificationService $notificationService
+    ) {
+        parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -50,29 +57,41 @@ class VenueController extends BaseController
     public function store(Request $request)
     {
         $this->authorize('create', Venue::class);
- 
+
         $request->merge([
             'phone' => $request->phone ?? '',
             'email' => $request->email ?? '',
         ]);
- 
+
         $request->validate([
-            'name' => 'required',
+            'name'    => 'required',
             'address' => 'required',
-            'zip' => 'required',
-            'city' => 'required',
-            'state' => 'required',
+            'zip'     => 'required',
+            'city'    => 'required',
+            'state'   => 'required',
             'country' => 'required',
             'website' => ['nullable', 'url'],
-            'phone' => ['regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
-            'email' => 'email',
+            'phone'   => ['regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
+            'email'   => 'email',
         ]);
- 
+
         $venue = new Venue;
         $venue->user_id = auth()->id();
-        $venue->fill($request->validated());
+        $venue->fill($request->only([
+            'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website',
+        ]));
         $venue->save();
- 
+
+        $this->notificationService->dispatchModuleNotification(
+            templateName: 'email_notification_venues',
+            moduleColumn: 'email_notification_venues',
+            variables: [
+                'venue_name' => $venue->name,
+                'venue_city' => $venue->city,
+                'venue_url'  => route('venues.show', $venue),
+            ],
+        );
+
         return redirect()->route('venues.index')
             ->with('status', 'Venue created successfully.');
     }

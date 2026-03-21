@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
  
 use App\Models\Agency;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
  
 class AgencyController extends BaseController
 {
+    public function __construct(
+        private readonly NotificationService $notificationService
+        ) {
+            parent::__construct();
+        }
+
     /**
      * Display a listing of the resource.
      */
@@ -51,32 +58,46 @@ class AgencyController extends BaseController
     public function store(Request $request)
     {
         $this->authorize('create', Agency::class);
- 
+
         $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'zip' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'country' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'website' => ['nullable', 'url'],
-            'facebook' => ['nullable', 'url'],
-            'twitter' => ['nullable', 'url'],
-            'instagram' => ['nullable', 'url'],
-            'youtube' => ['nullable', 'url'],
+            'name'       => 'required',
+            'address'    => 'required',
+            'zip'        => 'required',
+            'city'       => 'required',
+            'state'      => 'required',
+            'country'    => 'required',
+            'phone'      => 'required',
+            'email'      => 'required',
+            'website'    => ['nullable', 'url'],
+            'facebook'   => ['nullable', 'url'],
+            'twitter'    => ['nullable', 'url'],
+            'instagram'  => ['nullable', 'url'],
+            'youtube'    => ['nullable', 'url'],
             'soundcloud' => ['nullable', 'url'],
-            'spotify' => ['nullable', 'url'],
+            'spotify'    => ['nullable', 'url'],
         ]);
- 
+
         $agency = new Agency;
-        $agency->fill($request->validated());
+        $agency->fill($request->only([
+            'name', 'address', 'zip', 'city', 'state', 'country',
+            'phone', 'email', 'website', 'facebook', 'twitter',
+            'instagram', 'youtube', 'soundcloud', 'spotify',
+        ]));
         $agency->save();
- 
-        return redirect()->route('agencies.index')
-            ->with('status', 'Agency created successfully.');
-    }
+
+        $this->notificationService->dispatchModuleNotification(
+            templateName: 'email_notification_agencies',
+            moduleColumn: 'email_notification_agencies',
+            variables: [
+                'agency_name' => $agency->name,
+                'agency_city' => $agency->city,
+                'agency_url'  => route('agencies.show', $agency),
+            ]
+         );
+
+    return redirect()->route('agencies.index')
+        ->with('status', 'Agency created successfully.');
+}
  
     /**
      * Display the specified resource.

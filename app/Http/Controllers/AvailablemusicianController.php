@@ -7,9 +7,16 @@ use App\Models\Genre;
 use App\Models\Instrument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
- 
+use App\Services\NotificationService;
+
 class AvailablemusicianController extends BaseController
 {
+    public function __construct(
+        private readonly NotificationService $notificationService
+    ) {
+    parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -45,26 +52,43 @@ class AvailablemusicianController extends BaseController
     public function store(Request $request)
     {
         $this->authorize('create', Availablemusician::class);
- 
-        $request->validate([
-            'instrument_id' => 'required',
-            'genre_id' => 'required',
-            'description'     => 'nullable|string',
-            'available_from'  => 'nullable|date',
-            'available_until' => 'nullable|date|after:available_from',
-        ]);
- 
-        $availablemusician = new Availablemusician;
-        $availablemusician->fill($request->validated());
-        $availablemusician->user_id = auth()->id();
 
+        $request->validate([
+            'instrument_id'  => 'required',
+            'genre_id'       => 'required',
+            'description'    => 'nullable|string',
+            'available_from' => 'nullable|date',
+            'available_until'=> 'nullable|date|after:available_from',
+        ]);
+
+        $availablemusician = new Availablemusician;
+        $availablemusician->fill($request->only([
+            'instrument_id',
+            'genre_id',
+            'description',
+            'available_from',
+            'available_until',
+        ]));
+
+        $availablemusician->user_id = auth()->id();
         $availablemusician->save();
- 
+
         if ($request->hasFile('availablemusicianpic')) {
             $availablemusician->addMediaFromRequest('availablemusicianpic')
                 ->toMediaCollection('images/AvailablemusicianPics');
         }
- 
+
+        $this->notificationService->dispatchModuleNotification(
+            templateName: 'email_notification_availablemusicians',
+            moduleColumn: 'email_notification_availablemusicians',
+            variables: [
+                'musician_name'   => auth()->user()->name,
+                'instrument_name' => $availablemusician->instrument->name,
+                'genre_name'      => $availablemusician->genre->name,
+                'musician_url'    => route('availablemusicians.show', $availablemusician),
+            ]
+        );
+
         return redirect()
             ->route('availablemusicians.index')
             ->with('status', 'Available musician created successfully.');

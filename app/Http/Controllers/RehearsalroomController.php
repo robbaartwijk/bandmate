@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
  
 use App\Models\Rehearsalroom;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
  
 class RehearsalroomController extends BaseController
 {
+    public function __construct(
+        private readonly NotificationService $notificationService
+    ) {
+        parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -75,6 +82,16 @@ class RehearsalroomController extends BaseController
             $this->storeRehearsalroomImage($request, $rehearsalroom);
         }
  
+        $this->notificationService->dispatchModuleNotification(
+            templateName: 'email_notification_rehearsalrooms',
+            moduleColumn: 'email_notification_rehearsalrooms',
+            variables: [
+                'rehearsalroom_name' => $rehearsalroom->name,
+                'rehearsalroom_city' => $rehearsalroom->city,
+                'rehearsalroom_url'  => route('rehearsalrooms.show', $rehearsalroom),
+            ]
+        );
+
         return redirect()->route('rehearsalrooms.index')
             ->with('status', 'Rehearsal room created successfully.');
     }

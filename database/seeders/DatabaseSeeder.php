@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([UsersTableSeeder::class]);
         $this->call([EmailSystemSeeder::class]);  
-
+        $this->call([Emailnotificationtemplatesseeder::class]);
     }
 }
