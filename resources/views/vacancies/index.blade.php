@@ -124,12 +124,13 @@ $user = auth()->user();
             </div>
         </div>
     </div>
-
-    <?php echo $vacancies->appends(array('sort' => request()->sort))->links(); ?>
-
-    @if(isset($vacancies) && $vacancies->count() < 25) <div class="float-left" style="color:white">
-        {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
 </div>
-@endif
+
+<?php echo $vacancies->appends(array('sort' => request()->sort))->links(); ?>
+
+@if(isset($vacancies) && $vacancies->count() < 25) <div class="float-left" style="color:white">
+    {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
+    </div>
+    @endif
 
 @endsection
