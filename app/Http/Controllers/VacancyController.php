@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Instrument;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
  
 class VacancyController extends BaseController
 {
+
+    public function __construct(
+        private readonly NotificationService $notificationService
+        ) {
+        parent::__construct();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -56,21 +64,31 @@ class VacancyController extends BaseController
     public function store(Request $request)
     {
         $this->authorize('create', Vacancy::class);
- 
+
         $request->validate([
-            'act_id' => 'required',
+            'act_id'        => 'required',
             'instrument_id' => 'required',
             'description'   => 'nullable|string',
         ]);
- 
+
         $vacancy = new Vacancy;
-        $vacancy->fill($request->validated());
+        $vacancy->fill($request->only(['act_id', 'instrument_id', 'description']));
         $vacancy->user_id = auth()->id();
         $vacancy->save();
- 
-        return redirect()
+
+        $this->notificationService->dispatchModuleNotification(
+            templateName: 'email_notification_vacancies',
+            moduleColumn: 'email_notification_vacancies',
+            variables: [
+                'act_name'        => $vacancy->act->name,
+                'instrument_name' => $vacancy->instrument->name,
+                'vacancy_url'     => route('vacancies.show', $vacancy),
+            ]
+        );
+
+     return redirect()
             ->route('vacancies.index')
-            ->with('status', 'Vacancy created successfully.');
+         ->with('status', 'Vacancy created successfully.');
     }
  
     /**
