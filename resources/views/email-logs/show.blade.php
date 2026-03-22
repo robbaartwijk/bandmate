@@ -8,10 +8,11 @@
                 <h3 class="card-title"><b>Log entry #{{ $emailLog->id }}</b></h3>
             </div>
 
+            {{-- Meta info --}}
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-12 col-lg-6">
                     <div class="card-body text-primary">
-                        <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
                             <h4><b>Recipient: </b>{{ $emailLog->recipient->email }}
                                 @if($emailLog->recipient->name)
                                     <small style="color:#aaa;"> ({{ $emailLog->recipient->name }})</small>
@@ -32,35 +33,38 @@
                 </div>
             </div>
 
+            {{-- Error message --}}
             @if($emailLog->error_message)
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12">
                     <div class="card-body text-primary">
                         <h4><b>Error message</b></h4>
-                        <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
-                            <pre style="color:#e55; background:#1e1e2e; padding:12px; border-radius:6px; font-size:12px; white-space:pre-wrap;">{{ $emailLog->error_message }}</pre>
+                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
+                            <pre style="color:#e55; background:#1e1e2e; padding:12px; border-radius:6px; font-size:12px; white-space:pre-wrap; overflow-x:auto;">{{ $emailLog->error_message }}</pre>
                         </div>
                     </div>
                 </div>
             </div>
             @endif
 
+            {{-- Merge variables --}}
             @if($emailLog->recipient->variables)
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12">
                     <div class="card-body text-primary">
                         <h4><b>Merge variables used</b></h4>
-                        <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
-                            <pre style="color:#ccc; background:#1e1e2e; padding:12px; border-radius:6px; font-size:12px; white-space:pre-wrap;">{{ json_encode($emailLog->recipient->variables, JSON_PRETTY_PRINT) }}</pre>
+                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
+                            <pre style="color:#ccc; background:#1e1e2e; padding:12px; border-radius:6px; font-size:12px; white-space:pre-wrap; overflow-x:auto;">{{ json_encode($emailLog->recipient->variables, JSON_PRETTY_PRINT) }}</pre>
                         </div>
                     </div>
                 </div>
             </div>
             @endif
 
+            {{-- Actions --}}
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-body">
+                <div class="col-12">
+                    <div class="card-body">                    
                         <a href="{{ route('email-logs.index') }}" class="btn btn-primary">Back</a>
                         @can('delete', $emailLog)
                         <form action="{{ route('email-logs.destroy', $emailLog) }}" method="POST" style="display:inline"

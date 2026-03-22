@@ -4,8 +4,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="bm_card card">
-            <div class="card-header">
-                <h3 class="card-title"><b>Email job #{{ $emailJob->id }}</b></h3>
+            <div class="card-header" style="display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
+                <h3 class="card-title mb-0"><b>Email job #{{ $emailJob->id }}</b></h3>
                 @can('update', $emailJob)
                 @if($emailJob->status === 'pending')
                     <a href="{{ route('email-jobs.edit', $emailJob) }}" class="btn btn-warning">Edit</a>
@@ -29,10 +29,11 @@
             <script>setTimeout(function(){ document.getElementById('status-alert').style.display='none'; }, 2000);</script>
             @endif
 
+            {{-- Job meta --}}
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-12 col-lg-6">
                     <div class="card-body text-primary">
-                        <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
                             <h4><b>Template: </b>{{ $emailJob->template->name ?? '—' }}</h4>
                             <h4><b>Type: </b>{{ ucfirst($emailJob->type) }}</h4>
                             <h4><b>Status: </b>{{ ucfirst($emailJob->status) }}</h4>
@@ -50,47 +51,50 @@
                 </div>
             </div>
 
+            {{-- Recipients table --}}
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12">
                     <div class="card-body text-primary">
                         <h3>Recipients ({{ $emailJob->recipients->count() }})
                             <a href="{{ route('email-logs.index', ['job_id' => $emailJob->id]) }}" class="btn btn-info btn-sm" style="margin-left:10px;">View logs</a>
                         </h3>
 
-                        <table class="table tablesorter" style="margin-top:10px;">
-                            <thead class="text-primary">
-                                <tr>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Delivery status</th>
-                                    <th>Sent at</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($emailJob->recipients as $recipient)
-                                <tr>
-                                    <td>{{ $recipient->email }}</td>
-                                    <td>{{ $recipient->name ?? '—' }}</td>
-                                    <td>
-                                        @if($recipient->log)
-                                            {{ ucfirst($recipient->log->status) }}
-                                        @else
-                                            Pending
-                                        @endif
-                                    </td>
-                                    <td>{{ $recipient->log?->sent_at?->format('d M Y, H:i') ?? '—' }}</td>
-                                </tr>
-                                @empty
-                                <tr><td colspan="4" class="text-center">No recipients found.</td></tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div class="table-responsive" style="margin-top:10px;">
+                            <table class="table tablesorter">
+                                <thead class="text-primary">
+                                    <tr>
+                                        <th>Email</th>
+                                        <th class="d-none d-sm-table-cell">Name</th>
+                                        <th>Status</th>
+                                        <th class="d-none d-md-table-cell">Sent at</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($emailJob->recipients as $recipient)
+                                    <tr>
+                                        <td>{{ $recipient->email }}</td>
+                                        <td class="d-none d-sm-table-cell">{{ $recipient->name ?? '—' }}</td>
+                                        <td>
+                                            @if($recipient->log)
+                                                {{ ucfirst($recipient->log->status) }}
+                                            @else
+                                                Pending
+                                            @endif
+                                        </td>
+                                        <td class="d-none d-md-table-cell">{{ $recipient->log?->sent_at?->format('d M Y, H:i') ?? '—' }}</td>
+                                    </tr>
+                                    @empty
+                                    <tr><td colspan="4" class="text-center">No recipients found.</td></tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12">
                     <div class="card-body">
                         <a href="{{ route('email-jobs.index') }}" class="btn btn-primary">Back</a>
                     </div>

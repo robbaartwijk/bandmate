@@ -4,7 +4,7 @@
 <div class="col-container">
     <div class="row">
         <div class="col-md-12">
-            <div class="bm_card_height_large bm_card card">
+            <div class="bm_card card">
                 <div class="card-header">
                     <h3 class="card-title"><b>New email job</b></h3>
                 </div>
@@ -15,18 +15,20 @@
                     <input type="hidden" id="initial-type" value="{{ old('type', 'single') }}">
 
                     <div class="bm_row_layout row">
-                        <div class="col-lg-6">
+
+                        {{-- Column 1: Job settings --}}
+                        <div class="col-12 col-lg-6">
                             <div class="card-body text-primary">
-                                <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+                                <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
 
                                     <div class="bm_form_group form-group {{ $errors->has('template_id') ? 'has-danger' : '' }}">
-                                        <label for="template_id" class="bm_label_layout">
-                                            <h3>Template</h3>
-                                        </label>
-                                        <select id="template_id" name="template_id" class="bm_general_input form-control {{ $errors->has('template_id') ? 'is-invalid' : '' }}">
+                                        <label for="template_id" class="bm_label_layout"><h3>Template</h3></label>
+                                        <select id="template_id" name="template_id"
+                                                class="bm_general_input form-control {{ $errors->has('template_id') ? 'is-invalid' : '' }}"
+                                                style="width:100%;">
                                             <option value="">— Select a template —</option>
                                             @foreach($templates as $template)
-                                            <option value="{{ $template->id }}" @selected(old('template_id')==$template->id)>
+                                            <option value="{{ $template->id }}" @selected(old('template_id') == $template->id)>
                                                 {{ $template->name }} — {{ $template->subject }}
                                             </option>
                                             @endforeach
@@ -35,25 +37,23 @@
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('type') ? 'has-danger' : '' }}">
-                                        <label class="bm_label_layout">
-                                            <h3>Type</h3>
-                                        </label>
-                                        <div style="margin-left: 10px;">
-                                            <label style="margin-right: 20px;">
-                                                <input type="radio" name="type" value="single" @checked(old('type', 'single' )==='single' ) onchange="setType('single')"> Single
+                                        <label class="bm_label_layout"><h3>Type</h3></label>
+                                        <div style="margin-left:10px;">
+                                            <label style="margin-right:20px;">
+                                                <input type="radio" name="type" value="single" @checked(old('type', 'single') === 'single') onchange="setType('single')"> Single
                                             </label>
                                             <label>
-                                                <input type="radio" name="type" value="bulk" @checked(old('type')==='bulk' ) onchange="setType('bulk')"> Bulk
+                                                <input type="radio" name="type" value="bulk" @checked(old('type') === 'bulk') onchange="setType('bulk')"> Bulk
                                             </label>
                                         </div>
                                         @include('alerts.feedback', ['field' => 'type'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('from_address') ? 'has-danger' : '' }}">
-                                        <label for="from_address" class="bm_label_layout">
-                                            <h3>From address</h3>
-                                        </label>
-                                        <input type="email" id="from_address" name="from_address" value="{{ old('from_address') }}" class="bm_general_input form-control {{ $errors->has('from_address') ? 'is-invalid' : '' }}" placeholder="no-reply@example.com">
+                                        <label for="from_address" class="bm_label_layout"><h3>From address</h3></label>
+                                        <input type="email" id="from_address" name="from_address" value="{{ old('from_address') }}"
+                                               class="bm_general_input form-control {{ $errors->has('from_address') ? 'is-invalid' : '' }}"
+                                               placeholder="no-reply@example.com" style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'from_address'])
                                     </div>
 
@@ -61,14 +61,17 @@
                                         <label for="from_name" class="bm_label_layout">
                                             <h3>From name <small style="font-weight:normal;">(optional)</small></h3>
                                         </label>
-                                        <input type="text" id="from_name" name="from_name" value="{{ old('from_name') }}" class="bm_general_input form-control" placeholder="Bandmate">
+                                        <input type="text" id="from_name" name="from_name" value="{{ old('from_name') }}"
+                                               class="bm_general_input form-control" placeholder="Bandmate" style="width:100%;">
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('scheduled_at') ? 'has-danger' : '' }}">
                                         <label for="scheduled_at" class="bm_label_layout">
                                             <h3>Schedule for <small style="font-weight:normal;">(optional)</small></h3>
                                         </label>
-                                        <input type="datetime-local" id="scheduled_at" name="scheduled_at" value="{{ old('scheduled_at') }}" class="bm_general_input form-control {{ $errors->has('scheduled_at') ? 'is-invalid' : '' }}">
+                                        <input type="datetime-local" id="scheduled_at" name="scheduled_at" value="{{ old('scheduled_at') }}"
+                                               class="bm_general_input form-control {{ $errors->has('scheduled_at') ? 'is-invalid' : '' }}"
+                                               style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'scheduled_at'])
                                     </div>
 
@@ -76,9 +79,10 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        {{-- Column 2: Recipients --}}
+                        <div class="col-12 col-lg-6">
                             <div class="card-body text-primary">
-                                <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px;">
+                                <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
 
                                     <h3>Recipients
                                         <button type="button" id="add-recipient" class="btn btn-info btn-sm" style="margin-left:10px; display:none;">
@@ -88,8 +92,8 @@
 
                                     <div style="margin-top:10px; margin-bottom:10px;">
                                         <label for="subscription-type" style="font-size:0.85rem; color:#aaa;">Load from subscription list:</label>
-                                        <div style="display:flex; gap:8px; align-items:center; margin-top:4px;">
-                                            <select id="subscription-type" class="bm_general_input form-control" style="max-width:260px;">
+                                        <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:4px;">
+                                            <select id="subscription-type" class="bm_general_input form-control" style="width:auto; flex:1; min-width:180px;">
                                                 <option value="">— Select type —</option>
                                                 <option value="all">All</option>
                                                 <option value="acts">Acts notification</option>
@@ -114,10 +118,11 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-12">
                             <div class="card-body text-primary">
                                 <button type="submit" class="btn btn-info">Create job</button>
                                 <a href="{{ route('email-jobs.index') }}" class="btn btn-primary">Back</a>
@@ -137,15 +142,15 @@ let currentType = document.getElementById('initial-type').value;
 
 function recipientRow(index, email, name) {
     email = email || '';
-    name = name || '';
-    return '<div class="row" id="row-' + index + '" style="margin-bottom:10px;">'
-        + '<div class="col-lg-5">'
-        + '<input type="email" name="recipients[' + index + '][email]" class="bm_general_input form-control" placeholder="recipient@example.com" value="' + email + '" required>'
+    name  = name  || '';
+    return '<div class="row" id="row-' + index + '" style="margin-bottom:10px; flex-wrap:wrap; gap:4px;">'
+        + '<div class="col-12 col-sm-5">'
+        + '<input type="email" name="recipients[' + index + '][email]" class="form-control" placeholder="recipient@example.com" value="' + email + '" required style="width:100%;">'
         + '</div>'
-        + '<div class="col-lg-4">'
-        + '<input type="text" name="recipients[' + index + '][name]" class="bm_general_input form-control" placeholder="Name (optional)" value="' + name + '">'
+        + '<div class="col-12 col-sm-4">'
+        + '<input type="text" name="recipients[' + index + '][name]" class="form-control" placeholder="Name (optional)" value="' + name + '" style="width:100%;">'
         + '</div>'
-        + (currentType === 'bulk' ? '<div class="col-lg-2"><button type="button" onclick="removeRow(' + index + ')" class="btn btn-danger btn-sm">Remove</button></div>' : '')
+        + (currentType === 'bulk' ? '<div class="col-12 col-sm-2"><button type="button" onclick="removeRow(' + index + ')" class="btn btn-danger btn-sm">Remove</button></div>' : '')
         + '</div>';
 }
 
@@ -161,7 +166,7 @@ function removeRow(index) {
 function setType(type) {
     currentType = type;
     const addBtn = document.getElementById('add-recipient');
-    const list = document.getElementById('recipients-list');
+    const list   = document.getElementById('recipients-list');
     list.innerHTML = '';
     recipientCount = 0;
     addRecipient();
@@ -172,7 +177,7 @@ setType(currentType);
 document.getElementById('add-recipient').addEventListener('click', function() { addRecipient(); });
 
 document.getElementById('load-subscribers').addEventListener('click', function() {
-    const type = document.getElementById('subscription-type').value;
+    const type     = document.getElementById('subscription-type').value;
     const feedback = document.getElementById('subscriber-feedback');
 
     if (!type) {
@@ -188,10 +193,7 @@ document.getElementById('load-subscribers').addEventListener('click', function()
     feedback.textContent = 'Loading...';
 
     fetch('{{ url("email-jobs-subscribers") }}/' + type, {
-        headers: {
-            'Accept': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        }
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
     })
     .then(function(r) { return r.json(); })
     .then(function(users) {
@@ -211,9 +213,7 @@ document.getElementById('load-subscribers').addEventListener('click', function()
             return;
         }
 
-        users.forEach(function(u) {
-            addRecipient(u.email, u.name ? u.name : '');
-        });
+        users.forEach(function(u) { addRecipient(u.email, u.name || ''); });
 
         feedback.style.color = '#2ecc71';
         feedback.textContent = users.length + ' subscriber' + (users.length !== 1 ? 's' : '') + ' loaded.';
