@@ -25,8 +25,9 @@ class UserController extends BaseController
             });
         }
  
-        $users = $query->get();
- 
+        $select = $request->input('selectrecords', 25);
+        $users = $query->paginate($select);
+
         return view('users.index', compact('users'));
     }
  

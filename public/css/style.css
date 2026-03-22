@@ -215,3 +215,8 @@
     background: rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
 }
+/* ── About pages ─────────────────────────────────────────────────────── */
+.bm_help_textbox {
+    height: auto !important;
+    min-height: 40vh;
+}

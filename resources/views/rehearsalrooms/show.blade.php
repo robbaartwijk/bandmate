@@ -16,34 +16,38 @@ $user = auth()->user();
             </div>
 
             <div class="card-body text-primary">
+                <div class="row">
 
-                @if (!empty($rehearsalroom->image))
-                <div style="float: left; margin-right: 20px;">
-                    <img src="{{ asset('/storage/' . $rehearsalroom->image->id . '/' . $rehearsalroom->image->file_name) }}" class="img-fluid bm_image">
+                    {{-- Image: stacks on mobile, side by side on desktop --}}
+                    <div class="col-12 col-md-auto mb-3">
+                        @if (!empty($rehearsalroom->image))
+                        <img src="{{ asset('/storage/' . $rehearsalroom->image->id . '/' . $rehearsalroom->image->file_name) }}"
+                            class="img-fluid bm_image" style="max-width:300px; width:100%; height:auto;">
+                        @else
+                        <img src="{{ asset('storage/defaults/defaultrehearsalroom.jpg') }}"
+                            class="img-fluid bm_image" style="max-width:300px; width:100%; height:auto;">
+                        @endif
+                    </div>
+
+                    <div class="col-12 col-md">
+                        <h4><b>Name : </b>{{ $rehearsalroom->name }}</h4>
+                        <h4><b>Address : </b>{{ $rehearsalroom->address }}</h4>
+                        <h4><b>City : </b>{{ $rehearsalroom->city }}</h4>
+                        <h4><b>State : </b>{{ $rehearsalroom->state }}</h4>
+                        <h4><b>Postal code : </b>{{ $rehearsalroom->zip }}</h4>
+                        <h4><b>Country : </b>{{ $rehearsalroom->country }}</h4>
+                        <h4><b>Phone : </b>{{ $rehearsalroom->phone }}</h4>
+                        <h4><b>Email : </b><a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a></h4>
+                        <h4><b>Website : </b><a href="{{ $rehearsalroom->website }}" target="_blank" style="word-break:break-all;">{{ $rehearsalroom->website }}</a></h4>
+                        <h4><b>Description : </b>{{ $rehearsalroom->description }}</h4>
+                        <h4><b>Date added : </b>{{ $rehearsalroom->created_at }}</h4>
+                        <h4><b>Date last update : </b>{{ $rehearsalroom->updated_at }}</h4>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                    </div>
+
                 </div>
-                @else
-                <div style="float: left; margin-right: 20px;">
-                    <img src="{{ asset('storage/defaults/defaultrehearsalroom.jpg') }}" style="width:480px; height:480px;" class="img-fluid bm_image">
-                </div>
-                @endif
-
-                <h4><b>Name : </b>{{ $rehearsalroom->name }}</h4>
-                <h4><b>Address : </b>{{ $rehearsalroom->address }}</h4>
-                <h4><b>City : </b>{{ $rehearsalroom->city }}</h4>
-                <h4><b>State : </b>{{ $rehearsalroom->state }}</h4>
-                <h4><b>Postal code : </b>{{ $rehearsalroom->zip }}</h4>
-                <h4><b>Country : </b>{{ $rehearsalroom->country }}</h4>
-
-                <h4><b>Phone : </b>{{ $rehearsalroom->phone }}</h4>
-                <h4><b>Email : </b> <a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a></h4>
-
-                <h4><b>Website : </b><a href="{{ $rehearsalroom->website }}" target="_blank">{{ $rehearsalroom->website }}</a></h4>
-                <h4><b>Description : </b> {{ $rehearsalroom->description }}</h4>
-
-                <h4><b>Date added : </b>{{ $rehearsalroom->created_at }}</h4>
-                <h4><b>Date last update : </b>{{ $rehearsalroom->updated_at }}</h4>
-                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

@@ -1,8 +1,9 @@
 @if ($paginator->hasPages())
-    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
+    <div style="border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 12px;margin-top:8px;overflow:hidden;">
+    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;width:100%;">
 
-        {{-- Left spacer --}}
-        <div style="min-width:160px;"></div>
+        {{-- Left spacer: hidden on mobile, visible from md upward --}}
+        <div style="min-width:160px;flex-shrink:1;display:none;" class="d-md-block"></div>
 
         {{-- Page buttons (centered) --}}
         <div>
@@ -52,8 +53,8 @@
             </span>
         </div>
 
-        {{-- Results count (right) --}}
-        <div style="min-width:160px;text-align:right;">
+        {{-- Results count: hidden on mobile, visible from md upward --}}
+        <div style="min-width:160px;text-align:right;flex-shrink:1;display:none;" class="d-md-block">
             <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0;">
                 {!! __('Showing') !!}
                 @if ($paginator->firstItem())
@@ -70,4 +71,5 @@
         </div>
 
     </nav>
+    </div>
 @endif

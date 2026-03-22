@@ -14,7 +14,8 @@ $user = auth()->user();
 
             <div class="card-body">
 
-                <div class="table-responsive">
+                {{-- Action buttons + search controls, wrapping on mobile --}}
+                <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; margin-bottom:12px;">
 
                     <a href="{{ route('acts.create') }}" class="btn btn-primary">Add act</a>
 
@@ -24,50 +25,29 @@ $user = auth()->user();
                     <a href="{{ route('acts.index', ['private' => true]) }}" class="btn btn-info">Show only my acts</a>
                     @endif
 
-                    <div class="float-right">
+                    <form action="{{ route('acts.index') }}" method="get" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:auto;">
 
-                        <form action="{{ route('acts.index') }}" method="get">
+                        <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:150px;" onchange="this.form.submit()">
+                            <option value="25"  {{ !request()->selectrecords || request()->selectrecords == '25'  ? 'selected' : '' }}>25 acts</option>
+                            <option value="50"  {{ request()->selectrecords == '50'  ? 'selected' : '' }}>50 acts</option>
+                            <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '' }}>100 acts</option>
+                        </select>
 
-                            <div class="input-group no-border">
+                        <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="width:180px; min-width:120px;" placeholder="Search...">
 
-                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('acts.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
-                                    <option value="25">Select 25 acts</option>
-                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
-                                        Select 50 acts
-                                    </option>
-                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
-                                        Select 100 acts
-                                    </option>
-                                </select>
+                        <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:160px;" onchange="this.form.submit()">
+                            <option value="name"        {{ request()->sort == 'name'        ? 'selected' : '' }}>Sort by name</option>
+                            <option value="genre_name"  {{ request()->sort == 'genre_name'  ? 'selected' : '' }}>Sort by genre</option>
+                            <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>Sort by description</option>
+                            <option value="created_at"  {{ request()->sort == 'created_at'  ? 'selected' : '' }}>Sort by date added</option>
+                            <option value="updated_at"  {{ request()->sort == 'updated_at'  ? 'selected' : '' }}>Sort by date last update</option>
+                        </select>
 
-                                <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="nc-icon nc-zoom-split"></i>
+                        </button>
 
-                                <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('acts.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
-                                    <option value="name" {{ request()->sort == 'name' ? 'selected' : 'name' }}>
-                                        Sort by name
-                                    </option>
-                                    <option value="genre_name" {{ request()->sort == 'genre_name' ? 'selected' : 'name' }}>
-                                        Sort by genre
-                                    </option>
-                                    <option value="description" {{ request()->sort == 'description' ? 'selected' : 'name' }}>
-                                        Sort by description
-                                    </option>
-                                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : 'name' }}>
-                                        Sort by date added
-                                    </option>
-                                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : 'name' }}>
-                                        Sort by date last update
-                                    </option>
-                                </select>
-
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <i class="nc-icon nc-zoom-split"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
 
                 @if (session('status'))
@@ -78,66 +58,72 @@ $user = auth()->user();
                     setTimeout(function() {
                         document.getElementById('status-alert').style.display = 'none';
                     }, 1000);
-
                 </script>
                 @endif
 
-                <table class="table tablesorter" id="">
-                    <thead class=" text-primary">
-                        <tr>
-                            <th>Name</th>
-                            <th>Members</th>
-                            <th>Genre</th>
-                            <th>Description</th>
-                            <th>Date added</th>
-                            <th>Date last update</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                {{-- table-responsive adds horizontal scroll on mobile --}}
+                <div class="table-responsive">
+                    <table class="table tablesorter">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th class="d-none d-sm-table-cell">Members</th>
+                                <th>Genre</th>
+                                <th class="d-none d-md-table-cell">Description</th>
+                                <th class="d-none d-lg-table-cell">Date added</th>
+                                <th class="d-none d-lg-table-cell">Date last update</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($acts as $act)
+                            <tr>
+                                <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
+                                <td class="d-none d-sm-table-cell">{{ $act->number_of_members }}</td>
+                                <td>
+                                    @if($act->genre)
+                                    <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }}</a>
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td class="d-none d-md-table-cell">{{ Str::limit($act->description, 41) }}</td>
+                                <td class="d-none d-lg-table-cell">{{ $act->created_at }}</td>
+                                <td class="d-none d-lg-table-cell">{{ $act->updated_at }}</td>
 
-                        @foreach ($acts as $act)
-                        <tr>
-                            <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
-                            <td>{{ $act->number_of_members }}</td>
-                            <td>
-                                @if($act->genre)
-                                <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }}</a>
+                                @if($user->is_admin || $user->id == $act->user_id)
+                                <td style="white-space:nowrap;">
+                                    <a href="{{ route('acts.edit', $act->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
+                                        <i class="tim-icons icon-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('acts.destroy', $act->id) }}" method="post" style="display:inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="button" class="btn btn-danger btn-link btn-icon btn-sm" onclick="if(confirm('Are you sure you want to delete this act?')) { this.closest('form').submit(); }">
+                                            <i class="tim-icons icon-simple-remove"></i>
+                                        </button>
+                                    </form>
+                                </td>
                                 @else
-                                N/A
+                                <td></td>
                                 @endif
-                            </td>
-                            <td>{{ Str::limit($act->description, 41) }}</td>
-                            <td>{{ $act->created_at }}</td>
-                            <td>{{ $act->updated_at }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-                            @if($user->is_admin || $user->id == $act->user_id)
-                            <td>
-                                <a href="{{ route('acts.edit', $act->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
-                                    <i class="tim-icons icon-pencil"></i>
-                                </a>
-                                <form action="{{ route('acts.destroy', $act->id) }}" method="post" style="display:inline">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="button" class="btn btn-danger btn-link btn-icon btn-sm" onclick="if(confirm('Are you sure you want to delete this act?')) { this.closest('form').submit(); }">
-                                        <i class="tim-icons icon-simple-remove"></i>
-                                    </button>
-                                </form>
-                            </td>
-                            @endif
-
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
-
-        <?php echo $acts->appends(array('sort' => request()->sort))->links(); ?>
-
-        @if($acts->count() < 25) <div class="float-left" style="color:white">
-            {{ $acts->count() }} {{ $acts->count() > 1 ? 'acts found' : 'act found' }}
     </div>
-    @endif
-
 </div>
+
+<?php echo $acts->appends(['sort' => request()->sort, 'search' => request()->search, 'selectrecords' => request()->selectrecords])->links(); ?>
+
+@if($acts->count() < 25)
+<div class="float-left" style="color:white">
+    {{ $acts->count() }} {{ $acts->count() > 1 ? 'acts found' : 'act found' }}
+</div>
+@endif
+
 @endsection

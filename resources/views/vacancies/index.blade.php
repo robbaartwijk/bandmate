@@ -14,7 +14,8 @@ $user = auth()->user();
 
             <div class="card-body">
 
-                <div class="table-responsive">
+                {{-- Action buttons + search controls, wrapping on mobile --}}
+                <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; margin-bottom:12px;">
 
                     <a href="{{ route('vacancies.create') }}" class="btn btn-primary">Add vacancy</a>
 
@@ -24,52 +25,29 @@ $user = auth()->user();
                     <a href="{{ route('vacancies.index', ['private' => true]) }}" class="btn btn-info">Show only my vacancies</a>
                     @endif
 
-                    <div class="float-right">
+                    <form action="{{ route('vacancies.index') }}" method="get" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:auto;">
 
-                        <form action="{{ route('vacancies.index') }}" method="get">
+                        <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:150px;" onchange="this.form.submit()">
+                            <option value="25"  {{ !request()->selectrecords || request()->selectrecords == '25'  ? 'selected' : '' }}>25 vacancies</option>
+                            <option value="50"  {{ request()->selectrecords == '50'  ? 'selected' : '' }}>50 vacancies</option>
+                            <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '' }}>100 vacancies</option>
+                        </select>
 
-                            <div class="input-group no-border">
+                        <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="width:180px; min-width:120px;" placeholder="Search...">
 
-                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('vacancies.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
-                                    <option value="25" {{ request()->selectrecords == '25' ? 'selected' : '25' }}>
-                                        Select 25 vacancies
-                                    </option>
-                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
-                                        Select 50 vacancies
-                                    </option>
-                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
-                                        Select 100 vacancies
-                                    </option>
-                                </select>
+                        <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:180px;" onchange="this.form.submit()">
+                            <option value="act_name"       {{ request()->sort == 'act_name'       ? 'selected' : '' }}>Sort by act name</option>
+                            <option value="instrument_name"{{ request()->sort == 'instrument_name'? 'selected' : '' }}>Sort by instrument</option>
+                            <option value="description"    {{ request()->sort == 'description'    ? 'selected' : '' }}>Sort by description</option>
+                            <option value="created_at"     {{ request()->sort == 'created_at'     ? 'selected' : '' }}>Sort by date added</option>
+                            <option value="updated_at"     {{ request()->sort == 'updated_at'     ? 'selected' : '' }}>Sort by date last update</option>
+                        </select>
 
-                                <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="nc-icon nc-zoom-split"></i>
+                        </button>
 
-                                <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('vacancies.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
-                                    <option value="act_name" {{ request()->sort == 'act_name' ? 'selected' : '' }}>
-                                        Sort by act name
-                                    </option>
-                                    <option value="instrument_name" {{ request()->sort == 'instrument_name' ? 'selected' : '' }}>
-                                        Sort by instrument name
-                                    </option>
-                                    <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>
-                                        Sort by description
-                                    </option>
-                                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
-                                        Sort by date added
-                                    </option>
-                                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
-                                        Sort by date last update
-                                    </option>
-                                </select>
-
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <i class="nc-icon nc-zoom-split"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
 
                 @if (session('status'))
@@ -80,57 +58,65 @@ $user = auth()->user();
                     setTimeout(function() {
                         document.getElementById('status-alert').style.display = 'none';
                     }, 1000);
-
                 </script>
                 @endif
 
-                <table class="table tablesorter" id="">
-                    <thead class=" text-primary">
-                        <tr>
-                            <th>Act name</th>
-                            <th>Instrument</th>
-                            <th>Description</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($vacancies as $vacancy)
-                        <tr>
-                            <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
-                            <td>{{ $vacancy->instrument_name }}</td>
-                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
-                            </td>
-                            <td>{{ $vacancy->created_at }}</td>
-                            <td>{{ $vacancy->updated_at }}</td>
+                <div class="table-responsive">
+                    <table class="table tablesorter">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>Act name</th>
+                                <th>Instrument</th>
+                                <th class="d-none d-md-table-cell">Description</th>
+                                <th class="d-none d-lg-table-cell">Created at</th>
+                                <th class="d-none d-lg-table-cell">Updated at</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($vacancies as $vacancy)
+                            <tr>
+                                <td><a href="{{ route('acts.show', $vacancy->act_id) }}">{{ $vacancy->act_name }}</a></td>
+                                <td>{{ $vacancy->instrument_name }}</td>
+                                <td class="d-none d-md-table-cell">
+                                    <a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
+                                </td>
+                                <td class="d-none d-lg-table-cell">{{ $vacancy->created_at }}</td>
+                                <td class="d-none d-lg-table-cell">{{ $vacancy->updated_at }}</td>
 
-                            @if ($user->is_admin || $user->id == $vacancy->user_id)
-                            <td><a href="{{ route('vacancies.edit', $vacancy->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
-                                    <i class="tim-icons icon-pencil"></i>
-                                </a>
-                                <form action="{{ route('vacancies.destroy', $vacancy->id) }}" method="post" style="display:inline">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
-                                        <i class="tim-icons icon-simple-remove"></i>
-                                    </button>
-                                </form>
-                            </td>
-                            @endif
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                @if ($user->is_admin || $user->id == $vacancy->user_id)
+                                <td style="white-space:nowrap;">
+                                    <a href="{{ route('vacancies.edit', $vacancy->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
+                                        <i class="tim-icons icon-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('vacancies.destroy', $vacancy->id) }}" method="post" style="display:inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
+                                            <i class="tim-icons icon-simple-remove"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                @else
+                                <td></td>
+                                @endif
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
-<?php echo $vacancies->appends(array('sort' => request()->sort))->links(); ?>
+<?php echo $vacancies->appends(['sort' => request()->sort, 'search' => request()->search, 'selectrecords' => request()->selectrecords])->links(); ?>
 
-@if(isset($vacancies) && $vacancies->count() < 25) <div class="float-left" style="color:white">
+@if(isset($vacancies) && $vacancies->count() < 25)
+<div class="float-left" style="color:white">
     {{ $vacancies->count() }} {{ $vacancies->count() > 1 ? 'vacancies found' : 'vacancy found' }}
-    </div>
-    @endif
+</div>
+@endif
 
 @endsection

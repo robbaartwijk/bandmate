@@ -3,136 +3,130 @@
 @section('content')
 
 <div class="col-container">
-
     <div class="row">
         <div class="col-md-12">
-            <div class="bm_card bm_card_height_large card">
+            <div class="bm_card card">
                 <div class="card-header">
-                    <h3 class="card-title"><b>Edit venue</h3>
+                    <h3 class="card-title"><b>Edit venue</b></h3>
                 </div>
 
-                <div class="bm_row_layout row" style="height: 100vh;">
-                    <div class="col-lg-5">
+                <div class="bm_row_layout row">
 
-                        <div class="card-body text-primary">
+                    <form action="{{ route('venues.update', $venue->id) }}" method="post" style="width:100%;">
+                        @csrf
+                        @method('put')
 
-                            <div class="table-responsive">
+                        <div class="row">
 
-                                <form action="{{ route('venues.update', $venue->id) }}" method="post">
-                                    @csrf
-                                    @method('put')
+                            {{-- Column 1: Address --}}
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body text-primary">
 
                                     <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                        <label for="name" class="bm_label_layout">
-                                            <h3>Name</h3>
-                                        </label>
-                                        <input type="text" name="name" class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Name" value="{{ $venue->name }}">
+                                        <label for="name" class="bm_label_layout"><h3>Name</h3></label>
+                                        <input type="text" name="name"
+                                            class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                            placeholder="Name" value="{{ $venue->name }}" style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'name'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('address') ? 'has-danger' : '' }}">
-                                        <label for="address" class="bm_label_layout">
-                                            <h3>Address</h3>
-                                        </label>
-                                        <input type="text" name="address" class="bm_general_input form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" placeholder="Address" value="{{ $venue->address }}">
+                                        <label for="address" class="bm_label_layout"><h3>Address</h3></label>
+                                        <input type="text" name="address"
+                                            class="bm_general_input form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
+                                            placeholder="Address" value="{{ $venue->address }}" style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'address'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('zip') ? 'has-danger' : '' }}">
-                                        <label for="zip" class="bm_label_layout">
-                                            <h3>Zip</h3>
-                                        </label>
-                                        <input type="text" name="zip" class="bm_general_input form-control {{ $errors->has('zip') ? 'is-invalid' : '' }}" placeholder="Zip" value="{{ $venue->zip }}">
+                                        <label for="zip" class="bm_label_layout"><h3>Zip</h3></label>
+                                        <input type="text" name="zip"
+                                            class="bm_general_input form-control {{ $errors->has('zip') ? 'is-invalid' : '' }}"
+                                            placeholder="Zip" value="{{ $venue->zip }}" style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'zip'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('city') ? 'has-danger' : '' }}">
-                                        <label for="city" class="bm_label_layout">
-                                            <h3>City</h3>
-                                        </label>
-                                        <input type="text" name="city" class="bm_general_input form-control {{ $errors->has('city') ? 'is-invalid' : '' }}" placeholder="City" value="{{ $venue->city }}">
+                                        <label for="city" class="bm_label_layout"><h3>City</h3></label>
+                                        <input type="text" name="city"
+                                            class="bm_general_input form-control {{ $errors->has('city') ? 'is-invalid' : '' }}"
+                                            placeholder="City" value="{{ $venue->city }}" style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'city'])
                                     </div>
 
                                     <div class="bm_form_group form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
-                                        <label for="state" class="bm_label_layout">
-                                            <h3>State</h3>
-                                        </label>
-                                        <input type="text" name="state" class="bm_general_input form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" placeholder="State" value="{{ $venue->state }}">
+                                        <label for="state" class="bm_label_layout"><h3>State</h3></label>
+                                        <input type="text" name="state"
+                                            class="bm_general_input form-control {{ $errors->has('state') ? 'is-invalid' : '' }}"
+                                            placeholder="State" value="{{ $venue->state }}" style="width:100%;">
                                         @include('alerts.feedback', ['field' => 'state'])
                                     </div>
 
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card-body text-primary col-lg-4">
+                            {{-- Column 2: Contact --}}
+                            <div class="col-12 col-lg-6">
+                                <div class="card-body text-primary">
 
-                        <div class="bm_form_group form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
-                            <label for="country" class="bm_label_layout">
-                                <h3>Country</h3>
-                            </label>
-                            <input type="text" name="country" class="bm_general_input form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" placeholder="Country" value="{{ $venue->country }}">
-                            @include('alerts.feedback', ['field' => 'country'])
-                        </div>
+                                    <div class="bm_form_group form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
+                                        <label for="country" class="bm_label_layout"><h3>Country</h3></label>
+                                        <input type="text" name="country"
+                                            class="bm_general_input form-control {{ $errors->has('country') ? 'is-invalid' : '' }}"
+                                            placeholder="Country" value="{{ $venue->country }}" style="width:100%;">
+                                        @include('alerts.feedback', ['field' => 'country'])
+                                    </div>
 
-                        <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
-                            <label for="phone" class="bm_label_layout">
-                                <h3>Phone</h3>
-                            </label>
-                            <input type="text" name="phone" class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Phone" value="{{ $venue->phone }}">
-                            @include('alerts.feedback', ['field' => 'phone'])
-                        </div>
+                                    <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
+                                        <label for="phone" class="bm_label_layout"><h3>Phone</h3></label>
+                                        <input type="text" name="phone"
+                                            class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                                            placeholder="Phone" value="{{ $venue->phone }}" style="width:100%;">
+                                        @include('alerts.feedback', ['field' => 'phone'])
+                                    </div>
 
-                        <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                            <label for="email" class="bm_label_layout">
-                                <h3>Email</h3>
-                            </label>
-                            <input type="text" name="email" class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email" value="{{ $venue->email }}">
-                            @include('alerts.feedback', ['field' => 'email'])
-                        </div>
+                                    <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
+                                        <label for="email" class="bm_label_layout"><h3>Email</h3></label>
+                                        <input type="text" name="email"
+                                            class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                            placeholder="Email" value="{{ $venue->email }}" style="width:100%;">
+                                        @include('alerts.feedback', ['field' => 'email'])
+                                    </div>
 
-                        <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                            <label for="website" class="bm_label_layout">
-                                <h3>Website</h3>
-                            </label>
-                            <input type="text" name="website" class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" placeholder="Website" value="{{ $venue->website }}">
-                            @include('alerts.feedback', ['field' => 'website'])
-                        </div>
+                                    <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
+                                        <label for="website" class="bm_label_layout"><h3>Website</h3></label>
+                                        <input type="text" name="website"
+                                            class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}"
+                                            placeholder="Website" value="{{ $venue->website }}" style="width:100%;">
+                                        @include('alerts.feedback', ['field' => 'website'])
+                                    </div>
 
-                    </div>
+                                </div>
+                            </div>
 
-                    <div class="col-lg-12">
-                        <div class="card-body text-primary">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-12">
+                            {{-- Description: full width --}}
+                            <div class="col-12">
+                                <div class="card-body text-primary">
+                                    <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
+                                        <label for="description" class="bm_label_layout"><h3>Description</h3></label>
+                                        <textarea id="description" name="description"
+                                            class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                            placeholder="Description">{{ $venue->description }}</textarea>
+                                        @include('alerts.feedback', ['field' => 'description'])
 
-                                        <div class="card-body text-primary">
-
-                                            <div class="table-responsive">
-
-                                                <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                                                    <label for="description" class="bm_label_layout">
-                                                        <h3>Description</h3>
-                                                    </label>
-                                                    <textarea id="description" name="description" class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" placeholder="Description">{{ $venue->description }}</textarea>
-                                                    @include('alerts.feedback', ['field' => 'description'])
-
-                                                    <button type="submit" class="btn btn-info">Update</button>
-                                                    <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button type="submit" class="btn btn-info">Update</button>
+                                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
-            </form>
         </div>
     </div>
-    @endsection
+</div>
+
+@endsection

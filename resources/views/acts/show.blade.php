@@ -23,11 +23,11 @@ $user = auth()->user();
             </div>
 
             <div class="row">
-                <div class="col-lg-6">
-
+                {{-- col-12 so it fills full width on mobile, col-lg-6 side-by-side on large --}}
+                <div class="col-12 col-lg-6">
                     <div class="card-body text-primary">
                         <h1>General information</h1>
-                        <h2>Name : {{ $act->name }}</h2>
+                        <h2 style="word-break:break-word;">Name : {{ $act->name }}</h2>
                         <h4><b>Genre : </b>
                             @if ($act->genre)
                             <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }} ( {{ $act->genre->group }} )</a>
@@ -40,17 +40,16 @@ $user = auth()->user();
                         <h4><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h4>
 
                         @if (!empty($act->image))
-                        <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}" class="img-fluid bm_image bm_zoom bm_zoom_hover">
+                        <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}" class="img-fluid bm_image bm_zoom bm_zoom_hover" style="height:auto;">
                         @endif
-
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-12 col-lg-6">
                     <div class="card-body text-primary">
                         <h1>Contact and links</h1>
                         @if ($act->website)
-                        <h4><a href="{{ $act->website }}" target="_blank"><i class="fa fa-anchor"></i>
+                        <h4><a href="{{ $act->website }}" target="_blank" style="word-break:break-all;"><i class="fa fa-anchor"></i>
                                 {{ $act->website }}</a></h4>
                         @endif
 
@@ -64,37 +63,37 @@ $user = auth()->user();
                         @endif
 
                         @if ($act->facebook)
-                        <h4><a href="{{ $act->facebook }}" target="_blank"><i class="fab fa-facebook"></i>
+                        <h4><a href="{{ $act->facebook }}" target="_blank" style="word-break:break-all;"><i class="fab fa-facebook"></i>
                                 {{ $act->facebook }}</a></h4>
                         @endif
 
                         @if ($act->youtube)
-                        <h4><a href="{{ $act->youtube }}" target="_blank"><i class="fab fa-youtube"></i>
+                        <h4><a href="{{ $act->youtube }}" target="_blank" style="word-break:break-all;"><i class="fab fa-youtube"></i>
                                 {{ $act->youtube }}</a></h4>
                         @endif
 
                         @if ($act->twitter)
-                        <h4><a href="{{ $act->twitter }}" target="_blank"><i class="fab fa-twitter"></i>
+                        <h4><a href="{{ $act->twitter }}" target="_blank" style="word-break:break-all;"><i class="fab fa-twitter"></i>
                                 {{ $act->twitter }}</a></h4>
                         @endif
 
                         @if ($act->instagram)
-                        <h4><a href="{{ $act->instagram }}" target="_blank"><i class="fab fa-instagram"></i>
+                        <h4><a href="{{ $act->instagram }}" target="_blank" style="word-break:break-all;"><i class="fab fa-instagram"></i>
                                 {{ $act->instagram }}</a></h4>
                         @endif
 
                         @if ($act->soundcloud)
-                        <h4><a href="{{ $act->soundcloud }}" target="_blank"><i class="fab fa-soundcloud"></i>
+                        <h4><a href="{{ $act->soundcloud }}" target="_blank" style="word-break:break-all;"><i class="fab fa-soundcloud"></i>
                                 {{ $act->soundcloud }}</a></h4>
                         @endif
 
                         @if ($act->spotify)
-                        <h4><a href="{{ $act->spotify }}" target="_blank"><i class="fab fa-spotify"></i>
+                        <h4><a href="{{ $act->spotify }}" target="_blank" style="word-break:break-all;"><i class="fab fa-spotify"></i>
                                 {{ $act->spotify }}</a></h4>
                         @endif
 
                         @if ($act->bluesky)
-                            <h4><a href="{{ $act->bluesky }}" target="_blank"><img src="{{ asset('images/bluesky.jpg') }}" style="position:absolute; width:16px; height: 16px; margin-top: 5px;">"         " {{ $act->bluesky }}</a></h4>
+                            <h4><a href="{{ $act->bluesky }}" target="_blank" style="word-break:break-all;"><img src="{{ asset('images/bluesky.jpg') }}" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">{{ $act->bluesky }}</a></h4>
                         @endif
                     </div>
                 </div>
@@ -113,8 +112,13 @@ $user = auth()->user();
             @if (!empty($act->youtubedemo))
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card-body text-primary" style="height: 900px;">
-                        <iframe width="100%" height="100%" src="{{ $act->youtubedemo }}"></iframe>
+                    <div class="card-body text-primary">
+                        {{-- Responsive 16:9 YouTube embed --}}
+                        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
+                            <iframe src="{{ $act->youtubedemo }}"
+                                style="position:absolute; top:0; left:0; width:100%; height:100%;"
+                                frameborder="0" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -130,15 +134,13 @@ $user = auth()->user();
                 </div>
             </div>
 
-
         </div>
     </div>
+</div>
 
-    <script>
-        setTimeout(function() {
-            document.getElementById('status-message').style.display = 'none';
-        }, 2000);
+<script>
+    var el = document.getElementById('status-message');
+    if (el) { setTimeout(function() { el.style.display = 'none'; }, 2000); }
+</script>
 
-    </script>
-
-    @endsection
+@endsection

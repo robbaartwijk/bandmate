@@ -12,76 +12,60 @@ $user = auth()->user();
                 <h3 class="card-title"><b>Venues index</b></h3>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
+
+                {{-- Action buttons + search controls, wrapping on mobile --}}
+                <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; margin-bottom:12px;">
 
                     @if($user->is_admin)
-                        <a href="{{ route('venues.create') }}" class="btn btn-secondary">Add venue</a>
+                    <a href="{{ route('venues.create') }}" class="btn btn-secondary">Add venue</a>
                     @endif
 
-                    <div class="float-right">
+                    <form action="{{ route('venues.index') }}" method="get" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:auto;">
 
-                        <form action="{{ route('venues.index') }}" method="get">
-                            <div class="input-group no-border">
+                        <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:150px;" onchange="this.form.submit()">
+                            <option value="25"  {{ !request()->selectrecords || request()->selectrecords == '25'  ? 'selected' : '' }}>25 venues</option>
+                            <option value="50"  {{ request()->selectrecords == '50'  ? 'selected' : '' }}>50 venues</option>
+                            <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '' }}>100 venues</option>
+                        </select>
 
-                                <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('venues.index') }}?sort=' + document.querySelector('select[name=sort]').value + '&search=' + document.querySelector('input[name=search]').value + '&selectrecords=' + document.querySelector('select[name=selectrecords]').value">
-                                    <option value="25">Select 25 venues</option>
-                                    <option value="50" {{ request()->selectrecords == '50' ? 'selected' : '50' }}>
-                                        Select 50 venues
-                                    </option>
-                                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '100' }}>
-                                        Select 100 venues
-                                    </option>
-                                </select>
+                        <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="width:180px; min-width:120px;" placeholder="Search...">
 
-                                <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="margin: 10px; width: 300px;" placeholder="Search...">
+                        <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:180px;" onchange="this.form.submit()">
+                            <option value="name"       {{ request()->sort == 'name'       ? 'selected' : '' }}>Sort by name</option>
+                            <option value="city"       {{ request()->sort == 'city'       ? 'selected' : '' }}>Sort by city</option>
+                            <option value="website"    {{ request()->sort == 'website'    ? 'selected' : '' }}>Sort by website</option>
+                            <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>Sort by date added</option>
+                            <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>Sort by date last update</option>
+                        </select>
 
-                                <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="margin: 10px; width: 210px;" onchange="location.href='{{ route('venues.index') }}?sort=' + this.value + '&search=' + document.querySelector('input[name=search]').value">
-                                    <option value="name" {{ request()->sort == 'name' ? 'selected' : '' }}>
-                                        Sort by name
-                                    </option>
-                                    <option value="city" {{ request()->sort == 'city' ? 'selected' : '' }}>
-                                        Sort by city
-                                    </option>
-                                    <option value="website" {{ request()->sort == 'website' ? 'selected' : '' }}>
-                                        Sort by website
-                                    </option>
-                                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>
-                                        Sort by date added
-                                    </option>
-                                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>
-                                        Sort by date last update
-                                    </option>
-                                </select>
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="nc-icon nc-zoom-split"></i>
+                        </button>
 
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <i class="nc-icon nc-zoom-split"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    </form>
+                </div>
 
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert" id="status-alert">
-                        {{ session('status') }}
-                    </div>
-                    <script>
-                        setTimeout(function() {
-                            document.getElementById('status-alert').style.display = 'none';
-                        }, 1000);
+                @if (session('status'))
+                <div class="alert alert-success" role="alert" id="status-alert">
+                    {{ session('status') }}
+                </div>
+                <script>
+                    setTimeout(function() {
+                        document.getElementById('status-alert').style.display = 'none';
+                    }, 1000);
+                </script>
+                @endif
 
-                    </script>
-                    @endif
-
-                    <table class="table tablesorter " id="">
-                        <thead class=" text-primary">
+                <div class="table-responsive">
+                    <table class="table tablesorter">
+                        <thead class="text-primary">
                             <tr>
                                 <th>Name</th>
                                 <th>City</th>
-                                <th>Website</th>
-                                <th>Date added</th>
-                                <th>Date last update</th>
+                                <th class="d-none d-md-table-cell">Website</th>
+                                <th class="d-none d-lg-table-cell">Date added</th>
+                                <th class="d-none d-lg-table-cell">Date last update</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,12 +73,12 @@ $user = auth()->user();
                             <tr>
                                 <td><a href="{{ route('venues.show', $venue->id) }}">{{ $venue->name }}</a></td>
                                 <td>{{ $venue->city }}</td>
-                                <td><a href="{{ $venue->website }}">{{ Str::limit($venue->website, 30) }}</a></td>
-                                <td>{{ $venue->created_at }}</td>
-                                <td>{{ $venue->updated_at }}</td>
+                                <td class="d-none d-md-table-cell"><a href="{{ $venue->website }}">{{ Str::limit($venue->website, 30) }}</a></td>
+                                <td class="d-none d-lg-table-cell">{{ $venue->created_at }}</td>
+                                <td class="d-none d-lg-table-cell">{{ $venue->updated_at }}</td>
 
                                 @if($user->is_admin || $user->id == $venue->user_id)
-                                <td>
+                                <td style="white-space:nowrap;">
                                     <a href="{{ route('venues.edit', $venue->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
                                         <i class="tim-icons icon-pencil"></i>
                                     </a>
@@ -106,21 +90,25 @@ $user = auth()->user();
                                         </button>
                                     </form>
                                 </td>
+                                @else
+                                <td></td>
                                 @endif
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
 
-        <?php echo $venues->appends(array('sort' => request()->sort))->links(); ?>
+        <?php echo $venues->appends(['sort' => request()->sort, 'search' => request()->search, 'selectrecords' => request()->selectrecords])->links(); ?>
 
-        @if($venues->count() < 25) <div class="float-left" style="color:white">
+        @if($venues->count() < 25)
+        <div class="float-left" style="color:white">
             {{ $venues->count() }} {{ $venues->count() > 1 ? 'venues found' : 'venue found' }}
-    </div>
-    @endif
+        </div>
+        @endif
 
     </div>
 </div>
