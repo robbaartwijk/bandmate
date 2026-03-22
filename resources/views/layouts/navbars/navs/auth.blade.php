@@ -17,14 +17,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto">
-                {{-- <li class="search-bar input-group">
-                    <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
-                        <span class="d-lg-none d-md-block">{{ __('Search') }}</span>
-                    </button>
-                </li> --}}
-                <li class="dropdown nav-item">
+
+                {{-- Desktop only: avatar + dropdown --}}
+                <li class="dropdown nav-item d-none d-lg-block">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        
                         @if (!empty($userAvatar))
                             <img src="{{ asset('/storage/' . $userAvatar->id . '/' . $userAvatar->file_name) }}" class="bm_thumbnail">
                         @else
@@ -32,33 +28,56 @@
                             <img src="{{ asset('black') }}/img/anime3.png" alt="{{ __('Profile Photo') }}">
                         </div>
                         @endif
-
                         <b class="caret d-none d-lg-block d-xl-block"></b>
-                        <p class="d-lg-none">{{ __('Log out') }}</p>
                     </a>
 
-                    <ul class="dropdown-menu dropdown-navbar" style="background: rgba(35, 37, 51, 0.95); border: 1px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 8px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.4); min-width: 180px;">
+                    <ul class="dropdown-menu dropdown-navbar" style="background:rgba(35,37,51,0.95); border:1px solid rgba(255,255,255,0.25); border-radius:8px; padding:8px 0; box-shadow:0 4px 20px rgba(0,0,0,0.4); min-width:180px;">
                         <li class="nav-link">
-                            <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item" style="color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; transition: background 0.2s;">{{ __('Profile') }}</a>
+                            <a href="{{ route('profile.edit') }}" class="nav-item dropdown-item" style="color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px; transition:background 0.2s;">{{ __('Profile') }}</a>
                         </li>
                         <li class="nav-link">
-                            <a href="{{ route('profile.editPassword') }}" class="nav-item dropdown-item" style="color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; transition: background 0.2s;">{{ __('Change password') }}</a>
+                            <a href="{{ route('profile.editPassword') }}" class="nav-item dropdown-item" style="color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px; transition:background 0.2s;">{{ __('Change password') }}</a>
                         </li>
                         <li class="nav-link">
-                            <a href="{{ route('profile.userdata') }}" class="nav-item dropdown-item" style="color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; transition: background 0.2s;">{{ __('User data') }}</a>
+                            <a href="{{ route('profile.userdata') }}" class="nav-item dropdown-item" style="color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px; transition:background 0.2s;">{{ __('User data') }}</a>
                         </li>
-                        <li class="dropdown-divider" style="border-color: rgba(255,255,255,0.1); margin: 4px 0;"></li>
+                        <li class="dropdown-divider" style="border-color:rgba(255,255,255,0.1); margin:4px 0;"></li>
                         <li class="nav-link">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="nav-item dropdown-item" style="background:none; border:none; color: rgba(255,255,255,0.8); padding: 8px 20px; display: block; font-size: 14px; width: 100%; text-align: left; cursor: pointer; transition: background 0.2s;">
+                                <button type="submit" class="nav-item dropdown-item" style="background:none; border:none; color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px; width:100%; text-align:left; cursor:pointer; transition:background 0.2s;">
                                     {{ __('Log out') }}
                                 </button>
                             </form>
                         </li>
                     </ul>
-
                 </li>
+
+                {{-- Mobile only: avatar + flat menu --}}
+                <li class="d-lg-none" style="list-style:none; padding:4px 0;">
+                    <div style="padding:12px 20px 8px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:4px;">
+                        @if (!empty($userAvatar))
+                            <img src="{{ asset('/storage/' . $userAvatar->id . '/' . $userAvatar->file_name) }}"
+                                class="bm_thumbnail"
+                                style="display:block; margin-left:0; margin-right:auto;">
+                        @else
+                            <div class="photo" style="display:block; margin-left:0; margin-right:auto; width:55px;">
+                                <img src="{{ asset('black') }}/img/anime3.png" alt="{{ __('Profile Photo') }}">
+                            </div>
+                        @endif
+                    </div>
+                    <a href="{{ route('profile.edit') }}" class="dropdown-item" style="color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px;">{{ __('Profile') }}</a>
+                    <a href="{{ route('profile.editPassword') }}" class="dropdown-item" style="color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px;">{{ __('Change password') }}</a>
+                    <a href="{{ route('profile.userdata') }}" class="dropdown-item" style="color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px;">{{ __('User data') }}</a>
+                    <hr style="border-color:rgba(255,255,255,0.1); margin:4px 0;">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item" style="background:none; border:none; color:rgba(255,255,255,0.8); padding:8px 20px; display:block; font-size:14px; width:100%; text-align:left; cursor:pointer;">
+                            {{ __('Log out') }}
+                        </button>
+                    </form>
+                </li>
+
                 <li class="separator d-lg-none"></li>
             </ul>
         </div>

@@ -60,7 +60,7 @@
 }
 
 .bm_row_layout {
-    height:auto;
+    height: auto;
 }
 
 /* simpleMde changes and overrides */
@@ -119,7 +119,6 @@
     margin-left: auto;
     font-size: 17px;
     text-align: center;
-
 }
 
 .bm_upload_box {
@@ -138,13 +137,7 @@
 .bm_zoom {
     padding: 5px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    /* background-color: green; */
     transition: transform .2s;
-    /* Animation */
-    /* width: 100%;
-    height: 90%; */
     margin: 0 auto;
     z-index: 10;
 }
@@ -152,14 +145,14 @@
 .bm_zoom:hover {
     transform: scale(1.5);
     position: absolute;
-    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .bm_thumbnail {
     border: 1px solid rgb(130, 89, 89);
     width: 55px;
     height: 55px;
-    margin: 0 auto;
+    margin: 0;
+    display: inline-block;
     z-index: 10;
 }
 
@@ -187,8 +180,9 @@
 }
 
 .bm_help_textbox {
-    border:solid 1px;
-    height: 80vh;
+    border: solid 1px;
+    height: auto;
+    min-height: 40vh;
     margin: 10px;
 }
 
@@ -211,12 +205,88 @@
 .bm_card_height_small {
     height: 120vh;
 }
+
+/* ── Desktop dropdown hover ──────────────────────────────────────────── */
 .dropdown-navbar .dropdown-item:hover {
     background: rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
 }
-/* ── About pages ─────────────────────────────────────────────────────── */
-.bm_help_textbox {
-    height: auto !important;
-    min-height: 40vh;
+
+/* ── Mobile styles ───────────────────────────────────────────────────── */
+@media screen and (max-width: 991px) {
+
+    /* Navbar bg-white override */
+    .navbar.bg-white {
+        background: rgba(70, 75, 100, 0.98) !important;
+    }
+
+    .navbar.bg-white .navbar-nav .nav-link,
+    .navbar.bg-white .navbar-nav .dropdown-item,
+    .navbar.bg-white .navbar-nav a,
+    .navbar.bg-white .navbar-nav button,
+    .navbar.bg-white .navbar-brand {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .navbar.bg-white .navbar-nav .dropdown-item:hover,
+    .navbar.bg-white .navbar-nav button:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+    }
+
+    .navbar.bg-white .navbar-toggler-bar {
+        background: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    /* Mobile menu full width and left-aligned */
+    .navbar-nav.ml-auto {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    .navbar-nav.ml-auto > li.d-lg-none {
+        margin-left: 0 !important;
+        width: 100%;
+        float: none;
+    }
+
+    /* Avatar left-align in mobile menu */
+    .navbar-nav.ml-auto > li.d-lg-none .photo,
+    .navbar-nav.ml-auto > li.d-lg-none .bm_thumbnail {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        display: block !important;
+    }
+
+    /* Responsive form inputs */
+    .bm_general_input,
+    .bm_general_input_small {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .bm_upload {
+        width: 100% !important;
+    }
+
+    .bm_card_height_large,
+    .bm_card_height_medium,
+    .bm_card_height_small {
+        height: auto !important;
+    }
+
+    .bm_form_group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bm_image {
+        height: auto !important;
+    }
+
+    .bm_zoom:hover {
+        transform: none;
+        position: static;
+    }
 }
