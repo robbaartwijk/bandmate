@@ -57,7 +57,7 @@ $adminGroups = [
     'management' => [
         'label' => 'Management',
         'icon'  => 'fa-user-shield',
-        'pages' => ['users', 'email-templates', 'email-jobs', 'email-logs'],
+        'pages' => ['users', 'email-templates', 'email-jobs', 'email-logs', 'profile', 'userprofile'],
         'links' => [
             ['route' => 'profile.edit',           'slug' => 'profile',          'icon' => 'fa-user-circle',  'label' => 'User Profile'],
             ['route' => 'users.index',             'slug' => 'users',            'icon' => 'fa-users',        'label' => 'User Management'],

@@ -2,185 +2,101 @@
 
 @section('content')
 
-<div class="col-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bm_card card">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Edit agency</b></h3>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Edit agency</h2>
+    </div>
+    <div class="bm-card-body">
+        <form action="{{ route('agencies.update', $agency->id) }}" method="post">
+            @csrf
+            @method('put')
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                {{-- Column 1: Address --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Address</h3>
+
+                    @foreach([
+                        ['name',    'Name',    'Name'],
+                        ['address', 'Address', 'Street address'],
+                        ['zip',     'Zip',     'Postal code'],
+                        ['city',    'City',    'City'],
+                        ['state',   'State',   'State / Province'],
+                        ['country', 'Country', 'Country'],
+                    ] as [$field, $label, $placeholder])
+                    <div class="bm-form-group">
+                        <label class="bm-label">{{ $label }}</label>
+                        <input type="text" name="{{ $field }}"
+                               class="bm-input @error($field) border-red-500 @enderror"
+                               placeholder="{{ $placeholder }}" value="{{ old($field, $agency->$field) }}">
+                        @include('alerts.feedback', ['field' => $field])
+                    </div>
+                    @endforeach
                 </div>
 
-                <div class="bm_row_layout row">
+                {{-- Column 2: Contact --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Contact</h3>
 
-                    <form action="{{ route('agencies.update', $agency->id) }}" method="post" style="width:100%;">
-                        @csrf
-                        @method('put')
+                    @foreach([
+                        ['phone',    'Phone',    'Phone number'],
+                        ['email',    'Email',    'Email address'],
+                        ['website',  'Website',  'https://'],
+                        ['facebook', 'Facebook', 'Facebook URL'],
+                    ] as [$field, $label, $placeholder])
+                    <div class="bm-form-group">
+                        <label class="bm-label">{{ $label }}</label>
+                        <input type="text" name="{{ $field }}"
+                               class="bm-input @error($field) border-red-500 @enderror"
+                               placeholder="{{ $placeholder }}" value="{{ old($field, $agency->$field) }}">
+                        @include('alerts.feedback', ['field' => $field])
+                    </div>
+                    @endforeach
+                </div>
 
-                        <div class="row">
+                {{-- Column 3: Social --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Social</h3>
 
-                            {{-- Column 1: Address --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
+                    @foreach([
+                        ['youtube',    'YouTube',    'YouTube URL'],
+                        ['twitter',    'Twitter',    'Twitter URL'],
+                        ['instagram',  'Instagram',  'Instagram URL'],
+                        ['soundcloud', 'SoundCloud', 'SoundCloud URL'],
+                        ['spotify',    'Spotify',    'Spotify URL'],
+                    ] as [$field, $label, $placeholder])
+                    <div class="bm-form-group">
+                        <label class="bm-label">{{ $label }}</label>
+                        <input type="text" name="{{ $field }}"
+                               class="bm-input @error($field) border-red-500 @enderror"
+                               placeholder="{{ $placeholder }}" value="{{ old($field, $agency->$field) }}">
+                        @include('alerts.feedback', ['field' => $field])
+                    </div>
+                    @endforeach
+                </div>
 
-                                    <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                        <label for="name" class="bm_label_layout"><h3>Name</h3></label>
-                                        <input type="text" name="name"
-                                            class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            placeholder="Name" value="{{ $agency->name }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'name'])
-                                    </div>
+            </div>
 
-                                    <div class="bm_form_group form-group {{ $errors->has('address') ? 'has-danger' : '' }}">
-                                        <label for="address" class="bm_label_layout"><h3>Address</h3></label>
-                                        <input type="text" name="address"
-                                            class="bm_general_input form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                                            placeholder="Address" value="{{ $agency->address }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'address'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('zip') ? 'has-danger' : '' }}">
-                                        <label for="zip" class="bm_label_layout"><h3>Zip</h3></label>
-                                        <input type="text" name="zip"
-                                            class="bm_general_input form-control {{ $errors->has('zip') ? 'is-invalid' : '' }}"
-                                            placeholder="Zip" value="{{ $agency->zip }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'zip'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('city') ? 'has-danger' : '' }}">
-                                        <label for="city" class="bm_label_layout"><h3>City</h3></label>
-                                        <input type="text" name="city"
-                                            class="bm_general_input form-control {{ $errors->has('city') ? 'is-invalid' : '' }}"
-                                            placeholder="City" value="{{ $agency->city }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'city'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
-                                        <label for="state" class="bm_label_layout"><h3>State</h3></label>
-                                        <input type="text" name="state"
-                                            class="bm_general_input form-control {{ $errors->has('state') ? 'is-invalid' : '' }}"
-                                            placeholder="State" value="{{ $agency->state }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'state'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Column 2: Contact --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
-                                        <label for="country" class="bm_label_layout"><h3>Country</h3></label>
-                                        <input type="text" name="country"
-                                            class="bm_general_input form-control {{ $errors->has('country') ? 'is-invalid' : '' }}"
-                                            placeholder="Country" value="{{ $agency->country }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'country'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
-                                        <label for="phone" class="bm_label_layout"><h3>Phone</h3></label>
-                                        <input type="text" name="phone"
-                                            class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                            placeholder="Phone" value="{{ $agency->phone }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'phone'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                                        <label for="email" class="bm_label_layout"><h3>Email</h3></label>
-                                        <input type="text" name="email"
-                                            class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                            placeholder="Email" value="{{ $agency->email }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'email'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                                        <label for="website" class="bm_label_layout"><h3>Website</h3></label>
-                                        <input type="text" name="website"
-                                            class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}"
-                                            placeholder="Website" value="{{ $agency->website }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'website'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('facebook') ? 'has-danger' : '' }}">
-                                        <label for="facebook" class="bm_label_layout"><h3>Facebook</h3></label>
-                                        <input type="text" name="facebook"
-                                            class="bm_general_input form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}"
-                                            placeholder="Facebook" value="{{ $agency->facebook }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'facebook'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Column 3: Social --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('youtube') ? 'has-danger' : '' }}">
-                                        <label for="youtube" class="bm_label_layout"><h3>Youtube</h3></label>
-                                        <input type="text" name="youtube"
-                                            class="bm_general_input form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}"
-                                            placeholder="Youtube" value="{{ $agency->youtube }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'youtube'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('twitter') ? 'has-danger' : '' }}">
-                                        <label for="twitter" class="bm_label_layout"><h3>Twitter</h3></label>
-                                        <input type="text" name="twitter"
-                                            class="bm_general_input form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}"
-                                            placeholder="Twitter" value="{{ $agency->twitter }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'twitter'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('instagram') ? 'has-danger' : '' }}">
-                                        <label for="instagram" class="bm_label_layout"><h3>Instagram</h3></label>
-                                        <input type="text" name="instagram"
-                                            class="bm_general_input form-control {{ $errors->has('instagram') ? 'is-invalid' : '' }}"
-                                            placeholder="Instagram" value="{{ $agency->instagram }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'instagram'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('soundcloud') ? 'has-danger' : '' }}">
-                                        <label for="soundcloud" class="bm_label_layout"><h3>Soundcloud</h3></label>
-                                        <input type="text" name="soundcloud"
-                                            class="bm_general_input form-control {{ $errors->has('soundcloud') ? 'is-invalid' : '' }}"
-                                            placeholder="Soundcloud" value="{{ $agency->soundcloud }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'soundcloud'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('spotify') ? 'has-danger' : '' }}">
-                                        <label for="spotify" class="bm_label_layout"><h3>Spotify</h3></label>
-                                        <input type="text" name="spotify"
-                                            class="bm_general_input form-control {{ $errors->has('spotify') ? 'is-invalid' : '' }}"
-                                            placeholder="Spotify" value="{{ $agency->spotify }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'spotify'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Description: full width --}}
-                            <div class="col-12">
-                                <div class="card-body text-primary">
-                                    <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                                        <label for="description" class="bm_label_layout"><h3>Description</h3></label>
-                                        <textarea id="description" name="description"
-                                            class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="Description">{{ $agency->description }}</textarea>
-                                        @include('alerts.feedback', ['field' => 'description'])
-
-                                        <button type="submit" class="btn btn-info">Update</button>
-                                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-
+            {{-- Description: full width --}}
+            <div class="mt-6">
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Description</h3>
+                <div class="bm-form-group">
+                    <textarea name="description" class="bm-textarea @error('description') border-red-500 @enderror"
+                              placeholder="Describe the agency...">{{ old('description', $agency->description) }}</textarea>
+                    @include('alerts.feedback', ['field' => 'description'])
                 </div>
             </div>
-        </div>
+
+            <div class="flex items-center gap-3 mt-6 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary">
+                    <i class="fas fa-save"></i> Update agency
+                </button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </form>
     </div>
 </div>
 

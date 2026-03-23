@@ -83,7 +83,7 @@
         @apply block text-xs font-medium text-white/60 mb-1.5;
     }
     .bm-input {
-        @apply w-full bg-gray-800 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30
+        @apply w-full bg-gray-200 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-400
                focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors;
     }
     .bm-select {
@@ -93,7 +93,7 @@
         @apply bm-input resize-y min-h-24;
     }
     .bm-checkbox {
-        @apply w-4 h-4 rounded border-white/20 bg-gray-800 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-gray-900;
+        @apply w-4 h-4 rounded border-gray-300 bg-gray-200 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-gray-900;
     }
     .bm-form-group {
         @apply mb-5;

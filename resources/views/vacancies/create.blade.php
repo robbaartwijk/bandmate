@@ -2,72 +2,66 @@
 
 @section('content')
 
-<div class="col-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bm_card card">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Add vacancy</b></h3>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Add vacancy</h2>
+    </div>
+    <div class="bm-card-body">
+        <form action="{{ route('vacancies.store') }}" method="post">
+            @csrf
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                {{-- Selects --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Details</h3>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Act</label>
+                        <select name="act_id" class="bm-select @error('act_id') border-red-500 @enderror">
+                            <option value="">Select act</option>
+                            @foreach ($acts as $act)
+                            <option value="{{ $act->id }}" {{ old('act_id') == $act->id ? 'selected' : '' }}>{{ $act->name }}</option>
+                            @endforeach
+                        </select>
+                        @include('alerts.feedback', ['field' => 'act_id'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Instrument</label>
+                        <select name="instrument_id" class="bm-select @error('instrument_id') border-red-500 @enderror">
+                            <option value="">Select instrument</option>
+                            @foreach ($instruments as $instrument)
+                            <option value="{{ $instrument->id }}" {{ old('instrument_id') == $instrument->id ? 'selected' : '' }}>{{ $instrument->type }} - {{ $instrument->name }}</option>
+                            @endforeach
+                        </select>
+                        @include('alerts.feedback', ['field' => 'instrument_id'])
+                    </div>
                 </div>
 
-                <div class="bm_row_layout row">
+                {{-- Description --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Description</h3>
 
-                    <form action="{{ route('vacancies.store') }}" method="post" style="width:100%;">
-                        @csrf
-
-                        <div class="row">
-
-                            {{-- Act + Instrument selects --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('act_id') ? 'has-danger' : '' }}">
-                                        <label for="act_id" class="bm_label_layout"><h3>Act</h3></label>
-                                        <select name="act_id" class="bm_general_input form-control {{ $errors->has('act_id') ? 'is-invalid' : '' }}" style="width:100%;">
-                                            <option value="">Select</option>
-                                            @foreach ($acts as $act)
-                                            <option value="{{ $act->id }}" {{ old('act_id') == $act->id ? 'selected' : '' }}>{{ $act->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'act_id'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
-                                        <label for="instrument_id" class="bm_label_layout"><h3>Instrument</h3></label>
-                                        <select name="instrument_id" class="bm_general_input form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}" style="width:100%;">
-                                            <option value="">Select</option>
-                                            @foreach ($instruments as $instrument)
-                                            <option value="{{ $instrument->id }}" {{ old('instrument_id') == $instrument->id ? 'selected' : '' }}>{{ $instrument->type }} - {{ $instrument->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'instrument_id'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Description full width --}}
-                            <div class="col-12">
-                                <div class="card-body text-primary">
-                                    <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                                        <label for="description" class="bm_label_layout"><h3>Description</h3></label>
-                                        <textarea id="description" name="description"
-                                            class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="Description">{{ old('description') }}</textarea>
-                                        @include('alerts.feedback', ['field' => 'description'])
-
-                                        <button type="submit" class="btn btn-info">Add</button>
-                                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-
+                    <div class="bm-form-group">
+                        <label class="bm-label">Description</label>
+                        <textarea name="description" class="bm-textarea @error('description') border-red-500 @enderror"
+                                  placeholder="Describe the vacancy...">{{ old('description') }}</textarea>
+                        @include('alerts.feedback', ['field' => 'description'])
+                    </div>
                 </div>
+
             </div>
-        </div>
+
+            <div class="flex items-center gap-3 mt-6 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary">
+                    <i class="fas fa-plus"></i> Add vacancy
+                </button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </form>
     </div>
 </div>
 
