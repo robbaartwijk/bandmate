@@ -1,25 +1,17 @@
 @extends('layouts.app', ['page' => __('About data usage'), 'pageSlug' => 'aboutdatausage'])
-
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>About data usage</b></h3>
-            </div>
-
-            <div class="bm_help_textbox card-body text-primary">
-
-                <ul style="margin-left:20px; list-style-type:disc;">
-                    <li>
-                        <h4>Acts are bands, trios, solo acts, orchestras, etcetera.</h4>
-                    </li>
-                    <li>
-                        <h4>Now that you have registered you can enter your own act(s) into our database and you can now browse through said database.</h4>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">About data usage</h2>
     </div>
-    @endsection
+    <div class="bm-card-body prose-sm">
+        <ul class="space-y-3 text-white/70 text-sm leading-relaxed list-disc list-inside">
+            <li>We collect only the data you provide when registering and using the platform.</li>
+            <li>Your personal details (name, email, address) are used to identify you and to let other musicians contact you through your listings.</li>
+            <li>We do not share your data with any third party organisations or individuals.</li>
+            <li>You can update or delete your profile at any time from the Edit profile page.</li>
+            <li>Email notification preferences can be managed in your profile settings.</li>
+        </ul>
+    </div>
+</div>
+@endsection

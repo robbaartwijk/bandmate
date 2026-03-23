@@ -1,105 +1,103 @@
 @extends('layouts.app', ['pageSlug' => 'dashboard'])
 
-<style>
-    body {
-        background-image: url('{{ asset('images/Background_sharp.jpg') }}');
-        background-size: cover;
-        background-position: center;
-        background-size: 120%;
-        background-repeat: no-repeat;
-    }
- 
-</style>
-
 @section('content')
 
 @if (session('status'))
-<div id="status-alert" class="alert alert-success">
-    {{ session('status') }}
+<div id="status-alert" class="bm-alert bm-alert-success">
+    <i class="fas fa-check-circle"></i> {{ session('status') }}
 </div>
 <script>
     setTimeout(function() {
         document.getElementById('status-alert').style.display = 'none';
     }, 2000);
-
 </script>
 @endif
 
-<div class="header py-7 py-lg-8">
-    <div class="container">
-        <div class="header-body text-center mb-7">
-            <div class="row justify-content-center" style="margin-top: 10px;">
-                <div class="col-lg-8 col-md-6">
-                    <p class="text-lead text-light" style="border: solid 1px; border-color: rgb(190, 190, 208);">
-                        <img src="{{ asset('images/Logo2.jpg') }}" />
-                    </p>
-                    <br>
-                    <h1 class="text-white">{{ __('Welcome to Bandmate') }}</h1>
-                </div>
+{{-- Welcome card --}}
+<div class="bm-card mb-6">
+    <div class="bm-card-body">
+        <div class="flex flex-col md:flex-row items-start gap-6">
+            <div class="flex-shrink-0">
+                <img src="{{ asset('images/Logo2.jpg') }}" alt="Bandmate"
+                     class="rounded-lg border border-white/20" style="max-width: 160px;">
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-white mb-4">{{ __('Welcome to Bandmate') }}</h1>
+                <p class="text-white/70 text-sm leading-relaxed mb-3">
+                    The best place to find your bandmates, rehearsal rooms, agencies and venues.
+                    Use the menu to browse all available information and add your own.
+                    You can edit information you entered yourself, but only browse other users' entries.
+                </p>
+                <p class="text-white/70 text-sm leading-relaxed mb-3">
+                    This website is a labour of love and is not sponsored by anyone.
+                    Your data is used only to make the platform work and will never be shared with any other person or organisation.
+                    The site is meant for musicians &mdash; not the music business.
+                </p>
+                <p class="text-white/70 text-sm leading-relaxed">
+                    If you'd like to support the hosting costs, a donation via PayPal is always appreciated.
+                </p>
             </div>
         </div>
 
-        <p>
-            <h4 class="text-white">
-                The best place to find your bandmates, rehearsal rooms, agencies and venues. You can use the options in the menu on the left to browse through all the available information and add your own information. You will then be able to edit the information you have entered yourself, but only browse through other users' information.
-            </h4>
-        </p>
+        {{-- Donate button --}}
+        <div class="mt-6 text-center">
+            <form action="https://www.paypal.com/donate" method="post" target="_blank" class="inline-block">
+                <input type="hidden" name="business" value="rob.baartwijk@gmail.com" />
+                <input type="hidden" name="currency_code" value="EUR" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                       border="0" name="submit" title="PayPal - The safer, easier way to pay online!"
+                       alt="Donate with PayPal button" />
+            </form>
+        </div>
 
-        <h4>
-            <ul class="text-white">
-                <li>
-                    An act is typically either a band or a solo artist. You can of course add your own act.
-                </li>
-                <li>
-                    A vacancy is just what it says; a vacancy in a band. You can add your own vacancies but only for the acts you have entered into the database yourself.
-                </li>
-                <li>
-                    If you are a rehearsal room owner, you can add your own rehearsal rooms.
-                </li>
-                <li>
-                    If you are an agency, you can add your own agency information for artists to find. Finally if you are a venue owner, you can add your own venue information.
-                </li>
-            </ul>
-        </h4>
-
-        </h4>
-        </p>
-
+        {{-- Quick reference --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-6 border-t border-white/10 text-center">
+            <div class="px-4 py-3 rounded-lg bg-white/5">
+                <p class="text-white/70 text-sm">An <strong class="text-white">act</strong> is a band or solo artist &mdash; register your own.</p>
+            </div>
+            <div class="px-4 py-3 rounded-lg bg-white/5">
+                <p class="text-white/70 text-sm">A <strong class="text-white">vacancy</strong> is an opening in a band, linked to acts you own.</p>
+            </div>
+            <div class="px-4 py-3 rounded-lg bg-white/5">
+                <p class="text-white/70 text-sm"><strong class="text-white">Rehearsal rooms</strong> &mdash; add yours if you own one.</p>
+            </div>
+            <div class="px-4 py-3 rounded-lg bg-white/5">
+                <p class="text-white/70 text-sm"><strong class="text-white">Agencies &amp; venues</strong> &mdash; list your business for artists to find.</p>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div style="border: solid 2px"; class="card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>Recently added</b></h3>
-            </div>
+{{-- Recently added --}}
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Recently added</h2>
+        <a href="{{ route('acts.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">View all</a>
+    </div>
+    <div class="bm-card-body space-y-8">
 
-            <header>
-                <h4 style="margin-top: 40px; margin-left: 20px;"><b>Acts</b></h4>
-            </header>
-
-            <div style="margin-left: 20px;" class="table-responsive">
-                <table class="table tablesorter" id="">
-                    <thead class=" text-primary">
+        {{-- Acts --}}
+        <div>
+            <h3 class="text-white font-semibold text-sm mb-3">Acts</h3>
+            <div class="overflow-x-auto">
+                <table class="bm-table">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Genre</th>
-                            <th>Band members</th>
+                            <th>Members</th>
                             <th>Description</th>
-                            <th>Date added</th>
+                            <th>Added</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($recentActs->isEmpty())
-                        <tr>
-                            <td colspan="7">No acts found</td>
-                        </tr>
+                        @if ((!isSet($recentActs) || ($recentActs->isEmpty())))
+                        <tr><td colspan="5" class="text-white/40">No acts found</td></tr>
                         @else
                         @foreach ($recentActs as $act)
                         <tr>
-                            <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
-                            <td>{{ $act->genre->name}}</td>
+                            <td><a href="{{ route('acts.show', $act->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->name }}</a></td>
+                            <td>{{ $act->genre->name }}</td>
                             <td>{{ $act->number_of_members }}</td>
                             <td>{{ Str::limit($act->description, 41) }}</td>
                             <td>{{ $act->created_at }}</td>
@@ -109,34 +107,32 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <header>
-                <h4 style="margin-top: 40px; margin-left: 20px;"><b>Vacancies</b></h4>
-            </header>
-
-            <div style="margin-left: 20px;" class="table-responsive">
-                <table class="table tablesorter" id="">
-                    <thead class=" text-primary">
+        {{-- Vacancies --}}
+        <div>
+            <h3 class="text-white font-semibold text-sm mb-3">Vacancies</h3>
+            <div class="overflow-x-auto">
+                <table class="bm-table">
+                    <thead>
                         <tr>
                             <th>Act</th>
                             <th>Genre</th>
                             <th>Instrument</th>
                             <th>Description</th>
-                            <th>Date added</th>
+                            <th>Added</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($recentVacancies->isEmpty())
-                        <tr>
-                            <td colspan="7">No vacancies found</td>
-                        </tr>
+                        @if ((!isSet($recentVacancies) || ($recentVacancies->isEmpty())))
+                        <tr><td colspan="5" class="text-white/40">No vacancies found</td></tr>
                         @else
                         @foreach ($recentVacancies as $vacancy)
                         <tr>
-                            <td><a href="{{ route('acts.show', $act->id) }}">{{ $act->name }}</a></td>
-                            <td>{{ $vacancy->genre_name}}</td>
+                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act->name ?? '' }}</a></td>
+                            <td>{{ $vacancy->genre_name }}</td>
                             <td>{{ $vacancy->instrument->name }}</td>
-                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}">{{ Str::limit($vacancy->description, 42) }}</a>
+                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a></td>
                             <td>{{ $vacancy->created_at }}</td>
                         </tr>
                         @endforeach
@@ -144,34 +140,32 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <header>
-                <h4 style="margin-top: 40px; margin-left: 20px;"><b>Available musicians</b></h4>
-            </header>
-
-            <div style="margin-left: 20px;" class="table-responsive">
-                <table class="table tablesorter" id="">
-                    <thead class=" text-primary">
+        {{-- Available musicians --}}
+        <div>
+            <h3 class="text-white font-semibold text-sm mb-3">Available musicians</h3>
+            <div class="overflow-x-auto">
+                <table class="bm-table">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Genre</th>
                             <th>Instrument</th>
                             <th>Description</th>
-                            <th>Date added</th>
+                            <th>Added</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($recentAvailablemusicians->isEmpty())
-                        <tr>
-                            <td colspan="7">No available musicians found</td>
-                        </tr>
+                        @if ((!isSet($recentAvailablemusicians) || ($recentAvailablemusicians->isEmpty())))
+                        <tr><td colspan="5" class="text-white/40">No available musicians found</td></tr>
                         @else
                         @foreach ($recentAvailablemusicians as $recentAvailablemusician)
                         <tr>
                             <td>{{ $recentAvailablemusician->user->name }}</td>
-                            <td>{{ $recentAvailablemusician->genre->name}}</td>
+                            <td>{{ $recentAvailablemusician->genre->name }}</td>
                             <td>{{ $recentAvailablemusician->instrument->name }}</td>
-                            <td><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}">{{ Str::limit($recentAvailablemusician->description, 35) }}</a>
+                            <td><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentAvailablemusician->description, 35) }}</a></td>
                             <td>{{ $recentAvailablemusician->created_at }}</td>
                         </tr>
                         @endforeach
@@ -179,34 +173,32 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <header>
-                <h4 style="margin-top: 40px; margin-left: 20px;"><b>Rehearsal rooms</b></h4>
-            </header>
-
-            <div style="margin-left: 20px;" class="table-responsive">
-                <table class="table tablesorter" id="">
-                    <thead class=" text-primary">
+        {{-- Rehearsal rooms --}}
+        <div>
+            <h3 class="text-white font-semibold text-sm mb-3">Rehearsal rooms</h3>
+            <div class="overflow-x-auto">
+                <table class="bm-table">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>City</th>
                             <th>Country</th>
                             <th>Description</th>
-                            <th>Date added</th>
+                            <th>Added</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($recentRehearsalrooms->isEmpty())
-                        <tr>
-                            <td colspan="7">No rehearsal rooms found</td>
-                        </tr>
+                        @if ((!isSet($recentRehearsalrooms) || ($recentRehearsalrooms->isEmpty())))
+                        <tr><td colspan="5" class="text-white/40">No rehearsal rooms found</td></tr>
                         @else
                         @foreach ($recentRehearsalrooms as $recentRehearsalroom)
                         <tr>
                             <td>{{ $recentRehearsalroom->name }}</td>
-                            <td>{{ $recentRehearsalroom->city}}</td>
+                            <td>{{ $recentRehearsalroom->city }}</td>
                             <td>{{ $recentRehearsalroom->country }}</td>
-                            <td><a href="{{ route('rehearsalrooms.show', $recentRehearsalroom->id) }}">{{ Str::limit($recentRehearsalroom->description, 30) }}</a>
+                            <td><a href="{{ route('rehearsalrooms.show', $recentRehearsalroom->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentRehearsalroom->description, 30) }}</a></td>
                             <td>{{ $recentRehearsalroom->created_at }}</td>
                         </tr>
                         @endforeach
@@ -214,14 +206,8 @@
                     </tbody>
                 </table>
             </div>
-
-
-
-
-
-
-
         </div>
+
     </div>
 </div>
 

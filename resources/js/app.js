@@ -19,10 +19,6 @@ import { createApp } from 'vue';
 import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css';
 
-import { Chart, Colors } from 'chart.js';
-
-Chart.register(Colors);
-
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -62,7 +58,8 @@ for (const path in components) {
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
-// SimpleMDE initialization moved to Vue app mounted hook
-// This comment is no longer needed as the initialization is already in the mounted hook
-
-app.mount('#app');
+// Only mount Vue if a #app element exists on this page
+const appEl = document.querySelector('#app');
+if (appEl) {
+    app.mount(appEl);
+}

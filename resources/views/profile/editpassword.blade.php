@@ -1,82 +1,63 @@
-@extends('layouts.app', ['page' => __('Edit password'), 'pageSlug' => 'editpassword'])
-
+@extends('layouts.app', ['page' => __('Change password'), 'pageSlug' => 'editpassword'])
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"><b>Change password</b></h3>
-            </div>
+<div class="flex justify-center">
+    <div class="w-full max-w-md">
+        <div class="bm-card">
+            <div class="bm-card-header"><h2 class="bm-card-title">Change password</h2></div>
+            <div class="bm-card-body">
 
-            <div class="bm_row_layout row">
-
-                <div class="col-lg-4" style="position: relative; left: 50%; transform: translateX(-50%);">
-
-                    <div style="border: 1px solid rgb(200, 130, 130); padding: 10px; margin-bottom: 10px; margin-left:15px;">
-
-                        <div class="card-body text-primary">
-
-                            <div class="table-responsive">
-
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <form action="{{ route('profile.updatePassword') }}" method="post">
-                                            @csrf
-
-                                            @if (!empty($user->avatar))
-                                            <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}" class="bm_zoom thumbnail" style="width: 150px; height: 150px;">
-                                            @endif
-
-                                            <div class="bm_userbox">
-                                                {{ $user->name }}
-                                            </div>
-
-                                            <br />
-
-                                            <div class="input-group{{ $errors->has('currentpassword') ? ' has-danger' : '' }}">
-                                                <input type="password" placeholder="{{ __('  Current password') }}" name="currentpassword" class="bm_password_input form-control{{ $errors->has('currentpassword') ? ' is-invalid' : '' }}">
-                                                @include('alerts.feedback', ['field' => 'currentpassword'])
-                                            </div>
-
-                                            <div class="input-group{{ $errors->has('newpassword') ? ' has-danger' : '' }}">
-                                                <input type="password" placeholder="{{ __('  New password') }}" name="newpassword" class="bm_password_input form-control{{ $errors->has('newpassword') ? ' is-invalid' : '' }}">
-                                                @include('alerts.feedback', ['field' => 'newpassword'])
-                                            </div>
-
-                                            <div class="input-group{{ $errors->has('confirmpassword') ? ' has-danger' : '' }}">
-                                                <input type="password" placeholder="{{ __('  Confirm password') }}" name="confirmpassword" class="bm_password_input form-control{{ $errors->has('confirmpassword') ? ' is-invalid' : '' }}">
-                                                @include('alerts.feedback', ['field' => 'confirmpassword'])
-                                            </div>
-
-                                            @if (session('status'))
-                                            <div class="alert alert-danger">
-                                                {{ session('status') }}
-                                            </div>
-                                            @endif
-
-                                            @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            @endif
-
-                                            <div style="margin-top:30px; margin-left:80px;">
-                                                <button type="submit" class="btn btn-danger">Update</button>
-                                                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                            </div>
-
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="flex flex-col items-center mb-6">
+                    @if(!empty($user->avatar))
+                    <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}"
+                         class="bm_thumbnail mb-3">
+                    @else
+                    <div class="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center mb-3">
+                        <span class="text-white text-xl font-semibold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                     </div>
+                    @endif
+                    <p class="text-white/60 text-sm">{{ $user->name }}</p>
                 </div>
+
+                @if($errors->any())
+                <div class="bm-alert bm-alert-error mb-4">
+                    <ul class="list-disc list-inside text-xs space-y-1">
+                        @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                    </ul>
+                </div>
+                @endif
+
+                @if(session('status'))
+                <div class="bm-alert bm-alert-error mb-4">{{ session('status') }}</div>
+                @endif
+
+                <form action="{{ route('profile.updatePassword') }}" method="post">
+                    @csrf
+                    <div class="bm-form-group">
+                        <label class="bm-label">Current password</label>
+                        <input type="password" name="currentpassword"
+                               class="bm-input @error('currentpassword') border-red-500 @enderror"
+                               placeholder="Current password">
+                        @include('alerts.feedback', ['field' => 'currentpassword'])
+                    </div>
+                    <div class="bm-form-group">
+                        <label class="bm-label">New password</label>
+                        <input type="password" name="newpassword"
+                               class="bm-input @error('newpassword') border-red-500 @enderror"
+                               placeholder="New password">
+                        @include('alerts.feedback', ['field' => 'newpassword'])
+                    </div>
+                    <div class="bm-form-group">
+                        <label class="bm-label">Confirm new password</label>
+                        <input type="password" name="confirmpassword"
+                               class="bm-input @error('confirmpassword') border-red-500 @enderror"
+                               placeholder="Confirm new password">
+                        @include('alerts.feedback', ['field' => 'confirmpassword'])
+                    </div>
+                    <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                        <button type="submit" class="bm-btn bm-btn-danger"><i class="fas fa-key"></i> Update password</button>
+                        <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

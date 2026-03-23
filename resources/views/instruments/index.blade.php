@@ -1,89 +1,60 @@
 @extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
-
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>Instruments index</b></h3>
-            </div>
-            <div class="card-body">
-
-                <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; margin-bottom:12px;">
-
-                    <a href="{{ route('instruments.create') }}" class="btn btn-secondary">Add instrument</a>
-
-                    <form action="{{ route('instruments.index') }}" method="get" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:auto;">
-
-                        <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="width:180px; min-width:120px;" placeholder="Search...">
-
-                        <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:180px;" onchange="this.form.submit()">
-                            <option value="name"       {{ request()->sort == 'name'       ? 'selected' : '' }}>Sort by name</option>
-                            <option value="type"       {{ request()->sort == 'type'       ? 'selected' : '' }}>Sort by type</option>
-                            <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>Sort by date added</option>
-                            <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>Sort by date last update</option>
-                        </select>
-
-                        <button type="submit" class="btn btn-secondary">
-                            <i class="nc-icon nc-zoom-split"></i>
-                        </button>
-
-                    </form>
-                </div>
-
-                @if (session('status'))
-                <div class="alert alert-success" role="alert" id="status-alert">
-                    {{ session('status') }}
-                </div>
-                <script>
-                    setTimeout(function() {
-                        document.getElementById('status-alert').style.display = 'none';
-                    }, 1000);
-                </script>
-                @endif
-
-                <div class="table-responsive">
-                    <table class="table tablesorter">
-                        <thead class="text-primary">
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th class="d-none d-lg-table-cell">Date added</th>
-                                <th class="d-none d-lg-table-cell">Date last update</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($instruments as $instrument)
-                            <tr>
-                                <td><a href="{{ route('instruments.show', $instrument->id) }}">{{ $instrument->name }}</a></td>
-                                <td>{{ $instrument->type }}</td>
-                                <td class="d-none d-lg-table-cell">{{ $instrument->created_at }}</td>
-                                <td class="d-none d-lg-table-cell">{{ $instrument->updated_at }}</td>
-                                <td style="white-space:nowrap;">
-                                    <a href="{{ route('instruments.edit', $instrument->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
-                                        <i class="tim-icons icon-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('instruments.destroy', $instrument->id) }}" method="post" style="display:inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
-                                            <i class="tim-icons icon-simple-remove"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="float-left" style="color:white">
-                    {{ $instruments->count() }} {{ $instruments->count() > 1 ? 'instruments found' : 'instrument found' }}
-                </div>
-
-            </div>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Instruments</h2>
+        <a href="{{ route('instruments.create') }}" class="bm-btn bm-btn-primary bm-btn-sm"><i class="fas fa-plus"></i> Add instrument</a>
+    </div>
+    <div class="bm-card-body">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+            <form action="{{ route('instruments.index') }}" method="get" class="flex flex-wrap items-center gap-2 ml-auto">
+                <input type="text" name="search" value="{{ request()->search }}" class="bm-input text-sm py-1.5" style="width:160px;" placeholder="Search...">
+                <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
+                    <option value="name"       {{ request()->sort == 'name'       ? 'selected' : '' }}>Sort by name</option>
+                    <option value="type"       {{ request()->sort == 'type'       ? 'selected' : '' }}>Sort by type</option>
+                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>Sort by date added</option>
+                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>Sort by last update</option>
+                </select>
+                <button type="submit" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-search"></i></button>
+            </form>
         </div>
+
+        @if(session('status'))
+        <div class="bm-alert bm-alert-success mb-4" id="status-alert"><i class="fas fa-check-circle"></i> {{ session('status') }}</div>
+        <script>setTimeout(() => { const el = document.getElementById('status-alert'); if(el) el.style.display='none'; }, 2000);</script>
+        @endif
+
+        <div class="overflow-x-auto">
+            <table class="bm-table">
+                <thead><tr>
+                    <th>Name</th><th>Type</th>
+                    <th class="hidden lg:table-cell">Added</th>
+                    <th class="hidden lg:table-cell">Updated</th>
+                    <th>Actions</th>
+                </tr></thead>
+                <tbody>
+                    @foreach ($instruments as $instrument)
+                    <tr>
+                        <td><a href="{{ route('instruments.show', $instrument->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $instrument->name }}</a></td>
+                        <td>{{ $instrument->type }}</td>
+                        <td class="hidden lg:table-cell text-white/40 text-xs">{{ $instrument->created_at }}</td>
+                        <td class="hidden lg:table-cell text-white/40 text-xs">{{ $instrument->updated_at }}</td>
+                        <td class="whitespace-nowrap">
+                            <a href="{{ route('instruments.edit', $instrument->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm mr-1"><i class="fas fa-pencil-alt"></i></a>
+                            <form action="{{ route('instruments.destroy', $instrument->id) }}" method="post" class="inline">
+                                @csrf @method('delete')
+                                <button type="button" class="bm-btn bm-btn-danger bm-btn-sm"
+                                        onclick="if(confirm('Delete this instrument?')) this.closest('form').submit()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4"><span class="text-white/40 text-xs">{{ $instruments->count() }} {{ $instruments->count() == 1 ? 'instrument' : 'instruments' }} found</span></div>
     </div>
 </div>
 @endsection

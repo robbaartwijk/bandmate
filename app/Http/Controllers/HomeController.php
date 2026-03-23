@@ -21,13 +21,31 @@ class HomeController extends BaseController
     /**
      * Show the application dashboard.
      */
+    public function dashboard(Request $request): \Illuminate\View\View
+    {
+        $recentActs = $this->getRecentActs();
+        $recentVacancies = $this->getRecentVacancies();
+        $recentAvailablemusicians = $this->getRecentAvailablemusicians();
+        $recentRehearsalrooms = $this->getRecentRehearsalrooms();
+
+        return view('dashboard', compact([
+            'recentActs',
+            'recentVacancies',
+            'recentAvailablemusicians',
+            'recentRehearsalrooms',
+        ]));
+    }
+
+    /**
+     * Show the home/welcome page.
+     */
     public function index(Request $request): \Illuminate\View\View
     {
         $recentActs = $this->getRecentActs();
         $recentVacancies = $this->getRecentVacancies();
         $recentAvailablemusicians = $this->getRecentAvailablemusicians();
         $recentRehearsalrooms = $this->getRecentRehearsalrooms();
- 
+
         return view('welcome', compact([
             'recentActs',
             'recentVacancies',
@@ -58,4 +76,3 @@ class HomeController extends BaseController
         return Rehearsalroom::latest()->take(5)->get();
     }
 }
- 

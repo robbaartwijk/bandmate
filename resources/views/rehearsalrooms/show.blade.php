@@ -1,53 +1,113 @@
-@php
-$user = auth()->user();
-@endphp
-
+@php $user = auth()->user(); @endphp
 @extends('layouts.app', ['page' => __('Rehearsal rooms'), 'pageSlug' => 'rehearsalrooms'])
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>Show rehearsal room</b></h3>
-                @if($user->is_admin || $user->id == $rehearsalroom->user_id)
-                <a href="{{ route('rehearsalrooms.edit', $rehearsalroom->id) }}" class="btn btn-warning">Edit Rehearsal Room</a>
+
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">{{ $rehearsalroom->name }}</h2>
+        @if($user->is_admin || $user->id == $rehearsalroom->user_id)
+        <a href="{{ route('rehearsalrooms.edit', $rehearsalroom->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm">
+            <i class="fas fa-pencil-alt"></i> Edit
+        </a>
+        @endif
+    </div>
+
+    <div class="bm-card-body">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            {{-- Image --}}
+            <div>
+                @if (!empty($rehearsalroom->image))
+                <img src="{{ asset('/storage/' . $rehearsalroom->image->id . '/' . $rehearsalroom->image->file_name) }}"
+                     class="rounded-lg w-full h-auto" style="max-width:360px;">
+                @else
+                <img src="{{ asset('storage/defaults/defaultrehearsalroom.jpg') }}"
+                     class="rounded-lg w-full h-auto" style="max-width:360px;">
                 @endif
             </div>
 
-            <div class="card-body text-primary">
-                <div class="row">
-
-                    {{-- Image: stacks on mobile, side by side on desktop --}}
-                    <div class="col-12 col-md-auto mb-3">
-                        @if (!empty($rehearsalroom->image))
-                        <img src="{{ asset('/storage/' . $rehearsalroom->image->id . '/' . $rehearsalroom->image->file_name) }}"
-                            class="img-fluid bm_image" style="max-width:300px; width:100%; height:auto;">
-                        @else
-                        <img src="{{ asset('storage/defaults/defaultrehearsalroom.jpg') }}"
-                            class="img-fluid bm_image" style="max-width:300px; width:100%; height:auto;">
-                        @endif
+            {{-- Details --}}
+            <div>
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Details</h3>
+                <dl class="space-y-2 text-sm">
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Name</dt>
+                        <dd class="text-white/80">{{ $rehearsalroom->name }}</dd>
                     </div>
-
-                    <div class="col-12 col-md">
-                        <h4><b>Name : </b>{{ $rehearsalroom->name }}</h4>
-                        <h4><b>Address : </b>{{ $rehearsalroom->address }}</h4>
-                        <h4><b>City : </b>{{ $rehearsalroom->city }}</h4>
-                        <h4><b>State : </b>{{ $rehearsalroom->state }}</h4>
-                        <h4><b>Postal code : </b>{{ $rehearsalroom->zip }}</h4>
-                        <h4><b>Country : </b>{{ $rehearsalroom->country }}</h4>
-                        <h4><b>Phone : </b>{{ $rehearsalroom->phone }}</h4>
-                        <h4><b>Email : </b><a href="mailto:{{ $rehearsalroom->email }}">{{ $rehearsalroom->email }}</a></h4>
-                        <h4><b>Website : </b><a href="{{ $rehearsalroom->website }}" target="_blank" style="word-break:break-all;">{{ $rehearsalroom->website }}</a></h4>
-                        <h4><b>Description : </b>{{ $rehearsalroom->description }}</h4>
-                        <h4><b>Date added : </b>{{ $rehearsalroom->created_at }}</h4>
-                        <h4><b>Date last update : </b>{{ $rehearsalroom->updated_at }}</h4>
-                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                    @if($rehearsalroom->address)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Address</dt>
+                        <dd class="text-white/80">{{ $rehearsalroom->address }}</dd>
                     </div>
-
-                </div>
+                    @endif
+                    @if($rehearsalroom->city)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">City</dt>
+                        <dd class="text-white/80">{{ $rehearsalroom->city }}</dd>
+                    </div>
+                    @endif
+                    @if($rehearsalroom->state)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">State</dt>
+                        <dd class="text-white/80">{{ $rehearsalroom->state }}</dd>
+                    </div>
+                    @endif
+                    @if($rehearsalroom->zip)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Postal code</dt>
+                        <dd class="text-white/80">{{ $rehearsalroom->zip }}</dd>
+                    </div>
+                    @endif
+                    @if($rehearsalroom->country)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Country</dt>
+                        <dd class="text-white/80">{{ $rehearsalroom->country }}</dd>
+                    </div>
+                    @endif
+                    @if($rehearsalroom->phone)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Phone</dt>
+                        <dd class="text-white/80"><i class="fas fa-phone w-4"></i> {{ $rehearsalroom->phone }}</dd>
+                    </div>
+                    @endif
+                    @if($rehearsalroom->email)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Email</dt>
+                        <dd><a href="mailto:{{ $rehearsalroom->email }}" class="text-indigo-400 hover:text-indigo-300">
+                            <i class="fas fa-envelope w-4"></i> {{ $rehearsalroom->email }}</a></dd>
+                    </div>
+                    @endif
+                    @if($rehearsalroom->website)
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Website</dt>
+                        <dd><a href="{{ $rehearsalroom->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                            <i class="fas fa-globe w-4"></i> {{ $rehearsalroom->website }}</a></dd>
+                    </div>
+                    @endif
+                </dl>
             </div>
+
         </div>
+
+        @if($rehearsalroom->description)
+        <div class="mt-8">
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Description</h3>
+            <p class="text-white/70 text-sm leading-relaxed">{!! nl2br(e($rehearsalroom->description)) !!}</p>
+        </div>
+        @endif
+
+        <div class="mt-8 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+            <dl class="flex gap-6 text-xs text-white/30">
+                <div><dt class="inline">Added:</dt> <dd class="inline">{{ $rehearsalroom->created_at }}</dd></div>
+                <div><dt class="inline">Updated:</dt> <dd class="inline">{{ $rehearsalroom->updated_at }}</dd></div>
+            </dl>
+            <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary bm-btn-sm">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
     </div>
 </div>
+
 @endsection

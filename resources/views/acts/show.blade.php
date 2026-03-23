@@ -1,146 +1,148 @@
-@php
-$user = auth()->user();
-@endphp
-
+@php $user = auth()->user(); @endphp
 @extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
 
 @section('content')
 
 @if(session()->has('status'))
-<div class="alert alert-success" id="status-message">
-    {{ session()->get('status') }}
+<div class="bm-alert bm-alert-success mb-4" id="status-message">
+    <i class="fas fa-check-circle"></i> {{ session()->get('status') }}
 </div>
+<script>setTimeout(() => { const el = document.getElementById('status-message'); if(el) el.style.display='none'; }, 2000);</script>
 @endif
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b> Show act</b></h3>
-                @if($user->is_admin || $user->id == $act->user_id)
-                    <a href="{{ route('acts.edit', $act->id) }}" class="btn btn-warning">Edit Act</a>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">{{ $act->name }}</h2>
+        @if($user->is_admin || $user->id == $act->user_id)
+        <a href="{{ route('acts.edit', $act->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm">
+            <i class="fas fa-pencil-alt"></i> Edit
+        </a>
+        @endif
+    </div>
+
+    <div class="bm-card-body">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            {{-- General info --}}
+            <div>
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">General information</h3>
+                <dl class="space-y-2 text-sm">
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Genre</dt>
+                        <dd class="text-white/80">
+                            @if($act->genre)
+                                <a href="{{ route('genres.show', $act->genre->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->genre->name }} ({{ $act->genre->group }})</a>
+                            @else N/A @endif
+                        </dd>
+                    </div>
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Members</dt>
+                        <dd class="text-white/80">{{ $act->number_of_members }}</dd>
+                    </div>
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Rehearsal room</dt>
+                        <dd>
+                            <span class="{{ $act->rehearsal_room ? 'bm-badge-green' : 'bm-badge-gray' }} bm-badge">
+                                {{ $act->rehearsal_room ? 'Yes' : 'No' }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="flex gap-2">
+                        <dt class="text-white/40 w-36 flex-shrink-0">Active</dt>
+                        <dd>
+                            <span class="{{ $act->active ? 'bm-badge-green' : 'bm-badge-gray' }} bm-badge">
+                                {{ $act->active ? 'Yes' : 'No' }}
+                            </span>
+                        </dd>
+                    </div>
+                </dl>
+
+                @if(!empty($act->image))
+                <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}"
+                     class="bm_image bm_zoom mt-4 rounded-lg" style="height:auto;">
                 @endif
             </div>
 
-            <div class="row">
-                {{-- col-12 so it fills full width on mobile, col-lg-6 side-by-side on large --}}
-                <div class="col-12 col-lg-6">
-                    <div class="card-body text-primary">
-                        <h1>General information</h1>
-                        <h2 style="word-break:break-word;">Name : {{ $act->name }}</h2>
-                        <h4><b>Genre : </b>
-                            @if ($act->genre)
-                            <a href="{{ route('genres.show', $act->genre->id) }}">{{ $act->genre->name }} ( {{ $act->genre->group }} )</a>
-                            @else
-                            N/A
-                            @endif
-                        </h4>
-                        <h4><b>Number of members : </b> {{ $act->number_of_members }}</h4>
-                        <h4><b>Rehearsal Room : </b> {{ $act->rehearsal_room ? 'Yes' : 'No' }}</h4>
-                        <h4><b>Active : </b> {{ $act->active ? 'Yes' : 'No' }}</h4>
-
-                        @if (!empty($act->image))
-                        <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}" class="img-fluid bm_image bm_zoom bm_zoom_hover" style="height:auto;">
-                        @endif
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-6">
-                    <div class="card-body text-primary">
-                        <h1>Contact and links</h1>
-                        @if ($act->website)
-                        <h4><a href="{{ $act->website }}" target="_blank" style="word-break:break-all;"><i class="fa fa-anchor"></i>
-                                {{ $act->website }}</a></h4>
-                        @endif
-
-                        @if ($act->email)
-                        <h4><a href="mailto:{{ $act->email }}" target="_blank"><i class="fa fa-envelope"></i>
-                                {{ $act->email }}</a></h4>
-                        @endif
-
-                        @if ($act->phone)
-                        <h4><i class="fa fa-phone"></i> {{ $act->phone }}</h4>
-                        @endif
-
-                        @if ($act->facebook)
-                        <h4><a href="{{ $act->facebook }}" target="_blank" style="word-break:break-all;"><i class="fab fa-facebook"></i>
-                                {{ $act->facebook }}</a></h4>
-                        @endif
-
-                        @if ($act->youtube)
-                        <h4><a href="{{ $act->youtube }}" target="_blank" style="word-break:break-all;"><i class="fab fa-youtube"></i>
-                                {{ $act->youtube }}</a></h4>
-                        @endif
-
-                        @if ($act->twitter)
-                        <h4><a href="{{ $act->twitter }}" target="_blank" style="word-break:break-all;"><i class="fab fa-twitter"></i>
-                                {{ $act->twitter }}</a></h4>
-                        @endif
-
-                        @if ($act->instagram)
-                        <h4><a href="{{ $act->instagram }}" target="_blank" style="word-break:break-all;"><i class="fab fa-instagram"></i>
-                                {{ $act->instagram }}</a></h4>
-                        @endif
-
-                        @if ($act->soundcloud)
-                        <h4><a href="{{ $act->soundcloud }}" target="_blank" style="word-break:break-all;"><i class="fab fa-soundcloud"></i>
-                                {{ $act->soundcloud }}</a></h4>
-                        @endif
-
-                        @if ($act->spotify)
-                        <h4><a href="{{ $act->spotify }}" target="_blank" style="word-break:break-all;"><i class="fab fa-spotify"></i>
-                                {{ $act->spotify }}</a></h4>
-                        @endif
-
-                        @if ($act->bluesky)
-                            <h4><a href="{{ $act->bluesky }}" target="_blank" style="word-break:break-all;"><img src="{{ asset('images/bluesky.jpg') }}" style="width:16px; height:16px; vertical-align:middle; margin-right:4px;">{{ $act->bluesky }}</a></h4>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-body text-primary">
-                        <h1>Description</h1>
-                        <h4>{!! nl2br(e($act->description)) !!}</h4>
-                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                    </div>
-                </div>
-            </div>
-
-            @if (!empty($act->youtubedemo))
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-body text-primary">
-                        {{-- Responsive 16:9 YouTube embed --}}
-                        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden;">
-                            <iframe src="{{ $act->youtubedemo }}"
-                                style="position:absolute; top:0; left:0; width:100%; height:100%;"
-                                frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-body text-primary">
-                        <h4>History</h4>
-                        <h4><b>Date added : </b>{{ $act->created_at }}</h4>
-                        <h4><b>Date last update : </b>{{ $act->updated_at }}</h4>
-                    </div>
-                </div>
+            {{-- Contact & links --}}
+            <div>
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Contact & links</h3>
+                <ul class="space-y-2 text-sm">
+                    @if($act->website)
+                    <li><a href="{{ $act->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fas fa-globe w-5"></i> {{ $act->website }}</a></li>
+                    @endif
+                    @if($act->email)
+                    <li><a href="mailto:{{ $act->email }}" class="text-indigo-400 hover:text-indigo-300">
+                        <i class="fas fa-envelope w-5"></i> {{ $act->email }}</a></li>
+                    @endif
+                    @if($act->phone)
+                    <li class="text-white/70"><i class="fas fa-phone w-5"></i> {{ $act->phone }}</li>
+                    @endif
+                    @if($act->facebook)
+                    <li><a href="{{ $act->facebook }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fab fa-facebook w-5"></i> {{ $act->facebook }}</a></li>
+                    @endif
+                    @if($act->youtube)
+                    <li><a href="{{ $act->youtube }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fab fa-youtube w-5"></i> {{ $act->youtube }}</a></li>
+                    @endif
+                    @if($act->twitter)
+                    <li><a href="{{ $act->twitter }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fab fa-twitter w-5"></i> {{ $act->twitter }}</a></li>
+                    @endif
+                    @if($act->instagram)
+                    <li><a href="{{ $act->instagram }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fab fa-instagram w-5"></i> {{ $act->instagram }}</a></li>
+                    @endif
+                    @if($act->soundcloud)
+                    <li><a href="{{ $act->soundcloud }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fab fa-soundcloud w-5"></i> {{ $act->soundcloud }}</a></li>
+                    @endif
+                    @if($act->spotify)
+                    <li><a href="{{ $act->spotify }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <i class="fab fa-spotify w-5"></i> {{ $act->spotify }}</a></li>
+                    @endif
+                    @if($act->bluesky)
+                    <li><a href="{{ $act->bluesky }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
+                        <img src="{{ asset('images/bluesky.jpg') }}" class="inline w-4 h-4 mr-1">{{ $act->bluesky }}</a></li>
+                    @endif
+                </ul>
             </div>
 
         </div>
+
+        {{-- Description --}}
+        @if($act->description)
+        <div class="mt-8">
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Description</h3>
+            <p class="text-white/70 text-sm leading-relaxed">{!! nl2br(e($act->description)) !!}</p>
+        </div>
+        @endif
+
+        {{-- YouTube demo --}}
+        @if(!empty($act->youtubedemo))
+        <div class="mt-8">
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Video</h3>
+            <div class="relative" style="padding-bottom:56.25%; height:0; overflow:hidden;">
+                <iframe src="{{ $act->youtubedemo }}"
+                        class="absolute inset-0 w-full h-full rounded-lg"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        @endif
+
+        {{-- History --}}
+        <div class="mt-8 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+            <dl class="flex gap-6 text-xs text-white/30">
+                <div><dt class="inline">Added:</dt> <dd class="inline">{{ $act->created_at }}</dd></div>
+                <div><dt class="inline">Updated:</dt> <dd class="inline">{{ $act->updated_at }}</dd></div>
+            </dl>
+            <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary bm-btn-sm">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+
     </div>
 </div>
-
-<script>
-    var el = document.getElementById('status-message');
-    if (el) { setTimeout(function() { el.style.display = 'none'; }, 2000); }
-</script>
 
 @endsection

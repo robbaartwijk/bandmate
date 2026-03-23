@@ -6,6 +6,8 @@
 /storage/*.key
 /storage/debugbar/
 /storage/pail
+/storage/framework/views/
+/storage/logs/
 /vendor
 .env
 .env.backup
@@ -21,3 +23,5 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+__MACOSX/
+.DS_Store

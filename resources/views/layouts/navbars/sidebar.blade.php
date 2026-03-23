@@ -1,326 +1,288 @@
 @php
 $user = auth()->user();
+
+$navGroups = [
+    'user' => [
+        'label' => 'User Access',
+        'icon'  => 'fa-music',
+        'pages' => ['dashboard', 'acts', 'vacancies', 'availablemusicians', 'rehearsalrooms', 'venues', 'agencies', 'about'],
+        'links' => [
+            ['route' => 'acts.index',               'slug' => 'acts',               'icon' => 'fa-music',        'label' => 'Acts'],
+            ['route' => 'vacancies.index',           'slug' => 'vacancies',          'icon' => 'fa-music',        'label' => 'Vacancies'],
+            ['route' => 'availablemusicians.index',  'slug' => 'availablemusicians', 'icon' => 'fa-music',        'label' => 'Available musicians'],
+            ['route' => 'rehearsalrooms.index',      'slug' => 'rehearsalrooms',     'icon' => 'fa-music',        'label' => 'Rehearsal rooms'],
+            ['route' => 'venues.index',              'slug' => 'venues',             'icon' => 'fa-music',        'label' => 'Venues'],
+            ['route' => 'agencies.index',            'slug' => 'agencies',           'icon' => 'fa-music',        'label' => 'Agencies'],
+        ],
+    ],
+    'statistics' => [
+        'label' => 'Statistics',
+        'icon'  => 'fa-chart-bar',
+        'pages' => ['chart1', 'chart2', 'chart3', 'chart4', 'chart5'],
+        'links' => [
+            ['route' => 'statistics.chart1', 'slug' => 'chart1', 'icon' => 'fa-chart-bar', 'label' => 'Users'],
+            ['route' => 'statistics.chart2', 'slug' => 'chart2', 'icon' => 'fa-chart-bar', 'label' => 'Vacancies'],
+            ['route' => 'statistics.chart3', 'slug' => 'chart3', 'icon' => 'fa-chart-bar', 'label' => 'Acts'],
+            ['route' => 'statistics.chart4', 'slug' => 'chart4', 'icon' => 'fa-chart-bar', 'label' => 'Available musicians'],
+            ['route' => 'statistics.chart5', 'slug' => 'chart5', 'icon' => 'fa-chart-bar', 'label' => 'AM per instrument'],
+        ],
+    ],
+    'about' => [
+        'label' => 'About',
+        'icon'  => 'fa-info-circle',
+        'pages' => ['aboutus', 'aboutdatausage', 'aboutacts', 'aboutvacancies', 'aboutavailablemusicians', 'aboutrehearsalrooms', 'aboutagencies', 'aboutvenues'],
+        'links' => [
+            ['route' => 'about.acts',               'slug' => 'aboutacts',               'icon' => 'fa-chevron-right', 'label' => 'Acts'],
+            ['route' => 'about.vacancies',           'slug' => 'aboutvacancies',          'icon' => 'fa-chevron-right', 'label' => 'Vacancies'],
+            ['route' => 'about.availablemusicians',  'slug' => 'aboutavailablemusicians', 'icon' => 'fa-chevron-right', 'label' => 'Available musicians'],
+            ['route' => 'about.rehearsalrooms',      'slug' => 'aboutrehearsalrooms',     'icon' => 'fa-chevron-right', 'label' => 'Rehearsal rooms'],
+            ['route' => 'about.agencies',            'slug' => 'aboutagencies',           'icon' => 'fa-chevron-right', 'label' => 'Agencies'],
+            ['route' => 'about.venues',              'slug' => 'aboutvenues',             'icon' => 'fa-chevron-right', 'label' => 'Venues'],
+            ['route' => 'about.us',                  'slug' => 'aboutus',                 'icon' => 'fa-chevron-right', 'label' => 'About us'],
+            ['route' => 'about.datausage',           'slug' => 'aboutdatausage',          'icon' => 'fa-chevron-right', 'label' => 'Data usage'],
+        ],
+    ],
+];
+
+$adminGroups = [
+    'support' => [
+        'label' => 'Support data',
+        'icon'  => 'fa-database',
+        'pages' => ['instruments', 'genres'],
+        'links' => [
+            ['route' => 'instruments.index', 'slug' => 'instruments', 'icon' => 'fa-database', 'label' => 'Instruments'],
+            ['route' => 'genres.index',      'slug' => 'genres',      'icon' => 'fa-database', 'label' => 'Genres'],
+        ],
+    ],
+    'management' => [
+        'label' => 'Management',
+        'icon'  => 'fa-user-shield',
+        'pages' => ['users', 'email-templates', 'email-jobs', 'email-logs'],
+        'links' => [
+            ['route' => 'profile.edit',           'slug' => 'profile',          'icon' => 'fa-user-circle',  'label' => 'User Profile'],
+            ['route' => 'users.index',             'slug' => 'users',            'icon' => 'fa-users',        'label' => 'User Management'],
+            ['route' => 'email-templates.index',   'slug' => 'email-templates',  'icon' => 'fa-envelope',     'label' => 'Email Templates'],
+            ['route' => 'email-jobs.index',        'slug' => 'email-jobs',       'icon' => 'fa-paper-plane',  'label' => 'Email Jobs'],
+            ['route' => 'email-logs.index',        'slug' => 'email-logs',       'icon' => 'fa-list',         'label' => 'Email Logs'],
+        ],
+    ],
+];
 @endphp
 
-<div class="bm_card bm_sidebar_card_margin_top sidebar">
+{{-- ── Desktop sidebar ── --}}
+<aside
+    :class="sidebarOpen ? 'w-64' : 'w-16'"
+    class="hidden lg:flex flex-col flex-shrink-0 transition-all duration-300 ease-in-out overflow-hidden"
+    style="background-color: rgb(28, 28, 85);">
 
-    <div class="sidebar-wrapper" style="background-color:rgb(50, 50, 128);">
-
-        <div class="logo">
-            <img src="{{ asset('images/Logo.jpg') }}" style="border: solid 2px grey;  width:200px; height: 15%;" />
-        </div>
-        <ul class="nav">
-
-            <li>
-                <a data-toggle="collapse" href="#userdata" aria-expanded="true" class="show">
-                    <i class="fa fa-music"></i>
-                    <span class="nav-link-text">
-                        <h4>{{ __('User Access') }}</h4>
-                    </span>
-                    <b class="caret mt-1"></b>
-                </a>
-
-                <div class="collapse @if ($pageSlug == 'dashboard' || $pageSlug == 'acts' || $pageSlug == 'vacancies' || $pageSlug == 'availablemusicians' || $pageSlug == 'rehearsalrooms' || $pageSlug == 'venues' || $pageSlug == 'agencies' || $pageSlug == 'about') show @endif" id="userdata" data-parent=".sidebar-wrapper">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug=='acts' ) class="active " @endif>
-                            <a href="{{ route('acts.index') }}">
-                                <i class="fa fa-music"></i>
-                                <p>
-                                    <h5>{{ __('Acts') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='vacancies' ) class="active " @endif>
-                            <a href="{{ route('vacancies.index') }}">
-                                <i class="fa fa-music"></i>
-                                <p>
-                                    <h5>{{ __('Vacancies') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='availablemusicians' ) class="active " @endif>
-                            <a href="{{ route('availablemusicians.index') }}">
-                                <i class="fa fa-music"></i>
-                                <p>
-                                    <h5>{{ __('Available musicians') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='rehearsalrooms' ) class="active " @endif>
-                            <a href="{{ route('rehearsalrooms.index') }}">
-                                <i class="fa fa-music"></i>
-                                <p>
-                                    <h5>{{ __('Rehearsal rooms') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='venues' ) class="active " @endif>
-                            <a href="{{ route('venues.index') }}">
-                                <i class="fa fa-music"></i>
-                                <p>
-                                    <h5>{{ __('Venues') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='agencies' ) class="active " @endif>
-                            <a href="{{ route('agencies.index') }}">
-                                <i class="fa fa-music"></i>
-                                <p>
-                                    <h5>{{ __('Agencies') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li>
-                <a data-toggle="collapse" href="#statistics" aria-expanded="{{ $pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' ? 'true' : 'false' }}" class="{{ $pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' ? '' : 'collapsed' }}">
-                    <i class="fa fa-chart-bar"></i>
-                    <span class="nav-link-text">
-                        <h4>{{ __('Statistics') }}</h4>
-                    </span>
-                    <b class="caret mt-1"></b>
-                </a>
-
-                <div class="collapse @if ($pageSlug == 'chart1' || $pageSlug == 'chart2' || $pageSlug == 'chart3' || $pageSlug == 'chart4' || $pageSlug == 'chart5') show @endif" id="statistics" data-parent=".sidebar-wrapper">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug=='chart1' ) class="active " @endif>
-                            <a href="{{ route('statistics.chart1') }}">
-                                <i class="fa fa-chart-bar"></i>
-                                <p>
-                                    <h5>{{ __('Users') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='chart2' ) class="active " @endif>
-                            <a href="{{ route('statistics.chart2') }}">
-                                <i class="fa fa-chart-bar"></i>
-                                <p>
-                                    <h5>{{ __('Vacancies') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='chart3' ) class="active " @endif>
-                            <a href="{{ route('statistics.chart3') }}">
-                                <i class="fa fa-chart-bar"></i>
-                                <p>
-                                    <h5>{{ __('Acts') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='chart4' ) class="active " @endif>
-                            <a href="{{ route('statistics.chart4') }}">
-                                <i class="fa fa-chart-bar"></i>
-                                <p>
-                                    <h5>{{ __('Available musicians(AM)') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='chart5' ) class="active " @endif>
-                            <a href="{{ route('statistics.chart5') }}">
-                                <i class="fa fa-chart-bar"></i>
-                                <p>
-                                    <h5>{{ __('(AM) Per instrument') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li>
-                <a data-toggle="collapse" href="#about" aria-expanded="{{ $pageSlug == 'aboutus' || $pageSlug == 'aboutdatausage' || $pageSlug == 'aboutacts' || $pageSlug == 'aboutvacancies' || $pageSlug == 'aboutavailablemusicians' || $pageSlug == 'aboutrehearsalrooms'  || $pageSlug == 'aboutagencies' || $pageSlug == 'aboutvenues' ? 'true' : 'false' }}" class="{{ $pageSlug == 'aboutus' || $pageSlug == 'aboutdatausage' || $pageSlug == 'aboutacts' ? '' : 'collapsed' }}">
-                    <i class="fa fa-chevron-circle-right"></i>
-                    <span class="nav-link-text">
-                        <h4>{{ __('About') }}</h4>
-                    </span>
-                    <b class="caret mt-1"></b>
-                </a>
-
-                <div class="collapse @if ($pageSlug == 'aboutus' || $pageSlug == 'aboutdatausage' || $pageSlug == 'aboutacts' || $pageSlug == 'aboutvacancies' || $pageSlug == 'aboutavailablemusicians' || $pageSlug == 'aboutrehearsalrooms' || $pageSlug == 'aboutvenues' || $pageSlug == 'aboutagencies' ) show @endif" id="about" data-parent=".sidebar-wrapper">
-                    <ul class="nav pl-4">
-
-                        <li @if ($pageSlug=='aboutacts' ) class="active " @endif>
-                            <a href="{{ route('about.acts') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Acts') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutvacancies' ) class="active " @endif>
-                            <a href="{{ route('about.vacancies') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Vacancies') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutavailablemusicians' ) class="active " @endif>
-                            <a href="{{ route('about.availablemusicians') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Available musicians') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutrehearsalrooms' ) class="active " @endif>
-                            <a href="{{ route('about.rehearsalrooms') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Rehearsal rooms') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutagencies' ) class="active " @endif>
-                            <a href="{{ route('about.agencies') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Agencies') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutvenues' ) class="active " @endif>
-                            <a href="{{ route('about.venues') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Venues') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutus' ) class="active " @endif>
-                            <a href="{{ route('about.us') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('About us') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                        <li @if ($pageSlug=='aboutdatausage' ) class="active " @endif>
-                            <a href="{{ route('about.datausage') }}">
-                                <i class="fa fa-chevron-circle-right"></i>
-                                <p>
-                                    <h5>{{ __('Data usage') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            @if($user->is_admin)
-            <li>
-                <a data-toggle="collapse" href="#beheer" aria-expanded="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' ? 'true' : 'false' }}" class="{{ $pageSlug == 'instruments' || $pageSlug == 'genres' ? '' : 'collapsed' }}">
-                    <i class="fa fa-database"></i>
-                    <span class="nav-link-text">
-                        <h4>{{ __('Support data') }}</h4>
-                    </span>
-                    <b class="caret mt-1"></b>
-                </a>
-
-                <div class="collapse @if ($pageSlug == 'beheer' || $pageSlug == 'instruments' || $pageSlug == 'genres') show @endif" id="beheer" data-parent=".sidebar-wrapper">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug=='instruments' ) class="active " @endif>
-                            <a href="{{ route('instruments.index') }}">
-                                <i class="fa fa-database"></i>
-                                <p>
-                                    <h5>{{ __('Instruments') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='genres' ) class="active " @endif>
-                            <a href="{{ route('genres.index') }}">
-                                <i class="fa fa-database"></i>
-                                <p>
-                                    <h5>{{ __('Genres') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            @endif
-
-            @if($user->is_admin)
-            <li>
-
-                <a data-toggle="collapse" href="#admin" aria-expanded="{{ in_array($pageSlug, ['userprofile', 'users', 'email-templates', 'email-jobs', 'email-logs']) ? 'true' : 'false' }}" class="{{ in_array($pageSlug, ['userprofile', 'users', 'email-templates', 'email-jobs', 'email-logs']) ? '' : 'collapsed' }}">
-                    <i class="fa fa-user-circle"></i>
-                    <span class="nav-link-text">
-                        <h4>{{ __('Management') }}</h4>
-                        <b class="caret mt-1"></b>
-                    </span>
-                </a>
-
-                <div class="collapse @if (in_array($pageSlug, ['userprofile', 'users', 'email-templates', 'email-jobs', 'email-logs'])) show @endif" id="admin" data-parent=".sidebar-wrapper">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug=='profile') class="active" @endif>
-                            <a href="{{ route('profile.edit') }}">
-                                <i class="fa fa-user-circle"></i>
-                                <p>
-                                    <h5>{{ __('User Profile') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='users') class="active" @endif>
-                            <a href="{{ route('users.index') }}">
-                                <i class="fa fa-user-circle"></i>
-                                <p>
-                                    <h5>{{ __('User Management') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='email-templates') class="active" @endif>
-                            <a href="{{ route('email-templates.index') }}">
-                                <i class="fa fa-envelope"></i>
-                                <p>
-                                    <h5>{{ __('Email Templates') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='email-jobs') class="active" @endif>
-                            <a href="{{ route('email-jobs.index') }}">
-                                <i class="fa fa-paper-plane"></i>
-                                <p>
-                                    <h5>{{ __('Email Jobs') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='email-logs') class="active" @endif>
-                            <a href="{{ route('email-logs.index') }}">
-                                <i class="fa fa-list"></i>
-                                <p>
-                                    <h5>{{ __('Email Logs') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug=='docs') class="active" @endif>
-                            <a href="/docs" target="_blank" rel="noopener noreferrer">
-                                <i class="fa fa-user-circle"></i>
-                                <p>
-                                    <h5>{{ __('Technical Documentation') }}</h5>
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            @endif
-        </ul>
+    {{-- Logo --}}
+    <div class="flex items-center justify-between px-4 py-4 border-b border-white/10 flex-shrink-0">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-2 min-w-0">
+            <img src="{{ asset('images/Logo.jpg') }}"
+                 alt="Bandmate"
+                 class="h-8 w-auto flex-shrink-0 rounded border border-white/20">
+            <span x-show="sidebarOpen"
+                  x-transition:enter="transition-opacity duration-200 delay-100"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="transition-opacity duration-100"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0"
+                  class="text-white font-semibold text-sm truncate"
+                  style="font-family: 'DM Sans', sans-serif;">
+                Bandmate
+            </span>
+        </a>
+        <button @click="sidebarOpen = !sidebarOpen"
+                class="text-white/50 hover:text-white transition-colors flex-shrink-0 ml-2">
+            <i class="fas fa-bars text-sm"></i>
+        </button>
     </div>
-</div>
+
+    {{-- Nav --}}
+    <nav class="flex-1 overflow-y-auto overflow-x-hidden py-4 space-y-1 px-2">
+
+        {{-- Dashboard link --}}
+        <a href="{{ route('dashboard') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                  {{ $pageSlug === 'dashboard' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
+            <i class="fas fa-home w-4 text-center flex-shrink-0 text-xs"></i>
+            <span x-show="sidebarOpen" class="truncate">Dashboard</span>
+        </a>
+
+        {{-- Regular nav groups --}}
+        @foreach($navGroups as $groupKey => $group)
+        @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
+        <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
+            <button @click="open = !open"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                           {{ $isGroupActive ? 'text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
+                <i class="fas {{ $group['icon'] }} w-4 text-center flex-shrink-0 text-xs"></i>
+                <span x-show="sidebarOpen" class="flex-1 text-left truncate">{{ $group['label'] }}</span>
+                <i x-show="sidebarOpen"
+                   :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"
+                   class="fas text-xs text-white/40 flex-shrink-0 transition-transform duration-200"></i>
+            </button>
+
+            <div x-show="open && sidebarOpen"
+                 x-transition:enter="transition-all ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="mt-1 ml-4 space-y-0.5">
+                @foreach($group['links'] as $link)
+                <a href="{{ route($link['route']) }}"
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                          {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
+                    <i class="fas {{ $link['icon'] }} w-3 text-center flex-shrink-0" style="font-size:10px;"></i>
+                    <span class="truncate">{{ $link['label'] }}</span>
+                </a>
+                @endforeach
+            </div>
+        </div>
+        @endforeach
+
+        {{-- Admin-only groups --}}
+        @if($user->is_admin)
+        <div class="pt-2 mt-2 border-t border-white/10">
+            <p x-show="sidebarOpen" class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/30">Admin</p>
+        </div>
+        @foreach($adminGroups as $groupKey => $group)
+        @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
+        <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
+            <button @click="open = !open"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                           {{ $isGroupActive ? 'text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
+                <i class="fas {{ $group['icon'] }} w-4 text-center flex-shrink-0 text-xs"></i>
+                <span x-show="sidebarOpen" class="flex-1 text-left truncate">{{ $group['label'] }}</span>
+                <i x-show="sidebarOpen"
+                   :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"
+                   class="fas text-xs text-white/40 flex-shrink-0"></i>
+            </button>
+
+            <div x-show="open && sidebarOpen"
+                 x-transition:enter="transition-all ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="mt-1 ml-4 space-y-0.5">
+                @foreach($group['links'] as $link)
+                <a href="{{ route($link['route']) }}"
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                          {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
+                    <i class="fas {{ $link['icon'] }} w-3 text-center flex-shrink-0" style="font-size:10px;"></i>
+                    <span class="truncate">{{ $link['label'] }}</span>
+                </a>
+                @endforeach
+                @if($groupKey === 'management')
+                <a href="/docs" target="_blank" rel="noopener noreferrer"
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/10 transition-colors">
+                    <i class="fas fa-book w-3 text-center flex-shrink-0" style="font-size:10px;"></i>
+                    <span class="truncate">Technical Docs</span>
+                    <i class="fas fa-external-link-alt ml-auto" style="font-size:9px; opacity:0.4;"></i>
+                </a>
+                @endif
+            </div>
+        </div>
+        @endforeach
+        @endif
+
+    </nav>
+
+    {{-- User footer --}}
+    <div x-show="sidebarOpen" class="flex-shrink-0 px-4 py-3 border-t border-white/10">
+        <div class="flex items-center gap-3">
+            @if (!empty($userAvatar))
+            <img src="{{ asset('/storage/' . $userAvatar->id . '/' . $userAvatar->file_name) }}"
+                 class="w-8 h-8 rounded-full border border-white/20 object-cover flex-shrink-0">
+            @else
+            <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0">
+                <span class="text-white text-xs font-semibold">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+            </div>
+            @endif
+            <div class="min-w-0">
+                <p class="text-white text-xs font-medium truncate">{{ Auth::user()->name }}</p>
+                <p class="text-white/40 text-xs truncate">{{ Auth::user()->email }}</p>
+            </div>
+        </div>
+    </div>
+</aside>
+
+{{-- ── Mobile sidebar ── --}}
+<aside
+    x-show="sidebarMobileOpen"
+    x-transition:enter="transition-transform ease-out duration-200"
+    x-transition:enter-start="-translate-x-full"
+    x-transition:enter-end="translate-x-0"
+    x-transition:leave="transition-transform ease-in duration-150"
+    x-transition:leave-start="translate-x-0"
+    x-transition:leave-end="-translate-x-full"
+    class="fixed inset-y-0 left-0 z-30 w-64 flex flex-col lg:hidden overflow-y-auto"
+    style="background-color: rgb(28, 28, 85); display:none;">
+
+    <div class="flex items-center justify-between px-4 py-4 border-b border-white/10">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+            <img src="{{ asset('images/Logo.jpg') }}" alt="Bandmate" class="h-8 w-auto rounded border border-white/20">
+            <span class="text-white font-semibold text-sm" style="font-family: 'DM Sans', sans-serif;">Bandmate</span>
+        </a>
+        <button @click="sidebarMobileOpen = false" class="text-white/50 hover:text-white transition-colors">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <nav class="flex-1 py-4 space-y-1 px-2">
+        <a href="{{ route('dashboard') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                  {{ ($pageSlug ?? '') === 'dashboard' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
+            <i class="fas fa-home w-4 text-center text-xs"></i>
+            <span>Dashboard</span>
+        </a>
+
+        @foreach($navGroups as $groupKey => $group)
+        @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
+        <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
+            <button @click="open = !open"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-white/60 hover:text-white hover:bg-white/10">
+                <i class="fas {{ $group['icon'] }} w-4 text-center text-xs"></i>
+                <span class="flex-1 text-left">{{ $group['label'] }}</span>
+                <i :class="open ? 'fa-chevron-down' : 'fa-chevron-right'" class="fas text-xs text-white/40"></i>
+            </button>
+            <div x-show="open" class="mt-1 ml-4 space-y-0.5">
+                @foreach($group['links'] as $link)
+                <a href="{{ route($link['route']) }}"
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                          {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
+                    <i class="fas {{ $link['icon'] }} w-3 text-center" style="font-size:10px;"></i>
+                    <span>{{ $link['label'] }}</span>
+                </a>
+                @endforeach
+            </div>
+        </div>
+        @endforeach
+
+        @if($user->is_admin)
+        <div class="pt-2 mt-2 border-t border-white/10">
+            <p class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/30">Admin</p>
+        </div>
+        @foreach($adminGroups as $groupKey => $group)
+        @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
+        <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
+            <button @click="open = !open"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-white/60 hover:text-white hover:bg-white/10">
+                <i class="fas {{ $group['icon'] }} w-4 text-center text-xs"></i>
+                <span class="flex-1 text-left">{{ $group['label'] }}</span>
+                <i :class="open ? 'fa-chevron-down' : 'fa-chevron-right'" class="fas text-xs text-white/40"></i>
+            </button>
+            <div x-show="open" class="mt-1 ml-4 space-y-0.5">
+                @foreach($group['links'] as $link)
+                <a href="{{ route($link['route']) }}"
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                          {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
+                    <i class="fas {{ $link['icon'] }} w-3 text-center" style="font-size:10px;"></i>
+                    <span>{{ $link['label'] }}</span>
+                </a>
+                @endforeach
+            </div>
+        </div>
+        @endforeach
+        @endif
+    </nav>
+</aside>

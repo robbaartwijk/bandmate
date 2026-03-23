@@ -1,36 +1,13 @@
-@extends('layouts.app', ['page' => __('chart4'), 'pageSlug' => 'chart4'])
-
+@extends('layouts.app', ['page' => __('Available musicians growth'), 'pageSlug' => 'chart4'])
 @section('content')
 
-<style>
-    .bm-chart-wrapper {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-        background: rgb(40, 24, 47);
-        border: 2px solid rgb(244, 239, 239);
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    .bm-chart-wrapper:hover {
-        transform: none;
-    }
-    @media (min-width: 992px) {
-        .bm-chart-wrapper:hover {
-            transform: scale(1.05);
-            transition: transform .2s;
-        }
-    }
-</style>
-
-<div class="col-md-12 text-center">
-    <h1>Available musicians registration growth</h1>
-</div>
-
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-8">
-            <div class="bm-chart-wrapper">
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Available musicians growth</h2>
+    </div>
+    <div class="bm-card-body">
+        <div class="mx-auto" style="max-width:800px;">
+            <div class="border border-white/20 rounded-lg p-4 bg-white/5 transition-transform duration-200 hover:scale-105">
                 <x-chartjs-component :chart="$chartavailablemusiciansregistrations" />
             </div>
         </div>

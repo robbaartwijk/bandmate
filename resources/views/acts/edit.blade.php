@@ -2,227 +2,155 @@
 
 @section('content')
 
-<div class="col-container">
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Edit act</h2>
+    </div>
+    <div class="bm-card-body">
+        <form action="{{ route('acts.update', $act->id) }}" method="post" enctype="multipart/form-data">
+            @csrf @method('put')
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bm_card card">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Edit act</b></h3>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                {{-- Column 1: Basic info --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Basic info</h3>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Name</label>
+                        <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
+                               placeholder="Name" value="{{ $act->name }}">
+                        @include('alerts.feedback', ['field' => 'name'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Members</label>
+                        <input type="number" min="1" name="number_of_members"
+                               class="bm-input @error('number_of_members') border-red-500 @enderror"
+                               value="{{ $act->number_of_members }}">
+                        @include('alerts.feedback', ['field' => 'number_of_members'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Genre</label>
+                        <select name="genre_id" class="bm-select @error('genre_id') border-red-500 @enderror">
+                            <option value="">Select genre</option>
+                            @foreach ($genres as $genre)
+                            <option value="{{ $genre->id }}" {{ $act->genre_id == $genre->id ? 'selected' : '' }}>
+                                {{ $genre->group }} — {{ $genre->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @include('alerts.feedback', ['field' => 'genre_id'])
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="rehearsal_room" name="rehearsal_room" class="bm-checkbox" {{ $act->rehearsal_room ? 'checked' : '' }}>
+                        <label for="rehearsal_room" class="text-sm text-white/70">Rehearsal room available?</label>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="active" name="active" class="bm-checkbox" {{ $act->active ? 'checked' : '' }}>
+                        <label for="active" class="text-sm text-white/70">Act currently active?</label>
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Act picture</label>
+                        @if(!empty($act->image))
+                        <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}"
+                             class="bm_thumbnail mb-2">
+                        @endif
+                        <input type="file" id="actpic" name="actpic" accept="image/*"
+                               class="block w-full text-sm text-white/60 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
+                               onchange="validateFileSize(this)">
+                        @include('alerts.feedback', ['field' => 'actpic'])
+                    </div>
                 </div>
 
-                <div class="bm_row_layout row">
+                {{-- Column 2: Contact --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Contact</h3>
 
-                    <form action="{{ route('acts.update', $act->id) }}" method="post" enctype="multipart/form-data" style="width:100%;">
-                        @csrf
-                        @method('put')
+                    @foreach([
+                        ['email',   'Email',   'Email address'],
+                        ['phone',   'Phone',   'Phone number'],
+                        ['website', 'Website', 'https://'],
+                        ['facebook','Facebook','Facebook URL'],
+                        ['youtube', 'YouTube', 'YouTube URL'],
+                        ['twitter', 'Twitter', 'Twitter URL'],
+                    ] as [$name, $label, $placeholder])
+                    <div class="bm-form-group">
+                        <label class="bm-label">{{ $label }}</label>
+                        <input type="text" name="{{ $name }}"
+                               class="bm-input @error($name) border-red-500 @enderror"
+                               placeholder="{{ $placeholder }}" value="{{ $act->$name }}">
+                        @include('alerts.feedback', ['field' => $name])
+                    </div>
+                    @endforeach
+                </div>
 
-                        <div class="row">
+                {{-- Column 3: Social --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Social & media</h3>
 
-                            {{-- Column 1: Basic info --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
+                    @foreach([
+                        ['instagram',  'Instagram',  'Instagram URL'],
+                        ['soundcloud', 'SoundCloud', 'SoundCloud URL'],
+                        ['spotify',    'Spotify',    'Spotify URL'],
+                        ['bluesky',    'Bluesky',    'Bluesky URL'],
+                        ['youtubedemo','Video demo', 'YouTube embed URL'],
+                    ] as [$name, $label, $placeholder])
+                    <div class="bm-form-group">
+                        <label class="bm-label">{{ $label }}</label>
+                        <input type="text" name="{{ $name }}"
+                               class="bm-input @error($name) border-red-500 @enderror"
+                               placeholder="{{ $placeholder }}" value="{{ $act->$name }}">
+                        @include('alerts.feedback', ['field' => $name])
+                    </div>
+                    @endforeach
+                </div>
 
-                                    <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                        <label for="name" class="bm_label_layout"><h3>Name</h3></label>
-                                        <input type="text" name="name"
-                                            class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            placeholder="Name" value="{{ $act->name }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'name'])
-                                    </div>
+            </div>
 
-                                    <div class="bm_form_group form-group {{ $errors->has('number_of_members') ? 'has-danger' : '' }}">
-                                        <label for="number_of_members" class="bm_label_layout"><h3>Members</h3></label>
-                                        <input type="number" min="1" name="number_of_members"
-                                            class="bm_general_input form-control {{ $errors->has('number_of_members') ? 'is-invalid' : '' }}"
-                                            placeholder="Number of Members" value="{{ $act->number_of_members }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'number_of_members'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
-                                        <label for="genre_id" class="bm_label_layout"><h3>Genre</h3></label>
-                                        <select name="genre_id"
-                                            class="bm_general_input form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}"
-                                            style="width:100%;">
-                                            <option value="">Select</option>
-                                            @foreach ($genres as $genre)
-                                            <option value="{{ $genre->id }}" {{ $act->genre_id == $genre->id ? 'selected' : '' }}>
-                                                {{ $genre->group }} - {{ $genre->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'genre_id'])
-                                    </div>
-
-                                    <div class="form-group {{ $errors->has('rehearsal_room') ? 'has-danger' : '' }}">
-                                        <label for="rehearsal_room"><h3>Rehearsal room?</h3></label>
-                                        <input type="checkbox" class="bm_checkbox_layout form-check-input" id="rehearsal_room" name="rehearsal_room" {{ $act->rehearsal_room ? 'checked' : '' }}>
-                                        @include('alerts.feedback', ['field' => 'rehearsal_room'])
-                                    </div>
-
-                                    <div class="form-group {{ $errors->has('active') ? 'has-danger' : '' }}">
-                                        <label for="active"><h3>Act currently active?</h3></label>
-                                        <input type="checkbox" class="bm_checkbox_layout form-check-input" id="active" name="active" {{ $act->active ? 'checked' : '' }}>
-                                        @include('alerts.feedback', ['field' => 'active'])
-                                    </div>
-
-                                    <div class="bm_upload_box">
-                                        <label class="bm_upload_label" for="actpic"><h3>Act picture</h3></label>
-                                        <input type="file" class="bm_upload btn btn-info" id="actpic" name="actpic" accept="image/*" onchange="validateFileSize(this)">
-                                        @include('alerts.feedback', ['field' => 'actpic'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Column 2: Contact --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                                        <label for="website" class="bm_label_layout"><h3>Website</h3></label>
-                                        <input type="text" name="website"
-                                            class="bm_general_input form-control {{ $errors->has('website') ? 'is-invalid' : '' }}"
-                                            placeholder="Website" value="{{ $act->website }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'website'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                                        <label for="email" class="bm_label_layout"><h3>Email</h3></label>
-                                        <input type="text" name="email"
-                                            class="bm_general_input form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                            placeholder="Email" value="{{ $act->email }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'email'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
-                                        <label for="phone" class="bm_label_layout"><h3>Phone</h3></label>
-                                        <input type="text" name="phone"
-                                            class="bm_general_input form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                            placeholder="Phone" value="{{ $act->phone }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'phone'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('facebook') ? 'has-danger' : '' }}">
-                                        <label for="facebook" class="bm_label_layout"><h3>Facebook</h3></label>
-                                        <input type="text" name="facebook"
-                                            class="bm_general_input form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}"
-                                            placeholder="Facebook" value="{{ $act->facebook }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'facebook'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('youtube') ? 'has-danger' : '' }}">
-                                        <label for="youtube" class="bm_label_layout"><h3>Youtube</h3></label>
-                                        <input type="text" name="youtube"
-                                            class="bm_general_input form-control {{ $errors->has('youtube') ? 'is-invalid' : '' }}"
-                                            placeholder="Youtube" value="{{ $act->youtube }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'youtube'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('twitter') ? 'has-danger' : '' }}">
-                                        <label for="twitter" class="bm_label_layout"><h3>Twitter</h3></label>
-                                        <input type="text" name="twitter"
-                                            class="bm_general_input form-control {{ $errors->has('twitter') ? 'is-invalid' : '' }}"
-                                            placeholder="Twitter" value="{{ $act->twitter }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'twitter'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Column 3: Social --}}
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('instagram') ? 'has-danger' : '' }}">
-                                        <label for="instagram" class="bm_label_layout"><h3>Instagram</h3></label>
-                                        <input type="text" name="instagram"
-                                            class="bm_general_input form-control {{ $errors->has('instagram') ? 'is-invalid' : '' }}"
-                                            placeholder="Instagram" value="{{ $act->instagram }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'instagram'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('soundcloud') ? 'has-danger' : '' }}">
-                                        <label for="soundcloud" class="bm_label_layout"><h3>Soundcloud</h3></label>
-                                        <input type="text" name="soundcloud"
-                                            class="bm_general_input form-control {{ $errors->has('soundcloud') ? 'is-invalid' : '' }}"
-                                            placeholder="Soundcloud" value="{{ $act->soundcloud }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'soundcloud'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('spotify') ? 'has-danger' : '' }}">
-                                        <label for="spotify" class="bm_label_layout"><h3>Spotify</h3></label>
-                                        <input type="text" name="spotify"
-                                            class="bm_general_input form-control {{ $errors->has('spotify') ? 'is-invalid' : '' }}"
-                                            placeholder="Spotify" value="{{ $act->spotify }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'spotify'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('bluesky') ? 'has-danger' : '' }}">
-                                        <label for="bluesky" class="bm_label_layout"><h3>Bluesky</h3></label>
-                                        <input type="text" name="bluesky"
-                                            class="bm_general_input form-control {{ $errors->has('bluesky') ? 'is-invalid' : '' }}"
-                                            placeholder="Bluesky" value="{{ $act->bluesky }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'bluesky'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('youtubedemo') ? 'has-danger' : '' }}">
-                                        <label for="youtubedemo" class="bm_label_layout"><h3>Video</h3></label>
-                                        <input type="text" name="youtubedemo"
-                                            class="bm_general_input form-control {{ $errors->has('youtubedemo') ? 'is-invalid' : '' }}"
-                                            placeholder="Youtube Demo" value="{{ $act->youtubedemo }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'youtubedemo'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Description: full width --}}
-                            <div class="col-12">
-                                <div class="card-body text-primary">
-                                    <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                                        <label for="description" class="bm_label_layout"><h3>Description</h3></label>
-                                        <textarea id="description" name="description"
-                                            class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="Description">{{ $act->description }}</textarea>
-                                        @include('alerts.feedback', ['field' => 'description'])
-
-                                        <button type="submit" class="btn btn-info">Update</button>
-                                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-
+            {{-- Description --}}
+            <div class="mt-6">
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Description</h3>
+                <div class="bm-form-group">
+                    <label class="bm-label">Description</label>
+                    <textarea id="description" name="description"
+                              class="bm-textarea @error('description') border-red-500 @enderror">{{ $act->description }}</textarea>
+                    @include('alerts.feedback', ['field' => 'description'])
                 </div>
             </div>
-        </div>
+
+            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary">
+                    <i class="fas fa-save"></i> Save changes
+                </button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+
+        </form>
     </div>
 </div>
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script>
-    function validateFileSize(input) {
-        const file = input.files[0];
-        if (file && file.size > 1048576) {
-            alert('File size must be less than 1MB');
-            input.value = '';
-        }
+new SimpleMDE({ element: document.getElementById('description'), toolbar: ['bold','italic','heading','|','quote','unordered-list','ordered-list','|','link','image'] });
+function validateFileSize(input) {
+    if (input.files[0] && input.files[0].size > 1048576) {
+        alert('File size must be less than 1MB');
+        input.value = '';
     }
+}
 </script>
+@endpush
 
 @endsection

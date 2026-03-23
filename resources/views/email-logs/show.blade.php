@@ -1,82 +1,60 @@
 @extends('layouts.app', ['page' => __('Email Logs'), 'pageSlug' => 'email-logs'])
-
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card">
-            <div class="card-header">
-                <h3 class="card-title"><b>Log entry #{{ $emailLog->id }}</b></h3>
-            </div>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Log entry #{{ $emailLog->id }}</h2>
+        @can('delete', $emailLog)
+        <form action="{{ route('email-logs.destroy', $emailLog) }}" method="POST" class="inline"
+              onsubmit="return confirm('Delete this log entry?')">
+            @csrf @method('DELETE')
+            <button type="submit" class="bm-btn bm-btn-danger bm-btn-sm"><i class="fas fa-trash"></i> Delete</button>
+        </form>
+        @endcan
+    </div>
+    <div class="bm-card-body">
 
-            {{-- Meta info --}}
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <div class="card-body text-primary">
-                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
-                            <h4><b>Recipient: </b>{{ $emailLog->recipient->email }}
-                                @if($emailLog->recipient->name)
-                                    <small style="color:#aaa;"> ({{ $emailLog->recipient->name }})</small>
-                                @endif
-                            </h4>
-                            <h4><b>Job: </b>
-                                <a href="{{ route('email-jobs.show', $emailLog->recipient->job_id) }}">
-                                    Job #{{ $emailLog->recipient->job_id }}
-                                </a>
-                                — {{ $emailLog->recipient->job->template->name ?? '—' }}
-                            </h4>
-                            <h4><b>Status: </b>{{ ucfirst($emailLog->status) }}</h4>
-                            <h4><b>Message ID: </b><code>{{ $emailLog->message_id ?? '—' }}</code></h4>
-                            <h4><b>Sent at: </b>{{ $emailLog->sent_at ? $emailLog->sent_at->format('d M Y, H:i:s') : '—' }}</h4>
-                            <h4><b>Failed at: </b>{{ $emailLog->failed_at ? $emailLog->failed_at->format('d M Y, H:i:s') : '—' }}</h4>
-                        </div>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div>
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Details</h3>
+                <dl class="space-y-2 text-sm">
+                    <div class="flex gap-2"><dt class="text-white/40 w-28 flex-shrink-0">Recipient</dt>
+                        <dd class="text-white/80">{{ $emailLog->recipient->email }}
+                            @if($emailLog->recipient->name)<span class="text-white/40 text-xs ml-1">({{ $emailLog->recipient->name }})</span>@endif
+                        </dd></div>
+                    <div class="flex gap-2"><dt class="text-white/40 w-28 flex-shrink-0">Job</dt>
+                        <dd><a href="{{ route('email-jobs.show', $emailLog->recipient->job_id) }}" class="text-indigo-400 hover:text-indigo-300">
+                            Job #{{ $emailLog->recipient->job_id }}</a>
+                            — {{ $emailLog->recipient->job->template->name ?? '—' }}</dd></div>
+                    <div class="flex gap-2"><dt class="text-white/40 w-28 flex-shrink-0">Status</dt>
+                        <dd>
+                            @php $sc = match($emailLog->status) { 'sent','delivered' => 'bm-badge-green', 'opened','clicked' => 'bm-badge-blue', 'failed','bounced' => 'bm-badge-red', default => 'bm-badge-gray' }; @endphp
+                            <span class="bm-badge {{ $sc }}">{{ ucfirst($emailLog->status) }}</span>
+                        </dd></div>
+                    <div class="flex gap-2"><dt class="text-white/40 w-28 flex-shrink-0">Message ID</dt><dd class="text-white/50 font-mono text-xs">{{ $emailLog->message_id ?? '—' }}</dd></div>
+                    <div class="flex gap-2"><dt class="text-white/40 w-28 flex-shrink-0">Sent at</dt><dd class="text-white/40 text-xs">{{ $emailLog->sent_at ? $emailLog->sent_at->format('d M Y, H:i:s') : '—' }}</dd></div>
+                    @if($emailLog->failed_at)
+                    <div class="flex gap-2"><dt class="text-white/40 w-28 flex-shrink-0">Failed at</dt><dd class="text-red-400 text-xs">{{ $emailLog->failed_at->format('d M Y, H:i:s') }}</dd></div>
+                    @endif
+                </dl>
             </div>
+        </div>
 
-            {{-- Error message --}}
-            @if($emailLog->error_message)
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-body text-primary">
-                        <h4><b>Error message</b></h4>
-                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
-                            <pre style="color:#e55; background:#1e1e2e; padding:12px; border-radius:6px; font-size:12px; white-space:pre-wrap; overflow-x:auto;">{{ $emailLog->error_message }}</pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
+        @if($emailLog->error_message)
+        <div class="mb-6">
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Error message</h3>
+            <pre class="bg-gray-900 rounded-lg p-4 text-xs text-red-400 overflow-x-auto whitespace-pre-wrap border border-red-500/20">{{ $emailLog->error_message }}</pre>
+        </div>
+        @endif
 
-            {{-- Merge variables --}}
-            @if($emailLog->recipient->variables)
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-body text-primary">
-                        <h4><b>Merge variables used</b></h4>
-                        <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
-                            <pre style="color:#ccc; background:#1e1e2e; padding:12px; border-radius:6px; font-size:12px; white-space:pre-wrap; overflow-x:auto;">{{ json_encode($emailLog->recipient->variables, JSON_PRETTY_PRINT) }}</pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
+        @if($emailLog->recipient->variables)
+        <div class="mb-6">
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Merge variables used</h3>
+            <pre class="bg-gray-900 rounded-lg p-4 text-xs text-white/60 overflow-x-auto whitespace-pre-wrap border border-white/10">{{ json_encode($emailLog->recipient->variables, JSON_PRETTY_PRINT) }}</pre>
+        </div>
+        @endif
 
-            {{-- Actions --}}
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-body">                    
-                        <a href="{{ route('email-logs.index') }}" class="btn btn-primary">Back</a>
-                        @can('delete', $emailLog)
-                        <form action="{{ route('email-logs.destroy', $emailLog) }}" method="POST" style="display:inline"
-                              onsubmit="return confirm('Delete this log entry?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete log entry</button>
-                        </form>
-                        @endcan
-                    </div>
-                </div>
-            </div>
-
+        <div class="pt-4 border-t border-white/10">
+            <a href="{{ route('email-logs.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
     </div>
 </div>

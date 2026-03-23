@@ -1,66 +1,35 @@
 @extends('layouts.app', ['page' => __('Genres'), 'pageSlug' => 'genres'])
-
 @section('content')
-
-<div class="col-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bm_card card">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Add genre</b></h3>
+<div class="bm-card">
+    <div class="bm-card-header"><h2 class="bm-card-title">Add genre</h2></div>
+    <div class="bm-card-body max-w-lg">
+        <form action="{{ route('genres.store') }}" method="post">
+            @csrf
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div class="bm-form-group">
+                    <label class="bm-label">Name</label>
+                    <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
+                           placeholder="Genre name" value="{{ old('name') }}">
+                    @include('alerts.feedback', ['field' => 'name'])
                 </div>
-
-                <div class="bm_row_layout row">
-
-                    <form action="{{ route('genres.store') }}" method="post" style="width:100%;">
-                        @csrf
-
-                        <div class="row">
-
-                            <div class="col-12 col-lg-4">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                        <label for="name" class="bm_label_layout"><h3>Name</h3></label>
-                                        <input type="text" name="name"
-                                            class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            placeholder="Name" value="{{ old('name') }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'name'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('group') ? 'has-danger' : '' }}">
-                                        <label for="group" class="bm_label_layout"><h3>Group</h3></label>
-                                        <input type="text" name="group"
-                                            class="bm_general_input form-control {{ $errors->has('group') ? 'is-invalid' : '' }}"
-                                            placeholder="Group" value="{{ old('group') }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'group'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="card-body text-primary">
-                                    <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                                        <label for="description" class="bm_label_layout"><h3>Description</h3></label>
-                                        <textarea id="description" name="description"
-                                            class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="Description">{{ old('description') }}</textarea>
-                                        @include('alerts.feedback', ['field' => 'description'])
-
-                                        <button type="submit" class="btn btn-info">Add</button>
-                                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-
+                <div class="bm-form-group">
+                    <label class="bm-label">Group</label>
+                    <input type="text" name="group" class="bm-input @error('group') border-red-500 @enderror"
+                           placeholder="e.g. Rock, Jazz, Classical" value="{{ old('group') }}">
+                    @include('alerts.feedback', ['field' => 'group'])
                 </div>
             </div>
-        </div>
+            <div class="bm-form-group">
+                <label class="bm-label">Description</label>
+                <textarea name="description" class="bm-textarea @error('description') border-red-500 @enderror"
+                          placeholder="Describe this genre...">{{ old('description') }}</textarea>
+                @include('alerts.feedback', ['field' => 'description'])
+            </div>
+            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary"><i class="fas fa-plus"></i> Add genre</button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+        </form>
     </div>
 </div>
-
 @endsection

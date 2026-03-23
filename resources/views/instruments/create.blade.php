@@ -1,51 +1,27 @@
 @extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
-
 @section('content')
-
-<div class="col-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bm_card card">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Add instrument</b></h3>
-                </div>
-
-                <div class="bm_row_layout row">
-
-                    <form action="{{ route('instruments.store') }}" method="post" style="width:100%;">
-                        @csrf
-
-                        <div class="col-12 col-lg-4">
-                            <div class="card-body text-primary">
-
-                                <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                    <label for="name" class="bm_label_layout"><h3>Name</h3></label>
-                                    <input type="text" name="name"
-                                        class="bm_general_input form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        placeholder="Name" value="{{ old('name') }}" style="width:100%;">
-                                    @include('alerts.feedback', ['field' => 'name'])
-                                </div>
-
-                                <div class="bm_form_group form-group {{ $errors->has('type') ? 'has-danger' : '' }}">
-                                    <label for="type" class="bm_label_layout"><h3>Type</h3></label>
-                                    <input type="text" name="type"
-                                        class="bm_general_input form-control {{ $errors->has('type') ? 'is-invalid' : '' }}"
-                                        placeholder="Type" value="{{ old('type') }}" style="width:100%;">
-                                    @include('alerts.feedback', ['field' => 'type'])
-                                </div>
-
-                                <button type="submit" class="btn btn-info">Add</button>
-                                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-
-                            </div>
-                        </div>
-
-                    </form>
-
-                </div>
+<div class="bm-card">
+    <div class="bm-card-header"><h2 class="bm-card-title">Add instrument</h2></div>
+    <div class="bm-card-body max-w-md">
+        <form action="{{ route('instruments.store') }}" method="post">
+            @csrf
+            <div class="bm-form-group">
+                <label class="bm-label">Name</label>
+                <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
+                       placeholder="Instrument name" value="{{ old('name') }}">
+                @include('alerts.feedback', ['field' => 'name'])
             </div>
-        </div>
+            <div class="bm-form-group">
+                <label class="bm-label">Type</label>
+                <input type="text" name="type" class="bm-input @error('type') border-red-500 @enderror"
+                       placeholder="e.g. String, Wind, Percussion" value="{{ old('type') }}">
+                @include('alerts.feedback', ['field' => 'type'])
+            </div>
+            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary"><i class="fas fa-plus"></i> Add instrument</button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+        </form>
     </div>
 </div>
-
 @endsection

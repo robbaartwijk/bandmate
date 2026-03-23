@@ -1,20 +1,28 @@
 @extends('layouts.app', ['page' => __('Genres'), 'pageSlug' => 'genres'])
-
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card">
-            <div class="card-header">
-                <h3 class="card-title">Show Genre</h3>
-            </div>
-            <div class="card-body text-primary">
-                <h3><b>Name : </b>{{ $genre->name }}</h3>
-                <h3><b>Group : </b>{{ $genre->group }}</h3>
-                <h4><b>Description : </b>{!! nl2br(e($genre->description)) !!}</h4>
-                <h4><b>Date added : </b>{{ $genre->created_at }}</h4>
-                <h4><b>Date Last Updated : </b>{{ $genre->updated_at }}</h4>
-                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-            </div>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">{{ $genre->name }}</h2>
+        <a href="{{ route('genres.edit', $genre->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-pencil-alt"></i> Edit</a>
+    </div>
+    <div class="bm-card-body max-w-lg">
+        <dl class="space-y-3 text-sm mb-6">
+            <div class="flex gap-2"><dt class="text-white/40 w-24 flex-shrink-0">Name</dt><dd class="text-white/80 font-medium">{{ $genre->name }}</dd></div>
+            <div class="flex gap-2"><dt class="text-white/40 w-24 flex-shrink-0">Group</dt>
+                <dd><span class="bm-badge bm-badge-blue">{{ $genre->group }}</span></dd></div>
+        </dl>
+        @if($genre->description)
+        <div>
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Description</h3>
+            <p class="text-white/70 text-sm leading-relaxed">{!! nl2br(e($genre->description)) !!}</p>
+        </div>
+        @endif
+        <div class="mt-8 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+            <dl class="flex gap-6 text-xs text-white/30">
+                <div><dt class="inline">Added:</dt> <dd class="inline">{{ $genre->created_at }}</dd></div>
+                <div><dt class="inline">Updated:</dt> <dd class="inline">{{ $genre->updated_at }}</dd></div>
+            </dl>
+            <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
     </div>
 </div>

@@ -1,25 +1,16 @@
 @extends('layouts.app', ['page' => __('About vacancies'), 'pageSlug' => 'aboutvacancies'])
-
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>About vacancies</b></h3>
-            </div>
-
-            <div class="bm_help_textbox card-body text-primary">
-
-                <ul style="margin-left:20px; list-style-type:disc;">
-                    <li>
-                        <h4>Acts are bands, trios, solo acts, orchestras, etcetera.</h4>
-                    </li>
-                    <li>
-                        <h4>Now that you have registered you can enter your own act(s) into our database and you can now browse through said database.</h4>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">About vacancies</h2>
     </div>
-    @endsection
+    <div class="bm-card-body prose-sm">
+        <ul class="space-y-3 text-white/70 text-sm leading-relaxed list-disc list-inside">
+            <li>A vacancy is an opening in a band or act for a specific instrument.</li>
+            <li>You can only create a vacancy for an act that you have added yourself.</li>
+            <li>Other musicians can browse vacancies to find a band that suits them.</li>
+            <li>Vacancies can include a description of what kind of musician the act is looking for.</li>
+        </ul>
+    </div>
+</div>
+@endsection

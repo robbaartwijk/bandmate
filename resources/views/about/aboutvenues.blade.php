@@ -1,25 +1,16 @@
 @extends('layouts.app', ['page' => __('About venues'), 'pageSlug' => 'aboutvenues'])
-
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>About venues</b></h3>
-            </div>
-
-            <div class="bm_help_textbox card-body text-primary">
-
-                <ul style="margin-left:20px; list-style-type:disc;">
-                    <li>
-                        <h4>Acts are bands, trios, solo acts, orchestras, etcetera.</h4>
-                    </li>
-                    <li>
-                        <h4>Now that you have registered you can enter your own act(s) into our database and you can now browse through said database.</h4>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">About venues</h2>
     </div>
-    @endsection
+    <div class="bm-card-body prose-sm">
+        <ul class="space-y-3 text-white/70 text-sm leading-relaxed list-disc list-inside">
+            <li>Venues are locations where live music is performed — bars, clubs, theatres, and concert halls.</li>
+            <li>Venue owners can add their venue so that acts can find places to perform.</li>
+            <li>Listings include the full address, contact information, and a description of the venue.</li>
+            <li>Only administrators can add venues to keep the listings reliable and relevant.</li>
+        </ul>
+    </div>
+</div>
+@endsection

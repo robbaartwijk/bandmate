@@ -1,11 +1,5 @@
-<footer style="opacity: 0.85;" ; class="footer">
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="copyright text-left">
-                <b>Version 1.2</b>
-            </div>
-            <div class="copyright text-right">
-                &copy; {{ date('Y') }} Copyright Rob Baartwijk
-            </div>
-        </div>
-    </footer>
+<footer class="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3 border-t border-white/10 text-xs text-white/30"
+        style="background-color: rgb(20, 20, 70);">
+    <span><b>Version 1.2</b></span>
+    <span>&copy; {{ date('Y') }} Rob Baartwijk</span>
+</footer>

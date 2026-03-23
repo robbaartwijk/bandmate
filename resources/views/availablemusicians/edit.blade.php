@@ -1,121 +1,94 @@
-@extends('layouts.app', ['page' => __('Availablemusicians'), 'pageSlug' => 'availablemusicians'])
+@extends('layouts.app', ['page' => __('Available musicians'), 'pageSlug' => 'availablemusicians'])
 
 @section('content')
+<div class="bm-card">
+    <div class="bm-card-header"><h2 class="bm-card-title">Edit available musician listing</h2></div>
+    <div class="bm-card-body">
+        <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post" enctype="multipart/form-data">
+            @csrf @method('put')
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="space-y-4">
 
-<div class="col-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bm_card card">
-                <div class="card-header">
-                    <h3 class="card-title"><b>Edit available musician</b></h3>
+                    <div class="bm-form-group">
+                        <label class="bm-label">Musician name</label>
+                        <input type="text" class="bm-input bg-gray-700/50 text-emerald-400 cursor-not-allowed"
+                               value="{{ $availablemusician->user->name }}" readonly>
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Instrument</label>
+                        <select name="instrument_id" class="bm-select @error('instrument_id') border-red-500 @enderror">
+                            @foreach ($availablemusician->instruments as $instrument)
+                            <option value="{{ $instrument->id }}" {{ $availablemusician->instrument->id == $instrument->id ? 'selected' : '' }}>
+                                {{ $instrument->type }} — {{ $instrument->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @include('alerts.feedback', ['field' => 'instrument_id'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Genre</label>
+                        <select name="genre_id" class="bm-select @error('genre_id') border-red-500 @enderror">
+                            @foreach ($availablemusician->genres as $genre)
+                            <option value="{{ $genre->id }}" {{ $availablemusician->genre->id == $genre->id ? 'selected' : '' }}>
+                                {{ $genre->group }} — {{ $genre->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @include('alerts.feedback', ['field' => 'genre_id'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Available from</label>
+                        <input type="date" name="available_from" class="bm-input @error('available_from') border-red-500 @enderror"
+                               value="{{ old('available_from', $availablemusician->available_from) }}">
+                        @include('alerts.feedback', ['field' => 'available_from'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Available until</label>
+                        <input type="date" name="available_until" class="bm-input @error('available_until') border-red-500 @enderror"
+                               value="{{ old('available_until', $availablemusician->available_until) }}">
+                        @include('alerts.feedback', ['field' => 'available_until'])
+                    </div>
+
+                    <div class="bm-form-group">
+                        <label class="bm-label">Picture</label>
+                        @if(!empty($availablemusician->image))
+                        <img src="{{ asset('/storage/' . $availablemusician->image->id . '/' . $availablemusician->image->file_name) }}"
+                             class="bm_thumbnail mb-2">
+                        @endif
+                        <input type="file" id="availablemusicianpic" name="availablemusicianpic" accept="image/*"
+                               class="block w-full text-sm text-white/60 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
+                               onchange="validateFileSize(this)">
+                        @include('alerts.feedback', ['field' => 'availablemusicianpic'])
+                    </div>
                 </div>
 
-                <div class="bm_row_layout row">
-
-                    <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post" enctype="multipart/form-data" style="width:100%;">
-                        @csrf
-                        @method('put')
-
-                        <div class="row">
-
-                            <div class="col-12 col-lg-5">
-                                <div class="card-body text-primary">
-
-                                    <div class="bm_form_group form-group {{ $errors->has('musiciansname') ? 'has-danger' : '' }}">
-                                        <label for="musiciansname" class="bm_label_layout"><h3>Musician name</h3></label>
-                                        <input type="text" name="musiciansname" id="musiciansname"
-                                            style="color:lightgreen; width:100%;"
-                                            class="bm_general_input bm_display_green form-control {{ $errors->has('musiciansname') ? 'is-invalid' : '' }}"
-                                            placeholder="Musician name" value="{{ $availablemusician->user->name }}" readonly>
-                                        @include('alerts.feedback', ['field' => 'musiciansname'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('instrument_id') ? 'has-danger' : '' }}">
-                                        <label for="instrument_id" class="bm_label_layout"><h3>Instrument</h3></label>
-                                        <select name="instrument_id" class="bm_general_input form-control {{ $errors->has('instrument_id') ? 'is-invalid' : '' }}" style="width:100%;">
-                                            <option value="">Select</option>
-                                            @foreach ($availablemusician->instruments as $instrument)
-                                            <option value="{{ $instrument->id }}" {{ $availablemusician->instrument->id == $instrument->id ? 'selected' : '' }}>
-                                                {{ $instrument->type }} - {{ $instrument->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'instrument_id'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('genre_id') ? 'has-danger' : '' }}">
-                                        <label for="genre_id" class="bm_label_layout"><h3>Genre</h3></label>
-                                        <select name="genre_id" class="bm_general_input form-control {{ $errors->has('genre_id') ? 'is-invalid' : '' }}" style="width:100%;">
-                                            <option value="">Select</option>
-                                            @foreach ($availablemusician->genres as $genre)
-                                            <option value="{{ $genre->id }}" {{ $availablemusician->genre->id == $genre->id ? 'selected' : '' }}>
-                                                {{ $genre->group }} - {{ $genre->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @include('alerts.feedback', ['field' => 'genre_id'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('available_from') ? 'has-danger' : '' }}">
-                                        <label for="available_from" class="bm_label_layout"><h3>Available from</h3></label>
-                                        <input type="date" name="available_from" id="available_from"
-                                            class="bm_general_input form-control {{ $errors->has('available_from') ? 'is-invalid' : '' }}"
-                                            value="{{ old('available_from', $availablemusician->available_from ? $availablemusician->available_from : '') }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'available_from'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('available_until') ? 'has-danger' : '' }}">
-                                        <label for="available_until" class="bm_label_layout"><h3>Available until</h3></label>
-                                        <input type="date" name="available_until" id="available_until"
-                                            class="bm_general_input form-control {{ $errors->has('available_until') ? 'is-invalid' : '' }}"
-                                            value="{{ old('available_until', $availablemusician->available_until ? $availablemusician->available_until : '') }}"
-                                            style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'available_until'])
-                                    </div>
-
-                                    <div class="bm_upload_box">
-                                        <label class="bm_upload_label" for="availablemusicianpic"><h3>Picture</h3></label>
-                                        <input type="file" class="bm_upload btn btn-info" id="availablemusicianpic" name="availablemusicianpic" accept="image/*" onchange="validateFileSize(this)">
-                                        @include('alerts.feedback', ['field' => 'availablemusicianpic'])
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {{-- Description full width --}}
-                            <div class="col-12">
-                                <div class="card-body text-primary">
-                                    <div class="form-group {{ $errors->has('description') ? 'has-danger' : '' }}">
-                                        <label for="description" class="bm_label_layout"><h3>Description</h3></label>
-                                        <textarea id="description" name="description"
-                                            class="bm_textarea_layout form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
-                                            placeholder="Description">{{ $availablemusician->description }}</textarea>
-                                        @include('alerts.feedback', ['field' => 'description'])
-
-                                        <button type="submit" class="btn btn-info">Update</button>
-                                        <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-
+                <div class="bm-form-group">
+                    <label class="bm-label">Description</label>
+                    <textarea name="description" class="bm-textarea h-48 @error('description') border-red-500 @enderror">{{ $availablemusician->description }}</textarea>
+                    @include('alerts.feedback', ['field' => 'description'])
                 </div>
             </div>
-        </div>
+
+            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary"><i class="fas fa-save"></i> Save changes</button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+        </form>
     </div>
 </div>
 
+@push('scripts')
 <script>
-    function validateFileSize(input) {
-        const file = input.files[0];
-        if (file && file.size > 1048576) {
-            alert('File size must be less than 1MB');
-            input.value = '';
-        }
+function validateFileSize(input) {
+    if (input.files[0] && input.files[0].size > 1048576) {
+        alert('File size must be less than 1MB');
+        input.value = '';
     }
+}
 </script>
-
+@endpush
 @endsection

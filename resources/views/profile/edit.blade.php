@@ -2,214 +2,127 @@
 
 @section('content')
 
-<div class="col-container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Edit profile</h2>
+    </div>
 
-                @if (session('status'))
-                <div class="alert alert-success" role="alert" id="status-alert">
-                    {{ session('status') }}
-                </div>
-                <script>
-                    setTimeout(function() {
-                        document.getElementById('status-alert').style.display = 'none';
-                    }, 1000);
-                </script>
-                @endif
+    <div class="bm-card-body">
 
-                <div class="card-header">
-                    <h3 class="card-title"><b>Edit profile</b></h3>
-                </div>
+        {{-- Flash --}}
+        @if (session('status'))
+        <div class="bm-alert bm-alert-success" id="status-alert">
+            <i class="fas fa-check-circle"></i> {{ session('status') }}
+        </div>
+        <script>setTimeout(() => { const el = document.getElementById('status-alert'); if(el) el.style.display='none'; }, 2000);</script>
+        @endif
 
-                <form action="{{ route('profile.update', $user->id) }}" method="post" enctype="multipart/form-data" style="width:100%;">
-                    @csrf
-                    @method('put')
+        <form action="{{ route('profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('put')
 
-                    <div class="bm_row_layout row">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                        {{-- Column 1: Personal details --}}
-                        <div class="col-12 col-lg-6">
-                            <div style="border:1px solid rgb(200,130,130); padding:10px; margin:10px;">
-                                <div class="card-body text-primary">
+                {{-- Column 1: Personal details --}}
+                <div class="space-y-4">
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Personal details</h3>
 
-                                    <div class="bm_form_group form-group {{ $errors->has('name') ? 'has-danger' : '' }}">
-                                        <label for="name" class="bm_label_layout_small"><h4>Full name</h4></label>
-                                        <input type="text" name="name"
-                                            class="bm_general_input_small form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            placeholder="Name" value="{{ old('name', $user->name) }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'name'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('first_name') ? 'has-danger' : '' }}">
-                                        <label for="first_name" class="bm_label_layout_small"><h4>First name</h4></label>
-                                        <input type="text" name="first_name"
-                                            class="bm_general_input_small form-control {{ $errors->has('first_name') ? 'is-invalid' : '' }}"
-                                            placeholder="First name" value="{{ $user->first_name }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'first_name'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('last_name') ? 'has-danger' : '' }}">
-                                        <label for="last_name" class="bm_label_layout_small"><h4>Last name</h4></label>
-                                        <input type="text" name="last_name"
-                                            class="bm_general_input_small form-control {{ $errors->has('last_name') ? 'is-invalid' : '' }}"
-                                            placeholder="Last name" value="{{ $user->last_name }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'last_name'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('stage_name') ? 'has-danger' : '' }}">
-                                        <label for="stage_name" class="bm_label_layout_small"><h4>Stage name</h4></label>
-                                        <input type="text" name="stage_name"
-                                            class="bm_general_input_small form-control {{ $errors->has('stage_name') ? 'is-invalid' : '' }}"
-                                            placeholder="Stage name" value="{{ $user->stage_name }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'stage_name'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('email') ? 'has-danger' : '' }}">
-                                        <label for="email" class="bm_label_layout_small"><h4>Email</h4></label>
-                                        <input type="text" name="email"
-                                            class="bm_general_input_small form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                            placeholder="Email" value="{{ $user->email }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'email'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('street') ? 'has-danger' : '' }}">
-                                        <label for="street" class="bm_label_layout_small"><h4>Street</h4></label>
-                                        <input type="text" name="street"
-                                            class="bm_general_input_small form-control {{ $errors->has('street') ? 'is-invalid' : '' }}"
-                                            placeholder="Street" value="{{ $user->street }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'street'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('street_number') ? 'has-danger' : '' }}">
-                                        <label for="street_number" class="bm_label_layout_small"><h4>Street number</h4></label>
-                                        <input type="text" name="street_number"
-                                            class="bm_general_input_small form-control {{ $errors->has('street_number') ? 'is-invalid' : '' }}"
-                                            placeholder="Street number" value="{{ $user->street_number }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'street_number'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('zip') ? 'has-danger' : '' }}">
-                                        <label for="zip" class="bm_label_layout_small"><h4>Zip</h4></label>
-                                        <input type="text" name="zip"
-                                            class="bm_general_input_small form-control {{ $errors->has('zip') ? 'is-invalid' : '' }}"
-                                            placeholder="Zip" value="{{ $user->zip }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'zip'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('city') ? 'has-danger' : '' }}">
-                                        <label for="city" class="bm_label_layout_small"><h4>City</h4></label>
-                                        <input type="text" name="city"
-                                            class="bm_general_input_small form-control {{ $errors->has('city') ? 'is-invalid' : '' }}"
-                                            placeholder="City" value="{{ $user->city }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'city'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('state') ? 'has-danger' : '' }}">
-                                        <label for="state" class="bm_label_layout_small"><h4>State</h4></label>
-                                        <input type="text" name="state"
-                                            class="bm_general_input_small form-control {{ $errors->has('state') ? 'is-invalid' : '' }}"
-                                            placeholder="State" value="{{ $user->state }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'state'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('country') ? 'has-danger' : '' }}">
-                                        <label for="country" class="bm_label_layout_small"><h4>Country</h4></label>
-                                        <input type="text" name="country"
-                                            class="bm_general_input_small form-control {{ $errors->has('country') ? 'is-invalid' : '' }}"
-                                            placeholder="Country" value="{{ $user->country }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'country'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('phone') ? 'has-danger' : '' }}">
-                                        <label for="phone" class="bm_label_layout_small"><h4>Phone</h4></label>
-                                        <input type="text" name="phone"
-                                            class="bm_general_input_small form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                            placeholder="Phone" value="{{ $user->phone }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'phone'])
-                                    </div>
-
-                                    <div class="bm_form_group form-group {{ $errors->has('website') ? 'has-danger' : '' }}">
-                                        <label for="website" class="bm_label_layout_small"><h4>Website</h4></label>
-                                        <input type="text" name="website"
-                                            class="bm_general_input_small form-control {{ $errors->has('website') ? 'is-invalid' : '' }}"
-                                            placeholder="Website" value="{{ $user->website }}" style="width:100%;">
-                                        @include('alerts.feedback', ['field' => 'website'])
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Column 2: Notifications + Avatar --}}
-                        <div class="col-12 col-lg-6">
-                            <div class="card-body text-primary">
-
-                                <h3>Receive email notifications</h3>
-
-                                <div style="border:1px solid rgb(200,130,130); padding:10px; margin-bottom:10px;">
-
-                                    @foreach([
-                                        'email_notification_all'               => 'All emails',
-                                        'email_notification_acts'              => 'New registered acts',
-                                        'email_notification_vacancies'         => 'New registered vacancies',
-                                        'email_notification_availablemusicians'=> 'New registered available musicians',
-                                        'email_notification_rehearsalrooms'    => 'New registered rehearsal rooms',
-                                        'email_notification_venues'            => 'New registered venues',
-                                        'email_notification_agencies'          => 'New registered agencies',
-                                        'email_notification_newsletter'        => 'Newsletters',
-                                    ] as $field => $label)
-                                    <div class="form-group" style="display:flex; align-items:center; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-                                        <h4 style="margin:0;">{{ $label }}</h4>
-
-                                    <input type="checkbox" name="{{ $field }}"
-                                        style="width:20px; height:20px; margin-left:12px; flex-shrink:0; accent-color:#e14eca;"
-                                        {{ $user->$field ? 'checked' : '' }}>
-
-                                    </div>
-                                    @endforeach
-
-                                </div>
-
-                                <h3>Upload your own avatar</h3>
-
-                                <div class="bm_upload_box" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:10px;">
-                                    @if (!empty($user->avatar))
-                                    <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}"
-                                        class="bm_zoom thumbnail" style="width:100px; height:100px; object-fit:cover;">
-                                    @endif
-                                    <input type="file" class="bm_upload btn btn-info" id="AvatarThumbnailPic" name="AvatarThumbnailPic" accept="image/*" onchange="validateFileSize(this)" style="width:auto; flex:1;">
-                                    @include('alerts.feedback', ['field' => 'AvatarThumbnailPic'])
-                                </div>
-
-                            </div>
-                        </div>
-
+                    @foreach([
+                        ['name',          'Full name',     'text', 'Full name'],
+                        ['first_name',     'First name',    'text', 'First name'],
+                        ['last_name',      'Last name',     'text', 'Last name'],
+                        ['stage_name',     'Stage name',    'text', 'Stage name'],
+                        ['email',          'Email',         'text', 'Email address'],
+                        ['street',         'Street',        'text', 'Street'],
+                        ['street_number',  'Street number', 'text', 'Street number'],
+                        ['zip',            'Zip',           'text', 'Zip code'],
+                        ['city',           'City',          'text', 'City'],
+                        ['state',          'State',         'text', 'State / Province'],
+                        ['country',        'Country',       'text', 'Country'],
+                        ['phone',          'Phone',         'text', 'Phone number'],
+                        ['website',        'Website',       'text', 'https://'],
+                    ] as [$field, $label, $type, $placeholder])
+                    <div class="bm-form-group">
+                        <label class="bm-label">{{ $label }}</label>
+                        <input type="{{ $type }}" name="{{ $field }}"
+                               class="bm-input @error($field) border-red-500 @enderror"
+                               placeholder="{{ $placeholder }}"
+                               value="{{ old($field, $user->$field) }}">
+                        @include('alerts.feedback', ['field' => $field])
                     </div>
+                    @endforeach
+                </div>
 
-                    {{-- Submit buttons: full width --}}
-                    <div class="col-12">
-                        <div class="card-body text-primary">
-                            <button type="submit" class="btn btn-info">Update</button>
-                            <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+                {{-- Column 2: Notifications + Avatar --}}
+                <div class="space-y-6">
+
+                    {{-- Email notifications --}}
+                    <div>
+                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Email notifications</h3>
+                        <div class="space-y-1">
+                            @foreach([
+                                'email_notification_all'                => 'All emails',
+                                'email_notification_acts'               => 'New registered acts',
+                                'email_notification_vacancies'          => 'New registered vacancies',
+                                'email_notification_availablemusicians' => 'New registered available musicians',
+                                'email_notification_rehearsalrooms'     => 'New registered rehearsal rooms',
+                                'email_notification_venues'             => 'New registered venues',
+                                'email_notification_agencies'           => 'New registered agencies',
+                                'email_notification_newsletter'         => 'Newsletters',
+                            ] as $field => $label)
+                            <div class="flex items-center justify-between px-3 py-2 rounded hover:bg-white/5 border-b border-white/5">
+                                <span class="text-sm text-white/80">{{ $label }}</span>
+                                <input type="checkbox" name="{{ $field }}"
+                                       class="bm-checkbox"
+                                       {{ $user->$field ? 'checked' : '' }}>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
 
-                </form>
+                    {{-- Avatar --}}
+                    <div>
+                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Avatar</h3>
+                        <div class="flex flex-wrap items-center gap-4">
+                            @if (!empty($user->avatar))
+                            <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}"
+                                 class="w-20 h-20 rounded-full object-cover border-2 border-white/20" alt="Avatar">
+                            @endif
+                            <div class="flex-1">
+                                <input type="file" id="AvatarThumbnailPic" name="AvatarThumbnailPic" accept="image/*"
+                                       class="block w-full text-sm text-white/60 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
+                                       onchange="validateFileSize(this)">
+                                @include('alerts.feedback', ['field' => 'AvatarThumbnailPic'])
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
-        </div>
+
+            {{-- Submit buttons --}}
+            <div class="flex items-center gap-3 mt-6 pt-4 border-t border-white/10">
+                <button type="submit" class="bm-btn bm-btn-primary">
+                    <i class="fas fa-save"></i> Update profile
+                </button>
+                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+
+        </form>
     </div>
 </div>
 
 <script>
-    function validateFileSize(input) {
-        const file = input.files[0];
-        if (file && file.size > 1048576) {
-            alert('File size must be less than 1MB');
-            input.value = '';
-        }
+function validateFileSize(input) {
+    const file = input.files[0];
+    if (file && file.size > 1048576) {
+        alert('File size must be less than 1MB');
+        input.value = '';
     }
+}
 </script>
 
 @endsection

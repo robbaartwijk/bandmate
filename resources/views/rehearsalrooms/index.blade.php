@@ -1,119 +1,106 @@
-@php
-$user = auth()->user();
-@endphp
-
+@php $user = auth()->user(); @endphp
 @extends('layouts.app', ['page' => __('Rehearsal rooms'), 'pageSlug' => 'rehearsalrooms'])
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <div class="bm_card card ">
-            <div class="card-header">
-                <h3 class="card-title"><b>Rehearsal rooms index</b></h3>
-            </div>
-            <div class="card-body">
 
-                {{-- Action buttons + search controls, wrapping on mobile --}}
-                <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:8px; margin-bottom:12px;">
+<div class="bm-card">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">Rehearsal rooms</h2>
+        <a href="{{ route('rehearsalrooms.create') }}" class="bm-btn bm-btn-primary bm-btn-sm">
+            <i class="fas fa-plus"></i> Add rehearsal room
+        </a>
+    </div>
 
-                    <a href="{{ route('rehearsalrooms.create') }}" class="btn btn-primary">Add rehearsal room</a>
+    <div class="bm-card-body">
 
-                    @if(request()->has('private') && request()->private)
-                    <a href="{{ route('rehearsalrooms.index', ['private' => false]) }}" class="btn btn-info">Show all rehearsalrooms</a>
-                    @else
-                    <a href="{{ route('rehearsalrooms.index', ['private' => true]) }}" class="btn btn-info">Show only my rehearsalrooms</a>
-                    @endif
+        {{-- Toolbar --}}
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+            @if(request()->has('private') && request()->private)
+                <a href="{{ route('rehearsalrooms.index', ['private' => false]) }}" class="bm-btn bm-btn-secondary bm-btn-sm">
+                    <i class="fas fa-globe"></i> Show all rehearsal rooms
+                </a>
+            @else
+                <a href="{{ route('rehearsalrooms.index', ['private' => true]) }}" class="bm-btn bm-btn-secondary bm-btn-sm">
+                    <i class="fas fa-user"></i> Show only my rehearsal rooms
+                </a>
+            @endif
 
-                    <form action="{{ route('rehearsalrooms.index') }}" method="get" style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:auto;">
-
-                        <select name="selectrecords" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:150px;" onchange="this.form.submit()">
-                            <option value="25"  {{ !request()->selectrecords || request()->selectrecords == '25'  ? 'selected' : '' }}>25 rooms</option>
-                            <option value="50"  {{ request()->selectrecords == '50'  ? 'selected' : '' }}>50 rooms</option>
-                            <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '' }}>100 rooms</option>
-                        </select>
-
-                        <input type="text" name="search" value="{{ request()->search }}" class="form-control border" style="width:180px; min-width:120px;" placeholder="Search...">
-
-                        <select name="sort" class="form-control btn btn-secondary btn-round rounded border text-center" style="width:180px;" onchange="this.form.submit()">
-                            <option value="name"       {{ request()->sort == 'name'       ? 'selected' : '' }}>Sort by name</option>
-                            <option value="city"       {{ request()->sort == 'city'       ? 'selected' : '' }}>Sort by city</option>
-                            <option value="country"    {{ request()->sort == 'country'    ? 'selected' : '' }}>Sort by country</option>
-                            <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>Sort by date added</option>
-                            <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>Sort by date last update</option>
-                        </select>
-
-                        <button type="submit" class="btn btn-secondary">
-                            <i class="nc-icon nc-zoom-split"></i>
-                        </button>
-
-                    </form>
-                </div>
-
-                @if (session('status'))
-                <div class="alert alert-success" role="alert" id="status-alert">
-                    {{ session('status') }}
-                </div>
-                <script>
-                    setTimeout(function() {
-                        document.getElementById('status-alert').style.display = 'none';
-                    }, 1000);
-                </script>
-                @endif
-
-                <div class="table-responsive">
-                    <table class="table tablesorter">
-                        <thead class="text-primary">
-                            <tr>
-                                <th>Name</th>
-                                <th>City</th>
-                                <th class="d-none d-sm-table-cell">Country</th>
-                                <th class="d-none d-lg-table-cell">Date added</th>
-                                <th class="d-none d-lg-table-cell">Date last update</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($rehearsalrooms as $rehearsalroom)
-                            <tr>
-                                <td><a href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}">{{ $rehearsalroom->name }}</a></td>
-                                <td>{{ $rehearsalroom->city }}</td>
-                                <td class="d-none d-sm-table-cell">{{ $rehearsalroom->country }}</td>
-                                <td class="d-none d-lg-table-cell">{{ $rehearsalroom->created_at }}</td>
-                                <td class="d-none d-lg-table-cell">{{ $rehearsalroom->updated_at }}</td>
-
-                                @if ($user->is_admin || $user->id == $rehearsalroom->user_id)
-                                <td style="white-space:nowrap;">
-                                    <a href="{{ route('rehearsalrooms.edit', $rehearsalroom->id) }}" class="btn btn-primary btn-link btn-icon btn-sm">
-                                        <i class="tim-icons icon-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('rehearsalrooms.destroy', $rehearsalroom->id) }}" method="post" style="display:inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger btn-link btn-icon btn-sm">
-                                            <i class="tim-icons icon-simple-remove"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                @else
-                                <td></td>
-                                @endif
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
+            <form action="{{ route('rehearsalrooms.index') }}" method="get" class="flex flex-wrap items-center gap-2 ml-auto">
+                <select name="selectrecords" class="bm-select text-sm py-1.5" style="width:110px;" onchange="this.form.submit()">
+                    <option value="25"  {{ (!request()->selectrecords || request()->selectrecords == '25')  ? 'selected' : '' }}>25 rooms</option>
+                    <option value="50"  {{ request()->selectrecords == '50'  ? 'selected' : '' }}>50 rooms</option>
+                    <option value="100" {{ request()->selectrecords == '100' ? 'selected' : '' }}>100 rooms</option>
+                </select>
+                <input type="text" name="search" value="{{ request()->search }}"
+                       class="bm-input text-sm py-1.5" style="width:160px;" placeholder="Search...">
+                <select name="sort" class="bm-select text-sm py-1.5" style="width:185px;" onchange="this.form.submit()">
+                    <option value="name"       {{ request()->sort == 'name'       ? 'selected' : '' }}>Sort by name</option>
+                    <option value="city"       {{ request()->sort == 'city'       ? 'selected' : '' }}>Sort by city</option>
+                    <option value="country"    {{ request()->sort == 'country'    ? 'selected' : '' }}>Sort by country</option>
+                    <option value="created_at" {{ request()->sort == 'created_at' ? 'selected' : '' }}>Sort by date added</option>
+                    <option value="updated_at" {{ request()->sort == 'updated_at' ? 'selected' : '' }}>Sort by last update</option>
+                </select>
+                <button type="submit" class="bm-btn bm-btn-secondary bm-btn-sm">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
         </div>
+
+        {{-- Flash --}}
+        @if (session('status'))
+        <div class="bm-alert bm-alert-success" id="status-alert">
+            <i class="fas fa-check-circle"></i> {{ session('status') }}
+        </div>
+        <script>setTimeout(() => { const el = document.getElementById('status-alert'); if(el) el.style.display='none'; }, 2000);</script>
+        @endif
+
+        {{-- Table --}}
+        <div class="overflow-x-auto">
+            <table class="bm-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th class="hidden sm:table-cell">Country</th>
+                        <th class="hidden lg:table-cell">Added</th>
+                        <th class="hidden lg:table-cell">Updated</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($rehearsalrooms as $rehearsalroom)
+                    <tr>
+                        <td><a href="{{ route('rehearsalrooms.show', $rehearsalroom->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $rehearsalroom->name }}</a></td>
+                        <td>{{ $rehearsalroom->city }}</td>
+                        <td class="hidden sm:table-cell">{{ $rehearsalroom->country }}</td>
+                        <td class="hidden lg:table-cell text-white/40 text-xs">{{ $rehearsalroom->created_at }}</td>
+                        <td class="hidden lg:table-cell text-white/40 text-xs">{{ $rehearsalroom->updated_at }}</td>
+                        <td class="whitespace-nowrap">
+                            @if ($user->is_admin || $user->id == $rehearsalroom->user_id)
+                            <a href="{{ route('rehearsalrooms.edit', $rehearsalroom->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm mr-1">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <form action="{{ route('rehearsalrooms.destroy', $rehearsalroom->id) }}" method="post" class="inline">
+                                @csrf @method('delete')
+                                <button type="button" class="bm-btn bm-btn-danger bm-btn-sm"
+                                        onclick="if(confirm('Delete this rehearsal room?')) this.closest('form').submit()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flex items-center justify-between mt-4">
+            <span class="text-white/40 text-xs">{{ $rehearsalrooms->count() }} {{ $rehearsalrooms->count() == 1 ? 'rehearsal room' : 'rehearsal rooms' }} found</span>
+            {{ $rehearsalrooms->appends(['sort' => request()->sort, 'search' => request()->search, 'selectrecords' => request()->selectrecords])->links() }}
+        </div>
+
     </div>
 </div>
-
-<?php echo $rehearsalrooms->appends(['sort' => request()->sort, 'search' => request()->search, 'selectrecords' => request()->selectrecords])->links(); ?>
-
-@if($rehearsalrooms->count() < 25)
-<div class="float-left" style="color:white">
-    {{ $rehearsalrooms->count() }} {{ $rehearsalrooms->count() > 1 ? 'rehearsalrooms found' : 'rehearsalroom found' }}
-</div>
-@endif
 
 @endsection
