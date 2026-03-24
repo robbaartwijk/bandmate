@@ -1,69 +1,121 @@
-@extends('layouts.app', ['class' => 'register-page', 'page' => __('Register Page'), 'contentClass' => 'register-page'])
+@extends('layouts.app', ['page' => __('Register')])
 
 @section('content')
-    <div class="row">
 
-        <div class="col-md-7 mr-auto ml-auto">
-            <div class="bm_card card">
-            <div class="card-header">
-                <h1 class="card-title">{{ __('Register') }}</h1>
+<div class="flex items-center justify-center min-h-[calc(100vh-120px)]">
+    <div class="w-full max-w-md">
+
+        <div class="bm-card">
+            <div class="bm-card-header">
+                <h2 class="bm-card-title">{{ __('Create your account') }}</h2>
             </div>
-            <form class="form" method="post" action="{{ route('register') }}">
-                @csrf
 
-                <div class="card-body">
+            <div class="bm-card-body space-y-5">
 
-                <div class="input-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="tim-icons icon-single-02""></i>
-                    </div>
-                    </div>
-                    <input type="text" name="name" style="border: solid 1px; background: white; color: black;" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}">
-                    @include('alerts.feedback', ['field' => 'name'])
-                </div>
+                <form method="POST" action="{{ route('register') }}" class="space-y-4">
+                    @csrf
 
-                <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="tim-icons icon-email-85"></i>
+                    {{-- Name --}}
+                    <div class="bm-form-group">
+                        <label for="name" class="bm-label">{{ __('Name') }}</label>
+                        <input id="name"
+                               type="text"
+                               name="name"
+                               value="{{ old('name') }}"
+                               required
+                               autofocus
+                               autocomplete="name"
+                               placeholder="{{ __('Your name') }}"
+                               class="bm-input @error('name') ring-2 ring-red-500 border-red-500 @enderror">
+                        @error('name')
+                            <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                        @enderror
                     </div>
-                    </div>
-                    <input type="email" name="email" style="border: solid 1px; background: white; color: black;" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}">
-                    @include('alerts.feedback', ['field' => 'email'])
-                </div>
 
-                <div class="input-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="tim-icons icon-lock-circle"></i>
+                    {{-- Email --}}
+                    <div class="bm-form-group">
+                        <label for="email" class="bm-label">{{ __('Email address') }}</label>
+                        <input id="email"
+                               type="email"
+                               name="email"
+                               value="{{ old('email') }}"
+                               required
+                               autocomplete="username"
+                               placeholder="you@example.com"
+                               class="bm-input @error('email') ring-2 ring-red-500 border-red-500 @enderror">
+                        @error('email')
+                            <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                        @enderror
                     </div>
+
+                    {{-- Password --}}
+                    <div class="bm-form-group">
+                        <label for="password" class="bm-label">{{ __('Password') }}</label>
+                        <input id="password"
+                               type="password"
+                               name="password"
+                               required
+                               autocomplete="new-password"
+                               placeholder="••••••••"
+                               class="bm-input @error('password') ring-2 ring-red-500 border-red-500 @enderror">
+                        @error('password')
+                            <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                        @enderror
                     </div>
-                    <input type="password" name="password" style="border: solid 1px; background: white; color: black;" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}">
-                    @include('alerts.feedback', ['field' => 'password'])
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="tim-icons icon-lock-circle"></i>
+
+                    {{-- Confirm password --}}
+                    <div class="bm-form-group">
+                        <label for="password_confirmation" class="bm-label">{{ __('Confirm password') }}</label>
+                        <input id="password_confirmation"
+                               type="password"
+                               name="password_confirmation"
+                               required
+                               autocomplete="new-password"
+                               placeholder="••••••••"
+                               class="bm-input">
                     </div>
+
+                    {{-- Terms --}}
+                    <div class="flex items-start gap-2">
+                        <input type="checkbox"
+                               id="terms"
+                               name="terms"
+                               required
+                               class="bm-checkbox mt-0.5 flex-shrink-0">
+                        <label for="terms" class="text-sm text-white/60 cursor-pointer">
+                            {{ __('I agree to the') }}
+                            <a href="{{ route('terms.show') }}" target="_blank"
+                               class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                                {{ __('Terms of Service') }}
+                            </a>
+                            {{ __('and') }}
+                            <a href="{{ route('policy.show') }}" target="_blank"
+                               class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                                {{ __('Privacy Policy') }}
+                            </a>
+                        </label>
                     </div>
-                    <input type="password" name="password_confirmation" class="form-control" placeholder="{{ __('Confirm Password') }}">
-                </div>
-                <div class="form-check text-left">
-                    <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox">
-                    <span class="form-check-sign"></span>
-                    {{ __('I agree to the') }}
-                    <a href="#">{{ __('terms and conditions') }}</a>.
-                    </label>
-                </div>
-                </div>
-                <div class="card-footer">
-                <button type="submit" class="btn btn-info btn-round btn-lg">{{ __('Register and continue') }}</button>
-                </div>
-            </form>
+
+                    {{-- Submit --}}
+                    <button type="submit" class="bm-btn-primary w-full justify-center py-2.5">
+                        <i class="fas fa-user-plus"></i>
+                        {{ __('Register') }}
+                    </button>
+
+                </form>
+
+                {{-- Login link --}}
+                <p class="text-center text-sm text-white/40 pt-2">
+                    {{ __('Already have an account?') }}
+                    <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                        {{ __('Log in') }}
+                    </a>
+                </p>
+
             </div>
         </div>
+
     </div>
+</div>
+
 @endsection

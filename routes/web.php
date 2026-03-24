@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailJobController;
 use App\Http\Controllers\EmailLogController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\GenreController;
@@ -34,14 +32,17 @@ Route::middleware([
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
-Auth::routes(['logout' => false]);
+// Auth::routes() removed — Jetstream/Fortify registers all auth routes (/login,
+// /register, /password/*, /logout) via FortifyServiceProvider. Keeping Auth::routes()
+// here caused duplicate route registration and pointed to the old Laravel-UI controllers.
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    
+    // Logout is handled by Fortify (POST /logout). The explicit route pointing at
+    // the old LoginController has been removed along with Auth::routes().
+
     Route::resource('instruments', InstrumentController::class)->names([
         'index' => 'instruments.index',
     ]);
@@ -103,9 +104,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('editpassword', [ProfileController::class, 'editPassword'])->name('profile.editPassword');
     Route::post('updatepassword', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
     Route::get('userdata', [ProfileController::class, 'userdata'])->name('profile.userdata');
-
-    Route::post('/password/reset', [ResetPasswordController::class, 'sendResetLink']);
-    Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 
     Route::resource('email-templates', EmailTemplateController::class);
     Route::resource('email-jobs', EmailJobController::class);

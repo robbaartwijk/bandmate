@@ -7,22 +7,30 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateInstrumentRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Only admins may update instruments (enforced via InstrumentPolicy::before()).
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('update', $this->route('instrument'));
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * Validation rules for updating an instrument.
      */
     public function rules(): array
     {
+        $instrumentId = $this->route('instrument')->id;
+
         return [
-            //
+            'name' => ['required', 'string', 'max:255', 'unique:instruments,name,' . $instrumentId],
+            'type' => ['required', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'An instrument with this name already exists.',
         ];
     }
 }
