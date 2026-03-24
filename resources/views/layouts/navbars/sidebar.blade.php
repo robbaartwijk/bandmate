@@ -88,7 +88,7 @@ $adminGroups = [
                   x-transition:leave="transition-opacity duration-100"
                   x-transition:leave-start="opacity-100"
                   x-transition:leave-end="opacity-0"
-                  class="text-white font-semibold text-sm truncate"
+                  class="text-white font-semibold text-base truncate"
                   style="font-family: 'DM Sans', sans-serif;">
                 Bandmate
             </span>
@@ -104,9 +104,9 @@ $adminGroups = [
 
         {{-- Dashboard link --}}
         <a href="{{ route('dashboard') }}"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+           class="flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors
                   {{ $pageSlug === 'dashboard' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
-            <i class="fas fa-home w-4 text-center flex-shrink-0 text-xs"></i>
+            <i class="fas fa-home w-4 text-center flex-shrink-0 text-sm"></i>
             <span x-show="sidebarOpen" class="truncate">Dashboard</span>
         </a>
 
@@ -115,9 +115,9 @@ $adminGroups = [
         @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
         <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
             <button @click="open = !open"
-                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors
                            {{ $isGroupActive ? 'text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
-                <i class="fas {{ $group['icon'] }} w-4 text-center flex-shrink-0 text-xs"></i>
+                <i class="fas {{ $group['icon'] }} w-4 text-center flex-shrink-0 text-sm"></i>
                 <span x-show="sidebarOpen" class="flex-1 text-left truncate">{{ $group['label'] }}</span>
                 <i x-show="sidebarOpen"
                    :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"
@@ -131,9 +131,9 @@ $adminGroups = [
                  class="mt-1 ml-4 space-y-0.5">
                 @foreach($group['links'] as $link)
                 <a href="{{ route($link['route']) }}"
-                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm transition-colors
                           {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
-                    <i class="fas {{ $link['icon'] }} w-3 text-center flex-shrink-0" style="font-size:10px;"></i>
+                    <i class="fas {{ $link['icon'] }} w-3 text-center flex-shrink-0" style="font-size:12px;"></i>
                     <span class="truncate">{{ $link['label'] }}</span>
                 </a>
                 @endforeach
@@ -150,9 +150,9 @@ $adminGroups = [
         @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
         <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
             <button @click="open = !open"
-                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors
                            {{ $isGroupActive ? 'text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
-                <i class="fas {{ $group['icon'] }} w-4 text-center flex-shrink-0 text-xs"></i>
+                <i class="fas {{ $group['icon'] }} w-4 text-center flex-shrink-0 text-sm"></i>
                 <span x-show="sidebarOpen" class="flex-1 text-left truncate">{{ $group['label'] }}</span>
                 <i x-show="sidebarOpen"
                    :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"
@@ -166,18 +166,18 @@ $adminGroups = [
                  class="mt-1 ml-4 space-y-0.5">
                 @foreach($group['links'] as $link)
                 <a href="{{ route($link['route']) }}"
-                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm transition-colors
                           {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
-                    <i class="fas {{ $link['icon'] }} w-3 text-center flex-shrink-0" style="font-size:10px;"></i>
+                    <i class="fas {{ $link['icon'] }} w-3 text-center flex-shrink-0" style="font-size:12px;"></i>
                     <span class="truncate">{{ $link['label'] }}</span>
                 </a>
                 @endforeach
                 @if($groupKey === 'management')
                 <a href="/docs" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white hover:bg-white/10 transition-colors">
-                    <i class="fas fa-book w-3 text-center flex-shrink-0" style="font-size:10px;"></i>
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-white hover:bg-white/10 transition-colors">
+                    <i class="fas fa-book w-3 text-center flex-shrink-0" style="font-size:12px;"></i>
                     <span class="truncate">Technical Docs</span>
-                    <i class="fas fa-external-link-alt ml-auto" style="font-size:9px; opacity:0.4;"></i>
+                    <i class="fas fa-external-link-alt ml-auto" style="font-size:11px; opacity:0.4;"></i>
                 </a>
                 @endif
             </div>
@@ -199,8 +199,8 @@ $adminGroups = [
             </div>
             @endif
             <div class="min-w-0">
-                <p class="text-white text-xs font-medium truncate">{{ Auth::user()->name }}</p>
-                <p class="text-white/40 text-xs truncate">{{ Auth::user()->email }}</p>
+                <p class="text-white text-sm font-medium truncate">{{ Auth::user()->name }}</p>
+                <p class="text-white/40 text-sm truncate">{{ Auth::user()->email }}</p>
             </div>
         </div>
     </div>
@@ -221,7 +221,7 @@ $adminGroups = [
     <div class="flex items-center justify-between px-4 py-4 border-b border-white/10">
         <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
             <img src="{{ asset('images/Logo.jpg') }}" alt="Bandmate" class="h-8 w-auto rounded border border-white/20">
-            <span class="text-white font-semibold text-sm" style="font-family: 'DM Sans', sans-serif;">Bandmate</span>
+            <span class="text-white font-semibold text-base" style="font-family: 'DM Sans', sans-serif;">Bandmate</span>
         </a>
         <button @click="sidebarMobileOpen = false" class="text-white/50 hover:text-white transition-colors">
             <i class="fas fa-times"></i>
@@ -230,9 +230,9 @@ $adminGroups = [
 
     <nav class="flex-1 py-4 space-y-1 px-2">
         <a href="{{ route('dashboard') }}"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
+           class="flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors
                   {{ ($pageSlug ?? '') === 'dashboard' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
-            <i class="fas fa-home w-4 text-center text-xs"></i>
+            <i class="fas fa-home w-4 text-center text-sm"></i>
             <span>Dashboard</span>
         </a>
 
@@ -240,17 +240,17 @@ $adminGroups = [
         @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
         <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
             <button @click="open = !open"
-                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-white/60 hover:text-white hover:bg-white/10">
-                <i class="fas {{ $group['icon'] }} w-4 text-center text-xs"></i>
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors text-white/60 hover:text-white hover:bg-white/10">
+                <i class="fas {{ $group['icon'] }} w-4 text-center text-sm"></i>
                 <span class="flex-1 text-left">{{ $group['label'] }}</span>
                 <i :class="open ? 'fa-chevron-down' : 'fa-chevron-right'" class="fas text-xs text-white/40"></i>
             </button>
             <div x-show="open" class="mt-1 ml-4 space-y-0.5">
                 @foreach($group['links'] as $link)
                 <a href="{{ route($link['route']) }}"
-                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm transition-colors
                           {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
-                    <i class="fas {{ $link['icon'] }} w-3 text-center" style="font-size:10px;"></i>
+                    <i class="fas {{ $link['icon'] }} w-3 text-center" style="font-size:12px;"></i>
                     <span>{{ $link['label'] }}</span>
                 </a>
                 @endforeach
@@ -266,17 +266,17 @@ $adminGroups = [
         @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
         <div x-data="{ open: {{ $isGroupActive ? 'true' : 'false' }} }">
             <button @click="open = !open"
-                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors text-white/60 hover:text-white hover:bg-white/10">
-                <i class="fas {{ $group['icon'] }} w-4 text-center text-xs"></i>
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors text-white/60 hover:text-white hover:bg-white/10">
+                <i class="fas {{ $group['icon'] }} w-4 text-center text-sm"></i>
                 <span class="flex-1 text-left">{{ $group['label'] }}</span>
                 <i :class="open ? 'fa-chevron-down' : 'fa-chevron-right'" class="fas text-xs text-white/40"></i>
             </button>
             <div x-show="open" class="mt-1 ml-4 space-y-0.5">
                 @foreach($group['links'] as $link)
                 <a href="{{ route($link['route']) }}"
-                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-xs transition-colors
+                   class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm transition-colors
                           {{ ($pageSlug ?? '') === $link['slug'] ? 'bg-indigo-500/30 text-indigo-200 font-medium' : 'text-white/50 hover:text-white hover:bg-white/10' }}">
-                    <i class="fas {{ $link['icon'] }} w-3 text-center" style="font-size:10px;"></i>
+                    <i class="fas {{ $link['icon'] }} w-3 text-center" style="font-size:12px;"></i>
                     <span>{{ $link['label'] }}</span>
                 </a>
                 @endforeach

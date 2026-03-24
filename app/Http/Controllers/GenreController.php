@@ -27,8 +27,8 @@ class GenreController extends BaseController
                     ->orWhere('group', 'like', '%'.$search.'%');
             });
         }
-    
-        $genres = $query->get();
+
+        $genres = $query->paginate(50); // FIX: added pagination (was ->get())
 
         return view('genres.index', compact('genres'));
     }
@@ -38,6 +38,8 @@ class GenreController extends BaseController
      */
     public function create()
     {
+        $this->authorize('create', Genre::class); // FIX: added missing authorization
+
         return view('genres.create');
     }
 
@@ -46,6 +48,8 @@ class GenreController extends BaseController
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Genre::class); // FIX: added missing authorization
+
         $request->validate([
             'name' => 'required',
             'group' => 'required',
@@ -70,6 +74,8 @@ class GenreController extends BaseController
      */
     public function edit(Genre $genre)
     {
+        $this->authorize('update', $genre); // FIX: added missing authorization
+
         return view('genres.edit', compact('genre'));
     }
 
@@ -78,6 +84,8 @@ class GenreController extends BaseController
      */
     public function update(Request $request, Genre $genre)
     {
+        $this->authorize('update', $genre); // FIX: added missing authorization
+
         $request->validate([
             'name' => 'required',
             'group' => 'required',
@@ -94,6 +102,8 @@ class GenreController extends BaseController
      */
     public function destroy(Genre $genre)
     {
+        $this->authorize('delete', $genre); // FIX: added missing authorization
+
         $genre->delete();
 
         return redirect()->route('genres.index')

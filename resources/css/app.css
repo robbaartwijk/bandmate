@@ -52,7 +52,7 @@
         @apply flex items-center justify-between px-5 py-4 border-b border-white/10;
     }
     .bm-card-title {
-        @apply text-white font-semibold text-sm;
+        @apply text-white font-semibold text-base; /* was text-sm */
     }
     .bm-card-body {
         @apply px-5 py-4;
@@ -60,7 +60,7 @@
 
     /* Buttons */
     .bm-btn {
-        @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900;
+        @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900; /* was text-sm */
     }
     .bm-btn-primary {
         @apply bm-btn bg-indigo-600 hover:bg-indigo-500 text-white focus:ring-indigo-500;
@@ -72,7 +72,7 @@
         @apply bm-btn bg-red-600/80 hover:bg-red-600 text-white focus:ring-red-500;
     }
     .bm-btn-sm {
-        @apply px-3 py-1.5 text-xs rounded-md;
+        @apply px-3 py-1.5 text-sm rounded-md; /* was text-xs */
     }
     .bm-btn-info {
         @apply bm-btn bg-sky-600/80 hover:bg-sky-600 text-white;
@@ -80,11 +80,11 @@
 
     /* Form elements */
     .bm-label {
-        @apply block text-xs font-medium text-white/60 mb-1.5;
+        @apply block text-sm font-medium text-white/60 mb-1.5; /* was text-xs */
     }
     .bm-input {
-        @apply w-full bg-gray-200 border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 placeholder-gray-400
-               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors;
+        @apply w-full bg-gray-400 border border-gray-500 rounded-lg px-3 py-2 text-base text-gray-900 placeholder-gray-600
+               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors; /* bg was gray-200/gray-300, text was text-sm */
     }
     .bm-select {
         @apply bm-input appearance-none;
@@ -93,7 +93,7 @@
         @apply bm-input resize-y min-h-24;
     }
     .bm-checkbox {
-        @apply w-4 h-4 rounded border-gray-300 bg-gray-200 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-gray-900;
+        @apply w-4 h-4 rounded border-gray-300 bg-gray-400 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-gray-900; /* bg was gray-200 */
     }
     .bm-form-group {
         @apply mb-5;
@@ -101,13 +101,13 @@
 
     /* Table */
     .bm-table {
-        @apply w-full text-sm text-left;
+        @apply w-full text-base text-left; /* was text-sm */
     }
     .bm-table thead tr {
         @apply border-b border-white/10;
     }
     .bm-table thead th {
-        @apply px-4 py-3 text-xs font-semibold text-white/40 uppercase tracking-wider;
+        @apply px-4 py-3 text-sm font-semibold text-white/40 uppercase tracking-wider; /* was text-xs */
     }
     .bm-table tbody tr {
         @apply border-b border-white/5 hover:bg-white/5 transition-colors;

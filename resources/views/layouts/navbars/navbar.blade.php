@@ -11,7 +11,7 @@
         </button>
 
         {{-- Page title --}}
-        <h1 class="text-white/90 text-sm font-medium" style="font-family: 'DM Sans', sans-serif;">
+        <h1 class="text-white/90 text-base font-medium" style="font-family: 'DM Sans', sans-serif;">
             {{ $page ?? config('app.name') }}
         </h1>
     </div>
@@ -30,7 +30,7 @@
                 </div>
             @endif
 
-            <span class="hidden sm:block text-sm">{{ Auth::user()->name }}</span>
+            <span class="hidden sm:block text-base">{{ Auth::user()->name }}</span>
             <i class="fas fa-chevron-down text-xs text-white/40 transition-transform duration-200"
                :class="open ? 'rotate-180' : ''"></i>
         </button>
@@ -48,17 +48,17 @@
 
             <div class="py-1">
                 <a href="{{ route('profile.edit') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-colors">
+                   class="flex items-center gap-3 px-4 py-2.5 text-base text-white/70 hover:text-white hover:bg-white/10 transition-colors">
                     <i class="fas fa-user-circle w-4 text-xs"></i>
                     {{ __('Profile') }}
                 </a>
                 <a href="{{ route('profile.editPassword') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-colors">
+                   class="flex items-center gap-3 px-4 py-2.5 text-base text-white/70 hover:text-white hover:bg-white/10 transition-colors">
                     <i class="fas fa-lock w-4 text-xs"></i>
                     {{ __('Change password') }}
                 </a>
                 <a href="{{ route('profile.userdata') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 transition-colors">
+                   class="flex items-center gap-3 px-4 py-2.5 text-base text-white/70 hover:text-white hover:bg-white/10 transition-colors">
                     <i class="fas fa-id-card w-4 text-xs"></i>
                     {{ __('User data') }}
                 </a>
@@ -68,7 +68,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                            class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors">
+                            class="w-full flex items-center gap-3 px-4 py-2.5 text-base text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors">
                         <i class="fas fa-sign-out-alt w-4 text-xs"></i>
                         {{ __('Log out') }}
                     </button>
@@ -88,11 +88,11 @@
     </a>
     <div class="flex items-center gap-3">
         <a href="{{ route('login') }}"
-           class="text-sm text-white/70 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/10">
+           class="text-base text-white/70 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/10">
             {{ __('Login') }}
         </a>
         <a href="{{ route('register') }}"
-           class="text-sm text-white font-medium px-4 py-2 rounded-lg transition-colors"
+           class="text-base text-white font-medium px-4 py-2 rounded-lg transition-colors"
            style="background-color: rgb(79, 70, 229);">
             {{ __('Register') }}
         </a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MailingController extends BaseController
 {
@@ -31,64 +32,47 @@ class MailingController extends BaseController
 
     public function buildMailingOptions()
     {
-        $mailingLists = [
-            [
-                'id' => 1,
-                'name' => 'email_notification_all',
-                'subscribers_count' => User::where('email_notification_all', true)->count(),
-                'description' => 'All email listings',
-            ],
-            [
-                'id' => 2,
-                'name' => 'email_notification_acts',
-                'subscribers_count' => User::where('email_notification_acts', true)->count(),
-                'description' => 'Acts email list',
-            ],
-            [
-                'id' => 3,
-                'name' => 'email_notification_vacancies',
-                'subscribers_count' => User::where('email_notification_vacancies', true)->count(),
-                'description' => 'Vacancies email list',
-            ],
-            [
-                'id' => 4,
-                'name' => 'email_notification_availablemusicians',
-                'subscribers_count' => User::where('email_notification_availablemusicians', true)->count(),
-                'description' => 'Available Musicians email list',
-            ],
-            [
-                'id' => 5,
-                'name' => 'email_notification_rehearsalrooms',
-                'subscribers_count' => User::where('email_notification_rehearsalrooms', true)->count(),
-                'description' => 'Available Rehearsal Rooms email list',
-            ],
-            [
-                'id' => 6,
-                'name' => 'email_notification_venues',
-                'subscribers_count' => User::where('email_notification_venues', true)->count(),
-                'description' => 'Venues email listings',
-            ],
-            [
-                'id' => 7,
-                'name' => 'email_notification_agencies',
-                'subscribers_count' => User::where('email_notification_agencies', true)->count(),
-                'description' => 'Available Agencies email list',
-            ],
-            [
-                'id' => 8,
-                'name' => 'email_notification_newsletter',
-                'subscribers_count' => User::where('email_notification_newsletter', true)->count(),
-                'description' => 'Newsletter email list',
-            ],
-
+        // FIX: replaced 8 separate COUNT queries with a single aggregated query.
+        // The original code fired one DB round-trip per mailing list on every page load.
+        $columns = [
+            'email_notification_all',
+            'email_notification_acts',
+            'email_notification_vacancies',
+            'email_notification_availablemusicians',
+            'email_notification_rehearsalrooms',
+            'email_notification_venues',
+            'email_notification_agencies',
+            'email_notification_newsletter',
         ];
 
-        $mailingLists = array_map(function ($list) {
-            return (object) $list;
-        }, $mailingLists);
+        $selectRaw = implode(', ', array_map(
+            fn($col) => "SUM(CASE WHEN `{$col}` = 1 THEN 1 ELSE 0 END) AS `{$col}`",
+            $columns
+        ));
 
-        return($mailingLists);
-        
+        $counts = DB::table('users')->selectRaw($selectRaw)->first();
+
+        $descriptions = [
+            'email_notification_all'               => 'All email listings',
+            'email_notification_acts'              => 'Acts email list',
+            'email_notification_vacancies'         => 'Vacancies email list',
+            'email_notification_availablemusicians'=> 'Available Musicians email list',
+            'email_notification_rehearsalrooms'    => 'Available Rehearsal Rooms email list',
+            'email_notification_venues'            => 'Venues email listings',
+            'email_notification_agencies'          => 'Available Agencies email list',
+            'email_notification_newsletter'        => 'Newsletter email list',
+        ];
+
+        $mailingLists = [];
+        foreach ($columns as $index => $column) {
+            $mailingLists[] = (object) [
+                'id'               => $index + 1,
+                'name'             => $column,
+                'subscribers_count'=> (int) ($counts->$column ?? 0),
+                'description'      => $descriptions[$column],
+            ];
+        }
+
+        return $mailingLists;
     }
-
 }

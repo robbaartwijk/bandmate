@@ -1,11 +1,11 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
+
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use App\Services\NotificationService;
- 
+
 class VenueController extends BaseController
 {
     public function __construct(
@@ -21,9 +21,9 @@ class VenueController extends BaseController
     {
         $sort = $request->input('sort') ?? 'name';
         $select = $request->input('selectrecords') ?? 25;
- 
+
         $query = Venue::orderBy($sort);
- 
+
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
@@ -31,26 +31,26 @@ class VenueController extends BaseController
                     ->orWhere('description', 'like', '%'.$search.'%');
             });
         }
- 
+
         if ($request->boolean('private')) {
             $query->where('user_id', auth()->id());
         }
- 
+
         $venues = $query->paginate($select)->onEachSide(1);
- 
+
         return view('venues.index', compact('venues'));
     }
- 
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $this->authorize('create', Venue::class);
- 
+
         return view('venues.create');
     }
- 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -58,11 +58,8 @@ class VenueController extends BaseController
     {
         $this->authorize('create', Venue::class);
 
-        $request->merge([
-            'phone' => $request->phone ?? '',
-            'email' => $request->email ?? '',
-        ]);
-
+        // FIX: removed the forced ->merge() that set phone/email to empty string.
+        // Using 'nullable' rules instead so empty submissions are handled cleanly.
         $request->validate([
             'name'    => 'required',
             'address' => 'required',
@@ -71,8 +68,8 @@ class VenueController extends BaseController
             'state'   => 'required',
             'country' => 'required',
             'website' => ['nullable', 'url'],
-            'phone'   => ['regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
-            'email'   => 'email',
+            'phone'   => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
+            'email'   => ['nullable', 'email'],
         ]);
 
         $venue = new Venue;
@@ -95,7 +92,7 @@ class VenueController extends BaseController
         return redirect()->route('venues.index')
             ->with('status', 'Venue created successfully.');
     }
- 
+
     /**
      * Display the specified resource.
      */
@@ -103,58 +100,53 @@ class VenueController extends BaseController
     {
         return view('venues.show', compact('venue'));
     }
- 
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Venue $venue)
     {
         $this->authorize('update', $venue);
- 
+
         return view('venues.edit', compact('venue'));
     }
- 
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Venue $venue)
     {
         $this->authorize('update', $venue);
- 
-        $request->merge([
-            'phone' => $request->phone ?? '',
-            'email' => $request->email ?? '',
-        ]);
- 
+
+        // FIX: same phone/email fix as store() — use nullable instead of forced empty string.
         $request->validate([
-            'name' => 'required',
+            'name'    => 'required',
             'address' => 'required',
-            'zip' => 'required',
-            'city' => 'required',
-            'state' => 'required',
+            'zip'     => 'required',
+            'city'    => 'required',
+            'state'   => 'required',
             'country' => 'required',
             'website' => ['nullable', 'url'],
-            'phone' => ['regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10'],
-            'email' => 'email',
+            'phone'   => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
+            'email'   => ['nullable', 'email'],
         ]);
- 
+
         $venue->update($request->validated());
- 
+
         return redirect()->route('venues.index')
             ->with('status', 'Venue updated successfully');
     }
- 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Venue $venue)
     {
         $this->authorize('delete', $venue);
- 
+
         $venue->delete();
- 
+
         return redirect()->route('venues.index')
             ->with('status', 'Venue deleted successfully');
     }
 }
- 

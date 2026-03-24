@@ -24,6 +24,7 @@ class Act extends Model implements HasMedia
         'genre_id',
         'rehearsal_room',
         'number_of_members',
+        'description',
         'website',
         'spotify',
         'soundcloud',
@@ -52,7 +53,7 @@ class Act extends Model implements HasMedia
     {
         return $this->hasMany(Vacancy::class);
     }
-     
+
     public function hasAnyMedia()
     {
         return $this->media()->count() > 0;

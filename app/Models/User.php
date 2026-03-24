@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;          // FIX: added — migration adds deleted_at but trait was missing
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens;
     use InteractsWithMedia;
+    use SoftDeletes;                // FIX: added — so $user->delete() populates deleted_at instead of hard-deleting
 
     // use HasFactory<\Database\Factories\UserFactory>
     use HasFactory;
@@ -120,9 +122,8 @@ class User extends Authenticatable implements HasMedia
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(200)  // Thumbnail width
-            ->height(200) // Thumbnail height
-            ->sharpen(10); // Optional: sharpen the image
+            ->width(200)
+            ->height(200)
+            ->sharpen(10);
     }
-    
 }

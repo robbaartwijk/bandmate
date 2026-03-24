@@ -32,9 +32,16 @@ class NotificationService {
         string $moduleColumn,
         array $variables = []
     ): ?EmailJob {
-        $template = EmailTemplate::where( 'name', $templateName )
-        ->where( 'status', 'active' )
-        ->first();
+        $template = EmailTemplate::where('name', $templateName)
+            ->where('status', 'active')
+            ->first();
+
+        // FIX: added early return when template is missing.
+        // Previously the code continued and called $template->id on a null value,
+        // causing a fatal error whenever the template didn't exist or wasn't active.
+        if (! $template) {
+            return null;
+        }
 
         $moduleSubscribers = User::where($moduleColumn, true)
             ->whereNotNull('email')
@@ -47,28 +54,28 @@ class NotificationService {
         // Merge into a single deduplicated array keyed by email
         $recipients = $moduleSubscribers->merge($allSubscribers);
 
-        if ( $recipients->isEmpty() ) {
+        if ($recipients->isEmpty()) {
             return null;
         }
 
-        $emailJob = EmailJob::create( [
+        $emailJob = EmailJob::create([
             'template_id'  => $template->id,
             'type'         => 'bulk',
-            'from_address' => config( 'mail.from.address' ),
-            'from_name'    => config( 'mail.from.name' ),
+            'from_address' => config('mail.from.address'),
+            'from_name'    => config('mail.from.name'),
             'status'       => 'pending',
             'created_by'   => null,
-        ] );
+        ]);
 
         foreach ($recipients as $email => $name) {
             $emailJob->recipients()->create([
                 'email'     => $email,
                 'name'      => $name,
                 'variables' => $variables ?: null,
-         ]);
-    }
+            ]);
+        }
 
-        ProcessEmailJob::dispatch( $emailJob );
+        ProcessEmailJob::dispatch($emailJob);
 
         return $emailJob;
     }

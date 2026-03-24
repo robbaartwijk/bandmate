@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Route;
+// FIX: removed unused 'use Illuminate\Support\Facades\Route;' import
 
 class PageController extends BaseController
 {

@@ -9,10 +9,10 @@ class ActController extends Controller
 {
     public function index()
     {
+        // FIX: replaced Act::all() with paginate() to prevent returning the entire
+        // table in a single response as the dataset grows.
+        $acts = Act::paginate(25);
 
-        // $acts = Act::paginate(10);
-
-        $acts = Act::all();
         return response()->json($acts);
     }
 }
