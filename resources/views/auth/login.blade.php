@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Login')])
+@extends('layouts.app', ['page' => __('auth.login')])
 
 @section('content')
 
@@ -7,7 +7,7 @@
 
         <div class="bm-card">
             <div class="bm-card-header">
-                <h2 class="bm-card-title">{{ __('Sign in to Bandmate') }}</h2>
+                <h2 class="bm-card-title">{{ __('auth.login_to_bandmate') }}</h2>
             </div>
 
             <div class="bm-card-body space-y-5">
@@ -24,7 +24,7 @@
 
                     {{-- Email --}}
                     <div class="bm-form-group">
-                        <label for="email" class="bm-label">{{ __('Email address') }}</label>
+                        <label for="email" class="bm-label">{{ __('auth.email') }}</label>
                         <input id="email"
                                type="email"
                                name="email"
@@ -41,7 +41,7 @@
 
                     {{-- Password --}}
                     <div class="bm-form-group">
-                        <label for="password" class="bm-label">{{ __('Password') }}</label>
+                        <label for="password" class="bm-label">{{ __('auth.password') }}</label>
                         <input id="password"
                                type="password"
                                name="password"
@@ -61,13 +61,13 @@
                                    name="remember"
                                    id="remember_me"
                                    class="bm-checkbox">
-                            <span class="text-sm text-white/60">{{ __('Remember me') }}</span>
+                            <span class="text-sm text-white/60">{{ __('auth.remember_me') }}</span>
                         </label>
 
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}"
                                class="text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
-                                {{ __('Forgot password?') }}
+                                {{ __('auth.forgot_password') }}
                             </a>
                         @endif
                     </div>
@@ -75,7 +75,7 @@
                     {{-- Submit --}}
                     <button type="submit" class="bm-btn-primary w-full justify-center py-2.5">
                         <i class="fas fa-sign-in-alt"></i>
-                        {{ __('Log in') }}
+                        {{ __('auth.login') }}
                     </button>
 
                 </form>
@@ -83,9 +83,9 @@
                 {{-- Register link --}}
                 @if (Route::has('register'))
                 <p class="text-center text-sm text-white/40 pt-2">
-                    {{ __("Don't have an account?") }}
+                    {{ __('auth.no_account') }}
                     <a href="{{ route('register') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">
-                        {{ __('Register') }}
+                        {{ __('auth.register') }}
                     </a>
                 </p>
                 @endif

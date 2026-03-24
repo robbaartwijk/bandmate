@@ -1,156 +1,123 @@
-@extends('layouts.app', ['page' => __('Acts'), 'pageSlug' => 'acts'])
-
+@extends('layouts.app', ['page' => __('acts.edit'), 'pageSlug' => 'acts'])
 @section('content')
-
 <div class="bm-card">
     <div class="bm-card-header">
-        <h2 class="bm-card-title">Edit act</h2>
+        <h2 class="bm-card-title">{{ __('acts.edit') }}</h2>
+        <a href="{{ route('acts.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">{{ __('common.back') }}</a>
     </div>
     <div class="bm-card-body">
         <form action="{{ route('acts.update', $act->id) }}" method="post" enctype="multipart/form-data">
-            @csrf @method('put')
+            @csrf
+            @method('PUT')
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                {{-- Column 1: Basic info --}}
-                <div class="space-y-4">
-                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Basic info</h3>
-
-                    <div class="bm-form-group">
-                        <label class="bm-label">Name</label>
-                        <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
-                               placeholder="Name" value="{{ $act->name }}">
-                        @include('alerts.feedback', ['field' => 'name'])
-                    </div>
-
-                    <div class="bm-form-group">
-                        <label class="bm-label">Members</label>
-                        <input type="number" min="1" name="number_of_members"
-                               class="bm-input @error('number_of_members') border-red-500 @enderror"
-                               value="{{ $act->number_of_members }}">
-                        @include('alerts.feedback', ['field' => 'number_of_members'])
-                    </div>
-
-                    <div class="bm-form-group">
-                        <label class="bm-label">Genre</label>
-                        <select name="genre_id" class="bm-select @error('genre_id') border-red-500 @enderror">
-                            <option value="">Select genre</option>
-                            @foreach ($genres as $genre)
-                            <option value="{{ $genre->id }}" {{ $act->genre_id == $genre->id ? 'selected' : '' }}>
-                                {{ $genre->group }} — {{ $genre->name }}
-                            </option>
-                            @endforeach
-                        </select>
-                        @include('alerts.feedback', ['field' => 'genre_id'])
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" id="rehearsal_room" name="rehearsal_room" class="bm-checkbox" {{ $act->rehearsal_room ? 'checked' : '' }}>
-                        <label for="rehearsal_room" class="text-sm text-white/70">Rehearsal room available?</label>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" id="active" name="active" class="bm-checkbox" {{ $act->active ? 'checked' : '' }}>
-                        <label for="active" class="text-sm text-white/70">Act currently active?</label>
-                    </div>
-
-                    <div class="bm-form-group">
-                        <label class="bm-label">Act picture</label>
-                        @if(!empty($act->image))
-                        <img src="{{ asset('/storage/' . $act->image->id . '/' . $act->image->file_name) }}"
-                             class="bm_thumbnail mb-2">
-                        @endif
-                        <input type="file" id="actpic" name="actpic" accept="image/*"
-                               class="block w-full text-sm text-white/60 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
-                               onchange="validateFileSize(this)">
-                        @include('alerts.feedback', ['field' => 'actpic'])
-                    </div>
-                </div>
-
-                {{-- Column 2: Contact --}}
-                <div class="space-y-4">
-                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Contact</h3>
-
-                    @foreach([
-                        ['email',   'Email',   'Email address'],
-                        ['phone',   'Phone',   'Phone number'],
-                        ['website', 'Website', 'https://'],
-                        ['facebook','Facebook','Facebook URL'],
-                        ['youtube', 'YouTube', 'YouTube URL'],
-                        ['twitter', 'Twitter', 'Twitter URL'],
-                    ] as [$name, $label, $placeholder])
-                    <div class="bm-form-group">
-                        <label class="bm-label">{{ $label }}</label>
-                        <input type="text" name="{{ $name }}"
-                               class="bm-input @error($name) border-red-500 @enderror"
-                               placeholder="{{ $placeholder }}" value="{{ $act->$name }}">
-                        @include('alerts.feedback', ['field' => $name])
-                    </div>
-                    @endforeach
-                </div>
-
-                {{-- Column 3: Social --}}
-                <div class="space-y-4">
-                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Social & media</h3>
-
-                    @foreach([
-                        ['instagram',  'Instagram',  'Instagram URL'],
-                        ['soundcloud', 'SoundCloud', 'SoundCloud URL'],
-                        ['spotify',    'Spotify',    'Spotify URL'],
-                        ['bluesky',    'Bluesky',    'Bluesky URL'],
-                        ['youtubedemo','Video demo', 'YouTube embed URL'],
-                    ] as [$name, $label, $placeholder])
-                    <div class="bm-form-group">
-                        <label class="bm-label">{{ $label }}</label>
-                        <input type="text" name="{{ $name }}"
-                               class="bm-input @error($name) border-red-500 @enderror"
-                               placeholder="{{ $placeholder }}" value="{{ $act->$name }}">
-                        @include('alerts.feedback', ['field' => $name])
-                    </div>
-                    @endforeach
-                </div>
-
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('acts.name') }}</label>
+                <input type="text" name="name" value="{{ old('name', $act->name) }}" class="bm-input @error('name') bm-input-error @enderror" placeholder="{{ __('acts.name_placeholder') }}">
+                @error('name')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
 
-            {{-- Description --}}
-            <div class="mt-6">
-                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Description</h3>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('common.col_genre') }}</label>
+                <select name="genre_id" class="bm-select @error('genre_id') bm-input-error @enderror">
+                    <option value="">{{ __('acts.select_genre') }}</option>
+                    @foreach ($genres as $genre)
+                    <option value="{{ $genre->id }}" {{ old('genre_id', $act->genre_id) == $genre->id ? 'selected' : '' }}>{{ $genre->name }}</option>
+                    @endforeach
+                </select>
+                @error('genre_id')<span class="bm-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('acts.members') }}</label>
+                <input type="number" name="members" value="{{ old('members', $act->members) }}" class="bm-input @error('members') bm-input-error @enderror" placeholder="{{ __('acts.members_placeholder') }}">
+                @error('members')<span class="bm-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('acts.description') }}</label>
+                <textarea name="description" rows="4" class="bm-input @error('description') bm-input-error @enderror" placeholder="{{ __('acts.description_placeholder') }}">{{ old('description', $act->description) }}</textarea>
+                @error('description')<span class="bm-error">{{ $message }}</span>@enderror
+            </div>
+
+            <div class="bm-form-group flex items-center gap-2">
+                <input type="checkbox" name="is_private" id="is_private" value="1" {{ old('is_private', $act->is_private) ? 'checked' : '' }} class="bm-checkbox">
+                <label for="is_private" class="bm-label mb-0">{{ __('acts.is_private') }}</label>
+            </div>
+
+            {{-- Contact information --}}
+            <h3 class="bm-section-title mt-6">{{ __('acts.contact_info') }}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bm-form-group">
-                    <label class="bm-label">Description</label>
-                    <textarea id="description" name="description"
-                              class="bm-textarea @error('description') border-red-500 @enderror">{{ $act->description }}</textarea>
-                    @include('alerts.feedback', ['field' => 'description'])
+                    <label class="bm-label">{{ __('acts.email_label') }}</label>
+                    <input type="email" name="email" value="{{ old('email', $act->email) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.phone_label') }}</label>
+                    <input type="text" name="phone" value="{{ old('phone', $act->phone) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.website_label') }}</label>
+                    <input type="url" name="website" value="{{ old('website', $act->website) }}" class="bm-input">
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
-                <button type="submit" class="bm-btn bm-btn-primary">
-                    <i class="fas fa-save"></i> Save changes
-                </button>
-                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Back
-                </a>
+            {{-- Social media & links --}}
+            <h3 class="bm-section-title mt-6">{{ __('acts.social_links') }}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.facebook_label') }}</label>
+                    <input type="url" name="facebook" value="{{ old('facebook', $act->facebook) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.youtube_label') }}</label>
+                    <input type="url" name="youtube" value="{{ old('youtube', $act->youtube) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.instagram_label') }}</label>
+                    <input type="url" name="instagram" value="{{ old('instagram', $act->instagram) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.twitter_label') }}</label>
+                    <input type="url" name="twitter" value="{{ old('twitter', $act->twitter) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.soundcloud_label') }}</label>
+                    <input type="url" name="soundcloud" value="{{ old('soundcloud', $act->soundcloud) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.spotify_label') }}</label>
+                    <input type="url" name="spotify" value="{{ old('spotify', $act->spotify) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.bluesky_label') }}</label>
+                    <input type="url" name="bluesky" value="{{ old('bluesky', $act->bluesky) }}" class="bm-input">
+                </div>
+                <div class="bm-form-group">
+                    <label class="bm-label">{{ __('acts.video_demo_label') }}</label>
+                    <input type="url" name="video_demo" value="{{ old('video_demo', $act->video_demo) }}" class="bm-input">
+                </div>
             </div>
 
+            {{-- Media --}}
+            <h3 class="bm-section-title mt-6">{{ __('acts.media_section') }}</h3>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('acts.upload_image') }}</label>
+                <input type="file" name="image" class="bm-input" accept="image/*">
+            </div>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('acts.upload_music') }}</label>
+                <input type="file" name="music" class="bm-input" accept="audio/*">
+            </div>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('acts.upload_video') }}</label>
+                <input type="file" name="video" class="bm-input" accept="video/*">
+            </div>
+
+            <div class="mt-6 flex gap-2">
+                <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
+                <a href="{{ route('acts.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
+            </div>
         </form>
     </div>
 </div>
-
-@push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-@endpush
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<script>
-new SimpleMDE({ element: document.getElementById('description'), toolbar: ['bold','italic','heading','|','quote','unordered-list','ordered-list','|','link','image'] });
-function validateFileSize(input) {
-    if (input.files[0] && input.files[0].size > 1048576) {
-        alert('File size must be less than 1MB');
-        input.value = '';
-    }
-}
-</script>
-@endpush
-
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Register')])
+@extends('layouts.app', ['page' => __('auth.register')])
 
 @section('content')
 
@@ -7,7 +7,7 @@
 
         <div class="bm-card">
             <div class="bm-card-header">
-                <h2 class="bm-card-title">{{ __('Create your account') }}</h2>
+                <h2 class="bm-card-title">{{ __('auth.create_account') }}</h2>
             </div>
 
             <div class="bm-card-body space-y-5">
@@ -17,7 +17,7 @@
 
                     {{-- Name --}}
                     <div class="bm-form-group">
-                        <label for="name" class="bm-label">{{ __('Name') }}</label>
+                        <label for="name" class="bm-label">{{ __('auth.your_name') }}</label>
                         <input id="name"
                                type="text"
                                name="name"
@@ -25,7 +25,7 @@
                                required
                                autofocus
                                autocomplete="name"
-                               placeholder="{{ __('Your name') }}"
+                               placeholder="{{ __('auth.your_name') }}"
                                class="bm-input @error('name') ring-2 ring-red-500 border-red-500 @enderror">
                         @error('name')
                             <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
@@ -34,7 +34,7 @@
 
                     {{-- Email --}}
                     <div class="bm-form-group">
-                        <label for="email" class="bm-label">{{ __('Email address') }}</label>
+                        <label for="email" class="bm-label">{{ __('auth.email') }}</label>
                         <input id="email"
                                type="email"
                                name="email"
@@ -50,7 +50,7 @@
 
                     {{-- Password --}}
                     <div class="bm-form-group">
-                        <label for="password" class="bm-label">{{ __('Password') }}</label>
+                        <label for="password" class="bm-label">{{ __('auth.password') }}</label>
                         <input id="password"
                                type="password"
                                name="password"
@@ -65,7 +65,7 @@
 
                     {{-- Confirm password --}}
                     <div class="bm-form-group">
-                        <label for="password_confirmation" class="bm-label">{{ __('Confirm password') }}</label>
+                        <label for="password_confirmation" class="bm-label">{{ __('auth.confirm_password') }}</label>
                         <input id="password_confirmation"
                                type="password"
                                name="password_confirmation"
@@ -83,15 +83,15 @@
                                required
                                class="bm-checkbox mt-0.5 flex-shrink-0">
                         <label for="terms" class="text-sm text-white/60 cursor-pointer">
-                            {{ __('I agree to the') }}
+                            {{ __('auth.agree_to') }}
                             <a href="{{ route('terms.show') }}" target="_blank"
                                class="text-indigo-400 hover:text-indigo-300 transition-colors">
-                                {{ __('Terms of Service') }}
+                                {{ __('auth.terms') }}
                             </a>
-                            {{ __('and') }}
+                            {{ __('auth.and') }}
                             <a href="{{ route('policy.show') }}" target="_blank"
                                class="text-indigo-400 hover:text-indigo-300 transition-colors">
-                                {{ __('Privacy Policy') }}
+                                {{ __('auth.privacy_policy') }}
                             </a>
                         </label>
                     </div>
@@ -99,16 +99,16 @@
                     {{-- Submit --}}
                     <button type="submit" class="bm-btn-primary w-full justify-center py-2.5">
                         <i class="fas fa-user-plus"></i>
-                        {{ __('Register') }}
+                        {{ __('auth.register') }}
                     </button>
 
                 </form>
 
                 {{-- Login link --}}
                 <p class="text-center text-sm text-white/40 pt-2">
-                    {{ __('Already have an account?') }}
+                    {{ __('auth.already_have_account') }}
                     <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">
-                        {{ __('Log in') }}
+                        {{ __('auth.login') }}
                     </a>
                 </p>
 

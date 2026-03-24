@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailJobController;
 use App\Http\Controllers\EmailLogController;
@@ -24,6 +25,30 @@ Route::resource('/', IndexController::class)->names([
     'index' => 'index.index',
 ]);
 
+// ── Language switcher ─────────────────────────────────────────────────────
+// No auth required — guests can also switch language before logging in.
+// When a user IS logged in their preference is also persisted to the database
+// so it is remembered across devices and sessions.
+Route::post('/language/{locale}', function (string $locale) {
+    $available = config('app.available_locales', ['en']);
+
+    if (!in_array($locale, $available)) {
+        return back();
+    }
+
+    // Always store in the session (works for guests too)
+    session(['locale' => $locale]);
+
+    // If authenticated, also save to the user's profile
+    if (Auth::check()) {
+        Auth::user()->update(['locale' => $locale]);
+    }
+
+    return back();
+})->name('language.switch');
+
+// ─────────────────────────────────────────────────────────────────────────
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -33,15 +58,11 @@ Route::middleware([
 });
 
 // Auth::routes() removed — Jetstream/Fortify registers all auth routes (/login,
-// /register, /password/*, /logout) via FortifyServiceProvider. Keeping Auth::routes()
-// here caused duplicate route registration and pointed to the old Laravel-UI controllers.
+// /register, /password/*, /logout) via FortifyServiceProvider.
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-
-    // Logout is handled by Fortify (POST /logout). The explicit route pointing at
-    // the old LoginController has been removed along with Auth::routes().
 
     Route::resource('instruments', InstrumentController::class)->names([
         'index' => 'instruments.index',

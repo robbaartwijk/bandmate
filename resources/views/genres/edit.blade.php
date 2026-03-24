@@ -1,32 +1,27 @@
-@extends('layouts.app', ['page' => __('Genres'), 'pageSlug' => 'genres'])
+@extends('layouts.app', ['page' => __('genres.edit'), 'pageSlug' => 'genres'])
 @section('content')
 <div class="bm-card">
-    <div class="bm-card-header"><h2 class="bm-card-title">Edit genre</h2></div>
-    <div class="bm-card-body max-w-lg">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">{{ __('genres.edit') }}</h2>
+        <a href="{{ route('genres.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">{{ __('common.back') }}</a>
+    </div>
+    <div class="bm-card-body">
         <form action="{{ route('genres.update', $genre->id) }}" method="post">
-            @csrf @method('put')
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <div class="bm-form-group">
-                    <label class="bm-label">Name</label>
-                    <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
-                           value="{{ $genre->name }}">
-                    @include('alerts.feedback', ['field' => 'name'])
-                </div>
-                <div class="bm-form-group">
-                    <label class="bm-label">Group</label>
-                    <input type="text" name="group" class="bm-input @error('group') border-red-500 @enderror"
-                           value="{{ $genre->group }}">
-                    @include('alerts.feedback', ['field' => 'group'])
-                </div>
+            @csrf
+            @method('PUT')
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('genres.name') }}</label>
+                <input type="text" name="name" value="{{ old('name', $genre->name) }}" class="bm-input @error('name') bm-input-error @enderror" placeholder="{{ __('genres.name_placeholder') }}">
+                @error('name')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
             <div class="bm-form-group">
-                <label class="bm-label">Description</label>
-                <textarea name="description" class="bm-textarea @error('description') border-red-500 @enderror">{{ $genre->description }}</textarea>
-                @include('alerts.feedback', ['field' => 'description'])
+                <label class="bm-label">{{ __('genres.group') }}</label>
+                <input type="text" name="group" value="{{ old('group', $genre->group) }}" class="bm-input @error('group') bm-input-error @enderror" placeholder="{{ __('genres.group_placeholder') }}">
+                @error('group')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
-            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
-                <button type="submit" class="bm-btn bm-btn-primary"><i class="fas fa-save"></i> Save changes</button>
-                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="mt-6 flex gap-2">
+                <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
+                <a href="{{ route('genres.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
             </div>
         </form>
     </div>

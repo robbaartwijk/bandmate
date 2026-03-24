@@ -36,7 +36,7 @@ class ProfileController extends BaseController
             $this->storeThumbnailImage($request, $user);
         }
 
-        return back()->withStatus(__('Profile successfully updated.'));
+        return back()->withStatus(__('profile.saved'));
     }
 
     public function processEmailNotifications(User $user, Request $request): User   

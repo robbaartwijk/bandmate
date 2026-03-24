@@ -1,69 +1,27 @@
-@extends('layouts.app', ['page' => __('Reset Password')])
-
+<x-guest-layout>
 @section('content')
+<div class="bm-auth-card">
+    <h2 class="bm-auth-title">{{ __('auth.forgot_title') }}</h2>
+    <p class="text-sm text-white/60 mb-6">{{ __('auth.forgot_instructions') }}</p>
 
-<div class="flex items-center justify-center min-h-[calc(100vh-120px)]">
-    <div class="w-full max-w-md">
+    @if(session('status'))
+    <div class="bm-alert bm-alert-success mb-4">{{ session('status') }}</div>
+    @endif
 
-        <div class="bm-card">
-            <div class="bm-card-header">
-                <h2 class="bm-card-title">{{ __('Forgot your password?') }}</h2>
-            </div>
+    <form method="POST" action="{{ route('password.email') }}">
+        @csrf
 
-            <div class="bm-card-body space-y-5">
-
-                <p class="text-sm text-white/50">
-                    {{ __("No problem. Enter your email address and we'll send you a password reset link.") }}
-                </p>
-
-                {{-- Status message --}}
-                @if (session('status'))
-                    <div class="bm-alert-success">
-                        <i class="fas fa-check-circle"></i>
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
-                    @csrf
-
-                    {{-- Email --}}
-                    <div class="bm-form-group">
-                        <label for="email" class="bm-label">{{ __('Email address') }}</label>
-                        <input id="email"
-                               type="email"
-                               name="email"
-                               value="{{ old('email') }}"
-                               required
-                               autofocus
-                               autocomplete="username"
-                               placeholder="you@example.com"
-                               class="bm-input @error('email') ring-2 ring-red-500 border-red-500 @enderror">
-                        @error('email')
-                            <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Submit --}}
-                    <button type="submit" class="bm-btn-primary w-full justify-center py-2.5">
-                        <i class="fas fa-paper-plane"></i>
-                        {{ __('Send Password Reset Link') }}
-                    </button>
-
-                </form>
-
-                {{-- Back to login --}}
-                <p class="text-center text-sm text-white/40 pt-2">
-                    <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">
-                        <i class="fas fa-arrow-left text-xs"></i>
-                        {{ __('Back to login') }}
-                    </a>
-                </p>
-
-            </div>
+        <div class="bm-form-group">
+            <label class="bm-label">{{ __('auth.email') }}</label>
+            <input type="email" name="email" value="{{ old('email') }}" class="bm-input @error('email') bm-input-error @enderror" required autofocus>
+            @error('email')<span class="bm-error">{{ $message }}</span>@enderror
         </div>
 
-    </div>
-</div>
+        <button type="submit" class="bm-btn bm-btn-primary w-full">{{ __('auth.send_reset_link') }}</button>
+    </form>
 
-@endsection
+    <p class="mt-4 text-center text-sm text-white/50">
+        <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300">{{ __('auth.back_to_login') }}</a>
+    </p>
+</div>
+</x-guest-layout>

@@ -3,67 +3,67 @@ $user = auth()->user();
 
 $navGroups = [
     'user' => [
-        'label' => 'User Access',
+        'label' => __('navigation.group_user_access'),
         'icon'  => 'fa-music',
         'pages' => ['dashboard', 'acts', 'vacancies', 'availablemusicians', 'rehearsalrooms', 'venues', 'agencies', 'about'],
         'links' => [
-            ['route' => 'acts.index',               'slug' => 'acts',               'icon' => 'fa-music',        'label' => 'Acts'],
-            ['route' => 'vacancies.index',           'slug' => 'vacancies',          'icon' => 'fa-music',        'label' => 'Vacancies'],
-            ['route' => 'availablemusicians.index',  'slug' => 'availablemusicians', 'icon' => 'fa-music',        'label' => 'Available musicians'],
-            ['route' => 'rehearsalrooms.index',      'slug' => 'rehearsalrooms',     'icon' => 'fa-music',        'label' => 'Rehearsal rooms'],
-            ['route' => 'venues.index',              'slug' => 'venues',             'icon' => 'fa-music',        'label' => 'Venues'],
-            ['route' => 'agencies.index',            'slug' => 'agencies',           'icon' => 'fa-music',        'label' => 'Agencies'],
+            ['route' => 'acts.index',               'slug' => 'acts',               'icon' => 'fa-music',        'label' => __('navigation.acts')],
+            ['route' => 'vacancies.index',           'slug' => 'vacancies',          'icon' => 'fa-music',        'label' => __('navigation.vacancies')],
+            ['route' => 'availablemusicians.index',  'slug' => 'availablemusicians', 'icon' => 'fa-music',        'label' => __('navigation.available_musicians')],
+            ['route' => 'rehearsalrooms.index',      'slug' => 'rehearsalrooms',     'icon' => 'fa-music',        'label' => __('navigation.rehearsal_rooms')],
+            ['route' => 'venues.index',              'slug' => 'venues',             'icon' => 'fa-music',        'label' => __('navigation.venues')],
+            ['route' => 'agencies.index',            'slug' => 'agencies',           'icon' => 'fa-music',        'label' => __('navigation.agencies')],
         ],
     ],
     'statistics' => [
-        'label' => 'Statistics',
+        'label' => __('navigation.group_statistics'),
         'icon'  => 'fa-chart-bar',
         'pages' => ['chart1', 'chart2', 'chart3', 'chart4', 'chart5'],
         'links' => [
-            ['route' => 'statistics.chart1', 'slug' => 'chart1', 'icon' => 'fa-chart-bar', 'label' => 'Users'],
-            ['route' => 'statistics.chart2', 'slug' => 'chart2', 'icon' => 'fa-chart-bar', 'label' => 'Vacancies'],
-            ['route' => 'statistics.chart3', 'slug' => 'chart3', 'icon' => 'fa-chart-bar', 'label' => 'Acts'],
-            ['route' => 'statistics.chart4', 'slug' => 'chart4', 'icon' => 'fa-chart-bar', 'label' => 'Available musicians'],
-            ['route' => 'statistics.chart5', 'slug' => 'chart5', 'icon' => 'fa-chart-bar', 'label' => 'AM per instrument'],
+            ['route' => 'statistics.chart1', 'slug' => 'chart1', 'icon' => 'fa-chart-bar', 'label' => __('navigation.stat_users')],
+            ['route' => 'statistics.chart2', 'slug' => 'chart2', 'icon' => 'fa-chart-bar', 'label' => __('navigation.stat_vacancies')],
+            ['route' => 'statistics.chart3', 'slug' => 'chart3', 'icon' => 'fa-chart-bar', 'label' => __('navigation.stat_acts')],
+            ['route' => 'statistics.chart4', 'slug' => 'chart4', 'icon' => 'fa-chart-bar', 'label' => __('navigation.stat_available_musicians')],
+            ['route' => 'statistics.chart5', 'slug' => 'chart5', 'icon' => 'fa-chart-bar', 'label' => __('navigation.stat_am_per_instrument')],
         ],
     ],
     'about' => [
-        'label' => 'About',
+        'label' => __('navigation.group_about'),
         'icon'  => 'fa-info-circle',
         'pages' => ['aboutus', 'aboutdatausage', 'aboutacts', 'aboutvacancies', 'aboutavailablemusicians', 'aboutrehearsalrooms', 'aboutagencies', 'aboutvenues'],
         'links' => [
-            ['route' => 'about.acts',               'slug' => 'aboutacts',               'icon' => 'fa-chevron-right', 'label' => 'Acts'],
-            ['route' => 'about.vacancies',           'slug' => 'aboutvacancies',          'icon' => 'fa-chevron-right', 'label' => 'Vacancies'],
-            ['route' => 'about.availablemusicians',  'slug' => 'aboutavailablemusicians', 'icon' => 'fa-chevron-right', 'label' => 'Available musicians'],
-            ['route' => 'about.rehearsalrooms',      'slug' => 'aboutrehearsalrooms',     'icon' => 'fa-chevron-right', 'label' => 'Rehearsal rooms'],
-            ['route' => 'about.agencies',            'slug' => 'aboutagencies',           'icon' => 'fa-chevron-right', 'label' => 'Agencies'],
-            ['route' => 'about.venues',              'slug' => 'aboutvenues',             'icon' => 'fa-chevron-right', 'label' => 'Venues'],
-            ['route' => 'about.us',                  'slug' => 'aboutus',                 'icon' => 'fa-chevron-right', 'label' => 'About us'],
-            ['route' => 'about.datausage',           'slug' => 'aboutdatausage',          'icon' => 'fa-chevron-right', 'label' => 'Data usage'],
+            ['route' => 'about.acts',               'slug' => 'aboutacts',               'icon' => 'fa-chevron-right', 'label' => __('navigation.about_acts')],
+            ['route' => 'about.vacancies',           'slug' => 'aboutvacancies',          'icon' => 'fa-chevron-right', 'label' => __('navigation.about_vacancies')],
+            ['route' => 'about.availablemusicians',  'slug' => 'aboutavailablemusicians', 'icon' => 'fa-chevron-right', 'label' => __('navigation.about_available_musicians')],
+            ['route' => 'about.rehearsalrooms',      'slug' => 'aboutrehearsalrooms',     'icon' => 'fa-chevron-right', 'label' => __('navigation.about_rehearsal_rooms')],
+            ['route' => 'about.agencies',            'slug' => 'aboutagencies',           'icon' => 'fa-chevron-right', 'label' => __('navigation.about_agencies')],
+            ['route' => 'about.venues',              'slug' => 'aboutvenues',             'icon' => 'fa-chevron-right', 'label' => __('navigation.about_venues')],
+            ['route' => 'about.us',                  'slug' => 'aboutus',                 'icon' => 'fa-chevron-right', 'label' => __('navigation.about_us')],
+            ['route' => 'about.datausage',           'slug' => 'aboutdatausage',          'icon' => 'fa-chevron-right', 'label' => __('navigation.about_data_usage')],
         ],
     ],
 ];
 
 $adminGroups = [
     'support' => [
-        'label' => 'Support data',
+        'label' => __('navigation.group_support'),
         'icon'  => 'fa-database',
         'pages' => ['instruments', 'genres'],
         'links' => [
-            ['route' => 'instruments.index', 'slug' => 'instruments', 'icon' => 'fa-database', 'label' => 'Instruments'],
-            ['route' => 'genres.index',      'slug' => 'genres',      'icon' => 'fa-database', 'label' => 'Genres'],
+            ['route' => 'instruments.index', 'slug' => 'instruments', 'icon' => 'fa-database', 'label' => __('navigation.instruments')],
+            ['route' => 'genres.index',      'slug' => 'genres',      'icon' => 'fa-database', 'label' => __('navigation.genres')],
         ],
     ],
     'management' => [
-        'label' => 'Management',
+        'label' => __('navigation.group_management'),
         'icon'  => 'fa-user-shield',
         'pages' => ['users', 'email-templates', 'email-jobs', 'email-logs', 'profile', 'userprofile'],
         'links' => [
-            ['route' => 'profile.edit',           'slug' => 'profile',          'icon' => 'fa-user-circle',  'label' => 'User Profile'],
-            ['route' => 'users.index',             'slug' => 'users',            'icon' => 'fa-users',        'label' => 'User Management'],
-            ['route' => 'email-templates.index',   'slug' => 'email-templates',  'icon' => 'fa-envelope',     'label' => 'Email Templates'],
-            ['route' => 'email-jobs.index',        'slug' => 'email-jobs',       'icon' => 'fa-paper-plane',  'label' => 'Email Jobs'],
-            ['route' => 'email-logs.index',        'slug' => 'email-logs',       'icon' => 'fa-list',         'label' => 'Email Logs'],
+            ['route' => 'profile.edit',           'slug' => 'profile',          'icon' => 'fa-user-circle',  'label' => __('navigation.user_profile')],
+            ['route' => 'users.index',             'slug' => 'users',            'icon' => 'fa-users',        'label' => __('navigation.user_management')],
+            ['route' => 'email-templates.index',   'slug' => 'email-templates',  'icon' => 'fa-envelope',     'label' => __('navigation.email_templates')],
+            ['route' => 'email-jobs.index',        'slug' => 'email-jobs',       'icon' => 'fa-paper-plane',  'label' => __('navigation.email_jobs')],
+            ['route' => 'email-logs.index',        'slug' => 'email-logs',       'icon' => 'fa-list',         'label' => __('navigation.email_logs')],
         ],
     ],
 ];
@@ -107,7 +107,7 @@ $adminGroups = [
            class="flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors
                   {{ $pageSlug === 'dashboard' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
             <i class="fas fa-home w-4 text-center flex-shrink-0 text-sm"></i>
-            <span x-show="sidebarOpen" class="truncate">Dashboard</span>
+            <span x-show="sidebarOpen" class="truncate">{{ __('navigation.dashboard') }}</span>
         </a>
 
         {{-- Regular nav groups --}}
@@ -144,7 +144,9 @@ $adminGroups = [
         {{-- Admin-only groups --}}
         @if($user->is_admin)
         <div class="pt-2 mt-2 border-t border-white/10">
-            <p x-show="sidebarOpen" class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/30">Admin</p>
+            <p x-show="sidebarOpen" class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/30">
+                {{ __('navigation.group_admin') }}
+            </p>
         </div>
         @foreach($adminGroups as $groupKey => $group)
         @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp
@@ -176,7 +178,7 @@ $adminGroups = [
                 <a href="/docs" target="_blank" rel="noopener noreferrer"
                    class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-white hover:bg-white/10 transition-colors">
                     <i class="fas fa-book w-3 text-center flex-shrink-0" style="font-size:12px;"></i>
-                    <span class="truncate">Technical Docs</span>
+                    <span class="truncate">{{ __('navigation.technical_docs') }}</span>
                     <i class="fas fa-external-link-alt ml-auto" style="font-size:11px; opacity:0.4;"></i>
                 </a>
                 @endif
@@ -233,7 +235,7 @@ $adminGroups = [
            class="flex items-center gap-3 px-3 py-2 rounded-lg text-base transition-colors
                   {{ ($pageSlug ?? '') === 'dashboard' ? 'bg-white/15 text-white' : 'text-white/60 hover:text-white hover:bg-white/10' }}">
             <i class="fas fa-home w-4 text-center text-sm"></i>
-            <span>Dashboard</span>
+            <span>{{ __('navigation.dashboard') }}</span>
         </a>
 
         @foreach($navGroups as $groupKey => $group)
@@ -260,7 +262,9 @@ $adminGroups = [
 
         @if($user->is_admin)
         <div class="pt-2 mt-2 border-t border-white/10">
-            <p class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/30">Admin</p>
+            <p class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/30">
+                {{ __('navigation.group_admin') }}
+            </p>
         </div>
         @foreach($adminGroups as $groupKey => $group)
         @php $isGroupActive = in_array($pageSlug ?? '', $group['pages']); @endphp

@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;          // FIX: added — migration adds deleted_at but trait was missing
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -24,9 +24,8 @@ class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens;
     use InteractsWithMedia;
-    use SoftDeletes;                // FIX: added — so $user->delete() populates deleted_at instead of hard-deleting
+    use SoftDeletes;
 
-    // use HasFactory<\Database\Factories\UserFactory>
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -51,6 +50,7 @@ class User extends Authenticatable implements HasMedia
         'country',
         'phone',
         'website',
+        'locale',           // ← added: stores the user's preferred display language
         'password',
         'email_notification_all',
         'email_notification_acts',
@@ -90,8 +90,8 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'is_admin' => 'boolean',
+        'password'          => 'hashed',
+        'is_admin'          => 'boolean',
     ];
 
     public function rehearsalrooms(): HasMany

@@ -1,10 +1,10 @@
-@extends('layouts.app', ['page' => __('User profile'), 'pageSlug' => 'userprofile'])
+@extends('layouts.app', ['page' => __('profile.title'), 'pageSlug' => 'userprofile'])
 
 @section('content')
 
 <div class="bm-card">
     <div class="bm-card-header">
-        <h2 class="bm-card-title">Edit profile</h2>
+        <h2 class="bm-card-title">{{ __('profile.edit') }}</h2>
     </div>
 
     <div class="bm-card-body">
@@ -25,53 +25,69 @@
 
                 {{-- Column 1: Personal details --}}
                 <div class="space-y-4">
-                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">Personal details</h3>
+                    <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10">{{ __('profile.my_data') }}</h3>
 
                     @foreach([
-                        ['name',          'Full name',     'text', 'Full name'],
-                        ['first_name',     'First name',    'text', 'First name'],
-                        ['last_name',      'Last name',     'text', 'Last name'],
-                        ['stage_name',     'Stage name',    'text', 'Stage name'],
-                        ['email',          'Email',         'text', 'Email address'],
-                        ['street',         'Street',        'text', 'Street'],
-                        ['street_number',  'Street number', 'text', 'Street number'],
-                        ['zip',            'Zip',           'text', 'Zip code'],
-                        ['city',           'City',          'text', 'City'],
-                        ['state',          'State',         'text', 'State / Province'],
-                        ['country',        'Country',       'text', 'Country'],
-                        ['phone',          'Phone',         'text', 'Phone number'],
-                        ['website',        'Website',       'text', 'https://'],
-                    ] as [$field, $label, $type, $placeholder])
+                        ['name',          'profile.name',          'text', 'profile.name'],
+                        ['first_name',    'profile.first_name',    'text', 'profile.first_name'],
+                        ['last_name',     'profile.last_name',     'text', 'profile.last_name'],
+                        ['stage_name',    'profile.stage_name',    'text', 'profile.stage_name'],
+                        ['email',         'profile.email',         'text', 'profile.email'],
+                        ['street',        'profile.street',        'text', 'profile.street'],
+                        ['street_number', 'profile.street_number', 'text', 'profile.street_number'],
+                        ['zip',           'profile.zip',           'text', 'profile.zip'],
+                        ['city',          'profile.city',          'text', 'profile.city'],
+                        ['state',         'profile.state',         'text', 'profile.state'],
+                        ['country',       'profile.country',       'text', 'profile.country'],
+                        ['phone',         'profile.phone',         'text', 'profile.phone'],
+                        ['website',       'profile.website',       'text', 'https://'],
+                    ] as [$field, $labelKey, $type, $placeholderKey])
                     <div class="bm-form-group">
-                        <label class="bm-label">{{ $label }}</label>
+                        <label class="bm-label">{{ __($labelKey) }}</label>
                         <input type="{{ $type }}" name="{{ $field }}"
                                class="bm-input @error($field) border-red-500 @enderror"
-                               placeholder="{{ $placeholder }}"
+                               placeholder="{{ $placeholderKey === 'https://' ? 'https://' : __($placeholderKey) }}"
                                value="{{ old($field, $user->$field) }}">
                         @include('alerts.feedback', ['field' => $field])
                     </div>
                     @endforeach
                 </div>
 
-                {{-- Column 2: Notifications + Avatar --}}
+                {{-- Column 2: Preferences + Notifications + Avatar --}}
                 <div class="space-y-6">
+
+                    {{-- Language preference --}}
+                    <div>
+                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">{{ __('profile.language') }}</h3>
+                        <div class="bm-form-group">
+                            <label class="bm-label">{{ __('profile.language') }}</label>
+                            <select name="locale" class="bm-select">
+                                @foreach(config('app.available_locales') as $locale)
+                                <option value="{{ $locale }}" {{ old('locale', $user->locale) === $locale ? 'selected' : '' }}>
+                                    {{ strtoupper($locale) }}
+                                </option>
+                                @endforeach
+                            </select>
+                            <p class="mt-1 text-xs text-white/40">{{ __('profile.language_hint') }}</p>
+                        </div>
+                    </div>
 
                     {{-- Email notifications --}}
                     <div>
-                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Email notifications</h3>
+                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">{{ __('profile.notifications') }}</h3>
                         <div class="space-y-1">
                             @foreach([
-                                'email_notification_all'                => 'All emails',
-                                'email_notification_acts'               => 'New registered acts',
-                                'email_notification_vacancies'          => 'New registered vacancies',
-                                'email_notification_availablemusicians' => 'New registered available musicians',
-                                'email_notification_rehearsalrooms'     => 'New registered rehearsal rooms',
-                                'email_notification_venues'             => 'New registered venues',
-                                'email_notification_agencies'           => 'New registered agencies',
-                                'email_notification_newsletter'         => 'Newsletters',
-                            ] as $field => $label)
+                                'email_notification_all'                => 'profile.notify_all',
+                                'email_notification_acts'               => 'profile.notify_acts',
+                                'email_notification_vacancies'          => 'profile.notify_vacancies',
+                                'email_notification_availablemusicians' => 'profile.notify_musicians',
+                                'email_notification_rehearsalrooms'     => 'profile.notify_rooms',
+                                'email_notification_venues'             => 'profile.notify_venues',
+                                'email_notification_agencies'           => 'profile.notify_agencies',
+                                'email_notification_newsletter'         => 'profile.notify_newsletter',
+                            ] as $field => $labelKey)
                             <div class="flex items-center justify-between px-3 py-2 rounded hover:bg-white/5 border-b border-white/5">
-                                <span class="text-sm text-white/80">{{ $label }}</span>
+                                <span class="text-sm text-white/80">{{ __($labelKey) }}</span>
                                 <input type="checkbox" name="{{ $field }}"
                                        class="bm-checkbox"
                                        {{ $user->$field ? 'checked' : '' }}>
@@ -82,7 +98,7 @@
 
                     {{-- Avatar --}}
                     <div>
-                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">Avatar</h3>
+                        <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-3">{{ __('profile.photo') }}</h3>
                         <div class="flex flex-wrap items-center gap-4">
                             @if (!empty($user->avatar))
                             <img src="{{ asset('/storage/' . $user->avatar->id . '/' . $user->avatar->file_name) }}"
@@ -104,10 +120,10 @@
             {{-- Submit buttons --}}
             <div class="flex items-center gap-3 mt-6 pt-4 border-t border-white/10">
                 <button type="submit" class="bm-btn bm-btn-primary">
-                    <i class="fas fa-save"></i> Update profile
+                    <i class="fas fa-save"></i> {{ __('profile.edit') }}
                 </button>
                 <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Back
+                    <i class="fas fa-arrow-left"></i> {{ __('common.back') }}
                 </a>
             </div>
 

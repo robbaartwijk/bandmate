@@ -1,25 +1,26 @@
-@extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
+@extends('layouts.app', ['page' => __('instruments.add'), 'pageSlug' => 'instruments'])
 @section('content')
 <div class="bm-card">
-    <div class="bm-card-header"><h2 class="bm-card-title">Add instrument</h2></div>
-    <div class="bm-card-body max-w-md">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">{{ __('instruments.add') }}</h2>
+        <a href="{{ route('instruments.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">{{ __('common.back') }}</a>
+    </div>
+    <div class="bm-card-body">
         <form action="{{ route('instruments.store') }}" method="post">
             @csrf
             <div class="bm-form-group">
-                <label class="bm-label">Name</label>
-                <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
-                       placeholder="Instrument name" value="{{ old('name') }}">
-                @include('alerts.feedback', ['field' => 'name'])
+                <label class="bm-label">{{ __('instruments.name') }}</label>
+                <input type="text" name="name" value="{{ old('name') }}" class="bm-input @error('name') bm-input-error @enderror" placeholder="{{ __('instruments.name_placeholder') }}">
+                @error('name')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
             <div class="bm-form-group">
-                <label class="bm-label">Type</label>
-                <input type="text" name="type" class="bm-input @error('type') border-red-500 @enderror"
-                       placeholder="e.g. String, Wind, Percussion" value="{{ old('type') }}">
-                @include('alerts.feedback', ['field' => 'type'])
+                <label class="bm-label">{{ __('instruments.type') }}</label>
+                <input type="text" name="type" value="{{ old('type') }}" class="bm-input @error('type') bm-input-error @enderror" placeholder="{{ __('instruments.type_placeholder') }}">
+                @error('type')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
-            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
-                <button type="submit" class="bm-btn bm-btn-primary"><i class="fas fa-plus"></i> Add instrument</button>
-                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="mt-6 flex gap-2">
+                <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
+                <a href="{{ route('instruments.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
             </div>
         </form>
     </div>

@@ -1,25 +1,38 @@
-@extends('layouts.app', ['page' => __('Users'), 'pageSlug' => 'users'])
+@extends('layouts.app', ['page' => __('users.edit'), 'pageSlug' => 'users'])
 @section('content')
 <div class="bm-card">
-    <div class="bm-card-header"><h2 class="bm-card-title">Edit user</h2></div>
-    <div class="bm-card-body max-w-md">
+    <div class="bm-card-header">
+        <h2 class="bm-card-title">{{ __('users.edit') }}</h2>
+        <a href="{{ route('users.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">{{ __('common.back') }}</a>
+    </div>
+    <div class="bm-card-body">
         <form action="{{ route('users.update', $user->id) }}" method="post">
-            @csrf @method('put')
+            @csrf
+            @method('PUT')
+
             <div class="bm-form-group">
-                <label class="bm-label">Name</label>
-                <input type="text" name="name" class="bm-input @error('name') border-red-500 @enderror"
-                       placeholder="Name" value="{{ $user->name }}">
-                @include('alerts.feedback', ['field' => 'name'])
+                <label class="bm-label">{{ __('profile.name') }}</label>
+                <input type="text" name="name" value="{{ old('name', $user->name) }}" class="bm-input @error('name') bm-input-error @enderror">
+                @error('name')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
+
             <div class="bm-form-group">
-                <label class="bm-label">Email</label>
-                <input type="text" name="email" class="bm-input @error('email') border-red-500 @enderror"
-                       placeholder="Email" value="{{ $user->email }}">
-                @include('alerts.feedback', ['field' => 'email'])
+                <label class="bm-label">{{ __('profile.email') }}</label>
+                <input type="email" name="email" value="{{ old('email', $user->email) }}" class="bm-input @error('email') bm-input-error @enderror">
+                @error('email')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
-            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
-                <button type="submit" class="bm-btn bm-btn-primary"><i class="fas fa-save"></i> Save changes</button>
-                <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('users.col_role') }}</label>
+                <select name="is_admin" class="bm-select">
+                    <option value="0" {{ old('is_admin', $user->is_admin) == '0' ? 'selected' : '' }}>{{ __('users.role_user') }}</option>
+                    <option value="1" {{ old('is_admin', $user->is_admin) == '1' ? 'selected' : '' }}>{{ __('users.role_admin') }}</option>
+                </select>
+            </div>
+
+            <div class="mt-6 flex gap-2">
+                <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
+                <a href="{{ route('users.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
             </div>
         </form>
     </div>
