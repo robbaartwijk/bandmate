@@ -105,10 +105,13 @@
         @apply border-b border-white/10;
     }
     .bm-table thead th {
-        @apply px-4 py-3 text-sm font-semibold text-white/40 uppercase tracking-wider; /* was text-xs */
+        @apply px-4 py-3 text-sm font-semibold text-white/60 uppercase tracking-wider; /* was text-xs */
     }
     .bm-table tbody tr {
         @apply border-b border-white/5 hover:bg-white/5 transition-colors;
+    }
+    .bm-table tbody th {
+        @apply px-4 py-3 text-white/60 font-medium text-left;
     }
     .bm-table tbody td {
         @apply px-4 py-3 text-white/70;

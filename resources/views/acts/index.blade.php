@@ -49,7 +49,7 @@
                     @foreach ($acts as $act)
                     <tr>
                         <td><a href="{{ route('acts.show', $act->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->name }}</a></td>
-                        <td class="hidden md:table-cell">{{ $act->members }}</td>
+                        <td class="hidden md:table-cell">{{ $act->number_of_members }}</td>
                         <td class="hidden md:table-cell">{{ $act->genre->name ?? '' }}</td>
                         <td class="hidden lg:table-cell text-white/60 text-sm">{{ Str::limit($act->description, 60) }}</td>
                         <td class="hidden lg:table-cell text-white/40 text-xs">{{ $act->created_at }}</td>

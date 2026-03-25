@@ -29,8 +29,8 @@
 
             <div class="bm-form-group">
                 <label class="bm-label">{{ __('acts.members') }}</label>
-                <input type="number" name="members" value="{{ old('members', $act->members) }}" class="bm-input @error('members') bm-input-error @enderror" placeholder="{{ __('acts.members_placeholder') }}">
-                @error('members')<span class="bm-error">{{ $message }}</span>@enderror
+                <input type="number" name="number_of_members" value="{{ old('number_of_members', $act->number_of_members) }}" class="bm-input @error('number_of_members') bm-input-error @enderror" placeholder="{{ __('acts.members_placeholder') }}">
+                @error('number_of_members')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
 
             <div class="bm-form-group">

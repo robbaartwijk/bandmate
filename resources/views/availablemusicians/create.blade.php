@@ -11,16 +11,36 @@
                 <label for="instrument_id" class="bm-label">{{ __('availablemusicians.instrument') }}</label>
                 <select id="instrument_id" name="instrument_id" class="bm-select" required>
                     <option value="">{{ __('availablemusicians.select_instrument') }}</option>
-                    @foreach ($instruments as $instrument)
+                    @foreach ($availablemusician->instruments as $instrument)
                     <option value="{{ $instrument->id }}" {{ old('instrument_id') == $instrument->id ? 'selected' : '' }}>{{ $instrument->name }}</option>
                     @endforeach
                 </select>
                 @error('instrument_id') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
             <div class="bm-form-group">
+                <label for="genre_id" class="bm-label">{{ __('common.col_genre') }}</label>
+                <select id="genre_id" name="genre_id" class="bm-select" required>
+                    <option value="">{{ __('common.select_genre') }}</option>
+                    @foreach ($availablemusician->genres as $genre)
+                    <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->name }}</option>
+                    @endforeach
+                </select>
+                @error('genre_id') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
                 <label for="description" class="bm-label">{{ __('availablemusicians.description') }}</label>
                 <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('availablemusicians.description_placeholder') }}">{{ old('description') }}</textarea>
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="available_from" class="bm-label">{{ __('availablemusicians.available_from') }}</label>
+                <input type="date" id="available_from" name="available_from" class="bm-input" value="{{ old('available_from') }}">
+                @error('available_from') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="available_until" class="bm-label">{{ __('availablemusicians.available_until') }}</label>
+                <input type="date" id="available_until" name="available_until" class="bm-input" value="{{ old('available_until') }}">
+                @error('available_until') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>

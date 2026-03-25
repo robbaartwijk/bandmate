@@ -9,8 +9,12 @@ return [
 
     'instrument'              => 'Instrument',
     'select_instrument'       => 'Selecteer instrument',
+    'genre'                   => 'Genre',
+    'select_genre'            => 'Selecteer genre',
     'description'             => 'Beschrijving',
     'description_placeholder' => 'Beschrijf uw vaardigheden en beschikbaarheid...',
+    'available_from'          => 'Beschikbaar vanaf',
+    'available_until'         => 'Beschikbaar tot',
 
     'delete_confirm' => 'Deze beschikbare muzikant verwijderen?',
 

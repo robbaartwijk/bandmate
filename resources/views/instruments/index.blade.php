@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Instruments'), 'pageSlug' => 'instruments'])
+@extends('layouts.app', ['page' => __('instruments.title'), 'pageSlug' => 'instruments'])
 @section('content')
 <div class="bm-card">
     <div class="bm-card-header">

@@ -46,7 +46,7 @@
         <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
             @include('layouts.navbars.navbar')
 
-            <main class="flex-1 overflow-y-auto bg-gray-950 px-4 py-6 sm:px-6 lg:px-8">
+            <main class="flex-1 overflow-y-auto overflow-x-hidden bg-gray-950 px-4 py-6 sm:px-6 lg:px-8">
                 @yield('content')
             </main>
 

@@ -1,41 +1,54 @@
-@extends('layouts.app', ['page' => __('availablemusicians.title'), 'pageSlug' => 'availablemusicians'])
+@extends('layouts.app', ['page' => __('availablemusicians.edit'), 'pageSlug' => 'availablemusicians'])
 @section('content')
 <div class="bm-card">
     <div class="bm-card-header">
-        <h2 class="bm-card-title">{{ __('availablemusicians.title') }}</h2>
+        <h2 class="bm-card-title">{{ __('availablemusicians.edit') }}</h2>
     </div>
     <div class="bm-card-body">
-        <table class="bm-table">
-            <tbody>
-                <tr>
-                    <th>{{ __('common.col_instrument') }}</th>
-                    <td>{{ $availablemusician->instrument->name ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('availablemusicians.description') }}</th>
-                    <td>{{ $availablemusician->description ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('common.col_added') }}</th>
-                    <td>{{ $availablemusician->created_at->format('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>{{ __('common.col_updated') }}</th>
-                    <td>{{ $availablemusician->updated_at->format('Y-m-d H:i:s') }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="flex gap-2 mt-6">
-            <a href="{{ route('availablemusicians.edit', $availablemusician->id) }}" class="bm-btn bm-btn-primary"><i class="fas fa-pencil-alt"></i> {{ __('common.edit') }}</a>
-            <form action="{{ route('availablemusicians.destroy', $availablemusician->id) }}" method="post" class="inline">
-                @csrf @method('delete')
-                <button type="button" class="bm-btn bm-btn-danger"
-                        onclick="if(confirm('{{ __('availablemusicians.delete_confirm') }}')) this.closest('form').submit()">
-                    <i class="fas fa-trash"></i> {{ __('common.delete') }}
-                </button>
-            </form>
-            <a href="{{ route('availablemusicians.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.back') }}</a>
-        </div>
+        <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post">
+            @csrf @method('put')
+            <div class="bm-form-group">
+                <label for="instrument_id" class="bm-label">{{ __('availablemusicians.instrument') }}</label>
+                <select id="instrument_id" name="instrument_id" class="bm-select" required>
+                    <option value="">{{ __('availablemusicians.select_instrument') }}</option>
+                    @foreach ($availablemusician->instruments as $instrument)
+                    <option value="{{ $instrument->id }}" {{ old('instrument_id', $availablemusician->instrument_id) == $instrument->id ? 'selected' : '' }}>{{ $instrument->name }}</option>
+                    @endforeach
+                </select>
+                @error('instrument_id') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="genre_id" class="bm-label">{{ __('common.col_genre') }}</label>
+                <select id="genre_id" name="genre_id" class="bm-select" required>
+                    <option value="">{{ __('common.select_genre') }}</option>
+                    @foreach ($availablemusician->genres as $genre)
+                    <option value="{{ $genre->id }}" {{ old('genre_id', $availablemusician->genre_id) == $genre->id ? 'selected' : '' }}>{{ $genre->name }}</option>
+                    @endforeach
+                </select>
+                @error('genre_id') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="description" class="bm-label">{{ __('availablemusicians.description') }}</label>
+                <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('availablemusicians.description_placeholder') }}">{{ old('description', $availablemusician->description) }}</textarea>
+                @error('description') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="available_from" class="bm-label">{{ __('availablemusicians.available_from') }}</label>
+                <input type="date" id="available_from" name="available_from" class="bm-input"
+                       value="{{ old('available_from', $availablemusician->available_from ? substr($availablemusician->available_from, 0, 10) : '') }}">
+                @error('available_from') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="available_until" class="bm-label">{{ __('availablemusicians.available_until') }}</label>
+                <input type="date" id="available_until" name="available_until" class="bm-input"
+                       value="{{ old('available_until', $availablemusician->available_until ? substr($availablemusician->available_until, 0, 10) : '') }}">
+                @error('available_until') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="flex gap-2 mt-6">
+                <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
+                <a href="{{ route('availablemusicians.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

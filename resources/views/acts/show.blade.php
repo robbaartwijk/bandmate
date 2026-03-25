@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <th class="text-white/60 font-medium">{{ __('acts.members') }}</th>
-                    <td>{{ $act->members }}</td>
+                    <td>{{ $act->number_of_members }}</td>
                 </tr>
                 <tr>
                     <th class="text-white/60 font-medium">{{ __('acts.description') }}</th>

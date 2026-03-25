@@ -14,8 +14,12 @@ return [
     // Form labels & placeholders
     'instrument'              => 'Instrument',
     'select_instrument'       => 'Select instrument',
+    'genre'                   => 'Genre',
+    'select_genre'            => 'Select genre',
     'description'             => 'Description',
     'description_placeholder' => 'Describe your skills and availability...',
+    'available_from'          => 'Available from',
+    'available_until'         => 'Available until',
 
     // Confirm dialog
     'delete_confirm' => 'Delete this available musician?',

@@ -84,10 +84,10 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Genre</th>
-                            <th>Members</th>
-                            <th>Description</th>
-                            <th>Added</th>
+                            <th class="hidden md:table-cell">Genre</th>
+                            <th class="hidden md:table-cell">Members</th>
+                            <th class="hidden lg:table-cell">Description</th>
+                            <th class="hidden lg:table-cell">Added</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,10 +97,10 @@
                         @foreach ($recentActs as $act)
                         <tr>
                             <td><a href="{{ route('acts.show', $act->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->name }}</a></td>
-                            <td>{{ $act->genre->name }}</td>
-                            <td>{{ $act->number_of_members }}</td>
-                            <td>{{ Str::limit($act->description, 41) }}</td>
-                            <td>{{ $act->created_at }}</td>
+                            <td class="hidden md:table-cell">{{ $act->genre->name }}</td>
+                            <td class="hidden md:table-cell">{{ $act->number_of_members }}</td>
+                            <td class="hidden lg:table-cell text-white/60 text-sm">{{ Str::limit($act->description, 41) }}</td>
+                            <td class="hidden lg:table-cell text-white/40 text-xs">{{ $act->created_at->format('Y-m-d') }}</td>
                         </tr>
                         @endforeach
                         @endif
@@ -117,10 +117,10 @@
                     <thead>
                         <tr>
                             <th>Act</th>
-                            <th>Genre</th>
-                            <th>Instrument</th>
-                            <th>Description</th>
-                            <th>Added</th>
+                            <th class="hidden md:table-cell">Genre</th>
+                            <th class="hidden md:table-cell">Instrument</th>
+                            <th class="hidden lg:table-cell">Description</th>
+                            <th class="hidden lg:table-cell">Added</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,10 +130,10 @@
                         @foreach ($recentVacancies as $vacancy)
                         <tr>
                             <td><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act->name ?? '' }}</a></td>
-                            <td>{{ $vacancy->genre_name }}</td>
-                            <td>{{ $vacancy->instrument->name }}</td>
-                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a></td>
-                            <td>{{ $vacancy->created_at }}</td>
+                            <td class="hidden md:table-cell">{{ $vacancy->genre_name }}</td>
+                            <td class="hidden md:table-cell">{{ $vacancy->instrument->name }}</td>
+                            <td class="hidden lg:table-cell text-white/60 text-sm"><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a></td>
+                            <td class="hidden lg:table-cell text-white/40 text-xs">{{ $vacancy->created_at->format('Y-m-d') }}</td>
                         </tr>
                         @endforeach
                         @endif
@@ -150,10 +150,10 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Genre</th>
-                            <th>Instrument</th>
-                            <th>Description</th>
-                            <th>Added</th>
+                            <th class="hidden md:table-cell">Genre</th>
+                            <th class="hidden md:table-cell">Instrument</th>
+                            <th class="hidden lg:table-cell">Description</th>
+                            <th class="hidden lg:table-cell">Added</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -163,10 +163,10 @@
                         @foreach ($recentAvailablemusicians as $recentAvailablemusician)
                         <tr>
                             <td>{{ $recentAvailablemusician->user->name }}</td>
-                            <td>{{ $recentAvailablemusician->genre->name }}</td>
-                            <td>{{ $recentAvailablemusician->instrument->name }}</td>
-                            <td><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentAvailablemusician->description, 35) }}</a></td>
-                            <td>{{ $recentAvailablemusician->created_at }}</td>
+                            <td class="hidden md:table-cell">{{ $recentAvailablemusician->genre->name }}</td>
+                            <td class="hidden md:table-cell">{{ $recentAvailablemusician->instrument->name }}</td>
+                            <td class="hidden lg:table-cell text-white/60 text-sm"><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentAvailablemusician->description, 35) }}</a></td>
+                            <td class="hidden lg:table-cell text-white/40 text-xs">{{ $recentAvailablemusician->created_at->format('Y-m-d') }}</td>
                         </tr>
                         @endforeach
                         @endif
@@ -183,10 +183,10 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>City</th>
-                            <th>Country</th>
-                            <th>Description</th>
-                            <th>Added</th>
+                            <th class="hidden md:table-cell">City</th>
+                            <th class="hidden md:table-cell">Country</th>
+                            <th class="hidden lg:table-cell">Description</th>
+                            <th class="hidden lg:table-cell">Added</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -196,10 +196,10 @@
                         @foreach ($recentRehearsalrooms as $recentRehearsalroom)
                         <tr>
                             <td>{{ $recentRehearsalroom->name }}</td>
-                            <td>{{ $recentRehearsalroom->city }}</td>
-                            <td>{{ $recentRehearsalroom->country }}</td>
-                            <td><a href="{{ route('rehearsalrooms.show', $recentRehearsalroom->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentRehearsalroom->description, 30) }}</a></td>
-                            <td>{{ $recentRehearsalroom->created_at }}</td>
+                            <td class="hidden md:table-cell">{{ $recentRehearsalroom->city }}</td>
+                            <td class="hidden md:table-cell">{{ $recentRehearsalroom->country }}</td>
+                            <td class="hidden lg:table-cell text-white/60 text-sm"><a href="{{ route('rehearsalrooms.show', $recentRehearsalroom->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentRehearsalroom->description, 30) }}</a></td>
+                            <td class="hidden lg:table-cell text-white/40 text-xs">{{ $recentRehearsalroom->created_at->format('Y-m-d') }}</td>
                         </tr>
                         @endforeach
                         @endif
