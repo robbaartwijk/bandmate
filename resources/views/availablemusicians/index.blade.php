@@ -55,8 +55,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            <span class="text-white/40 text-xs">{{ trans_choice('availablemusicians.found', $availablemusicians->count(), ['count' => $availablemusicians->count()]) }}</span>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $availablemusicians->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $availablemusicians->firstItem() ?? 0 }} – {{ $availablemusicians->lastItem() ?? 0 }} of {{ $availablemusicians->total() }}</span>
         </div>
     </div>
 </div>

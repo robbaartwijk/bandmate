@@ -59,7 +59,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">{{ $jobs->links() }}</div>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $jobs->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $jobs->firstItem() ?? 0 }} – {{ $jobs->lastItem() ?? 0 }} of {{ $jobs->total() }}</span>
+        </div>
     </div>
 </div>
 @endsection

@@ -54,7 +54,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4"><span class="text-white/40 text-xs">{{ $instruments->count() }} {{ $instruments->count() == 1 ? 'instrument' : 'instruments' }} found</span></div>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $instruments->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $instruments->firstItem() ?? 0 }} – {{ $instruments->lastItem() ?? 0 }} of {{ $instruments->total() }}</span>
+        </div>
     </div>
 </div>
 @endsection

@@ -31,10 +31,12 @@ class VacancyController extends BaseController
             ->select('vacancies.*', 'instruments.name as instrument_name', 'acts.name as act_name')
             ->join('instruments', 'vacancies.instrument_id', '=', 'instruments.id')
             ->join('acts', 'vacancies.act_id', '=', 'acts.id')
-            ->where(function ($query) use ($search) {
-                $query->where('vacancies.description', 'like', "%{$search}%")
-                    ->orWhere('instruments.name', 'like', "%{$search}%")
-                    ->orWhere('acts.name', 'like', "%{$search}%");
+            ->when($request->filled('search'), function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('vacancies.description', 'like', "%{$search}%")
+                      ->orWhere('instruments.name', 'like', "%{$search}%")
+                      ->orWhere('acts.name', 'like', "%{$search}%");
+                });
             })
             ->when($private, function ($query) {
                 return $query->where('vacancies.user_id', '=', auth()->id());

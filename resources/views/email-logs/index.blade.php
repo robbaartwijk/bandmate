@@ -5,7 +5,7 @@
     <div class="bm-card-body">
 
         <form method="GET" action="{{ route('email-logs.index') }}" class="flex flex-wrap items-center gap-2 mb-4">
-            <select name="job_id" class="bm-select text-sm py-1.5" style="min-width:180px;">
+            <select name="job_id" class="bm-select text-sm py-1.5" style="min-width:180px;" onchange="this.form.submit()">
                 <option value="">All jobs</option>
                 @foreach($jobs as $job)
                 <option value="{{ $job->id }}" @selected(request('job_id') == $job->id)>
@@ -13,7 +13,7 @@
                 </option>
                 @endforeach
             </select>
-            <select name="status" class="bm-select text-sm py-1.5" style="min-width:140px;">
+            <select name="status" class="bm-select text-sm py-1.5" style="min-width:140px;" onchange="this.form.submit()">
                 <option value="">All statuses</option>
                 @foreach(['sent', 'delivered', 'opened', 'clicked', 'failed', 'bounced'] as $s)
                 <option value="{{ $s }}" @selected(request('status') === $s)>{{ ucfirst($s) }}</option>
@@ -70,7 +70,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">{{ $logs->links() }}</div>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $logs->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $logs->firstItem() ?? 0 }} – {{ $logs->lastItem() ?? 0 }} of {{ $logs->total() }}</span>
+        </div>
     </div>
 </div>
 @endsection

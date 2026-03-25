@@ -12,8 +12,8 @@
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">                    
                     <option value="name" {{ request()->sort === 'name' ? 'selected' : '' }}>{{ __('common.sort_by_name') }}</option>
                     <option value="city" {{ request()->sort === 'city' ? 'selected' : '' }}>{{ __('common.sort_by_city') }}</option>
-                    <option value="created_at" {{ request()->sort === 'created_at' ? 'selected' : '' }}>{{ __('common.sort_by_created_at') }}</option>
-                    <option value="updated_at" {{ request()->sort === 'updated_at' ? 'selected' : '' }}>{{ __('common.sort_by_updated_at') }}</option>
+                    <option value="created_at" {{ request()->sort === 'created_at' ? 'selected' : '' }}>{{ __('common.sort_by_date_of_creation') }}</option>
+                    <option value="updated_at" {{ request()->sort === 'updated_at' ? 'selected' : '' }}>{{ __('common.sort_by_date_last_update') }}</option>
                 </select>
                 <button type="submit" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-search"></i></button>
             </form>
@@ -57,8 +57,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            <span class="text-white/40 text-xs">{{ trans_choice('rehearsalrooms.found', $rehearsalrooms->count(), ['count' => $rehearsalrooms->count()]) }}</span>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $rehearsalrooms->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $rehearsalrooms->firstItem() ?? 0 }} – {{ $rehearsalrooms->lastItem() ?? 0 }} of {{ $rehearsalrooms->total() }}</span>
         </div>
     </div>
 </div>

@@ -58,8 +58,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            <span class="text-white/40 text-xs">{{ trans_choice('users.found', $users->count(), ['count' => $users->count()]) }}</span>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $users->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $users->firstItem() ?? 0 }} – {{ $users->lastItem() ?? 0 }} of {{ $users->total() }}</span>
         </div>
     </div>
 </div>

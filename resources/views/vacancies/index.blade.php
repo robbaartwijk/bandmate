@@ -55,8 +55,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            <span class="text-white/40 text-xs">{{ trans_choice('vacancies.found', $vacancies->count(), ['count' => $vacancies->count()]) }}</span>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $vacancies->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $vacancies->firstItem() ?? 0 }} – {{ $vacancies->lastItem() ?? 0 }} of {{ $vacancies->total() }}</span>
         </div>
     </div>
 </div>

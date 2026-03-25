@@ -69,8 +69,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            <span class="text-white/40 text-xs">{{ trans_choice('acts.found', $acts->count(), ['count' => $acts->count()]) }}</span>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $acts->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $acts->firstItem() ?? 0 }} – {{ $acts->lastItem() ?? 0 }} of {{ $acts->total() }}</span>
         </div>
     </div>
 </div>

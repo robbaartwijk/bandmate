@@ -55,8 +55,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            <span class="text-white/40 text-xs">{{ trans_choice('genres.found', $genres->count(), ['count' => $genres->count()]) }}</span>
+        <div class="mt-4 flex flex-col items-center gap-2">
+            {{ $genres->appends(request()->query())->links() }}
+            <span class="text-white/40 text-xs">{{ $genres->firstItem() ?? 0 }} – {{ $genres->lastItem() ?? 0 }} of {{ $genres->total() }}</span>
         </div>
     </div>
 </div>
