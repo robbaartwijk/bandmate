@@ -23,7 +23,7 @@ class ActController extends BaseController
     public function index(Request $request)
     {
         $sort = $request->input('sort') ?? 'name';
-        $select = $request->input('selectrecords') ?? 25;
+        $select = $request->input('per_page') ?? 25;
 
         $query = $this->buildQuerySelection($request, $sort);
 
@@ -223,8 +223,8 @@ class ActController extends BaseController
 
     public function buildPrivateParameter($request, $query)
     {
-        if ($request->boolean('private')) {
-            $query->where('user_id', auth()->id());
+        if ($request->input('filter') === 'my') {
+            $query->where('acts.user_id', auth()->id());
         }
 
         return $query;
