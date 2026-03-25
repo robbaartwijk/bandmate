@@ -20,7 +20,7 @@
                 <input type="text" name="search" value="{{ request()->search }}" class="bm-input text-sm py-1.5" style="width:160px;" placeholder="{{ __('common.search_placeholder') }}">
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
                     <option value="name"        {{ request()->sort == 'name'        ? 'selected' : '' }}>{{ __('common.sort_by_name') }}</option>
-                    <option value="genre"       {{ request()->sort == 'genre'       ? 'selected' : '' }}>{{ __('common.sort_by_genre') }}</option>
+                    <option value="genre_name"  {{ request()->sort == 'genre_name'  ? 'selected' : '' }}>{{ __('common.sort_by_genre') }}</option>
                     <option value="description" {{ request()->sort == 'description' ? 'selected' : '' }}>{{ __('common.sort_by_description') }}</option>
                     <option value="created_at"  {{ request()->sort == 'created_at'  ? 'selected' : '' }}>{{ __('common.sort_by_date_added') }}</option>
                     <option value="updated_at"  {{ request()->sort == 'updated_at'  ? 'selected' : '' }}>{{ __('common.sort_by_last_update') }}</option>

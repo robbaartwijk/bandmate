@@ -47,8 +47,10 @@ return [
     'sort_by_last_update' => 'Sorteren op laatste update',
     'sort_by_city'        => 'Sorteren op stad',
     'sort_by_email'       => 'Sorteren op e-mail',
-    'sort_by_instrument'  => 'Sorteren op instrument',
-    'sort_by_act'         => 'Sorteren op act',
+    'sort_by_instrument'       => 'Sorteren op instrument',
+    'sort_by_act'              => 'Sorteren op act',
+    'sort_by_date_of_creation' => 'Sorteren op aanmaakdatum',
+    'sort_by_date_last_update' => 'Sorteren op laatste update',
 
     // Form placeholders
     'search_placeholder' => 'Zoeken...',

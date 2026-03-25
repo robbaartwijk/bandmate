@@ -12,7 +12,7 @@
                 <select id="act_id" name="act_id" class="bm-select" required>
                     <option value="">{{ __('vacancies.select_act') }}</option>
                     @foreach ($acts as $act)
-                    <option value="{{ $act->id }}" {{ old('act_id', $vacancy->act_id) == $act->id ? 'selected' : '' }}>{{ $act->name }}</option>
+                    <option value="{{ $act->id }}" {{ $vacancy->act_id == $act->id ? 'selected' : '' }}>{{ $act->name }}</option>
                     @endforeach
                 </select>
                 @error('act_id') <span class="bm-error">{{ $message }}</span> @enderror

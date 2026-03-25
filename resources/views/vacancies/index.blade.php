@@ -10,11 +10,10 @@
             <form action="{{ route('vacancies.index') }}" method="get" class="flex flex-wrap items-center gap-2 ml-auto">
                 <input type="text" name="search" value="{{ request()->search }}" class="bm-input text-sm py-1.5" style="width:160px;" placeholder="{{ __('common.search_placeholder') }}">
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
-                    <option value="">{{ __('common.sort_by') }}</option>
-                    <option value="act" {{ request()->sort === 'act' ? 'selected' : '' }}>{{ __('common.sort_by_act') }}</option>
-                    <option value="instrument" {{ request()->sort === 'instrument' ? 'selected' : '' }}>{{ __('common.sort_by_instrument') }}</option>
-                    <option value="created_at" {{ request()->sort === 'created_at' ? 'selected' : '' }}>{{ __('common.sort_by_created_at') }}</option>
-                    <option value="updated_at" {{ request()->sort === 'updated_at' ? 'selected' : '' }}>{{ __('common.sort_by_updated_at') }}</option>
+                    <option value="act_name"        {{ (request()->sort === 'act_name'        || !request()->sort) ? 'selected' : '' }}>{{ __('common.sort_by_act') }}</option>
+                    <option value="instrument_name" {{ request()->sort === 'instrument_name'  ? 'selected' : '' }}>{{ __('common.sort_by_instrument') }}</option>
+                    <option value="created_at"      {{ request()->sort === 'created_at'       ? 'selected' : '' }}>{{ __('common.sort_by_date_of_creation') }}</option>
+                    <option value="updated_at"      {{ request()->sort === 'updated_at'       ? 'selected' : '' }}>{{ __('common.sort_by_date_last_update') }}</option>
                 </select>
                 <button type="submit" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-search"></i></button>
             </form>

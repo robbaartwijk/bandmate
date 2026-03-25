@@ -10,7 +10,6 @@
             <form action="{{ route('agencies.index') }}" method="get" class="flex flex-wrap items-center gap-2 ml-auto">
                 <input type="text" name="search" value="{{ request()->search }}" class="bm-input text-sm py-1.5" style="width:160px;" placeholder="{{ __('common.search_placeholder') }}">
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
-                    <option value="">{{ __('common.sort_by') }}</option>
                     <option value="name" {{ request()->sort === 'name' ? 'selected' : '' }}>{{ __('common.sort_by_name') }}</option>
                     <option value="city" {{ request()->sort === 'city' ? 'selected' : '' }}>{{ __('common.sort_by_city') }}</option>
                     <option value="created_at" {{ request()->sort === 'created_at' ? 'selected' : '' }}>{{ __('common.sort_by_created_at') }}</option>

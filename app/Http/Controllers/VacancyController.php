@@ -2,6 +2,7 @@
  
 namespace App\Http\Controllers;
  
+use App\Models\Act;
 use App\Models\Instrument;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
@@ -38,7 +39,14 @@ class VacancyController extends BaseController
             ->when($private, function ($query) {
                 return $query->where('vacancies.user_id', '=', auth()->id());
             })
-            ->orderBy($sort, 'asc')
+            ->when(true, function ($query) use ($sort) {
+                match ($sort) {
+                    'instrument_name' => $query->orderBy('instruments.name'),
+                    'created_at'      => $query->orderBy('vacancies.created_at'),
+                    'updated_at'      => $query->orderBy('vacancies.updated_at'),
+                    default           => $query->orderBy('acts.name'),
+                };
+            })
             ->paginate($select)
             ->onEachSide(1);
  
@@ -114,8 +122,11 @@ class VacancyController extends BaseController
  
         $vacancy->user_name = $vacancy->user->name;
         $vacancy->act_name = $vacancy->act->name;
- 
-        $acts = auth()->user()->acts->sortBy('name');
+
+        $acts = Act::where('user_id', auth()->id())
+            ->orWhere('id', $vacancy->act_id)
+            ->orderBy('name')
+            ->get();
         $instruments = Instrument::all()->sortBy(['type', 'name']);
         $vacancy->instrument_id = $vacancy->instrument->id;
  
@@ -156,4 +167,3 @@ class VacancyController extends BaseController
             ->with('status', 'Vacancy deleted successfully');
     }
 }
- 
