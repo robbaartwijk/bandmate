@@ -39,9 +39,19 @@
                 @error('description')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
 
-            <div class="bm-form-group flex items-center gap-2">
-                <input type="checkbox" name="is_private" id="is_private" value="1" {{ old('is_private', $act->is_private) ? 'checked' : '' }} class="bm-checkbox">
-                <label for="is_private" class="bm-label mb-0">{{ __('acts.is_private') }}</label>
+            <div class="flex flex-wrap gap-6 mt-2 mb-4">
+                <div class="bm-form-group flex items-center gap-2 mb-0">
+                    <input type="checkbox" name="rehearsal_room" id="rehearsal_room" class="bm-checkbox" {{ $act->rehearsal_room ? 'checked' : '' }}>
+                    <label for="rehearsal_room" class="bm-label mb-0">Rehearsal room</label>
+                </div>
+                <div class="bm-form-group flex items-center gap-2 mb-0">
+                    <input type="checkbox" name="active" id="active" class="bm-checkbox" {{ $act->active ? 'checked' : '' }}>
+                    <label for="active" class="bm-label mb-0">Active</label>
+                </div>
+                <div class="bm-form-group flex items-center gap-2 mb-0">
+                    <input type="checkbox" name="is_private" id="is_private" value="1" {{ old('is_private', $act->is_private) ? 'checked' : '' }} class="bm-checkbox">
+                    <label for="is_private" class="bm-label mb-0">{{ __('acts.is_private') }}</label>
+                </div>
             </div>
 
             {{-- Contact information --}}
@@ -49,11 +59,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bm-form-group">
                     <label class="bm-label">{{ __('acts.email_label') }}</label>
-                    <input type="email" name="email" value="{{ old('email', $act->email) }}" class="bm-input">
+                    <input type="email" name="email" value="{{ old('email', $act->email) }}" class="bm-input @error('email') bm-input-error @enderror">
+                    @error('email')<span class="bm-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="bm-form-group">
                     <label class="bm-label">{{ __('acts.phone_label') }}</label>
-                    <input type="text" name="phone" value="{{ old('phone', $act->phone) }}" class="bm-input">
+                    <input type="text" name="phone" value="{{ old('phone', $act->phone) }}" class="bm-input @error('phone') bm-input-error @enderror">
+                    @error('phone')<span class="bm-error">{{ $message }}</span>@enderror
                 </div>
                 <div class="bm-form-group">
                     <label class="bm-label">{{ __('acts.website_label') }}</label>
@@ -94,28 +106,31 @@
                 </div>
                 <div class="bm-form-group">
                     <label class="bm-label">{{ __('acts.video_demo_label') }}</label>
-                    <input type="url" name="video_demo" value="{{ old('video_demo', $act->video_demo) }}" class="bm-input">
+                    <input type="url" name="youtubedemo" value="{{ old('youtubedemo', $act->youtubedemo) }}" class="bm-input" placeholder="https://www.youtube.com/watch?v=...">
                 </div>
             </div>
 
-            {{-- Media --}}
+            {{-- Image --}}
             <h3 class="bm-section-title mt-6">{{ __('acts.media_section') }}</h3>
             <div class="bm-form-group">
                 <label class="bm-label">{{ __('acts.upload_image') }}</label>
-                <input type="file" name="image" class="bm-input" accept="image/*">
-            </div>
-            <div class="bm-form-group">
-                <label class="bm-label">{{ __('acts.upload_music') }}</label>
-                <input type="file" name="music" class="bm-input" accept="audio/*">
-            </div>
-            <div class="bm-form-group">
-                <label class="bm-label">{{ __('acts.upload_video') }}</label>
-                <input type="file" name="video" class="bm-input" accept="video/*">
+                @php $currentImage = $act->getFirstMedia('images/ActPics'); @endphp
+                @if($currentImage)
+                <div class="mb-3">
+                    <img src="{{ asset('/storage/' . $currentImage->id . '/' . $currentImage->file_name) }}"
+                         class="rounded-lg border border-white/10"
+                         style="max-width:200px; max-height:150px; object-fit:cover;"
+                         alt="{{ $act->name }}">
+                    <p class="text-white/40 text-xs mt-1">Current image (upload a new one to replace)</p>
+                </div>
+                @endif
+                <input type="file" name="actpic" class="bm-input" accept="image/*">
+                @error('actpic')<span class="bm-error">{{ $message }}</span>@enderror
             </div>
 
             <div class="mt-6 flex gap-2">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
-                <a href="{{ route('acts.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
+                <a href="{{ route('acts.show', $act->id) }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>
             </div>
         </form>
     </div>
