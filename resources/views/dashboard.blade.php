@@ -22,19 +22,15 @@
                      class="rounded-lg border border-white/20" style="max-width: 160px;">
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-white mb-4">{{ __('Welcome to Bandmate') }}</h1>
+                <h1 class="text-2xl font-bold text-white mb-4">{{ __('dashboard.welcome') }}</h1>
                 <p class="text-white/70 text-sm leading-relaxed mb-3">
-                    The best place to find your bandmates, rehearsal rooms, agencies and venues.
-                    Use the menu to browse all available information and add your own.
-                    You can edit information you entered yourself, but only browse other users' entries.
+                    {{ __('dashboard.intro_1') }}
                 </p>
                 <p class="text-white/70 text-sm leading-relaxed mb-3">
-                    This website is a labour of love and is not sponsored by anyone.
-                    Your data is used only to make the platform work and will never be shared with any other person or organisation.
-                    The site is meant for musicians &mdash; not the music business.
+                    {{ __('dashboard.intro_2') }}
                 </p>
                 <p class="text-white/70 text-sm leading-relaxed">
-                    If you'd like to support the hosting costs, a donation via PayPal is always appreciated.
+                    {{ __('dashboard.intro_3') }}
                 </p>
             </div>
         </div>
@@ -45,24 +41,24 @@
                 <input type="hidden" name="business" value="rob.baartwijk@gmail.com" />
                 <input type="hidden" name="currency_code" value="EUR" />
                 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
-                       border="0" name="submit" title="PayPal - The safer, easier way to pay online!"
-                       alt="Donate with PayPal button" />
+                       border="0" name="submit" title="{{ __('dashboard.paypal_title') }}"
+                       alt="{{ __('dashboard.paypal_alt') }}" />
             </form>
         </div>
 
         {{-- Quick reference --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-6 border-t border-white/10 text-center">
             <div class="px-4 py-3 rounded-lg bg-white/5">
-                <p class="text-white/70 text-sm">An <strong class="text-white">act</strong> is a band or solo artist &mdash; register your own.</p>
+                <p class="text-white/70 text-sm">{!! __('dashboard.tip_act') !!}</p>
             </div>
             <div class="px-4 py-3 rounded-lg bg-white/5">
-                <p class="text-white/70 text-sm">A <strong class="text-white">vacancy</strong> is an opening in a band, linked to acts you own.</p>
+                <p class="text-white/70 text-sm">{!! __('dashboard.tip_vacancy') !!}</p>
             </div>
             <div class="px-4 py-3 rounded-lg bg-white/5">
-                <p class="text-white/70 text-sm"><strong class="text-white">Rehearsal rooms</strong> &mdash; add yours if you own one.</p>
+                <p class="text-white/70 text-sm">{!! __('dashboard.tip_rehearsal') !!}</p>
             </div>
             <div class="px-4 py-3 rounded-lg bg-white/5">
-                <p class="text-white/70 text-sm"><strong class="text-white">Agencies &amp; venues</strong> &mdash; list your business for artists to find.</p>
+                <p class="text-white/70 text-sm">{!! __('dashboard.tip_agencies') !!}</p>
             </div>
         </div>
     </div>
@@ -71,28 +67,28 @@
 {{-- Recently added --}}
 <div class="bm-card">
     <div class="bm-card-header">
-        <h2 class="bm-card-title">Recently added</h2>
-        <a href="{{ route('acts.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">View all</a>
+        <h2 class="bm-card-title">{{ __('dashboard.recently_added') }}</h2>
+        <a href="{{ route('acts.index') }}" class="bm-btn bm-btn-secondary bm-btn-sm">{{ __('dashboard.view_all') }}</a>
     </div>
     <div class="bm-card-body space-y-8">
 
         {{-- Acts --}}
         <div>
-            <h3 class="text-white font-semibold text-sm mb-3">Acts</h3>
+            <h3 class="text-white font-semibold text-sm mb-3">{{ __('dashboard.section_acts') }}</h3>
             <div class="overflow-x-auto">
                 <table class="bm-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th class="hidden md:table-cell">Genre</th>
-                            <th class="hidden md:table-cell">Members</th>
-                            <th class="hidden lg:table-cell">Description</th>
-                            <th class="hidden lg:table-cell">Added</th>
+                            <th>{{ __('common.col_name') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_genre') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_members') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_description') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ((!isSet($recentActs) || ($recentActs->isEmpty())))
-                        <tr><td colspan="5" class="text-white/40">No acts found</td></tr>
+                        <tr><td colspan="5" class="text-white/40">{{ __('dashboard.no_acts') }}</td></tr>
                         @else
                         @foreach ($recentActs as $act)
                         <tr>
@@ -111,21 +107,21 @@
 
         {{-- Vacancies --}}
         <div>
-            <h3 class="text-white font-semibold text-sm mb-3">Vacancies</h3>
+            <h3 class="text-white font-semibold text-sm mb-3">{{ __('dashboard.section_vacancies') }}</h3>
             <div class="overflow-x-auto">
                 <table class="bm-table">
                     <thead>
                         <tr>
-                            <th>Act</th>
-                            <th class="hidden md:table-cell">Genre</th>
-                            <th class="hidden md:table-cell">Instrument</th>
-                            <th class="hidden lg:table-cell">Description</th>
-                            <th class="hidden lg:table-cell">Added</th>
+                            <th>{{ __('common.col_act') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_genre') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_instrument') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_description') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ((!isSet($recentVacancies) || ($recentVacancies->isEmpty())))
-                        <tr><td colspan="5" class="text-white/40">No vacancies found</td></tr>
+                        <tr><td colspan="5" class="text-white/40">{{ __('dashboard.no_vacancies') }}</td></tr>
                         @else
                         @foreach ($recentVacancies as $vacancy)
                         <tr>
@@ -144,21 +140,21 @@
 
         {{-- Available musicians --}}
         <div>
-            <h3 class="text-white font-semibold text-sm mb-3">Available musicians</h3>
+            <h3 class="text-white font-semibold text-sm mb-3">{{ __('dashboard.section_musicians') }}</h3>
             <div class="overflow-x-auto">
                 <table class="bm-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th class="hidden md:table-cell">Genre</th>
-                            <th class="hidden md:table-cell">Instrument</th>
-                            <th class="hidden lg:table-cell">Description</th>
-                            <th class="hidden lg:table-cell">Added</th>
+                            <th>{{ __('common.col_name') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_genre') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_instrument') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_description') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ((!isSet($recentAvailablemusicians) || ($recentAvailablemusicians->isEmpty())))
-                        <tr><td colspan="5" class="text-white/40">No available musicians found</td></tr>
+                        <tr><td colspan="5" class="text-white/40">{{ __('dashboard.no_musicians') }}</td></tr>
                         @else
                         @foreach ($recentAvailablemusicians as $recentAvailablemusician)
                         <tr>
@@ -177,21 +173,21 @@
 
         {{-- Rehearsal rooms --}}
         <div>
-            <h3 class="text-white font-semibold text-sm mb-3">Rehearsal rooms</h3>
+            <h3 class="text-white font-semibold text-sm mb-3">{{ __('dashboard.section_rehearsal') }}</h3>
             <div class="overflow-x-auto">
                 <table class="bm-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th class="hidden md:table-cell">City</th>
-                            <th class="hidden md:table-cell">Country</th>
-                            <th class="hidden lg:table-cell">Description</th>
-                            <th class="hidden lg:table-cell">Added</th>
+                            <th>{{ __('common.col_name') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_city') }}</th>
+                            <th class="hidden md:table-cell">{{ __('common.col_country') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_description') }}</th>
+                            <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ((!isSet($recentRehearsalrooms) || ($recentRehearsalrooms->isEmpty())))
-                        <tr><td colspan="5" class="text-white/40">No rehearsal rooms found</td></tr>
+                        <tr><td colspan="5" class="text-white/40">{{ __('dashboard.no_rehearsal') }}</td></tr>
                         @else
                         @foreach ($recentRehearsalrooms as $recentRehearsalroom)
                         <tr>
