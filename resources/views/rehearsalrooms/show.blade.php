@@ -4,6 +4,17 @@
     <div class="bm-card-header">
         <h2 class="bm-card-title">{{ $rehearsalroom->name }}</h2>
     </div>
+
+    {{-- Cover photo --}}
+    @if(!empty($rehearsalroom->image))
+    <div class="w-full overflow-hidden" style="max-height:320px;">
+        <img src="{{ asset('/storage/' . $rehearsalroom->image->id . '/' . $rehearsalroom->image->file_name) }}"
+             alt="{{ $rehearsalroom->name }}"
+             class="w-full object-cover"
+             style="max-height:320px;">
+    </div>
+    @endif
+
     <div class="bm-card-body">
         <table class="bm-table">
             <tbody>

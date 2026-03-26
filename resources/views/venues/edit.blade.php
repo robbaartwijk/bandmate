@@ -5,7 +5,7 @@
         <h2 class="bm-card-title">{{ __('venues.edit') }}</h2>
     </div>
     <div class="bm-card-body">
-        <form action="{{ route('venues.update', $venue->id) }}" method="post">
+        <form action="{{ route('venues.update', $venue->id) }}" method="post" enctype="multipart/form-data">
             @csrf @method('put')
             <div class="bm-form-group">
                 <label for="name" class="bm-label">{{ __('venues.name') }}</label>
@@ -32,6 +32,26 @@
                 <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('venues.description_placeholder') }}">{{ old('description', $venue->description) }}</textarea>
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+
+            {{-- Photo upload --}}
+            <h3 class="bm-section-title mt-6">Photo</h3>
+            <div class="bm-form-group">
+                <label for="venuepic" class="bm-label">Venue photo</label>
+                @php $currentImage = $venue->getFirstMedia('images/VenuePics'); @endphp
+                @if($currentImage)
+                <div class="mb-3">
+                    <img src="{{ asset('/storage/' . $currentImage->id . '/' . $currentImage->file_name) }}"
+                         class="rounded-lg border border-white/10"
+                         style="max-width:260px; max-height:160px; object-fit:cover;"
+                         alt="{{ $venue->name }}">
+                    <p class="text-white/40 text-xs mt-1">Current photo — upload a new one to replace it.</p>
+                </div>
+                @endif
+                <input type="file" id="venuepic" name="venuepic" class="bm-input" accept="image/*">
+                <p class="text-white/40 text-xs mt-1">JPG, PNG or WebP. Max 4 MB.</p>
+                @error('venuepic') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('venues.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

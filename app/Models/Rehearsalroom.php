@@ -28,7 +28,8 @@ class Rehearsalroom extends Model implements HasMedia
         'phone',
         'email',
         'website',
-        'description'
+        'description',
+        'price',
     ];
 
     public function user()
@@ -40,5 +41,4 @@ class Rehearsalroom extends Model implements HasMedia
     {
         return $this->media()->count() > 0;
     }
-
 }

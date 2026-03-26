@@ -58,26 +58,27 @@ class VenueController extends BaseController
     {
         $this->authorize('create', Venue::class);
 
-        // FIX: removed the forced ->merge() that set phone/email to empty string.
-        // Using 'nullable' rules instead so empty submissions are handled cleanly.
         $request->validate([
-            'name'    => 'required',
-            'address' => 'required',
-            'zip'     => 'required',
-            'city'    => 'required',
-            'state'   => 'required',
-            'country' => 'required',
-            'website' => ['nullable', 'url'],
-            'phone'   => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
-            'email'   => ['nullable', 'email'],
+            'name'        => 'required',
+            'city'        => 'required',
+            'country'     => 'required',
+            'capacity'    => ['nullable', 'integer', 'min:0'],
+            'website'     => ['nullable', 'url'],
+            'phone'       => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
+            'email'       => ['nullable', 'email'],
+            'venuepic'    => ['nullable', 'image', 'max:4096'],
         ]);
 
         $venue = new Venue;
         $venue->user_id = auth()->id();
         $venue->fill($request->only([
-            'name', 'address', 'zip', 'city', 'state', 'country', 'phone', 'email', 'website',
+            'name', 'city', 'country', 'capacity', 'description',
         ]));
         $venue->save();
+
+        if ($request->hasFile('venuepic')) {
+            $this->storeVenueImage($request, $venue);
+        }
 
         $this->notificationService->dispatchModuleNotification(
             templateName: 'email_notification_venues',
@@ -98,6 +99,8 @@ class VenueController extends BaseController
      */
     public function show(Venue $venue)
     {
+        $venue->image = $venue->getFirstMedia('images/VenuePics');
+
         return view('venues.show', compact('venue'));
     }
 
@@ -118,22 +121,27 @@ class VenueController extends BaseController
     {
         $this->authorize('update', $venue);
 
-        // FIX: same phone/email fix as store() — use nullable instead of forced empty string.
         $request->validate([
-            'name'    => 'required',
-            'address' => 'required',
-            'zip'     => 'required',
-            'city'    => 'required',
-            'state'   => 'required',
-            'country' => 'required',
-            'website' => ['nullable', 'url'],
-            'phone'   => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
-            'email'   => ['nullable', 'email'],
+            'name'        => 'required',
+            'city'        => 'required',
+            'country'     => 'required',
+            'capacity'    => ['nullable', 'integer', 'min:0'],
+            'website'     => ['nullable', 'url'],
+            'phone'       => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
+            'email'       => ['nullable', 'email'],
+            'venuepic'    => ['nullable', 'image', 'max:4096'],
         ]);
 
-        $venue->update($request->validated());
+        $venue->fill($request->only([
+            'name', 'city', 'country', 'capacity', 'description',
+        ]))->save();
 
-        return redirect()->route('venues.index')
+        if ($request->hasFile('venuepic')) {
+            $this->clearVenueImage($venue);
+            $this->storeVenueImage($request, $venue);
+        }
+
+        return redirect()->route('venues.show', $venue)
             ->with('status', 'Venue updated successfully');
     }
 
@@ -144,9 +152,27 @@ class VenueController extends BaseController
     {
         $this->authorize('delete', $venue);
 
+        $venue->clearMediaCollection('images/VenuePics');
         $venue->delete();
 
         return redirect()->route('venues.index')
             ->with('status', 'Venue deleted successfully');
+    }
+
+    /**
+     * Store the uploaded venue image via Spatie Media Library.
+     */
+    public function storeVenueImage(Request $request, Venue $venue): void
+    {
+        $venue->addMediaFromRequest('venuepic')
+            ->toMediaCollection('images/VenuePics');
+    }
+
+    /**
+     * Remove the venue image media collection.
+     */
+    public function clearVenueImage(Venue $venue): void
+    {
+        $venue->clearMediaCollection('images/VenuePics');
     }
 }
