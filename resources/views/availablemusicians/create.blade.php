@@ -5,7 +5,7 @@
         <h2 class="bm-card-title">{{ __('availablemusicians.add') }}</h2>
     </div>
     <div class="bm-card-body">
-        <form action="{{ route('availablemusicians.store') }}" method="post">
+        <form action="{{ route('availablemusicians.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="bm-form-group">
                 <label for="instrument_id" class="bm-label">{{ __('availablemusicians.instrument') }}</label>
@@ -42,6 +42,16 @@
                 <input type="date" id="available_until" name="available_until" class="bm-input" value="{{ old('available_until') }}">
                 @error('available_until') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+
+            {{-- Photo --}}
+            <h3 class="bm-section-title mt-6">Photo</h3>
+            <div class="bm-form-group">
+                <label for="availablemusicianpic" class="bm-label">Profile photo</label>
+                <input type="file" id="availablemusicianpic" name="availablemusicianpic" class="bm-input" accept="image/*">
+                <p class="text-white/40 text-xs mt-1">JPG, PNG or WebP. Max 4 MB.</p>
+                @error('availablemusicianpic') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('availablemusicians.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

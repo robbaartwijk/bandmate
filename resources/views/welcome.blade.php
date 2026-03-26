@@ -4,32 +4,42 @@
 
 {{-- Hero --}}
 <div class="bm-card mb-6 overflow-hidden">
-    <div class="relative px-6 py-10" style="background: linear-gradient(135deg, rgb(28,28,85) 0%, rgb(49,27,100) 100%);">
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+
+    {{-- Banner image with gradient overlay --}}
+    <div class="relative px-6 py-12 md:py-16"
+         style="background:
+                linear-gradient(135deg, rgba(28,28,85,0.88) 0%, rgba(49,27,100,0.80) 100%),
+                url('{{ asset('images/welcomebanner.png') }}') center/cover no-repeat;">
+
+        {{-- Subtle bottom fade so the card body blends in smoothly --}}
+        <div class="absolute inset-x-0 bottom-0 h-16"
+             style="background: linear-gradient(to bottom, transparent, rgba(15,15,30,0.60));"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-6">
             <img src="{{ asset('images/Logo2.jpg') }}" alt="Bandmate"
-                 class="h-20 w-auto rounded-lg border border-white/20 flex-shrink-0">
+                 class="h-20 w-auto rounded-lg border border-white/20 flex-shrink-0 shadow-lg">
             <div>
                 <h1 class="text-white text-3xl font-semibold mb-3" style="font-family:'DM Sans',sans-serif;">
                     Welcome to Bandmate
                 </h1>
-                <p class="text-white/60 text-sm leading-relaxed max-w-2xl mb-2">
+                <p class="text-white/70 text-sm leading-relaxed max-w-2xl mb-2">
                     The best place to find your bandmates, rehearsal rooms, agencies and venues.
                     Use the menu to browse all available information and add your own.
                     You can edit information you entered yourself, but only browse other users' entries.
                 </p>
-                <p class="text-white/50 text-sm leading-relaxed max-w-2xl mb-2">
+                <p class="text-white/55 text-sm leading-relaxed max-w-2xl mb-2">
                     This website is a labour of love and is not sponsored by anyone. Your data is used only
                     to make the platform work and will never be shared with any other person or organisation.
                     The site is meant for musicians — not the music business.
                 </p>
-                <p class="text-white/50 text-sm leading-relaxed max-w-2xl">
+                <p class="text-white/55 text-sm leading-relaxed max-w-2xl">
                     If you'd like to support the hosting costs, a donation via PayPal is always appreciated.
                 </p>
             </div>
         </div>
 
         {{-- PayPal donate button --}}
-        <div class="mt-8 flex justify-center md:justify-start">
+        <div class="relative z-10 mt-8 flex justify-center md:justify-start">
             <form action="https://www.paypal.com/donate" method="post" target="_top">
                 <input type="hidden" name="business" value="48VGHAS7GVRPW">
                 <input type="hidden" name="no_recurring" value="0">

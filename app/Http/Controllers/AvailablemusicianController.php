@@ -135,7 +135,13 @@ class AvailablemusicianController extends BaseController
             'available_until' => 'nullable|date|after:available_from',
         ]);
  
-        $availablemusician->fill($request->validated());
+        $availablemusician->fill($request->only([
+            'instrument_id',
+            'genre_id',
+            'description',
+            'available_from',
+            'available_until',
+        ]));
         $availablemusician->save();
  
         if ($request->hasFile('availablemusicianpic')) {
@@ -263,4 +269,3 @@ class AvailablemusicianController extends BaseController
         return $query;
     }
 }
- 

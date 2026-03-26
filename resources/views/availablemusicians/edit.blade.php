@@ -5,7 +5,7 @@
         <h2 class="bm-card-title">{{ __('availablemusicians.edit') }}</h2>
     </div>
     <div class="bm-card-body">
-        <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post">
+        <form action="{{ route('availablemusicians.update', $availablemusician->id) }}" method="post" enctype="multipart/form-data">
             @csrf @method('put')
             <div class="bm-form-group">
                 <label for="instrument_id" class="bm-label">{{ __('availablemusicians.instrument') }}</label>
@@ -44,6 +44,26 @@
                        value="{{ old('available_until', $availablemusician->available_until ? substr($availablemusician->available_until, 0, 10) : '') }}">
                 @error('available_until') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+
+            {{-- Photo --}}
+            <h3 class="bm-section-title mt-6">Photo</h3>
+            <div class="bm-form-group">
+                <label for="availablemusicianpic" class="bm-label">Profile photo</label>
+                @php $currentImage = $availablemusician->getFirstMedia('images/AvailablemusicianPics'); @endphp
+                @if($currentImage)
+                <div class="mb-3 flex items-center gap-4">
+                    <img src="{{ asset('/storage/' . $currentImage->id . '/' . $currentImage->file_name) }}"
+                         class="rounded-full border-2 border-white/20 object-cover"
+                         style="width:80px; height:80px;"
+                         alt="{{ $availablemusician->user->name }}">
+                    <p class="text-white/40 text-xs">Current photo — upload a new one to replace it.</p>
+                </div>
+                @endif
+                <input type="file" id="availablemusicianpic" name="availablemusicianpic" class="bm-input" accept="image/*">
+                <p class="text-white/40 text-xs mt-1">JPG, PNG or WebP. Max 4 MB.</p>
+                @error('availablemusicianpic') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('availablemusicians.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

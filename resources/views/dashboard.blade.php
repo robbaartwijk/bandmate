@@ -14,29 +14,41 @@
 @endif
 
 {{-- Welcome card --}}
-<div class="bm-card mb-6">
-    <div class="bm-card-body">
-        <div class="flex flex-col md:flex-row items-start gap-6">
+<div class="bm-card mb-6 overflow-hidden">
+
+    {{-- Banner image with gradient overlay --}}
+    <div class="relative px-6 py-12 md:py-16"
+         style="background:
+                linear-gradient(135deg, rgba(28,28,85,0.88) 0%, rgba(49,27,100,0.80) 100%),
+                url('{{ asset('images/welcomebanner.png') }}') center/cover no-repeat;">
+
+        {{-- Subtle bottom fade --}}
+        <div class="absolute inset-x-0 bottom-0 h-16"
+             style="background: linear-gradient(to bottom, transparent, rgba(15,15,30,0.60));"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-start gap-6">
             <div class="flex-shrink-0">
                 <img src="{{ asset('images/Logo2.jpg') }}" alt="Bandmate"
-                     class="rounded-lg border border-white/20" style="max-width: 160px;">
+                     class="rounded-lg border border-white/20 shadow-lg" style="max-width: 160px;">
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-white mb-4">{{ __('dashboard.welcome') }}</h1>
-                <p class="text-white/90 text-sm leading-relaxed mb-3">
+                <h1 class="text-2xl font-bold text-white mb-4" style="font-family:'DM Sans',sans-serif;">
+                    {{ __('dashboard.welcome') }}
+                </h1>
+                <p class="text-white/70 text-sm leading-relaxed mb-3">
                     {{ __('dashboard.intro_1') }}
                 </p>
-                <p class="text-white/90 text-sm leading-relaxed mb-3">
+                <p class="text-white/55 text-sm leading-relaxed mb-3">
                     {{ __('dashboard.intro_2') }}
                 </p>
-                <p class="text-white/90 text-sm leading-relaxed">
+                <p class="text-white/55 text-sm leading-relaxed">
                     {{ __('dashboard.intro_3') }}
                 </p>
             </div>
         </div>
 
         {{-- Donate button --}}
-        <div class="mt-6 text-center">
+        <div class="relative z-10 mt-6 text-center md:text-left">
             <form action="https://www.paypal.com/donate" method="post" target="_blank" class="inline-block">
                 <input type="hidden" name="business" value="rob.baartwijk@gmail.com" />
                 <input type="hidden" name="currency_code" value="EUR" />
@@ -45,9 +57,11 @@
                        alt="{{ __('dashboard.paypal_alt') }}" />
             </form>
         </div>
+    </div>
 
-        {{-- Quick reference --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-6 border-t border-white/10 text-center">
+    {{-- Quick reference tiles --}}
+    <div class="bm-card-body">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center">
             <div class="px-4 py-3 rounded-lg bg-white/5">
                 <p class="text-white/70 text-sm">{!! __('dashboard.tip_act') !!}</p>
             </div>
