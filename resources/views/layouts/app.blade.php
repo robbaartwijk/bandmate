@@ -9,6 +9,25 @@
 
     <title>{{ config('app.name', 'Bandmate') }}{{ isset($page) ? ' — ' . $page : '' }}</title>
 
+    <!-- Open Graph / social sharing -->
+    @php
+        $ogTitle       = config('app.name', 'Bandmate') . (isset($page) ? ' — ' . $page : '');
+        $ogDescription = 'Find bandmates, rehearsal rooms, venues and agencies — the community platform for musicians.';
+        $ogImage       = asset('images/welcomebanner.png');
+        $ogUrl         = url()->current();
+    @endphp
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="{{ config('app.name', 'Bandmate') }}">
+    <meta property="og:title"       content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    <meta property="og:image"       content="{{ $ogImage }}">
+    <meta property="og:url"         content="{{ $ogUrl }}">
+    {{-- Twitter / X Card (also read by WhatsApp, Telegram, iMessage) --}}
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    <meta name="twitter:image"       content="{{ $ogImage }}">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">

@@ -177,7 +177,7 @@ class ActController extends BaseController
 
     public function buildJoinParameters()
     {
-        $query = Act::with(['genre'])
+        $query = Act::with(['genre', 'media'])
             ->select('acts.*', 'genres.name as genre_name')
             ->join('genres', 'acts.genre_id', '=', 'genres.id');
 
