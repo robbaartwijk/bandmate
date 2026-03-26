@@ -23,6 +23,16 @@ return [
     'description'             => 'Description',
     'description_placeholder' => 'Describe the rehearsal room...',
 
+    'address'             => 'Address',
+    'address_placeholder' => 'Street address',
+    'zip'                 => 'Zip / State',
+    'zip_placeholder'     => 'Zip code',
+    'state_placeholder'   => 'State / Province',
+    'phone'               => 'Phone',
+    'phone_placeholder'   => 'Phone number',
+    'email'               => 'Email',
+    'email_placeholder'   => 'Contact email',
+
     // Confirm dialog
     'delete_confirm' => 'Delete this rehearsal room?',
 

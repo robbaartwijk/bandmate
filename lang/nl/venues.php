@@ -17,6 +17,7 @@ return [
     'capacity_placeholder'    => 'Maximale capaciteit',
     'description'             => 'Beschrijving',
     'description_placeholder' => 'Beschrijf de venue...',
+    'venues.address'          => 'Adres',
 
     'delete_confirm' => 'Deze venue verwijderen?',
 
