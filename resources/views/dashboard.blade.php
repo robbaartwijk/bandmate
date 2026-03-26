@@ -23,13 +23,13 @@
             </div>
             <div>
                 <h1 class="text-2xl font-bold text-white mb-4">{{ __('dashboard.welcome') }}</h1>
-                <p class="text-white/70 text-sm leading-relaxed mb-3">
+                <p class="text-white/90 text-sm leading-relaxed mb-3">
                     {{ __('dashboard.intro_1') }}
                 </p>
-                <p class="text-white/70 text-sm leading-relaxed mb-3">
+                <p class="text-white/90 text-sm leading-relaxed mb-3">
                     {{ __('dashboard.intro_2') }}
                 </p>
-                <p class="text-white/70 text-sm leading-relaxed">
+                <p class="text-white/90 text-sm leading-relaxed">
                     {{ __('dashboard.intro_3') }}
                 </p>
             </div>
