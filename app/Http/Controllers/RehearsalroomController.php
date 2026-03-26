@@ -22,7 +22,7 @@ class RehearsalroomController extends BaseController
         $sort = $request->input('sort') ?? 'name';
         $select = $request->input('selectrecords') ?? 25;
 
-        $query = Rehearsalroom::with('user')->orderBy($sort);
+        $query = Rehearsalroom::with('user', 'media')->orderBy($sort);
 
         if ($request->has('search')) {
             $search = $request->input('search');

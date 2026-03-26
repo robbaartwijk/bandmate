@@ -26,7 +26,10 @@
                         <dt class="text-white/40 w-36 flex-shrink-0">Genre</dt>
                         <dd class="text-white/80">
                             @if($act->genre)
-                                <a href="{{ route('genres.show', $act->genre->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->genre->name }} ({{ $act->genre->group }})</a>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <a href="{{ route('genres.show', $act->genre->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->genre->name }}</a>
+                                    <x-genre-badge :group="$act->genre->group" />
+                                </div>
                             @else N/A @endif
                         </dd>
                     </div>

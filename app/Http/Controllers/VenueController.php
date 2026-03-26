@@ -22,7 +22,7 @@ class VenueController extends BaseController
         $sort = $request->input('sort') ?? 'name';
         $select = $request->input('selectrecords') ?? 25;
 
-        $query = Venue::orderBy($sort);
+        $query = Venue::with('media')->orderBy($sort);
 
         if ($request->has('search')) {
             $search = $request->input('search');

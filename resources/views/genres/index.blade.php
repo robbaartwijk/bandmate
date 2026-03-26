@@ -37,7 +37,7 @@
                     @foreach ($genres as $genre)
                     <tr>
                         <td><a href="{{ route('genres.show', $genre->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $genre->name }}</a></td>
-                        <td>{{ $genre->group }}</td>
+                        <td><x-genre-badge :group="$genre->group" /></td>
                         <td class="hidden lg:table-cell text-white/40 text-xs">{{ $genre->created_at }}</td>
                         <td class="hidden lg:table-cell text-white/40 text-xs">{{ $genre->updated_at }}</td>
                         <td class="whitespace-nowrap">
