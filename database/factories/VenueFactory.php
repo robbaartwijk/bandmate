@@ -29,7 +29,7 @@ class VenueFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->companyEmail,
             'website' => $this->faker->url,
-            'description' => $this->faker->sentences(20),
+            'description' => $this->faker->sentences(20, true),
         ];
     }
 }

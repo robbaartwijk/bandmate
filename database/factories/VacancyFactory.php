@@ -48,7 +48,7 @@ class VacancyFactory extends Factory
             'act_id' => $randomActID,
             'user_id' => $randomUserID,
             'instrument_id' => $this->faker->randomElement($instruments),
-            'description' => $this->faker->sentences(20),
+            'description' => $this->faker->sentences(20, true),
             'created_at' => NOW(),
             'updated_at' => NOW(),
         ];

@@ -29,7 +29,7 @@ class RehearsalroomFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'website' => $this->faker->url,
-            'description' => $this->faker->sentences(30),
+            'description' => $this->faker->sentences(30, true),
         ];
     }
 }

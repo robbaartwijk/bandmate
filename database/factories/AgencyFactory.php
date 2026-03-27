@@ -29,7 +29,7 @@ class AgencyFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'website' => $this->faker->url,
-            'description' => $this->faker->sentences(30),
+            'description' => $this->faker->sentences(30, true),
             'facebook' => 'https://www.facebook.com/' . $this->faker->url,
             'instagram' => 'https://www.instagram.com/' . $this->faker->url,
             'twitter' => 'https://www.twitter.com/' . $this->faker->url,
