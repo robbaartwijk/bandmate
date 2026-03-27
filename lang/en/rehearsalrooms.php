@@ -32,6 +32,8 @@ return [
     'phone_placeholder'   => 'Phone number',
     'email'               => 'Email',
     'email_placeholder'   => 'Contact email',
+    'website'               => 'Website',
+    'website_placeholder'   => 'Website URL',
 
     // Confirm dialog
     'delete_confirm' => 'Delete this rehearsal room?',

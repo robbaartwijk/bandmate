@@ -17,6 +17,8 @@ return [
     'price_placeholder'       => 'bijv. 15.00',
     'description'             => 'Beschrijving',
     'description_placeholder' => 'Beschrijf de repetitieruimte...',
+    'website'               => 'Website',
+    'website_placeholder'   => 'Website URL',
 
     'delete_confirm' => 'Deze repetitieruimte verwijderen?',
 

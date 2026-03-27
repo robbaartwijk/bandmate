@@ -33,6 +33,26 @@
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
 
+            {{-- Contact --}}
+            <h3 class="bm-section-title mt-6">Contact</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bm-form-group">
+                    <label for="phone" class="bm-label">{{ __('venues.phone') }}</label>
+                    <input type="text" id="phone" name="phone" value="{{ old('phone', $venue->phone) }}" class="bm-input @error('phone') bm-input-error @enderror" placeholder="+31 20 000 0000">
+                    @error('phone') <span class="bm-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="bm-form-group">
+                    <label for="email" class="bm-label">{{ __('venues.email') }}</label>
+                    <input type="email" id="email" name="email" value="{{ old('email', $venue->email) }}" class="bm-input @error('email') bm-input-error @enderror">
+                    @error('email') <span class="bm-error">{{ $message }}</span> @enderror
+                </div>
+                <div class="bm-form-group md:col-span-2">
+                    <label for="website" class="bm-label">{{ __('venues.website') }}</label>
+                    <input type="url" id="website" name="website" value="{{ old('website', $venue->website) }}" class="bm-input @error('website') bm-input-error @enderror" placeholder="https://...">
+                    @error('website') <span class="bm-error">{{ $message }}</span> @enderror
+                </div>
+            </div>
+
             {{-- Photo upload --}}
             <h3 class="bm-section-title mt-6">Photo</h3>
             <div class="bm-form-group">

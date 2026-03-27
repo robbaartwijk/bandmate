@@ -7,12 +7,12 @@ $navGroups = [
         'icon'  => 'fa-music',
         'pages' => ['dashboard', 'acts', 'vacancies', 'availablemusicians', 'rehearsalrooms', 'venues', 'agencies', 'about'],
         'links' => [
-            ['route' => 'acts.index',               'slug' => 'acts',               'icon' => 'fa-music',        'label' => __('navigation.acts')],
-            ['route' => 'vacancies.index',           'slug' => 'vacancies',          'icon' => 'fa-music',        'label' => __('navigation.vacancies')],
-            ['route' => 'availablemusicians.index',  'slug' => 'availablemusicians', 'icon' => 'fa-music',        'label' => __('navigation.available_musicians')],
-            ['route' => 'rehearsalrooms.index',      'slug' => 'rehearsalrooms',     'icon' => 'fa-music',        'label' => __('navigation.rehearsal_rooms')],
-            ['route' => 'venues.index',              'slug' => 'venues',             'icon' => 'fa-music',        'label' => __('navigation.venues')],
-            ['route' => 'agencies.index',            'slug' => 'agencies',           'icon' => 'fa-music',        'label' => __('navigation.agencies')],
+            ['route' => 'acts.index',               'slug' => 'acts',               'icon' => 'fa-guitar',       'label' => __('navigation.acts')],
+            ['route' => 'vacancies.index',           'slug' => 'vacancies',          'icon' => 'fa-search',       'label' => __('navigation.vacancies')],
+            ['route' => 'availablemusicians.index',  'slug' => 'availablemusicians', 'icon' => 'fa-user',         'label' => __('navigation.available_musicians')],
+            ['route' => 'rehearsalrooms.index',      'slug' => 'rehearsalrooms',     'icon' => 'fa-door-open',    'label' => __('navigation.rehearsal_rooms')],
+            ['route' => 'venues.index',              'slug' => 'venues',             'icon' => 'fa-building',     'label' => __('navigation.venues')],
+            ['route' => 'agencies.index',            'slug' => 'agencies',           'icon' => 'fa-briefcase',    'label' => __('navigation.agencies')],
         ],
     ],
     'statistics' => [

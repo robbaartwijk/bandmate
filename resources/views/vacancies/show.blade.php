@@ -12,6 +12,19 @@
                     <td>{{ $vacancy->act->name ?? '-' }}</td>
                 </tr>
                 <tr>
+                    <th class="text-white/60 font-medium">{{ __('common.col_genre') }}</th>
+                    <td>
+                        @if($vacancy->act?->genre)
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-white/80 text-sm">{{ $vacancy->act->genre->name }}</span>
+                            <x-genre-badge :group="$vacancy->act->genre->group" />
+                        </div>
+                        @else
+                        -
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                     <th class="text-white/60 font-medium">{{ __('common.col_instrument') }}</th>
                     <td>{{ $vacancy->instrument->name ?? '-' }}</td>
                 </tr>

@@ -66,6 +66,8 @@ class RehearsalroomController extends BaseController
             'city'              => 'required',
             'country'           => 'required',
             'price'             => ['nullable', 'numeric', 'min:0'],
+            'phone'             => ['nullable', 'string', 'max:30'],
+            'email'             => ['nullable', 'email'],
             'website'           => ['nullable', 'url'],
             'rehearsalroompic'  => ['nullable', 'image', 'max:4096'],
         ]);
@@ -74,7 +76,7 @@ class RehearsalroomController extends BaseController
         $rehearsalroom->user_id = auth()->id();
         $rehearsalroom->fill($request->only([
             'name', 'city', 'country', 'price', 'description',
-            'website', // FIX: was validated but never saved
+            'phone', 'email', 'website',
         ]));
         $rehearsalroom->save();
 
@@ -130,13 +132,15 @@ class RehearsalroomController extends BaseController
             'city'              => 'required',
             'country'           => 'required',
             'price'             => ['nullable', 'numeric', 'min:0'],
+            'phone'             => ['nullable', 'string', 'max:30'],
+            'email'             => ['nullable', 'email'],
             'website'           => ['nullable', 'url'],
             'rehearsalroompic'  => ['nullable', 'image', 'max:4096'],
         ]);
 
         $rehearsalroom->fill($request->only([
             'name', 'city', 'country', 'price', 'description',
-            'website', // FIX: was validated but never saved
+            'phone', 'email', 'website',
         ]))->save();
 
         if ($request->hasFile('rehearsalroompic')) {

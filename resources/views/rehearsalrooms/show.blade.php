@@ -60,6 +60,12 @@
                     <td><a href="mailto:{{ $rehearsalroom->email }}" class="text-indigo-400 hover:text-indigo-300">{{ $rehearsalroom->email }}</a></td>
                 </tr>
                 @endif
+                @if($rehearsalroom->website)
+                <tr>
+                    <th class="text-white/60 font-medium">{{ __('rehearsalrooms.website') }}</th>
+                    <td><a href="{{ $rehearsalroom->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">{{ $rehearsalroom->website }}</a></td>
+                </tr>
+                @endif
                 <tr>
                     <th class="text-white/60 font-medium">{{ __('rehearsalrooms.description') }}</th>
                     <td>{{ $rehearsalroom->description ?? '-' }}</td>

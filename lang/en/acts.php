@@ -39,6 +39,16 @@ return [
     'select_genre'            => 'Select genre',
     'is_private'              => 'Private act',
 
+    // ── Show page section headings ────────────────────────────────────────
+    'section_general_info' => 'General information',
+    'section_contact'      => 'Contact & links',
+    'section_description'  => 'Description',
+    'section_video'        => 'Video',
+
+    // ── Show page field labels ────────────────────────────────────────────
+    'field_rehearsal_room' => 'Rehearsal room',
+    'field_active'         => 'Active',
+
     // ── Form sections ─────────────────────────────────────────────────────
     'contact_info'  => 'Contact information',
     'social_links'  => 'Social media & links',

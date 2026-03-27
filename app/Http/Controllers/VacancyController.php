@@ -27,10 +27,11 @@ class VacancyController extends BaseController
         $search = $request->input('search') ?? '';
         $private = $request->input('private') ?? false;
  
-        $vacancies = Vacancy::with(['instrument', 'act'])
-            ->select('vacancies.*', 'instruments.name as instrument_name', 'acts.name as act_name')
+        $vacancies = Vacancy::with(['instrument', 'act', 'act.genre'])
+            ->select('vacancies.*', 'instruments.name as instrument_name', 'acts.name as act_name', 'genres.name as genre_name')
             ->join('instruments', 'vacancies.instrument_id', '=', 'instruments.id')
             ->join('acts', 'vacancies.act_id', '=', 'acts.id')
+            ->leftJoin('genres', 'acts.genre_id', '=', 'genres.id')
             ->when($request->filled('search'), function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('vacancies.description', 'like', "%{$search}%")
@@ -42,8 +43,9 @@ class VacancyController extends BaseController
                 return $query->where('vacancies.user_id', '=', auth()->id());
             })
             ->when(true, function ($query) use ($sort) {
-                match ($sort) {
+                return match ($sort) {
                     'instrument_name' => $query->orderBy('instruments.name'),
+                    'genre_name'      => $query->orderBy('genres.name'),
                     'created_at'      => $query->orderBy('vacancies.created_at'),
                     'updated_at'      => $query->orderBy('vacancies.updated_at'),
                     default           => $query->orderBy('acts.name'),
@@ -107,11 +109,13 @@ class VacancyController extends BaseController
     public function show(Vacancy $vacancy)
     {
         $this->authorize('view', $vacancy);
- 
+
+        $vacancy->load('act.genre', 'instrument', 'user');
+
         $vacancy->user_name = $vacancy->user->name;
         $vacancy->act_name = $vacancy->act->name;
         $vacancy->instrument_name = $vacancy->instrument->name;
- 
+
         return view('vacancies.show', compact('vacancy'));
     }
  

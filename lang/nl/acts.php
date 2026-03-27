@@ -30,6 +30,16 @@ return [
     'select_genre'            => 'Selecteer genre',
     'is_private'              => 'Privé act',
 
+    // ── Show page section headings ────────────────────────────────────────
+    'section_general_info' => 'Algemene informatie',
+    'section_contact'      => 'Contact & links',
+    'section_description'  => 'Beschrijving',
+    'section_video'        => 'Video',
+
+    // ── Show page field labels ────────────────────────────────────────────
+    'field_rehearsal_room' => 'Repetitieruimte',
+    'field_active'         => 'Actief',
+
     'contact_info'  => 'Contactgegevens',
     'social_links'  => 'Social media & links',
     'media_section' => 'Media',

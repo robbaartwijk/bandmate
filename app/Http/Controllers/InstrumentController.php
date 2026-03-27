@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreInstrumentRequest;
+use App\Http\Requests\UpdateInstrumentRequest;
 use App\Models\Instrument;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,7 @@ class InstrumentController extends BaseController
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort', 'name');
+        $sort = in_array($request->input('sort'), ['name', 'type']) ? $request->input('sort') : 'name';
 
         $query = Instrument::query()->orderBy($sort);
 

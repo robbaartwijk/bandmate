@@ -12,7 +12,7 @@
         <h2 class="bm-card-title">{{ $act->name }}</h2>
         @if($user->is_admin || $user->id == $act->user_id)
         <a href="{{ route('acts.edit', $act->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm">
-            <i class="fas fa-pencil-alt"></i> Edit
+            <i class="fas fa-pencil-alt"></i> {{ __('common.edit') }}
         </a>
         @endif
     </div>
@@ -20,10 +20,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {{-- General info --}}
             <div>
-                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">General information</h3>
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">{{ __('acts.section_general_info') }}</h3>
                 <dl class="space-y-2 text-sm">
                     <div class="flex gap-2">
-                        <dt class="text-white/40 w-36 flex-shrink-0">Genre</dt>
+                        <dt class="text-white/40 w-36 flex-shrink-0">{{ __('common.col_genre') }}</dt>
                         <dd class="text-white/80">
                             @if($act->genre)
                                 <div class="flex flex-wrap items-center gap-2">
@@ -34,22 +34,22 @@
                         </dd>
                     </div>
                     <div class="flex gap-2">
-                        <dt class="text-white/40 w-36 flex-shrink-0">Members</dt>
+                        <dt class="text-white/40 w-36 flex-shrink-0">{{ __('common.col_members') }}</dt>
                         <dd class="text-white/80">{{ $act->number_of_members }}</dd>
                     </div>
                     <div class="flex gap-2">
-                        <dt class="text-white/40 w-36 flex-shrink-0">Rehearsal room</dt>
+                        <dt class="text-white/40 w-36 flex-shrink-0">{{ __('acts.field_rehearsal_room') }}</dt>
                         <dd>
                             <span class="{{ $act->rehearsal_room ? 'bm-badge-green' : 'bm-badge-gray' }} bm-badge">
-                                {{ $act->rehearsal_room ? 'Yes' : 'No' }}
+                                {{ $act->rehearsal_room ? __('common.yes') : __('common.no') }}
                             </span>
                         </dd>
                     </div>
                     <div class="flex gap-2">
-                        <dt class="text-white/40 w-36 flex-shrink-0">Active</dt>
+                        <dt class="text-white/40 w-36 flex-shrink-0">{{ __('acts.field_active') }}</dt>
                         <dd>
                             <span class="{{ $act->active ? 'bm-badge-green' : 'bm-badge-gray' }} bm-badge">
-                                {{ $act->active ? 'Yes' : 'No' }}
+                                {{ $act->active ? __('common.yes') : __('common.no') }}
                             </span>
                         </dd>
                     </div>
@@ -61,7 +61,7 @@
             </div>
             {{-- Contact & links --}}
             <div>
-                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Contact & links</h3>
+                <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">{{ __('acts.section_contact') }}</h3>
                 <ul class="space-y-2 text-sm">
                     @if($act->website)
                     <li><a href="{{ $act->website }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 break-all">
@@ -108,14 +108,14 @@
         {{-- Description --}}
         @if($act->description)
         <div class="mt-8">
-            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Description</h3>
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">{{ __('acts.section_description') }}</h3>
             <p class="text-white/70 text-sm leading-relaxed">{!! nl2br(e($act->description)) !!}</p>
         </div>
         @endif
         {{-- YouTube demo --}}
         @if(!empty($act->youtubedemo))
         <div class="mt-8">
-            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">Video</h3>
+            <h3 class="text-white/60 text-xs font-semibold uppercase tracking-wider pb-2 border-b border-white/10 mb-4">{{ __('acts.section_video') }}</h3>
             <div class="relative" style="padding-bottom:56.25%; height:0; overflow:hidden;">
                 <iframe src="{{ $act->youtubedemo }}"
                         class="absolute inset-0 w-full h-full rounded-lg"
@@ -126,11 +126,11 @@
         {{-- History --}}
         <div class="mt-8 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
             <dl class="flex gap-6 text-xs text-white/30">
-                <div><dt class="inline">Added:</dt> <dd class="inline">{{ $act->created_at }}</dd></div>
-                <div><dt class="inline">Updated:</dt> <dd class="inline">{{ $act->updated_at }}</dd></div>
+                <div><dt class="inline">{{ __('common.col_added') }}:</dt> <dd class="inline">{{ $act->created_at }}</dd></div>
+                <div><dt class="inline">{{ __('common.col_updated') }}:</dt> <dd class="inline">{{ $act->updated_at }}</dd></div>
             </dl>
             <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary bm-btn-sm">
-                <i class="fas fa-arrow-left"></i> Back
+                <i class="fas fa-arrow-left"></i> {{ __('common.back') }}
             </a>
         </div>
     </div>

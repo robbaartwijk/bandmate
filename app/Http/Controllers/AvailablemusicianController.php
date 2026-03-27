@@ -40,7 +40,7 @@ class AvailablemusicianController extends BaseController
  
         $availablemusician = new Availablemusician;
         $availablemusician->instruments = Instrument::all();
-        $availablemusician->genres = Genre::all();
+        $availablemusician->genres = Genre::orderBy('group', 'desc')->orderBy('name')->get();
         $availablemusician->user = Auth::user();
  
         return view('availablemusicians.create', compact('availablemusician'));
@@ -114,7 +114,7 @@ class AvailablemusicianController extends BaseController
         $this->authorize('update', $availablemusician);
  
         $availablemusician->instruments = Instrument::all();
-        $availablemusician->genres = Genre::all();
+        $availablemusician->genres = Genre::orderBy('group', 'desc')->orderBy('name')->get();
         $availablemusician->user = $availablemusician->user;
  
         return view('availablemusicians.edit', compact('availablemusician'));

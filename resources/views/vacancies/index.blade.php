@@ -11,6 +11,7 @@
                 <input type="text" name="search" value="{{ request()->search }}" class="bm-input text-sm py-1.5" style="width:160px;" placeholder="{{ __('common.search_placeholder') }}">
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
                     <option value="act_name"        {{ (request()->sort === 'act_name'        || !request()->sort) ? 'selected' : '' }}>{{ __('common.sort_by_act') }}</option>
+                    <option value="genre_name"      {{ request()->sort === 'genre_name'       ? 'selected' : '' }}>{{ __('common.sort_by_genre') }}</option>
                     <option value="instrument_name" {{ request()->sort === 'instrument_name'  ? 'selected' : '' }}>{{ __('common.sort_by_instrument') }}</option>
                     <option value="created_at"      {{ request()->sort === 'created_at'       ? 'selected' : '' }}>{{ __('common.sort_by_date_of_creation') }}</option>
                     <option value="updated_at"      {{ request()->sort === 'updated_at'       ? 'selected' : '' }}>{{ __('common.sort_by_date_last_update') }}</option>
@@ -26,6 +27,7 @@
             <table class="bm-table">
                 <thead><tr>
                     <th>{{ __('common.col_act') }}</th>
+                    <th class="hidden md:table-cell">{{ __('common.col_genre') }}</th>
                     <th>{{ __('common.col_instrument') }}</th>
                     <th class="hidden lg:table-cell">{{ __('vacancies.description') }}</th>
                     <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
@@ -36,6 +38,16 @@
                     @foreach ($vacancies as $record)
                     <tr>
                         <td><a href="{{ route('vacancies.show', $record->id) }}" class="hover:underline">{{ $record->act->name ?? '-' }}</a></td>
+                        <td class="hidden md:table-cell">
+                            @if($record->act?->genre)
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-white/80 text-sm">{{ $record->act->genre->name }}</span>
+                                <x-genre-badge :group="$record->act->genre->group" />
+                            </div>
+                            @else
+                            -
+                            @endif
+                        </td>
                         <td>{{ $record->instrument->name ?? '-' }}</td>
                         <td class="hidden lg:table-cell text-sm text-white/70">{{ Str::limit($record->description, 60) }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->created_at->format('Y-m-d') }}</td>
