@@ -19,7 +19,9 @@ class RehearsalroomController extends BaseController
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort') ?? 'name';
+        // Whitelist allowed sort columns to prevent SQL injection via orderBy()
+        $allowedSorts = ['name', 'city', 'country', 'price', 'created_at', 'updated_at'];
+        $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
         $select = $request->input('selectrecords') ?? 25;
 
         $query = Rehearsalroom::with('user', 'media')->orderBy($sort);
@@ -72,6 +74,7 @@ class RehearsalroomController extends BaseController
         $rehearsalroom->user_id = auth()->id();
         $rehearsalroom->fill($request->only([
             'name', 'city', 'country', 'price', 'description',
+            'website', // FIX: was validated but never saved
         ]));
         $rehearsalroom->save();
 
@@ -133,6 +136,7 @@ class RehearsalroomController extends BaseController
 
         $rehearsalroom->fill($request->only([
             'name', 'city', 'country', 'price', 'description',
+            'website', // FIX: was validated but never saved
         ]))->save();
 
         if ($request->hasFile('rehearsalroompic')) {

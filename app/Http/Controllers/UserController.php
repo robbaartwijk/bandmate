@@ -12,8 +12,10 @@ class UserController extends BaseController
      */
     public function index(Request $request): \Illuminate\View\View
     {
-        $sort = $request->input('sort', 'name');
- 
+        // Whitelist allowed sort columns to prevent SQL injection via orderBy()
+        $allowedSorts = ['name', 'email', 'created_at', 'updated_at'];
+        $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
+
         $query = User::withCount(['acts', 'rehearsalrooms', 'vacancies', 'availablemusicians'])
             ->orderBy($sort);
  
@@ -90,4 +92,3 @@ class UserController extends BaseController
             ->with('status', 'User deleted successfully');
     }
 }
- 

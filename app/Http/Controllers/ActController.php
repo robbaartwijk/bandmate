@@ -99,7 +99,7 @@ class ActController extends BaseController
     {
         $this->authorize('update', $act);
 
-        $genres = Genre::orderBy('group')->orderByDesc('name')->get();
+        $genres = Genre::orderBy('group', 'desc')->orderBy('name')->get(); // FIX: was using opposite sort to create()
 
         return view('acts.edit', compact(['act', 'genres']));
     }

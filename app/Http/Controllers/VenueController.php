@@ -19,7 +19,9 @@ class VenueController extends BaseController
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort') ?? 'name';
+        // Whitelist allowed sort columns to prevent SQL injection via orderBy()
+        $allowedSorts = ['name', 'city', 'country', 'capacity', 'created_at', 'updated_at'];
+        $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
         $select = $request->input('selectrecords') ?? 25;
 
         $query = Venue::with('media')->orderBy($sort);
@@ -73,6 +75,7 @@ class VenueController extends BaseController
         $venue->user_id = auth()->id();
         $venue->fill($request->only([
             'name', 'city', 'country', 'capacity', 'description',
+            'website', 'phone', 'email', // FIX: these were validated but never saved
         ]));
         $venue->save();
 
@@ -134,6 +137,7 @@ class VenueController extends BaseController
 
         $venue->fill($request->only([
             'name', 'city', 'country', 'capacity', 'description',
+            'website', 'phone', 'email', // FIX: these were validated but never saved
         ]))->save();
 
         if ($request->hasFile('venuepic')) {

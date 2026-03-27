@@ -15,6 +15,7 @@ class HomeController extends BaseController
      */
     public function __construct()
     {
+        parent::__construct(); // FIX: was missing — BaseController sets up the shared $userAvatar view variable
         $this->middleware('auth');
     }
  

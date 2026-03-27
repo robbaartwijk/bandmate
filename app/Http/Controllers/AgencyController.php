@@ -19,7 +19,9 @@ class AgencyController extends BaseController
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort') ?? 'name';
+        // Whitelist allowed sort columns to prevent SQL injection via orderBy()
+        $allowedSorts = ['name', 'city', 'country', 'created_at', 'updated_at'];
+        $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
         $select = $request->input('selectrecords') ?? 25;
 
         $query = Agency::with('user')->orderBy($sort);
@@ -59,28 +61,33 @@ class AgencyController extends BaseController
     {
         $this->authorize('create', Agency::class);
 
+        // FIX: validation now matches the form fields (address/zip/state/phone/email are not
+        // in the create form so they cannot be required here — they are nullable instead)
         $request->validate([
-            'name'       => 'required',
-            'address'    => 'required',
-            'zip'        => 'required',
-            'city'       => 'required',
-            'state'      => 'required',
-            'country'    => 'required',
-            'phone'      => 'required',
-            'email'      => 'required|email',
-            'website'    => ['nullable', 'url'],
-            'facebook'   => ['nullable', 'url'],
-            'twitter'    => ['nullable', 'url'],
-            'instagram'  => ['nullable', 'url'],
-            'youtube'    => ['nullable', 'url'],
-            'soundcloud' => ['nullable', 'url'],
-            'spotify'    => ['nullable', 'url'],
+            'name'        => 'required',
+            'city'        => 'required',
+            'country'     => 'required',
+            'description' => 'nullable|string',
+            'address'     => 'nullable|string',
+            'zip'         => 'nullable|string',
+            'state'       => 'nullable|string',
+            'phone'       => 'nullable|string',
+            'email'       => 'nullable|email',
+            'website'     => ['nullable', 'url'],
+            'facebook'    => ['nullable', 'url'],
+            'twitter'     => ['nullable', 'url'],
+            'instagram'   => ['nullable', 'url'],
+            'youtube'     => ['nullable', 'url'],
+            'soundcloud'  => ['nullable', 'url'],
+            'spotify'     => ['nullable', 'url'],
         ]);
 
         $agency = new Agency;
+        $agency->user_id = auth()->id();
         $agency->fill($request->only([
-            'name', 'address', 'zip', 'city', 'state', 'country',
-            'phone', 'email', 'website', 'facebook', 'twitter',
+            'name', 'city', 'country', 'description',
+            'address', 'zip', 'state', 'phone', 'email',
+            'website', 'facebook', 'twitter',
             'instagram', 'youtube', 'soundcloud', 'spotify',
         ]));
         $agency->save();
@@ -126,30 +133,29 @@ class AgencyController extends BaseController
     {
         $this->authorize('update', $agency);
 
-        // FIX: added 'email' format validation (was only 'required' before).
-        // Also switched from $request->validated() (which only works with Form Requests)
-        // to $request->only() to be explicit about which fields are updated.
         $request->validate([
-            'name'       => 'required',
-            'address'    => 'required',
-            'zip'        => 'required',
-            'city'       => 'required',
-            'state'      => 'required',
-            'country'    => 'required',
-            'phone'      => 'required',
-            'email'      => 'required|email',
-            'website'    => ['nullable', 'url'],
-            'facebook'   => ['nullable', 'url'],
-            'twitter'    => ['nullable', 'url'],
-            'instagram'  => ['nullable', 'url'],
-            'youtube'    => ['nullable', 'url'],
-            'soundcloud' => ['nullable', 'url'],
-            'spotify'    => ['nullable', 'url'],
+            'name'        => 'required',
+            'city'        => 'required',
+            'country'     => 'required',
+            'description' => 'nullable|string',
+            'address'     => 'nullable|string',
+            'zip'         => 'nullable|string',
+            'state'       => 'nullable|string',
+            'phone'       => 'nullable|string',
+            'email'       => 'nullable|email',
+            'website'     => ['nullable', 'url'],
+            'facebook'    => ['nullable', 'url'],
+            'twitter'     => ['nullable', 'url'],
+            'instagram'   => ['nullable', 'url'],
+            'youtube'     => ['nullable', 'url'],
+            'soundcloud'  => ['nullable', 'url'],
+            'spotify'     => ['nullable', 'url'],
         ]);
 
         $agency->update($request->only([
-            'name', 'address', 'zip', 'city', 'state', 'country',
-            'phone', 'email', 'website', 'facebook', 'twitter',
+            'name', 'city', 'country', 'description',
+            'address', 'zip', 'state', 'phone', 'email',
+            'website', 'facebook', 'twitter',
             'instagram', 'youtube', 'soundcloud', 'spotify',
         ]));
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ sidebarOpen: true, sidebarMobileOpen: false }">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">{{-- FIX: removed duplicate x-data here; sidebarOpen is properly initialised on the inner div below --}}
 
 <head>
     <meta charset="UTF-8">

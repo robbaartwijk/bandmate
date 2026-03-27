@@ -47,10 +47,7 @@
                     <input type="checkbox" name="active" id="active" class="bm-checkbox" {{ old('active') === 'on' ? 'checked' : '' }}>
                     <label for="active" class="bm-label mb-0">Active</label>
                 </div>
-                <div class="bm-form-group flex items-center gap-2 mb-0">
-                    <input type="checkbox" name="is_private" id="is_private" value="1" {{ old('is_private') ? 'checked' : '' }} class="bm-checkbox">
-                    <label for="is_private" class="bm-label mb-0">{{ __('acts.is_private') }}</label>
-                </div>
+                {{-- FIX: removed is_private checkbox — field is not in Act $fillable, not read by store(), and has no DB column --}}
             </div>
 
             {{-- Contact information --}}

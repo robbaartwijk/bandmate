@@ -35,20 +35,20 @@
                 <h1 class="text-2xl font-bold text-white mb-4" style="font-family:'DM Sans',sans-serif;">
                     {{ __('dashboard.welcome') }}
                 </h1>
-                <p class="text-white/70 text-sm leading-relaxed mb-3">
+                <p class="text-white text-sm leading-relaxed mb-3">
                     {{ __('dashboard.intro_1') }}
                 </p>
-                <p class="text-white/55 text-sm leading-relaxed mb-3">
+                <p class="text-white text-sm leading-relaxed mb-3">
                     {{ __('dashboard.intro_2') }}
                 </p>
-                <p class="text-white/55 text-sm leading-relaxed">
+                <p class="text-white text-sm leading-relaxed">
                     {{ __('dashboard.intro_3') }}
                 </p>
             </div>
         </div>
 
         {{-- Donate button --}}
-        <div class="relative z-10 mt-6 text-center md:text-left">
+        <div class="relative z-10 mt-6 text-center">
             <form action="https://www.paypal.com/donate" method="post" target="_blank" class="inline-block">
                 <input type="hidden" name="business" value="rob.baartwijk@gmail.com" />
                 <input type="hidden" name="currency_code" value="EUR" />
@@ -140,7 +140,7 @@
                         @foreach ($recentVacancies as $vacancy)
                         <tr>
                             <td><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act->name ?? '' }}</a></td>
-                            <td class="hidden md:table-cell">{{ $vacancy->genre_name }}</td>
+                            <td class="hidden md:table-cell">{{ $vacancy->act->genre->name ?? '' }}</td>{{-- FIX: genre_name doesn't exist on Vacancy; navigate via act->genre --}}
                             <td class="hidden md:table-cell">{{ $vacancy->instrument->name }}</td>
                             <td class="hidden lg:table-cell text-white/60 text-sm"><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a></td>
                             <td class="hidden lg:table-cell text-white/40 text-xs">{{ $vacancy->created_at->format('Y-m-d') }}</td>
