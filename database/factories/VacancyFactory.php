@@ -32,8 +32,6 @@ class VacancyFactory extends Factory
             ]);
         }
 
-        // var_dump($randomAct->id);
-
         if ($randomAct === null) {
             $randomActID = Act::factory()->create([
                 'user_id' => $randomUserID,
@@ -41,8 +39,6 @@ class VacancyFactory extends Factory
         } else {
             $randomActID = $randomAct->id;
         }
-
-        // var_dump($randomActID);
 
         return [
             'act_id' => $randomActID,
