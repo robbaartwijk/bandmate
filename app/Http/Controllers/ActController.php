@@ -63,8 +63,6 @@ class ActController extends BaseController
             $this->storeActImage($request, $act);
         }
 
-        // FIX: removed dead $template and $recipients variables that were fetched
-        // but never used — NotificationService handles this internally.
         $this->notificationService->dispatchModuleNotification(
             templateName: 'email_notification_acts',
             moduleColumn: 'email_notification_acts',
@@ -99,7 +97,7 @@ class ActController extends BaseController
     {
         $this->authorize('update', $act);
 
-        $genres = Genre::orderBy('group', 'desc')->orderBy('name')->get(); // FIX: was using opposite sort to create()
+        $genres = Genre::orderBy('group', 'desc')->orderBy('name')->get();
 
         return view('acts.edit', compact(['act', 'genres']));
     }
@@ -164,9 +162,6 @@ class ActController extends BaseController
 
     public function buildQuerySelection($request, $sort)
     {
-        // FIX: removed the separate buildQuerySelect() call — it set a select() that was
-        // immediately thrown away when buildJoinParameters() created a fresh query.
-        // The select is now only set once, inside buildJoinParameters().
         $query = $this->buildJoinParameters();
         $query = $this->buildSortParameters($query, $sort);
         $query = $this->buildSearchParameter($request, $query);
@@ -179,7 +174,7 @@ class ActController extends BaseController
     {
         $query = Act::with(['genre', 'media'])
             ->select('acts.*', 'genres.name as genre_name')
-            ->join('genres', 'acts.genre_id', '=', 'genres.id');
+            ->leftJoin('genres', 'acts.genre_id', '=', 'genres.id');  // FIX: was ->join() — acts without a genre were silently excluded
 
         return $query;
     }
@@ -194,7 +189,7 @@ class ActController extends BaseController
                 $query->orderBy('description');
                 break;
             case 'genre_name':
-                $query->orderBy('genres.name');
+                $query->orderByRaw('COALESCE(genres.name, \'\')');  // FIX: COALESCE handles NULL from the left join
                 break;
             case 'created_at':
                 $query->orderBy('created_at');

@@ -6,6 +6,8 @@ use App\Http\Requests\ProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+// Note: \Spatie\Image\Image import removed — thumbnail conversion is handled
+// automatically by User::registerMediaConversions() ('thumb' at 200×200).
 
 class ProfileController extends BaseController
 {
@@ -56,20 +58,16 @@ class ProfileController extends BaseController
     }
 
     /**
-     * Store a newly created image resource in storage.
+     * Store a newly uploaded avatar via Spatie Media Library.
+     *
+     * The 'thumb' conversion (200×200) defined in User::registerMediaConversions()
+     * is applied automatically by the library after the file is stored — no manual
+     * image manipulation is needed or should be done here.
      */
     public function storeThumbnailImage(Request $request, User $user): void
     {
         $user->addMediaFromRequest('AvatarThumbnailPic')
             ->toMediaCollection('images/AvatarThumbnailPics');
-
-        // Create a thumbnail of the image
-        $media = $user->getFirstMedia('images/AvatarThumbnailPics');
-        $image = \Spatie\Image\Image::load($media->getPath())
-            ->width(100)
-            ->height(100)
-            ->save();
-
     }
 
     /**
