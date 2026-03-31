@@ -26,7 +26,7 @@ class VacancyController extends BaseController
         $select = $request->input('selectrecords') ?? 25;
         $sort = $request->input('sort') ?? 'act_name';
         $search = $request->input('search') ?? '';
-        $private = $request->input('private') ?? false;
+        $private = $request->boolean('private') ?? false;
  
         $vacancies = Vacancy::with(['instrument', 'act', 'act.genre'])
             ->select('vacancies.*', 'instruments.name as instrument_name', 'acts.name as act_name', 'genres.name as genre_name')

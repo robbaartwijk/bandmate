@@ -17,14 +17,8 @@ class Agency extends Model implements HasMedia
     use InteractsWithMedia;
     use SoftDeletes;
 
-    protected $casts = [
-        'rehearsal_room' => 'boolean',
-        'active'         => 'boolean',
-    ];
-
     protected $fillable = [
         'user_id',
-        'act_id',
         'name',
         'address',
         'zip',
@@ -40,7 +34,7 @@ class Agency extends Model implements HasMedia
         'instagram',
         'youtube',
         'soundcloud',
-        'spotify'
+        'spotify',
     ];
 
     public function user()
@@ -52,5 +46,4 @@ class Agency extends Model implements HasMedia
     {
         return $this->media()->count() > 0;
     }
-
 }

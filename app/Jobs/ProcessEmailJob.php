@@ -17,19 +17,8 @@ class ProcessEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
  
-    /**
-     * Number of times the job may be attempted.
-     */
     public int $tries = 3;
- 
-    /**
-     * Number of seconds to wait before retrying.
-     */
     public int $backoff = 60;
- 
-    /**
-     * Number of seconds the job can run before timing out.
-     */
     public int $timeout = 120;
  
     public function __construct(
@@ -38,10 +27,12 @@ class ProcessEmailJob implements ShouldQueue
  
     public function handle(): void
     {
-        // Mark the job as processing
+        // Mark the job as processing.
+        // Only set started_at on the first attempt so retries don't overwrite
+        // the original start time.
         $this->emailJob->update([
             'status'     => 'processing',
-            'started_at' => now(),
+            'started_at' => $this->emailJob->started_at ?? now(),
         ]);
  
         $failed = 0;
@@ -73,8 +64,9 @@ class ProcessEmailJob implements ShouldQueue
             }
         }
  
-        // Mark completed — if every recipient failed, mark as failed
-        $total = $this->emailJob->recipients()->count();
+        // Use the already-loaded collection (property, not method) to avoid a
+        // redundant COUNT query after the foreach has already hydrated it.
+        $total = $this->emailJob->recipients->count();
  
         $this->emailJob->update([
             'status'       => $failed === $total ? 'failed' : 'completed',
@@ -82,9 +74,6 @@ class ProcessEmailJob implements ShouldQueue
         ]);
     }
  
-    /**
-     * Handle a job failure (all retries exhausted).
-     */
     public function failed(Throwable $exception): void
     {
         $this->emailJob->update([
@@ -93,4 +82,3 @@ class ProcessEmailJob implements ShouldQueue
         ]);
     }
 }
- 

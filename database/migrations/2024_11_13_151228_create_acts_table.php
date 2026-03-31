@@ -10,20 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    { 
+    {
         Schema::create('acts', function (Blueprint $table) {
 
             $table->id();
 
             $table->bigInteger('user_id')->nullable()->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+
             $table->string('name');
             $table->integer('number_of_members')->nullable();
-            $table->integer('genre_id');
+            $table->foreignId('genre_id')->constrained('genres')->onDelete('restrict');
             $table->boolean('rehearsal_room')->default(false);
             $table->string('website')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('active')->default(true);
             $table->longText('description')->nullable();
             $table->string('email');
             $table->string('phone');

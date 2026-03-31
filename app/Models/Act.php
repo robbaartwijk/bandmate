@@ -39,6 +39,11 @@ class Act extends Model implements HasMedia
         'phone',
     ];
 
+    protected $casts = [
+        'rehearsal_room' => 'boolean',
+        'active'         => 'boolean',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

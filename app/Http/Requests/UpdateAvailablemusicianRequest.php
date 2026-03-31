@@ -14,11 +14,12 @@ class UpdateAvailablemusicianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'instrument_id'   => ['required'],
-            'genre_id'        => ['required'],
-            'description'     => ['nullable', 'string'],
-            'available_from'  => ['nullable', 'date'],
-            'available_until' => ['nullable', 'date', 'after:available_from'],
+            'instrument_id'        => ['required'],
+            'genre_id'             => ['required'],
+            'description'          => ['nullable', 'string'],
+            'available_from'       => ['nullable', 'date'],
+            'available_until'      => ['nullable', 'date', 'after:available_from'],
+            'availablemusicianpic' => ['nullable', 'image', 'max:4096'],
         ];
     }
 }

@@ -31,7 +31,7 @@ class ActController extends BaseController
         $acts = $query->paginate($select)->onEachSide(1);
 
         return view('acts.index', compact(['acts']));
-    }       
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -56,8 +56,15 @@ class ActController extends BaseController
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
-        $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
 
+        $youtubeUrl = $request->youtubedemo;
+
+        if ($youtubeUrl) {
+            parse_str(parse_url($youtubeUrl, PHP_URL_QUERY), $params);
+            $videoId = $params['v'] ?? basename(parse_url($youtubeUrl, PHP_URL_PATH));
+            $act->youtubedemo = $videoId ? 'https://www.youtube.com/embed/' . $videoId : null;
+        }        
+        
         $act->save();
 
         if ($request->hasFile('actpic')) {
@@ -68,9 +75,9 @@ class ActController extends BaseController
             templateName: 'email_notification_acts',
             moduleColumn: 'email_notification_acts',
             variables: [
-                'act_name' => $act->name,
+                'act_name'  => $act->name,
                 'act_genre' => $act->genre?->name ?? '',
-                'act_url'  => route('acts.show', $act),
+                'act_url'   => route('acts.show', $act),
             ]
         );
 
@@ -108,8 +115,6 @@ class ActController extends BaseController
      */
     public function update(UpdateActRequest $request, Act $act)
     {
-        // Authorization is handled by UpdateActRequest::authorize()
-
         $act->fill($request->validated());
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
@@ -121,7 +126,7 @@ class ActController extends BaseController
             $this->storeActImage($request, $act);
         }
 
-        $act->update();
+        $act->save();
 
         return redirect()->route('acts.show', $act)->withStatus('Act updated successfully');
     }
@@ -175,7 +180,7 @@ class ActController extends BaseController
     {
         $query = Act::with(['genre', 'media'])
             ->select('acts.*', 'genres.name as genre_name')
-            ->leftJoin('genres', 'acts.genre_id', '=', 'genres.id');  // FIX: was ->join() — acts without a genre were silently excluded
+            ->leftJoin('genres', 'acts.genre_id', '=', 'genres.id');
 
         return $query;
     }
@@ -190,13 +195,16 @@ class ActController extends BaseController
                 $query->orderBy('description');
                 break;
             case 'genre_name':
-                $query->orderByRaw('COALESCE(genres.name, \'\')');  // FIX: COALESCE handles NULL from the left join
+                $query->orderByRaw('COALESCE(genres.name, \'\')');
                 break;
             case 'created_at':
                 $query->orderBy('created_at');
                 break;
             case 'updated_at':
                 $query->orderBy('updated_at');
+                break;
+            default:
+                $query->orderBy('name');
                 break;
         }
 
