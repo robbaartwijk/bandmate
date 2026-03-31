@@ -19,11 +19,11 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
             $table->string('name');
-            $table->string('number_of_members')->nullable();
+            $table->integer('number_of_members')->nullable();
             $table->integer('genre_id');
-            $table->string('rehearsal_room');
+            $table->boolean('rehearsal_room')->default(false);
             $table->string('website')->nullable();
-            $table->string('active');
+            $table->boolean('is_active')->default(true);
             $table->longText('description')->nullable();
             $table->string('email');
             $table->string('phone');

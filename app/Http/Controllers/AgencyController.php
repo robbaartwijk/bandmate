@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Http\Requests\StoreAgencyRequest;
+use App\Http\Requests\UpdateAgencyRequest;
 use Illuminate\Http\Request;
 use App\Services\NotificationService;
 
@@ -19,7 +21,6 @@ class AgencyController extends BaseController
      */
     public function index(Request $request)
     {
-        // Whitelist allowed sort columns to prevent SQL injection via orderBy()
         $allowedSorts = ['name', 'city', 'country', 'created_at', 'updated_at'];
         $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
         $select = $request->input('selectrecords') ?? 25;
@@ -57,39 +58,11 @@ class AgencyController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAgencyRequest $request)
     {
-        $this->authorize('create', Agency::class);
-
-        // FIX: validation now matches the form fields (address/zip/state/phone/email are not
-        // in the create form so they cannot be required here — they are nullable instead)
-        $request->validate([
-            'name'        => 'required',
-            'city'        => 'required',
-            'country'     => 'required',
-            'description' => 'nullable|string',
-            'address'     => 'nullable|string',
-            'zip'         => 'nullable|string',
-            'state'       => 'nullable|string',
-            'phone'       => 'nullable|string',
-            'email'       => 'nullable|email',
-            'website'     => ['nullable', 'url'],
-            'facebook'    => ['nullable', 'url'],
-            'twitter'     => ['nullable', 'url'],
-            'instagram'   => ['nullable', 'url'],
-            'youtube'     => ['nullable', 'url'],
-            'soundcloud'  => ['nullable', 'url'],
-            'spotify'     => ['nullable', 'url'],
-        ]);
-
         $agency = new Agency;
         $agency->user_id = auth()->id();
-        $agency->fill($request->only([
-            'name', 'city', 'country', 'description',
-            'address', 'zip', 'state', 'phone', 'email',
-            'website', 'facebook', 'twitter',
-            'instagram', 'youtube', 'soundcloud', 'spotify',
-        ]));
+        $agency->fill($request->validated());
         $agency->save();
 
         $this->notificationService->dispatchModuleNotification(
@@ -108,8 +81,6 @@ class AgencyController extends BaseController
 
     /**
      * Display the specified resource.
-     * Note: intentionally has no authorization check — agencies are publicly visible
-     * to all authenticated users, consistent with how the index listing works.
      */
     public function show(Agency $agency)
     {
@@ -129,35 +100,9 @@ class AgencyController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Agency $agency)
+    public function update(UpdateAgencyRequest $request, Agency $agency)
     {
-        $this->authorize('update', $agency);
-
-        $request->validate([
-            'name'        => 'required',
-            'city'        => 'required',
-            'country'     => 'required',
-            'description' => 'nullable|string',
-            'address'     => 'nullable|string',
-            'zip'         => 'nullable|string',
-            'state'       => 'nullable|string',
-            'phone'       => 'nullable|string',
-            'email'       => 'nullable|email',
-            'website'     => ['nullable', 'url'],
-            'facebook'    => ['nullable', 'url'],
-            'twitter'     => ['nullable', 'url'],
-            'instagram'   => ['nullable', 'url'],
-            'youtube'     => ['nullable', 'url'],
-            'soundcloud'  => ['nullable', 'url'],
-            'spotify'     => ['nullable', 'url'],
-        ]);
-
-        $agency->update($request->only([
-            'name', 'city', 'country', 'description',
-            'address', 'zip', 'state', 'phone', 'email',
-            'website', 'facebook', 'twitter',
-            'instagram', 'youtube', 'soundcloud', 'spotify',
-        ]));
+        $agency->update($request->validated());
 
         return redirect()->route('agencies.index')
             ->with('status', 'Agency updated successfully');

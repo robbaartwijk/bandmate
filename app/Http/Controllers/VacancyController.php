@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Act;
 use App\Models\Instrument;
 use App\Models\Vacancy;
+use App\Http\Requests\StoreVacancyRequest;
+use App\Http\Requests\UpdateVacancyRequest;
 use Illuminate\Http\Request;
 use App\Services\NotificationService;
  
 class VacancyController extends BaseController
 {
-
     public function __construct(
         private readonly NotificationService $notificationService
         ) {
@@ -73,18 +74,10 @@ class VacancyController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVacancyRequest $request)
     {
-        $this->authorize('create', Vacancy::class);
-
-        $request->validate([
-            'act_id'        => 'required',
-            'instrument_id' => 'required',
-            'description'   => 'nullable|string',
-        ]);
-
         $vacancy = new Vacancy;
-        $vacancy->fill($request->only(['act_id', 'instrument_id', 'description']));
+        $vacancy->fill($request->validated());
         $vacancy->user_id = auth()->id();
         $vacancy->save();
 
@@ -98,9 +91,9 @@ class VacancyController extends BaseController
             ]
         );
 
-     return redirect()
+        return redirect()
             ->route('vacancies.index')
-         ->with('status', 'Vacancy created successfully.');
+            ->with('status', 'Vacancy created successfully.');
     }
  
     /**
@@ -142,18 +135,9 @@ class VacancyController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vacancy $vacancy)
+    public function update(UpdateVacancyRequest $request, Vacancy $vacancy)
     {
-        $this->authorize('update', $vacancy);
- 
-        $request->validate([
-            'act_id' => 'required',
-            'instrument_id' => 'required',
-            'description'   => 'nullable|string',
-        ]);
- 
         $vacancy->fill($request->validated());
-
         $vacancy->save();
  
         return redirect()->route('vacancies.index')

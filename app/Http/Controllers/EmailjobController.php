@@ -78,44 +78,48 @@ class EmailJobController extends BaseController {
     */
 
     public function store( Request $request ): RedirectResponse {
-        $validated = $request->validate( [
-            'template_id'  => 'required|exists:email_templates,id',
-            'type'         => 'required|in:single,bulk',
-            'from_address' => 'required|email|max:255',
-            'from_name'    => 'nullable|string|max:255',
-            'metadata'     => 'nullable|array',
-            'scheduled_at' => 'nullable|date|after:now',
+    $validated = $request->validate( [
+        'template_id'  => 'required|exists:email_templates,id',
+        'type'         => 'required|in:single,bulk',
+        'from_address' => 'required|email|max:255',
+        'from_name'    => 'nullable|string|max:255',
+        'metadata'     => 'nullable|array',
+        'scheduled_at' => 'nullable|date|after:now',
 
-            'recipients'             => 'required|array|min:1',
-            'recipients.*.email'     => 'required|email|max:255',
-            'recipients.*.name'      => 'nullable|string|max:255',
-            'recipients.*.variables' => 'nullable|array',
+        'recipients'             => 'required|array|min:1',
+        'recipients.*.email'     => 'required|email|max:255',
+        'recipients.*.name'      => 'nullable|string|max:255',
+        'recipients.*.variables' => 'nullable|array',
+    ] );
+
+    $job = EmailJob::create( [
+        'template_id'  => $validated[ 'template_id' ],
+        'type'         => $validated[ 'type' ],
+        'from_address' => $validated[ 'from_address' ],
+        'from_name'    => $validated[ 'from_name' ] ?? null,
+        'metadata'     => $validated[ 'metadata' ] ?? null,
+        'scheduled_at' => $validated[ 'scheduled_at' ] ?? null,
+        'status'       => 'pending',
+        'created_by'   => auth()->id(),
+    ] );
+
+    foreach ( $validated[ 'recipients' ] as $recipient ) {
+        $job->recipients()->create( [
+            'email'     => $recipient[ 'email' ],
+            'name'      => $recipient[ 'name' ] ?? null,
+            'variables' => $recipient[ 'variables' ] ?? null,
         ] );
-
-        $job = EmailJob::create( [
-            'template_id'  => $validated[ 'template_id' ],
-            'type'         => $validated[ 'type' ],
-            'from_address' => $validated[ 'from_address' ],
-            'from_name'    => $validated[ 'from_name' ] ?? null,
-            'metadata'     => $validated[ 'metadata' ] ?? null,
-            'scheduled_at' => $validated[ 'scheduled_at' ] ?? null,
-            'status'       => 'pending',
-            'created_by'   => auth()->id(),
-        ] );
-
-        foreach ( $validated[ 'recipients' ] as $recipient ) {
-            $job->recipients()->create( [
-                'email'     => $recipient[ 'email' ],
-                'name'      => $recipient[ 'name' ] ?? null,
-                'variables' => $recipient[ 'variables' ] ?? null,
-            ] );
-        }
-
-        \App\Jobs\ProcessEmailJob::dispatch( $job );
-
-        return redirect()->route( 'email-jobs.show', $job )
-        ->with( 'success', 'Email job created and queued successfully.' );
     }
+
+    $delay = isset( $validated[ 'scheduled_at' ] )
+        ? now()->diffInSeconds( $validated[ 'scheduled_at' ] )
+        : 0;
+
+    \App\Jobs\ProcessEmailJob::dispatch( $job )->delay( $delay );
+
+    return redirect()->route( 'email-jobs.show', $job )
+        ->with( 'success', 'Email job created and queued successfully.' );
+}
 
     /**
     * Show details and recipient list for a job.

@@ -22,7 +22,8 @@ class ActController extends BaseController
      */
     public function index(Request $request)
     {
-        $sort = $request->input('sort') ?? 'name';
+        $allowedSorts = ['name', 'description', 'genre_name', 'created_at', 'updated_at'];
+        $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
         $select = $request->input('per_page') ?? 25;
 
         $query = $this->buildQuerySelection($request, $sort);
@@ -30,7 +31,7 @@ class ActController extends BaseController
         $acts = $query->paginate($select)->onEachSide(1);
 
         return view('acts.index', compact(['acts']));
-    }
+    }       
 
     /**
      * Show the form for creating a new resource.
