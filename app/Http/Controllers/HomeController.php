@@ -15,7 +15,7 @@ class HomeController extends BaseController
      */
     public function __construct()
     {
-        parent::__construct(); // FIX: was missing — BaseController sets up the shared $userAvatar view variable
+        parent::__construct();
         $this->middleware('auth');
     }
  
@@ -62,9 +62,14 @@ class HomeController extends BaseController
  
     private function getRecentVacancies()
     {
-        // Eager load act.genre to avoid N+1 — genre_name and instrument_name
-        // are accessible via relationships without extra queries
-        return Vacancy::with(['act.genre', 'instrument'])->latest()->take(5)->get();
+        // Use withTrashed() on the act and instrument relationships so that
+        // vacancies whose act or instrument has been soft-deleted still show
+        // their name on the dashboard instead of rendering as null/empty.
+        return Vacancy::with([
+            'act'          => fn ($q) => $q->withTrashed(),
+            'act.genre'    => fn ($q) => $q->withTrashed(),
+            'instrument'   => fn ($q) => $q->withTrashed(),
+        ])->latest()->take(5)->get();
     }
  
     private function getRecentAvailablemusicians()

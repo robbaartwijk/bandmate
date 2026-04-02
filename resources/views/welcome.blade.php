@@ -85,7 +85,7 @@
                     @forelse($recentActs as $act)
                     <tr>
                         <td><a href="{{ route('acts.show', $act->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->name }}</a></td>
-                        <td class="text-white/60">{{ $act->genre->name }}</td>
+                        <td class="text-white/60">{{ $act->genre?->name ?? '-' }}</td>
                         <td class="hidden sm:table-cell text-white/60">{{ $act->number_of_members }}</td>
                         <td class="hidden md:table-cell text-white/50 text-xs">{{ Str::limit($act->description, 41) }}</td>
                         <td class="hidden lg:table-cell text-white/40 text-xs">{{ $act->created_at }}</td>
@@ -114,8 +114,14 @@
                 <tbody>
                     @forelse($recentVacancies as $vacancy)
                     <tr>
-                        <td><a href="{{ route('acts.show', $vacancy->act_id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act_name }}</a></td>
-                        <td class="hidden sm:table-cell text-white/60">{{ $vacancy->instrument_name }}</td>
+                        <td>
+                            @if($vacancy->act)
+                            <a href="{{ route('acts.show', $vacancy->act->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act->name }}</a>
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td class="hidden sm:table-cell text-white/60">{{ $vacancy->instrument?->name ?? '-' }}</td>
                         <td class="hidden md:table-cell">
                             <a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a>
                         </td>
@@ -146,8 +152,8 @@
                     @forelse($recentAvailablemusicians as $musician)
                     <tr>
                         <td class="text-white/80">{{ $musician->user->name }}</td>
-                        <td class="text-white/60">{{ $musician->genre->name }}</td>
-                        <td class="hidden sm:table-cell text-white/60">{{ $musician->instrument->name }}</td>
+                        <td class="text-white/60">{{ $musician->genre?->name ?? '-' }}</td>
+                        <td class="hidden sm:table-cell text-white/60">{{ $musician->instrument?->name ?? '-' }}</td>
                         <td class="hidden md:table-cell">
                             <a href="{{ route('availablemusicians.show', $musician->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($musician->description, 35) }}</a>
                         </td>

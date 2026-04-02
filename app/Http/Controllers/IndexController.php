@@ -35,8 +35,14 @@ class IndexController extends BaseController
  
     private function getRecentVacancies()
     {
-        // Eager load act.genre and instrument — no N+1 queries
-        return Vacancy::with(['act.genre', 'instrument'])->latest()->take(5)->get();
+        // Use withTrashed() on the act and instrument relationships so that
+        // vacancies whose act or instrument has been soft-deleted still show
+        // their name instead of rendering as null/empty.
+        return Vacancy::with([
+            'act'        => fn ($q) => $q->withTrashed(),
+            'act.genre'  => fn ($q) => $q->withTrashed(),
+            'instrument' => fn ($q) => $q->withTrashed(),
+        ])->latest()->take(5)->get();
     }
  
     private function getRecentAvailablemusicians()
@@ -49,4 +55,3 @@ class IndexController extends BaseController
         return Rehearsalroom::latest()->take(5)->get();
     }
 }
- 

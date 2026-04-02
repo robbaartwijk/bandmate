@@ -107,7 +107,7 @@
                         @foreach ($recentActs as $act)
                         <tr>
                             <td><a href="{{ route('acts.show', $act->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $act->name }}</a></td>
-                            <td class="hidden md:table-cell">{{ $act->genre->name }}</td>
+                            <td class="hidden md:table-cell">{{ $act->genre->name ?? '-' }}</td>
                             <td class="hidden md:table-cell">{{ $act->number_of_members }}</td>
                             <td class="hidden lg:table-cell text-white/60 text-sm">{{ Str::limit($act->description, 41) }}</td>
                             <td class="hidden lg:table-cell text-white/40 text-xs">{{ $act->created_at->format('Y-m-d') }}</td>
@@ -139,10 +139,18 @@
                         @else
                         @foreach ($recentVacancies as $vacancy)
                         <tr>
-                            <td><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act->name ?? '' }}</a></td>
-                            <td class="hidden md:table-cell">{{ $vacancy->act->genre->name ?? '' }}</td>{{-- FIX: genre_name doesn't exist on Vacancy; navigate via act->genre --}}
-                            <td class="hidden md:table-cell">{{ $vacancy->instrument->name }}</td>
-                            <td class="hidden lg:table-cell text-white/60 text-sm"><a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a></td>
+                            <td>
+                                @if($vacancy->act)
+                                <a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $vacancy->act->name }}</a>
+                                @else
+                                -
+                                @endif
+                            </td>
+                            <td class="hidden md:table-cell">{{ $vacancy->act?->genre?->name ?? '-' }}</td>
+                            <td class="hidden md:table-cell">{{ $vacancy->instrument?->name ?? '-' }}</td>
+                            <td class="hidden lg:table-cell text-white/60 text-sm">
+                                <a href="{{ route('vacancies.show', $vacancy->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($vacancy->description, 42) }}</a>
+                            </td>
                             <td class="hidden lg:table-cell text-white/40 text-xs">{{ $vacancy->created_at->format('Y-m-d') }}</td>
                         </tr>
                         @endforeach
@@ -173,8 +181,8 @@
                         @foreach ($recentAvailablemusicians as $recentAvailablemusician)
                         <tr>
                             <td>{{ $recentAvailablemusician->user->name }}</td>
-                            <td class="hidden md:table-cell">{{ $recentAvailablemusician->genre->name }}</td>
-                            <td class="hidden md:table-cell">{{ $recentAvailablemusician->instrument->name }}</td>
+                            <td class="hidden md:table-cell">{{ $recentAvailablemusician->genre?->name ?? '-' }}</td>
+                            <td class="hidden md:table-cell">{{ $recentAvailablemusician->instrument?->name ?? '-' }}</td>
                             <td class="hidden lg:table-cell text-white/60 text-sm"><a href="{{ route('availablemusicians.show', $recentAvailablemusician->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ Str::limit($recentAvailablemusician->description, 35) }}</a></td>
                             <td class="hidden lg:table-cell text-white/40 text-xs">{{ $recentAvailablemusician->created_at->format('Y-m-d') }}</td>
                         </tr>
