@@ -9,7 +9,16 @@
             <tbody>
                 <tr>
                     <th class="text-white/60 font-medium">{{ __('common.col_act') }}</th>
-                    <td>{{ $vacancy->act->name ?? '-' }}</td>
+                    <td>
+                        @if($vacancy->act)
+                        <a href="{{ route('acts.show', $vacancy->act->id) }}"
+                           class="text-indigo-400 hover:text-indigo-300">
+                            {{ $vacancy->act->name }}
+                        </a>
+                        @else
+                        -
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <th class="text-white/60 font-medium">{{ __('common.col_genre') }}</th>

@@ -209,26 +209,32 @@ class ActController extends BaseController
         return $query;
     }
 
+    /**
+     * FIX: All sort columns are now prefixed with their table name to prevent
+     * "ambiguous column" SQL errors after the LEFT JOIN on genres. Both acts
+     * and genres have created_at / updated_at columns, so MySQL strict mode
+     * would reject the unqualified names.
+     */
     public function buildSortParameters($query, $sort)
     {
         switch ($sort) {
             case 'name':
-                $query->orderBy('name');
+                $query->orderBy('acts.name');
                 break;
             case 'description':
-                $query->orderBy('description');
+                $query->orderBy('acts.description');
                 break;
             case 'genre_name':
-                $query->orderByRaw('COALESCE(genres.name, \'\')');
+                $query->orderByRaw("COALESCE(genres.name, '')");
                 break;
             case 'created_at':
-                $query->orderBy('created_at');
+                $query->orderBy('acts.created_at');
                 break;
             case 'updated_at':
-                $query->orderBy('updated_at');
+                $query->orderBy('acts.updated_at');
                 break;
             default:
-                $query->orderBy('name');
+                $query->orderBy('acts.name');
                 break;
         }
 

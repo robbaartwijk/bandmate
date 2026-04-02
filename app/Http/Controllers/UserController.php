@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
  
 use App\Models\User;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
  
 class UserController extends BaseController
@@ -64,12 +65,15 @@ class UserController extends BaseController
  
     /**
      * Update the specified user in storage.
+     *
+     * FIX: Added missing `use App\Http\Requests\UpdateUserRequest` import and
+     * replaced the undefined `$validated` variable with `$request->validated()`.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('update', $user);
-        
-        $user->update($validated);
+
+        $user->update($request->validated());
 
         return redirect()->route('users.index')->with('status', 'User updated successfully');
     }

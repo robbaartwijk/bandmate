@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
 use Illuminate\Http\Request;
 
 class GenreController extends BaseController
@@ -28,7 +30,7 @@ class GenreController extends BaseController
             });
         }
 
-        $genres = $query->paginate(50); // FIX: added pagination (was ->get())
+        $genres = $query->paginate(50);
 
         return view('genres.index', compact('genres'));
     }
@@ -38,23 +40,20 @@ class GenreController extends BaseController
      */
     public function create()
     {
-        $this->authorize('create', Genre::class); // FIX: added missing authorization
+        $this->authorize('create', Genre::class);
 
         return view('genres.create');
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * FIX: Switched to StoreGenreRequest FormRequest so that $request->validated()
+     * returns the actual validated data instead of an empty array (which happened
+     * when validate() was called on a plain Request and validated() was then called).
      */
-    public function store(Request $request)
+    public function store(StoreGenreRequest $request)
     {
-        $this->authorize('create', Genre::class); // FIX: added missing authorization
-
-        $request->validate([
-            'name' => 'required',
-            'group' => 'required',
-        ]);
-
         Genre::create($request->validated());
 
         return redirect()->route('genres.index')
@@ -74,22 +73,21 @@ class GenreController extends BaseController
      */
     public function edit(Genre $genre)
     {
-        $this->authorize('update', $genre); // FIX: added missing authorization
+        $this->authorize('update', $genre);
 
         return view('genres.edit', compact('genre'));
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * FIX: Switched to UpdateGenreRequest FormRequest so that $request->validated()
+     * returns the actual validated data instead of an empty array, making the
+     * update a no-op (bug was: validate() result was discarded, validated() returned []).
      */
-    public function update(Request $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
-        $this->authorize('update', $genre); // FIX: added missing authorization
-
-        $request->validate([
-            'name' => 'required',
-            'group' => 'required',
-        ]);
+        $this->authorize('update', $genre);
 
         $genre->update($request->validated());
 
@@ -102,7 +100,7 @@ class GenreController extends BaseController
      */
     public function destroy(Genre $genre)
     {
-        $this->authorize('delete', $genre); // FIX: added missing authorization
+        $this->authorize('delete', $genre);
 
         $genre->delete();
 

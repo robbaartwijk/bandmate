@@ -42,6 +42,11 @@ class AvailablemusicianController extends BaseController
         return view('availablemusicians.create', compact('availablemusician'));
     }
  
+    /**
+     * FIX: Added null-safe operators (?->) on instrument and genre relationships
+     * before accessing ->name. If either is missing (e.g. soft-deleted), the original
+     * code would fatal with "Attempt to read property on null".
+     */
     public function store(StoreAvailablemusicianRequest $request)
     {
         $availablemusician = new Availablemusician;
@@ -59,8 +64,8 @@ class AvailablemusicianController extends BaseController
             moduleColumn: 'email_notification_availablemusicians',
             variables: [
                 'musician_name'   => auth()->user()->name,
-                'instrument_name' => $availablemusician->instrument->name,
-                'genre_name'      => $availablemusician->genre->name,
+                'instrument_name' => $availablemusician->instrument?->name ?? '',
+                'genre_name'      => $availablemusician->genre?->name ?? '',
                 'musician_url'    => route('availablemusicians.show', $availablemusician),
             ]
         );
@@ -143,11 +148,17 @@ class AvailablemusicianController extends BaseController
         return $query;
     }
  
+    /**
+     * FIX: Changed INNER JOINs on genres and instruments to LEFT JOINs.
+     * The original INNER JOINs silently excluded any availablemusician whose
+     * genre_id or instrument_id pointed to a soft-deleted (or missing) row,
+     * causing listings to disappear from the index without any error.
+     */
     public function buildJoinParameters($query)
     {
         $query->join('users', 'availablemusicians.user_id', '=', 'users.id')
-            ->join('genres', 'availablemusicians.genre_id', '=', 'genres.id')
-            ->join('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
+            ->leftJoin('genres', 'availablemusicians.genre_id', '=', 'genres.id')
+            ->leftJoin('instruments', 'availablemusicians.instrument_id', '=', 'instruments.id');
         return $query;
     }
  

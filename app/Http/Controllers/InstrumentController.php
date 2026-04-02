@@ -26,7 +26,7 @@ class InstrumentController extends BaseController
             });
         }
 
-        $instruments = $query->paginate(50); // FIX: added pagination (was ->get())
+        $instruments = $query->paginate(50);
 
         return view('instruments.index', compact('instruments'));
     }
@@ -43,16 +43,13 @@ class InstrumentController extends BaseController
 
     /**
      * Store a newly created resource in storage.
+     *
+     * FIX: Switched to StoreInstrumentRequest FormRequest so that $request->validated()
+     * returns the actual validated data instead of an empty array (which happened
+     * when validate() was called on a plain Request and validated() was then called).
      */
-    public function store(Request $request)
+    public function store(StoreInstrumentRequest $request)
     {
-        $this->authorize('create', Instrument::class);
-
-        $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-        ]);
-
         Instrument::create($request->validated());
 
         return redirect()->route('instruments.index')
@@ -79,15 +76,14 @@ class InstrumentController extends BaseController
 
     /**
      * Update the specified resource in storage.
+     *
+     * FIX: Switched to UpdateInstrumentRequest FormRequest so that $request->validated()
+     * returns the actual validated data instead of an empty array, making the
+     * update a no-op (bug was: validate() result was discarded, validated() returned []).
      */
-    public function update(Request $request, Instrument $instrument)
+    public function update(UpdateInstrumentRequest $request, Instrument $instrument)
     {
         $this->authorize('update', $instrument);
-
-        $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-        ]);
 
         $instrument->update($request->validated());
 

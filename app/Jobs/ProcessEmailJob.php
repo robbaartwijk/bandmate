@@ -68,8 +68,13 @@ class ProcessEmailJob implements ShouldQueue
         // redundant COUNT query after the foreach has already hydrated it.
         $total = $this->emailJob->recipients->count();
  
+        /**
+         * FIX: Added `$total > 0` guard before comparing $failed === $total.
+         * Previously, when a job had zero recipients, 0 === 0 evaluated to true
+         * and the job was incorrectly marked as 'failed' instead of 'completed'.
+         */
         $this->emailJob->update([
-            'status'       => $failed === $total ? 'failed' : 'completed',
+            'status'       => ($total > 0 && $failed === $total) ? 'failed' : 'completed',
             'completed_at' => now(),
         ]);
     }
