@@ -24,7 +24,7 @@
             </div>
             <div class="bm-form-group">
                 <label for="capacity" class="bm-label">{{ __('venues.capacity') }}</label>
-                <input type="number" id="capacity" name="capacity" value="{{ old('capacity', $venue->capacity) }}" min="0" class="bm-input" placeholder="{{ __('venues.capacity_placeholder') }}" required>
+                <input type="number" id="capacity" name="capacity" value="{{ old('capacity', $venue->capacity) }}" min="0" class="bm-input" placeholder="{{ __('venues.capacity_placeholder') }}">
                 @error('capacity') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
             <div class="bm-form-group">

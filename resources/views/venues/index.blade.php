@@ -12,6 +12,7 @@
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
                     <option value="name" {{ request()->sort === 'name' ? 'selected' : '' }}>{{ __('common.sort_by_name') }}</option>
                     <option value="city" {{ request()->sort === 'city' ? 'selected' : '' }}>{{ __('common.sort_by_city') }}</option>
+                    <option value="country" {{ request()->sort === 'country' ? 'selected' : '' }}>{{ __('common.sort_by_country') }}</option>
                     <option value="created_at" {{ request()->sort === 'created_at' ? 'selected' : '' }}>{{ __('common.sort_by_date_of_creation') }}</option>
                     <option value="updated_at" {{ request()->sort === 'updated_at' ? 'selected' : '' }}>{{ __('common.sort_by_date_last_update') }}</option>
                 </select>
