@@ -18,7 +18,7 @@ class StoreVacancyRequest extends FormRequest
                 'required',
                 Rule::exists('acts', 'id')->where('user_id', auth()->id()),
             ],
-            'instrument_id' => ['required'],
+            'instrument_id' => ['required', 'exists:instruments,id'],
             'description'   => ['nullable', 'string'],
         ];
     }

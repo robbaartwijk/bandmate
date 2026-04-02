@@ -46,6 +46,7 @@ return [
     'sort_by_date_added'  => 'Sorteren op toevoegdatum',
     'sort_by_last_update' => 'Sorteren op laatste update',
     'sort_by_city'        => 'Sorteren op stad',
+    'sort_by_country'     => 'Sorteren op land',
     'sort_by_email'       => 'Sorteren op e-mail',
     'sort_by_instrument'       => 'Sorteren op instrument',
     'sort_by_act'              => 'Sorteren op act',

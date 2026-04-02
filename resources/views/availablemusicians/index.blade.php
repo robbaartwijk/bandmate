@@ -53,7 +53,7 @@
                             </div>
                         </td>
                         <td>{{ $record->instrument->name ?? '-' }}</td>
-                        <td class="hidden md:table-cell">{{ $record->user->city ?? '-' }}</td>
+                        <td class="hidden md:table-cell">{{ $record->city ?? '-' }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->created_at->format('Y-m-d') }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->updated_at->format('Y-m-d') }}</td>
                         <td class="whitespace-nowrap">

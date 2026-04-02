@@ -57,13 +57,7 @@ class ActController extends BaseController
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
 
-        $youtubeUrl = $request->youtubedemo;
-
-        if ($youtubeUrl) {
-            parse_str(parse_url($youtubeUrl, PHP_URL_QUERY), $params);
-            $videoId = $params['v'] ?? basename(parse_url($youtubeUrl, PHP_URL_PATH));
-            $act->youtubedemo = $videoId ? 'https://www.youtube.com/embed/' . $videoId : null;
-        }        
+        $act->youtubedemo = $this->parseYoutubeUrl($request->youtubedemo);
         
         $act->save();
 
@@ -81,7 +75,7 @@ class ActController extends BaseController
             ]
         );
 
-        return redirect()->route('acts.show', $act)->withStatus('Act added successfully');
+        return redirect()->route('acts.show', $act)->with('status', 'Act added successfully');
     }
 
     /**
@@ -119,7 +113,7 @@ class ActController extends BaseController
 
         $act->rehearsal_room = $request->rehearsal_room === 'on' ? 1 : 0;
         $act->active = $request->active === 'on' ? 1 : 0;
-        $act->youtubedemo = str_replace('watch?v=', 'embed/', $request->youtubedemo);
+        $act->youtubedemo = $this->parseYoutubeUrl($request->youtubedemo);
 
         if ($request->hasFile('actpic')) {
             $this->clearActImage($act);
@@ -128,7 +122,7 @@ class ActController extends BaseController
 
         $act->save();
 
-        return redirect()->route('acts.show', $act)->withStatus('Act updated successfully');
+        return redirect()->route('acts.show', $act)->with('status', 'Act updated successfully');
     }
 
     /**
@@ -164,6 +158,36 @@ class ActController extends BaseController
     public function clearActImage(Act $act): void
     {
         $act->clearMediaCollection('images/ActPics');
+    }
+
+    /**
+     * Extract a YouTube video ID from any standard YouTube URL and return
+     * the canonical embed URL, or null if no valid ID is found.
+     *
+     * Handles: watch?v=, youtu.be/, /embed/, /shorts/ URLs.
+     */
+    private function parseYoutubeUrl(?string $url): ?string
+    {
+        if (! $url) {
+            return null;
+        }
+
+        $parsed = parse_url($url);
+        $host   = $parsed['host'] ?? '';
+        $path   = $parsed['path'] ?? '';
+
+        // youtu.be/<id>
+        if (str_contains($host, 'youtu.be')) {
+            $videoId = ltrim($path, '/');
+        } else {
+            // Standard watch?v= or /embed/<id> or /shorts/<id>
+            parse_str($parsed['query'] ?? '', $params);
+            $videoId = $params['v']
+                ?? (preg_match('#/(embed|shorts)/([^/?]+)#', $path, $m) ? $m[2] : null)
+                ?? null;
+        }
+
+        return $videoId ? 'https://www.youtube.com/embed/' . $videoId : null;
     }
 
     public function buildQuerySelection($request, $sort)

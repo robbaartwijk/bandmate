@@ -50,6 +50,7 @@ return [
     'sort_by_date_added'  => 'Sort by date added',
     'sort_by_last_update' => 'Sort by last update',
     'sort_by_city'        => 'Sort by city',
+    'sort_by_country'     => 'Sort by country',
     'sort_by_email'       => 'Sort by email',
     'sort_by_instrument'       => 'Sort by instrument',
     'sort_by_act'              => 'Sort by act',

@@ -33,6 +33,11 @@
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
             <div class="bm-form-group">
+                <label for="city" class="bm-label">{{ __('common.col_city') }}</label>
+                <input type="text" id="city" name="city" class="bm-input" value="{{ old('city', $availablemusician->city) }}" maxlength="100" placeholder="{{ __('common.col_city') }}">
+                @error('city') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
                 <label for="available_from" class="bm-label">{{ __('availablemusicians.available_from') }}</label>
                 <input type="date" id="available_from" name="available_from" class="bm-input"
                        value="{{ old('available_from', $availablemusician->available_from ? substr($availablemusician->available_from, 0, 10) : '') }}">

@@ -23,6 +23,7 @@ class Availablemusician extends Model implements HasMedia
         'instrument_id',
         'genre_id',
         'description',
+        'city',
         'available_from',
         'available_until',
     ];
@@ -53,4 +54,3 @@ class Availablemusician extends Model implements HasMedia
             ->singleFile();
     }
 }
- 

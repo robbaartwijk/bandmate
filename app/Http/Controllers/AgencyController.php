@@ -84,6 +84,8 @@ class AgencyController extends BaseController
      */
     public function show(Agency $agency)
     {
+        $this->authorize('view', $agency);
+
         return view('agencies.show', compact('agency'));
     }
 

@@ -25,6 +25,7 @@ class AvailablemusicianFactory extends Factory
             'genre_id' => $this->faker->randomElement($genres),
             'instrument_id' => $this->faker->randomElement($instrument),
             'description' => $this->faker->sentences(30, true),
+            'city' => $this->faker->city(),
             'available_from' => $this->faker->dateTimeBetween('-2 years', '-1 years'),
             'available_until' => $this->faker->dateTimeBetween('+1 years', '+2 years'),
 
