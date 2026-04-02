@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
  
 use App\Http\Controllers\BaseController;
-
+use App\Http\Requests\StoreEmailTemplateRequest;
+use App\Http\Requests\UpdateEmailTemplateRequest;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -38,17 +39,9 @@ class EmailTemplateController extends BaseController
     /**
      * Store a new template.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreEmailTemplateRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name'      => 'required|string|max:255|unique:email_templates,name',
-            'subject'   => 'required|string|max:255',
-            'body_html' => 'required|string',
-            'body_text' => 'nullable|string',
-            'status'    => 'required|in:active,inactive,draft',
-        ]);
- 
-        EmailTemplate::create($validated);
+        EmailTemplate::create($request->validated());
  
         return redirect()->route('email-templates.index')
             ->with('success', 'Template created successfully.');
@@ -73,17 +66,9 @@ class EmailTemplateController extends BaseController
     /**
      * Update an existing template.
      */
-    public function update(Request $request, EmailTemplate $emailTemplate): RedirectResponse
+    public function update(UpdateEmailTemplateRequest $request, EmailTemplate $emailTemplate): RedirectResponse
     {
-        $validated = $request->validate([
-            'name'      => 'required|string|max:255|unique:email_templates,name,' . $emailTemplate->id,
-            'subject'   => 'required|string|max:255',
-            'body_html' => 'required|string',
-            'body_text' => 'nullable|string',
-            'status'    => 'required|in:active,inactive,draft',
-        ]);
- 
-        $emailTemplate->update($validated);
+        $emailTemplate->update($request->validated());
  
         return redirect()->route('email-templates.index')
             ->with('success', 'Template updated successfully.');

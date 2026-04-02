@@ -32,4 +32,3 @@ class UpdateEmailTemplateRequest extends FormRequest
         ];
     }
 }
- 

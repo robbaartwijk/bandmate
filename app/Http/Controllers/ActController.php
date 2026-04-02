@@ -134,7 +134,7 @@ class ActController extends BaseController
 
         $act->clearMediaCollection('images/ActPics');
 
-        foreach ($act->vacancy as $vacancy) {
+        foreach ($act->vacancies as $vacancy) {
             $vacancy->delete();
         }
 

@@ -38,6 +38,10 @@
                     <th class="text-white/60 font-medium">{{ __('common.col_city') }}</th>
                     <td>{{ $availablemusician->city ?? '-' }}</td>
                 </tr>
+                 <tr>
+                    <th class="text-white/60 font-medium">{{ __('common.col_country') }}</th>
+                    <td>{{ $availablemusician->country ?? '-' }}</td>
+                </tr>
                 @if($availablemusician->available_from)
                 <tr>
                     <th class="text-white/60 font-medium">{{ __('availablemusicians.available_from') }}</th>

@@ -12,6 +12,8 @@
                 <select name="sort" class="bm-select text-sm py-1.5" style="width:160px;" onchange="this.form.submit()">
                     <option value="musician_name" {{ (request()->sort === 'musician_name' || !request()->sort) ? 'selected' : '' }}>{{ __('common.sort_by_name') }}</option>
                     <option value="instrument_name" {{ request()->sort === 'instrument_name' ? 'selected' : '' }}>{{ __('common.sort_by_instrument') }}</option>
+                    <option value="city_name" {{ request()->sort === 'city_name' ? 'selected' : '' }}>{{ __('common.sort_by_city') }}</option>
+                    <option value="country_name" {{ request()->sort === 'country_name' ? 'selected' : '' }}>{{ __('common.sort_by_country') }}</option>
                     <option value="created_at" {{ request()->sort === 'created_at' ? 'selected' : '' }}>{{ __('common.sort_by_date_of_creation') }}</option>
                     <option value="updated_at" {{ request()->sort === 'updated_at' ? 'selected' : '' }}>{{ __('common.sort_by_date_last_update') }}</option>
                 </select>
@@ -28,6 +30,7 @@
                     <th>{{ __('common.col_name') }}</th>
                     <th>{{ __('common.col_instrument') }}</th>
                     <th class="hidden md:table-cell">{{ __('common.col_city') }}</th>
+                    <th class="hidden md:table-cell">{{ __('common.col_country') }}</th>
                     <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
                     <th class="hidden lg:table-cell">{{ __('common.col_updated') }}</th>
                     <th>{{ __('common.col_actions') }}</th>
@@ -54,6 +57,7 @@
                         </td>
                         <td>{{ $record->instrument->name ?? '-' }}</td>
                         <td class="hidden md:table-cell">{{ $record->city ?? '-' }}</td>
+                        <td class="hidden md:table-cell">{{ $record->country ?? '-' }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->created_at->format('Y-m-d') }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->updated_at->format('Y-m-d') }}</td>
                         <td class="whitespace-nowrap">

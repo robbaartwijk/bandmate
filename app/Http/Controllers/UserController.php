@@ -65,15 +65,10 @@ class UserController extends BaseController
     /**
      * Update the specified user in storage.
      */
-    public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->authorize('update', $user);
         
-        $validated = $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-        ]);
-
         $user->update($validated);
 
         return redirect()->route('users.index')->with('status', 'User updated successfully');

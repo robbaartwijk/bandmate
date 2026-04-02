@@ -24,6 +24,7 @@ class Availablemusician extends Model implements HasMedia
         'genre_id',
         'description',
         'city',
+        'country',
         'available_from',
         'available_until',
     ];

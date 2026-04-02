@@ -38,6 +38,11 @@
                 @error('city') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
             <div class="bm-form-group">
+                <label for="country" class="bm-label">{{ __('common.col_country') }}</label>
+                <input type="text" id="country" name="country" class="bm-input" value="{{ old('country') }}" maxlength="100" placeholder="{{ __('common.col_country') }}">
+                @error('country') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
                 <label for="available_from" class="bm-label">{{ __('availablemusicians.available_from') }}</label>
                 <input type="date" id="available_from" name="available_from" class="bm-input" value="{{ old('available_from') }}">
                 @error('available_from') <span class="bm-error">{{ $message }}</span> @enderror

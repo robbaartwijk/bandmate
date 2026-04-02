@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRehearsalroomRequest;
+use App\Http\Requests\UpdateRehearsalroomRequest;
 use App\Models\Rehearsalroom;
 use Illuminate\Http\Request;
 use App\Services\NotificationService;
@@ -57,27 +59,11 @@ class RehearsalroomController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRehearsalroomRequest $request)
     {
-        $this->authorize('create', Rehearsalroom::class);
-
-        $request->validate([
-            'name'              => 'required',
-            'city'              => 'required',
-            'country'           => 'required',
-            'price'             => ['nullable', 'numeric', 'min:0'],
-            'phone'             => ['nullable', 'string', 'max:30'],
-            'email'             => ['nullable', 'email'],
-            'website'           => ['nullable', 'url'],
-            'rehearsalroompic'  => ['nullable', 'image', 'max:4096'],
-        ]);
-
         $rehearsalroom = new Rehearsalroom;
         $rehearsalroom->user_id = auth()->id();
-        $rehearsalroom->fill($request->only([
-            'name', 'city', 'country', 'price', 'description',
-            'phone', 'email', 'website',
-        ]));
+        $rehearsalroom->fill($request->validated());
         $rehearsalroom->save();
 
         if ($request->hasFile('rehearsalroompic')) {
@@ -123,25 +109,9 @@ class RehearsalroomController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Rehearsalroom $rehearsalroom)
+    public function update(UpdateRehearsalroomRequest $request, Rehearsalroom $rehearsalroom)
     {
-        $this->authorize('update', $rehearsalroom);
-
-        $request->validate([
-            'name'              => 'required',
-            'city'              => 'required',
-            'country'           => 'required',
-            'price'             => ['nullable', 'numeric', 'min:0'],
-            'phone'             => ['nullable', 'string', 'max:30'],
-            'email'             => ['nullable', 'email'],
-            'website'           => ['nullable', 'url'],
-            'rehearsalroompic'  => ['nullable', 'image', 'max:4096'],
-        ]);
-
-        $rehearsalroom->fill($request->only([
-            'name', 'city', 'country', 'price', 'description',
-            'phone', 'email', 'website',
-        ]))->save();
+        $rehearsalroom->fill($request->validated())->save();
 
         if ($request->hasFile('rehearsalroompic')) {
             $this->clearRehearsalroomImage($rehearsalroom);

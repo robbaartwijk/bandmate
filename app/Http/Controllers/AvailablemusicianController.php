@@ -157,6 +157,8 @@ class AvailablemusicianController extends BaseController
             case 'description':    $query->orderBy('availablemusicians.description'); break;
             case 'genre_name':     $query->orderBy('genres.name'); break;
             case 'instrument_name':$query->orderBy('instruments.name'); break;
+            case 'city_name':      $query->orderBy('availablemusicians.city'); break;
+            case 'country_name':   $query->orderBy('availablemusicians.country'); break;
             case 'musician_name':  $query->orderBy('users.name'); break;
             case 'available_from': $query->orderBy('available_from'); break;
             case 'available_until':$query->orderBy('available_until'); break;
@@ -174,6 +176,8 @@ class AvailablemusicianController extends BaseController
                 $q->where('availablemusicians.description', 'like', '%'.$search.'%')
                     ->orWhere('users.name', 'like', '%'.$search.'%')
                     ->orWhere('instruments.name', 'like', '%'.$search.'%')
+                    ->orWhere('availablemusicians.city', 'like', '%'.$search.'%')
+                    ->orWhere('availablemusicians.country', 'like', '%'.$search.'%')
                     ->orWhere('genres.name', 'like', '%'.$search.'%');
             });
         }

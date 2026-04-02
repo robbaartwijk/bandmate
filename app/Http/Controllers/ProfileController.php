@@ -73,7 +73,6 @@ class ProfileController extends BaseController
      */
     public function clearUserImage($user): void
     {
-        $user->clearMediaCollection('images/AvatarPics');
         $user->clearMediaCollection('images/AvatarThumbnailPics');
     }
 

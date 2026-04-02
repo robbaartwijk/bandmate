@@ -18,6 +18,7 @@ class UpdateRehearsalroomRequest extends FormRequest
             'city'             => ['required', 'string', 'max:255'],
             'country'          => ['required', 'string', 'max:255'],
             'price'            => ['nullable', 'numeric', 'min:0'],
+            'description'      => ['nullable', 'string'],
             'phone'            => ['nullable', 'string', 'max:30'],
             'email'            => ['nullable', 'email'],
             'website'          => ['nullable', 'url'],

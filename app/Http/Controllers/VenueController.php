@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreVenueRequest;
+use App\Http\Requests\UpdateVenueRequest;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 use App\Services\NotificationService;
@@ -56,27 +58,11 @@ class VenueController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVenueRequest $request)
     {
-        $this->authorize('create', Venue::class);
-
-        $request->validate([
-            'name'        => 'required',
-            'city'        => 'required',
-            'country'     => 'required',
-            'capacity'    => ['nullable', 'integer', 'min:0'],
-            'website'     => ['nullable', 'url'],
-            'phone'       => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
-            'email'       => ['nullable', 'email'],
-            'venuepic'    => ['nullable', 'image', 'max:4096'],
-        ]);
-
         $venue = new Venue;
         $venue->user_id = auth()->id();
-        $venue->fill($request->only([
-            'name', 'city', 'country', 'capacity', 'description',
-            'website', 'phone', 'email', // FIX: these were validated but never saved
-        ]));
+        $venue->fill($request->validated());
         $venue->save();
 
         if ($request->hasFile('venuepic')) {
@@ -102,8 +88,8 @@ class VenueController extends BaseController
      */
     public function show(Venue $venue)
     {
+        $this->authorize('view', $venue);    // ← add this line
         $venue->image = $venue->getFirstMedia('images/VenuePics');
-
         return view('venues.show', compact('venue'));
     }
 
@@ -120,25 +106,9 @@ class VenueController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Venue $venue)
+    public function update(UpdateVenueRequest $request, Venue $venue)
     {
-        $this->authorize('update', $venue);
-
-        $request->validate([
-            'name'        => 'required',
-            'city'        => 'required',
-            'country'     => 'required',
-            'capacity'    => ['nullable', 'integer', 'min:0'],
-            'website'     => ['nullable', 'url'],
-            'phone'       => ['nullable', 'regex:/^([0-9\s\-\+\(\)]+)$/', 'min:10'],
-            'email'       => ['nullable', 'email'],
-            'venuepic'    => ['nullable', 'image', 'max:4096'],
-        ]);
-
-        $venue->fill($request->only([
-            'name', 'city', 'country', 'capacity', 'description',
-            'website', 'phone', 'email', // FIX: these were validated but never saved
-        ]))->save();
+        $venue->fill($request->validated())->save();
 
         if ($request->hasFile('venuepic')) {
             $this->clearVenueImage($venue);
