@@ -120,7 +120,7 @@
             {{-- Submit buttons --}}
             <div class="flex items-center gap-3 mt-6 pt-4 border-t border-white/10">
                 <button type="submit" class="bm-btn bm-btn-primary">
-                    <i class="fas fa-save"></i> {{ __('profile.edit') }}
+                    <i class="fas fa-save"></i> {{ __('common.update') }}
                 </button>
                 <a href="{{ url()->previous() }}" class="bm-btn bm-btn-secondary">
                     <i class="fas fa-arrow-left"></i> {{ __('common.back') }}
