@@ -16,6 +16,8 @@ class StoreAvailablemusicianRequest extends FormRequest
         return [
             'instrument_id'        => ['required', 'exists:instruments,id'],
             'genre_id'             => ['required', 'exists:genres,id'],
+            'address'              => ['nullable', 'string', 'max:100'],
+            'zip'                  => ['nullable', 'string', 'max:10'],
             'city'                 => ['nullable', 'string', 'max:100'],
             'country'              => ['nullable', 'string', 'max:100'],
             'description'          => ['nullable', 'string'],

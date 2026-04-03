@@ -83,13 +83,11 @@
 
         {{-- Map --}}
         @php
-            $mapParts = array_filter([
+            $mapParts = array_filter(array_map('trim', [
                 $venue->address ?? null,
                 $venue->city    ?? null,
-                $venue->zip     ?? null,
-                $venue->state   ?? null,
                 $venue->country ?? null,
-            ]);
+            ]));
             $mapQuery = implode(', ', $mapParts);
         @endphp
         @if($mapQuery)
@@ -113,7 +111,9 @@
         (function () {
             const query = @json($mapQuery);
             const label = @json($venue->name);
-            fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query))
+            fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query), {
+                    headers: { 'Accept-Language': 'en', 'User-Agent': 'Bandmate/1.0' }
+                })
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
                     if (!data || !data.length) {

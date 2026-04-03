@@ -23,6 +23,8 @@ class Availablemusician extends Model implements HasMedia
         'instrument_id',
         'genre_id',
         'description',
+        'address',
+        'zip',
         'city',
         'country',
         'available_from',

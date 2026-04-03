@@ -12,6 +12,16 @@
                 <input type="text" id="name" name="name" value="{{ old('name') }}" class="bm-input" placeholder="{{ __('rehearsalrooms.name_placeholder') }}" required>
                 @error('name') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+            <div class="bm-form-group">
+                <label for="address" class="bm-label">{{ __('rehearsalrooms.address') }}</label>
+                <input type="text" id="address" name="address" value="{{ old('address') }}" class="bm-input" placeholder="{{ __('rehearsalrooms.address_placeholder') }}" required>
+                @error('address') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="zip" class="bm-label">{{ __('rehearsalrooms.zip') }}</label>
+                <input type="text" id="zip" name="zip" value="{{ old('zip') }}" class="bm-input" placeholder="{{ __('rehearsalrooms.zip_placeholder') }}" required>
+                @error('zip') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
             <div class="bm-form-group" x-data="cityAutocomplete({{ json_encode(old('city', '')) }}, {{ json_encode(old('country', '')) }})" x-init="init()">
                 <label for="city" class="bm-label">{{ __('rehearsalrooms.city') }}</label>
                 <div class="relative">

@@ -15,6 +15,8 @@ class UpdateRehearsalroomRequest extends FormRequest
     {
         return [
             'name'             => ['required', 'string', 'max:255'],
+            'address'          => ['nullable', 'string', 'max:255'],
+            'zip'              => ['nullable', 'string', 'max:20'],
             'city'             => ['required', 'string', 'max:255'],
             'country'          => ['required', 'string', 'max:255'],
             'price'            => ['nullable', 'numeric', 'min:0'],
@@ -29,7 +31,7 @@ class UpdateRehearsalroomRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'rehearsalroompic.max' => 'The photo may not be larger than 2 MB.',
+            'rehearsalroompic.max' => 'The photo may not be larger than 4 MB.',
             'rehearsalroompic.image' => 'The uploaded file must be an image.',
         ];
     }
