@@ -47,7 +47,8 @@ class VacancyController extends BaseController
                 return match ($sort) {
                     'instrument_name' => $query->orderBy('instruments.name'),
                     'genre_name'      => $query->orderBy('genres.name'),
-                    'created_at'      => $query->orderBy('vacancies.created_at'),
+                    'city'            => $query->orderBy('vacancies.city'),
+                    'country'         => $query->orderBy('vacancies.country'),
                     'updated_at'      => $query->orderBy('vacancies.updated_at'),
                     default           => $query->orderBy('acts.name'),
                 };
@@ -79,6 +80,7 @@ class VacancyController extends BaseController
         $vacancy = new Vacancy;
         $vacancy->fill($request->validated());
         $vacancy->user_id = auth()->id();
+
         $vacancy->save();
 
         $this->notificationService->dispatchModuleNotification(

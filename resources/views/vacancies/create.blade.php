@@ -32,6 +32,16 @@
                 <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('vacancies.description_placeholder') }}">{{ old('description') }}</textarea>
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+            <div class="bm-form-group">
+                <label for="city" class="bm-label">{{ __('common.col_city') }}</label>
+                <textarea id="city" name="city" class="bm-input" rows="1" placeholder="{{ __('common.col_city') }}">{{ old('city') }}</textarea>
+                @error('city') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
+            <div class="bm-form-group">
+                <label for="country" class="bm-label">{{ __('common.col_country') }}</label>
+                <textarea id="country" name="country" class="bm-input" rows="1" placeholder="{{ __('common.col_country') }}">{{ old('country') }}</textarea>
+                @error('country') <span class="bm-error">{{ $message }}</span> @enderror
+            </div>
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('vacancies.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

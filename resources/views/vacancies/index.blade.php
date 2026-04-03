@@ -13,7 +13,8 @@
                     <option value="act_name"        {{ (request()->sort === 'act_name'        || !request()->sort) ? 'selected' : '' }}>{{ __('common.sort_by_act') }}</option>
                     <option value="genre_name"      {{ request()->sort === 'genre_name'       ? 'selected' : '' }}>{{ __('common.sort_by_genre') }}</option>
                     <option value="instrument_name" {{ request()->sort === 'instrument_name'  ? 'selected' : '' }}>{{ __('common.sort_by_instrument') }}</option>
-                    <option value="created_at"      {{ request()->sort === 'created_at'       ? 'selected' : '' }}>{{ __('common.sort_by_date_of_creation') }}</option>
+                    <option value="city"            {{ request()->sort === 'city'             ? 'selected' : '' }}>{{ __('common.sort_by_city') }}</option>
+                    <option value="country"         {{ request()->sort === 'country'          ? 'selected' : '' }}>{{ __('common.sort_by_country') }}</option>
                     <option value="updated_at"      {{ request()->sort === 'updated_at'       ? 'selected' : '' }}>{{ __('common.sort_by_date_last_update') }}</option>
                 </select>
                 <button type="submit" class="bm-btn bm-btn-secondary bm-btn-sm"><i class="fas fa-search"></i></button>
@@ -30,7 +31,8 @@
                     <th class="hidden md:table-cell">{{ __('common.col_genre') }}</th>
                     <th>{{ __('common.col_instrument') }}</th>
                     <th class="hidden lg:table-cell">{{ __('vacancies.description') }}</th>
-                    <th class="hidden lg:table-cell">{{ __('common.col_added') }}</th>
+                    <th class="hidden lg:table-cell">{{ __('common.col_city') }}</th>
+                    <th class="hidden lg:table-cell">{{ __('common.col_country') }}</th>
                     <th class="hidden lg:table-cell">{{ __('common.col_updated') }}</th>
                     <th>{{ __('common.col_actions') }}</th>
                 </tr></thead>
@@ -49,8 +51,9 @@
                             @endif
                         </td>
                         <td>{{ $record->instrument->name ?? '-' }}</td>
-                        <td class="hidden lg:table-cell text-sm text-white/70">{{ Str::limit($record->description, 60) }}</td>
-                        <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->created_at->format('Y-m-d') }}</td>
+                        <td class="hidden lg:table-cell text-sm text-white/70">{{ Str::limit($record->description, 21) }}</td>
+                        <td class="hidden lg:table-cell text-sm text-white/70">{{ Str::limit($record->city, 20) }}</td>
+                        <td class="hidden lg:table-cell text-sm text-white/70">{{ Str::limit($record->country, 20) }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->updated_at->format('Y-m-d') }}</td>
                         <td class="whitespace-nowrap">
                             <a href="{{ route('vacancies.edit', $record->id) }}" class="bm-btn bm-btn-secondary bm-btn-sm mr-1"><i class="fas fa-pencil-alt"></i></a>

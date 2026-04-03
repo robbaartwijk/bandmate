@@ -42,6 +42,14 @@
                     <td>{{ $vacancy->description ?? '-' }}</td>
                 </tr>
                 <tr>
+                    <th class="text-white/60 font-medium">{{ __('common.col_city') }}</th>
+                    <td>{{ $vacancy->city ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th class="text-white/60 font-medium">{{ __('common.col_country') }}</th>
+                    <td>{{ $vacancy->country ?? '-' }}</td>
+                </tr>
+                <tr>
                     <th class="text-white/60 font-medium">{{ __('common.col_added') }}</th>
                     <td>{{ $vacancy->created_at->format('Y-m-d H:i:s') }}</td>
                 </tr>

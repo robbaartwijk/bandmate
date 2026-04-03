@@ -16,10 +16,14 @@ class StoreVacancyRequest extends FormRequest
         return [
             'act_id' => [
                 'required',
-                Rule::exists('acts', 'id')->where('user_id', auth()->id()),
+                auth()->user()->is_admin
+                    ? Rule::exists('acts', 'id')->whereNull('deleted_at')
+                    : Rule::exists('acts', 'id')->where('user_id', auth()->id())->whereNull('deleted_at'),
             ],
             'instrument_id' => ['required', 'exists:instruments,id'],
             'description'   => ['nullable', 'string'],
+            'city'          => ['nullable', 'string', 'max:255'],
+            'country'       => ['nullable', 'string', 'max:255'],
         ];
     }
 }

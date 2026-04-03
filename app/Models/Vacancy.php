@@ -24,6 +24,8 @@ class Vacancy extends Model implements HasMedia
         'act_id',
         'instrument_id',
         'description',
+        'city',
+        'country',
     ];
 
     public function user()
