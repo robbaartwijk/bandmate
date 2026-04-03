@@ -25,4 +25,12 @@ class StoreRehearsalroomRequest extends FormRequest
             'rehearsalroompic' => ['nullable', 'image', 'max:4096'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'rehearsalroompic.max' => 'The photo may not be larger than 2 MB.',
+            'rehearsalroompic.image' => 'The uploaded file must be an image.',
+        ];
+    }
 }

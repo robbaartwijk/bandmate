@@ -25,4 +25,12 @@ class StoreVenueRequest extends FormRequest
             'venuepic' => ['nullable', 'image', 'max:4096'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'venuepic.max' => 'The photo may not be larger than 2 MB.',
+            'venuepic.image' => 'The uploaded file must be an image.',
+        ];
+    }
 }

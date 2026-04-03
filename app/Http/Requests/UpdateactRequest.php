@@ -39,4 +39,12 @@ class UpdateActRequest extends FormRequest
             'actpic'           => ['nullable', 'image', 'max:4096'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'actpic.max' => 'The photo may not be larger than 2 MB.',
+            'actpic.image' => 'The uploaded file must be an image.',
+        ];
+    }
 }

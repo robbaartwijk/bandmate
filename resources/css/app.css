@@ -138,4 +138,8 @@
     .bm-alert-success { @apply bm-alert bg-emerald-500/15 text-emerald-300 border border-emerald-500/20; }
     .bm-alert-error   { @apply bm-alert bg-red-500/15 text-red-300 border border-red-500/20; }
     .bm-alert-info    { @apply bm-alert bg-sky-500/15 text-sky-300 border border-sky-500/20; }
+
+    .bm-error {
+        @apply block text-sm text-red-400 mt-1;
+    }
 }

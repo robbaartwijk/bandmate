@@ -24,4 +24,12 @@ class StoreAvailablemusicianRequest extends FormRequest
             'availablemusicianpic' => ['nullable', 'image', 'max:4096'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'availablemusicianpic.max' => 'The photo may not be larger than 2 MB.',
+            'availablemusicianpic.image' => 'The uploaded file must be an image.',
+        ];
+    }
 }

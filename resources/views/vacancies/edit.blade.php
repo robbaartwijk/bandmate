@@ -32,7 +32,7 @@
                 <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('vacancies.description_placeholder') }}">{{ old('description', $vacancy->description) }}</textarea>
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
-            <div class="bm-form-group" x-data="cityAutocomplete('{{ old('city', $vacancy->city) }}', '{{ old('country', $vacancy->country) }}')" x-init="init()">
+            <div class="bm-form-group" x-data="cityAutocomplete({{ json_encode(old('city', $vacancy->city)) }}, {{ json_encode(old('country', $vacancy->country)) }})" x-init="init()">
                 <label for="city" class="bm-label">{{ __('common.col_city') }}</label>
                 <div class="relative">
                     <input id="city" name="city" type="text" class="bm-input w-full"
