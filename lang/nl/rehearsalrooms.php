@@ -9,6 +9,11 @@ return [
 
     'name'                    => 'Naam',
     'name_placeholder'        => 'Naam van de ruimte',
+    'address'                 => 'Adres',
+    'address_placeholder'     => 'Straatnaam en huisnummer',
+    'zip'                     => 'Postcode',
+    'zip_placeholder'         => 'Postcode',
+    'city_placeholder'        => 'Stad',
     'city'                    => 'Stad',
     'city_placeholder'        => 'Stad',
     'country'                 => 'Land',
@@ -19,8 +24,11 @@ return [
     'description_placeholder' => 'Beschrijf de repetitieruimte...',
     'website'               => 'Website',
     'website_placeholder'   => 'Website URL',
+    'photo'                 => 'Kies een foto',
+    'photo_placeholder'     => 'Kies een foto',
 
     'delete_confirm' => 'Deze repetitieruimte verwijderen?',
+    'current photo — upload a new one to replace it' => 'Huidige foto — upload een nieuwe om deze te vervangen',
 
     'created' => 'Repetitieruimte aangemaakt.',
     'updated' => 'Repetitieruimte bijgewerkt.',

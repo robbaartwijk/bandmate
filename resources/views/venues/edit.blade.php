@@ -77,9 +77,9 @@
             </div>
 
             {{-- Photo upload --}}
-            <h3 class="bm-section-title mt-6">Photo</h3>
+            <h3 class="bm-section-title mt-6">{{ __('venues.photo') }}</h3>
             <div class="bm-form-group">
-                <label for="venuepic" class="bm-label">Venue photo</label>
+                <label for="venuepic" class="bm-label">{{ __('venues.photo') }}</label>
                 @php $currentImage = $venue->getFirstMedia('images/VenuePics'); @endphp
                 @if($currentImage)
                 <div class="mb-3">
@@ -87,7 +87,6 @@
                          class="rounded-lg border border-white/10"
                          style="max-width:260px; max-height:160px; object-fit:cover;"
                          alt="{{ $venue->name }}">
-                    <p class="text-yellow-300 text-xs mt-1">Current photo — upload a new one to replace it.</p>
                 </div>
                 @endif
                 <input type="file" id="venuepic" name="venuepic" class="bm-input" accept="image/*">
@@ -97,7 +96,6 @@
                     <span class="bm-error">{{ $errors->first('venuepic') }}</span>
                 @endif
             </div>
-
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('venues.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

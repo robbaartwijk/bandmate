@@ -87,9 +87,9 @@
             </div>
 
             {{-- Photo upload --}}
-            <h3 class="bm-section-title mt-6">Photo</h3>
+            <h3 class="bm-section-title mt-6">{{ __('rehearsalrooms.photo') }}</h3>
             <div class="bm-form-group">
-                <label for="rehearsalroompic" class="bm-label">Rehearsal room photo</label>
+                <label for="rehearsalroompic" class="bm-label">{{ __('rehearsalrooms.photo') }}</label>
                 <input type="file" id="rehearsalroompic" name="rehearsalroompic" class="bm-input" accept="image/*">
                 <p class="text-yellow-300 text-xs mt-1">JPG, PNG or WebP. Max 4 MB.</p>
                 <span id="rehearsalroompic-size-error" class="bm-error" style="display:none;"></span>

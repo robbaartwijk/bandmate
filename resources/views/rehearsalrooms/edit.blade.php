@@ -87,9 +87,9 @@
             </div>
 
             {{-- Photo upload --}}
-            <h3 class="bm-section-title mt-6">Photo</h3>
+            <h3 class="bm-section-title mt-6">{{ __('rehearsalrooms.photo') }}</h3>
             <div class="bm-form-group">
-                <label for="rehearsalroompic" class="bm-label">Rehearsal room photo</label>
+                <label for="rehearsalroompic" class="bm-label">{{ __('rehearsalrooms.photo') }}</label>
                 @php $currentImage = $rehearsalroom->getFirstMedia('images/RehearsalroomPics'); @endphp
                 @if($currentImage)
                 <div class="mb-3">
@@ -97,7 +97,9 @@
                          class="rounded-lg border border-white/10"
                          style="max-width:260px; max-height:160px; object-fit:cover;"
                          alt="{{ $rehearsalroom->name }}">
-                    <p class="text-yellow-300 text-xs mt-1">Current photo — upload a new one to replace it.</p>
+
+                    <p class="text-yellow-300 text-xs mt-1">{{ __('rehearsalrooms.photo') }}</p>
+
                 </div>
                 @endif
                 <input type="file" id="rehearsalroompic" name="rehearsalroompic" class="bm-input" accept="image/*">

@@ -77,9 +77,9 @@
             </div>
 
             {{-- Photo upload --}}
-            <h3 class="bm-section-title mt-6">Photo</h3>
+            <h3 class="bm-section-title mt-6">{{ __('venues.photo') }}</h3>
             <div class="bm-form-group">
-                <label for="venuepic" class="bm-label">Venue photo</label>
+                <label for="venuepic" class="bm-label">{{ __('venues.photo') }}</label>
                 <input type="file" id="venuepic" name="venuepic" class="bm-input" accept="image/*">
                 <p class="text-yellow-300 text-xs mt-1">JPG, PNG or WebP. Max 4 MB.</p>
                 <span id="venuepic-size-error" class="bm-error" style="display:none;"></span>
