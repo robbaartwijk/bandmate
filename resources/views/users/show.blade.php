@@ -21,6 +21,15 @@
         <script>setTimeout(() => { const el = document.getElementById('status-alert'); if(el) el.style.display='none'; }, 2000);</script>
         @endif
 
+        @if($user->image)
+        <div class="mb-6">
+            <img src="{{ asset('/storage/' . $user->image->id . '/' . $user->image->file_name) }}"
+                 class="rounded-lg border border-white/10 w-full object-cover"
+                 style="max-height:400px;"
+                 alt="{{ $user->name }}">
+        </div>
+        @endif
+
         <table class="bm-table">
             <tbody>
                 <tr>

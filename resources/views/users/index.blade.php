@@ -34,8 +34,24 @@
                 </tr></thead>
                 <tbody>
                     @foreach ($users as $user)
+                    @php $thumb = $user->getFirstMedia('images/AvatarThumbnailPics'); @endphp
                     <tr>
-                        <td><a href="{{ route('users.show', $user->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $user->name }}</a></td>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                @if($thumb)
+                                <img src="{{ asset('/storage/' . $thumb->id . '/' . $thumb->file_name) }}"
+                                     class="rounded-full object-cover border border-white/20 flex-shrink-0"
+                                     style="width:32px; height:32px;"
+                                     alt="{{ $user->name }}">
+                                @else
+                                <div class="rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0"
+                                     style="width:32px; height:32px;">
+                                    <i class="fas fa-user text-white/25 text-xs"></i>
+                                </div>
+                                @endif
+                                <a href="{{ route('users.show', $user->id) }}" class="text-indigo-400 hover:text-indigo-300">{{ $user->name }}</a>
+                            </div>
+                        </td>
                         <td class="hidden md:table-cell text-white/60 text-sm">{{ $user->email }}</td>
                         <td class="hidden md:table-cell">
                             <span class="text-xs px-2 py-0.5 rounded {{ $user->is_admin ? 'bg-indigo-500/20 text-indigo-300' : 'bg-white/10 text-white/50' }}">

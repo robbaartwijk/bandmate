@@ -20,6 +20,10 @@ return [
     'role_admin' => 'Admin',
     'role_user'  => 'User',
 
+    // Media
+    'media_section' => 'Photo',
+    'upload_image'  => 'Upload image',
+
     // Confirm dialog
     'delete_confirm' => 'Delete this user?',
 

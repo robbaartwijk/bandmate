@@ -14,6 +14,10 @@ return [
     'role_admin' => 'Beheerder',
     'role_user'  => 'Gebruiker',
 
+    // Media
+    'media_section' => 'Foto',
+    'upload_image'  => 'Afbeelding uploaden',
+
     'delete_confirm' => 'Deze gebruiker verwijderen?',
 
     'updated' => 'Gebruiker bijgewerkt.',

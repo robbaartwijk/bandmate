@@ -13,11 +13,11 @@ class UserController extends BaseController
      */
     public function index(Request $request): \Illuminate\View\View
     {
-        // Whitelist allowed sort columns to prevent SQL injection via orderBy()
         $allowedSorts = ['name', 'email', 'created_at', 'updated_at'];
         $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
 
         $query = User::withCount(['acts', 'rehearsalrooms', 'vacancies', 'availablemusicians'])
+            ->with('media')
             ->orderBy($sort);
  
         if ($request->has('search')) {
@@ -39,7 +39,6 @@ class UserController extends BaseController
      */
     public function show(User $user): \Illuminate\View\View
     {
-        // Eager load all relationships including nested ones to avoid N+1
         $user->load([
             'acts.genre',
             'vacancies.instrument',
@@ -65,15 +64,18 @@ class UserController extends BaseController
  
     /**
      * Update the specified user in storage.
-     *
-     * FIX: Added missing `use App\Http\Requests\UpdateUserRequest` import and
-     * replaced the undefined `$validated` variable with `$request->validated()`.
      */
     public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('update', $user);
 
         $user->update($request->validated());
+
+        if ($request->hasFile('userpic')) {
+            $user->clearMediaCollection('images/AvatarThumbnailPics');
+            $user->addMediaFromRequest('userpic')
+                ->toMediaCollection('images/AvatarThumbnailPics');
+        }
 
         return redirect()->route('users.index')->with('status', 'User updated successfully');
     }
@@ -84,7 +86,8 @@ class UserController extends BaseController
     public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('delete', $user);
-        
+
+        $user->clearMediaCollection('images/AvatarThumbnailPics');
         $user->delete();
  
         return redirect()->route('users.index')
