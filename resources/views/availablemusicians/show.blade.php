@@ -24,6 +24,17 @@
         </div>
     </div>
     <div class="bm-card-body">
+
+        @php $image = $availablemusician->getFirstMedia('images/AvailablemusicianPics'); @endphp
+        @if($image)
+        <div class="mb-6">
+            <img src="{{ asset('/storage/' . $image->id . '/' . $image->file_name) }}"
+                class="rounded-lg border border-white/10 w-full object-cover"
+                style="max-height:400px;"
+                alt="{{ $availablemusician->act->name ?? '' }}">
+        </div>
+        @endif
+
         <table class="bm-table">
             <tbody>
                 <tr>

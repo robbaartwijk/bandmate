@@ -38,8 +38,24 @@
                 </tr></thead>
                 <tbody>
                     @foreach ($vacancies as $record)
+                    @php $thumb = $record->getFirstMedia('images/VacancyPics'); @endphp
                     <tr>
-                        <td><a href="{{ route('vacancies.show', $record->id) }}" class="hover:underline">{{ $record->act->name ?? '-' }}</a></td>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                @if($thumb)
+                                <img src="{{ asset('/storage/' . $thumb->id . '/' . $thumb->file_name) }}"
+                                     class="rounded-full object-cover border border-white/20 flex-shrink-0"
+                                     style="width:32px; height:32px;"
+                                     alt="{{ $record->act->name ?? '' }}">
+                                @else
+                                <div class="rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0"
+                                     style="width:32px; height:32px;">
+                                    <i class="fas fa-music text-white/25 text-xs"></i>
+                                </div>
+                                @endif
+                                <a href="{{ route('vacancies.show', $record->id) }}" class="hover:underline">{{ $record->act->name ?? '-' }}</a>
+                            </div>
+                        </td>
                         <td class="hidden md:table-cell">
                             @if($record->act?->genre)
                             <div class="flex items-center gap-2 flex-wrap">

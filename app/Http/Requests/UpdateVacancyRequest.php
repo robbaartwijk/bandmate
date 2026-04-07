@@ -25,6 +25,7 @@ class UpdateVacancyRequest extends FormRequest
             'description'   => ['nullable', 'string'],
             'city'          => ['nullable', 'string', 'max:255'],
             'country'       => ['nullable', 'string', 'max:255'],
+            'vacancypic'    => ['nullable', 'image', 'max:4096'],
         ];
     }
 }

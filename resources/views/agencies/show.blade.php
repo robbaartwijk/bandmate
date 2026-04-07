@@ -5,6 +5,15 @@
         <h2 class="bm-card-title">{{ $agency->name }}</h2>
     </div>
     <div class="bm-card-body">
+        @php $image = $agency->getFirstMedia('images/AgencyPics'); @endphp
+        @if($image)
+        <div class="mb-6">
+            <img src="{{ asset('/storage/' . $image->id . '/' . $image->file_name) }}"
+                 class="rounded-lg border border-white/10 w-full object-cover"
+                 style="max-height:400px;"
+                 alt="{{ $agency->name }}">
+        </div>
+        @endif
         <table class="bm-table">
             <tbody>
                 <tr>

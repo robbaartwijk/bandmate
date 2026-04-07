@@ -5,7 +5,7 @@
         <h2 class="bm-card-title">{{ __('agencies.edit') }}</h2>
     </div>
     <div class="bm-card-body">
-        <form action="{{ route('agencies.update', $agency->id) }}" method="post">
+        <form action="{{ route('agencies.update', $agency->id) }}" method="post" enctype="multipart/form-data">
             @csrf @method('put')
             <div class="bm-form-group">
                 <label for="name" class="bm-label">{{ __('agencies.name') }}</label>
@@ -50,6 +50,25 @@
                 <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('agencies.description_placeholder') }}">{{ old('description', $agency->description) }}</textarea>
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+
+            {{-- Image --}}
+            <h3 class="bm-section-title mt-6">{{ __('agencies.media_section') }}</h3>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('agencies.upload_image') }}</label>
+                @php $currentImage = $agency->getFirstMedia('images/AgencyPics'); @endphp
+                @if($currentImage)
+                <div class="mb-3">
+                    <img src="{{ asset('/storage/' . $currentImage->id . '/' . $currentImage->file_name) }}"
+                         class="rounded-lg border border-white/10"
+                         style="max-width:200px; max-height:150px; object-fit:cover;"
+                         alt="{{ $agency->name }}">
+                    <p class="text-white/40 text-xs mt-1">Current image (upload a new one to replace)</p>
+                </div>
+                @endif
+                <input type="file" name="agencypic" class="bm-input" accept="image/*">
+                @error('agencypic')<span class="bm-error">{{ $message }}</span>@enderror
+            </div>
+
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('agencies.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

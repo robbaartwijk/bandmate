@@ -30,6 +30,7 @@ class UpdateAgencyRequest extends FormRequest
             'youtube'     => ['nullable', 'url'],
             'soundcloud'  => ['nullable', 'url'],
             'spotify'     => ['nullable', 'url'],
+            'agencypic'   => ['nullable', 'image', 'max:4096'],
         ];
     }
 }

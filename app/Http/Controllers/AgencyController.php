@@ -25,7 +25,7 @@ class AgencyController extends BaseController
         $sort = in_array($request->input('sort'), $allowedSorts) ? $request->input('sort') : 'name';
         $select = $request->input('selectrecords') ?? 25;
 
-        $query = Agency::with('user')->orderBy($sort);
+        $query = Agency::with('user', 'media')->orderBy($sort);
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -64,6 +64,10 @@ class AgencyController extends BaseController
         $agency->user_id = auth()->id();
         $agency->fill($request->validated());
         $agency->save();
+
+        if ($request->hasFile('agencypic')) {
+            $this->storeAgencyImage($request, $agency);
+        }
 
         $this->notificationService->dispatchModuleNotification(
             templateName: 'email_notification_agencies',
@@ -106,6 +110,11 @@ class AgencyController extends BaseController
     {
         $agency->update($request->validated());
 
+        if ($request->hasFile('agencypic')) {
+            $this->clearAgencyImage($agency);
+            $this->storeAgencyImage($request, $agency);
+        }
+
         return redirect()->route('agencies.index')
             ->with('status', 'Agency updated successfully');
     }
@@ -117,9 +126,28 @@ class AgencyController extends BaseController
     {
         $this->authorize('delete', $agency);
 
+        $agency->clearMediaCollection('images/AgencyPics');
+
         $agency->delete();
 
         return redirect()->route('agencies.index')
             ->with('status', 'Agency deleted successfully');
+    }
+
+    /**
+     * Store the uploaded agency image via Spatie Media Library.
+     */
+    public function storeAgencyImage(Request $request, Agency $agency): void
+    {
+        $agency->addMediaFromRequest('agencypic')
+            ->toMediaCollection('images/AgencyPics');
+    }
+
+    /**
+     * Remove the agency image media collection.
+     */
+    public function clearAgencyImage(Agency $agency): void
+    {
+        $agency->clearMediaCollection('images/AgencyPics');
     }
 }

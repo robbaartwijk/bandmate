@@ -21,6 +21,10 @@ return [
     'description'             => 'Description',
     'description_placeholder' => 'Describe the agency...',
 
+    // Media
+    'media_section' => 'Photo',
+    'upload_image'  => 'Upload image',
+
     // Confirm dialog
     'delete_confirm' => 'Delete this agency?',
 

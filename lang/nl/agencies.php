@@ -16,6 +16,10 @@ return [
     'description'             => 'Beschrijving',
     'description_placeholder' => 'Beschrijf de agency...',
 
+    // Media
+    'media_section' => 'Foto',
+    'upload_image'  => 'Afbeelding uploaden',
+
     'delete_confirm' => 'Deze agency verwijderen?',
 
     'created' => 'Agency aangemaakt.',

@@ -7,6 +7,10 @@ return [
     'edit'  => 'Vacature bewerken',
     'show'  => 'Vacaturedetails',
 
+    // Media
+    'media_section' => 'Foto',
+    'upload_image'  => 'Afbeelding uploaden',
+
     'instrument'              => 'Instrument',
     'select_instrument'       => 'Selecteer instrument',
     'act'                     => 'Act',

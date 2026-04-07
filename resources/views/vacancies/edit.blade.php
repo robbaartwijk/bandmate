@@ -5,7 +5,7 @@
         <h2 class="bm-card-title">{{ __('vacancies.edit') }}</h2>
     </div>
     <div class="bm-card-body">
-        <form action="{{ route('vacancies.update', $vacancy->id) }}" method="post">
+        <form action="{{ route('vacancies.update', $vacancy->id) }}" method="post" enctype="multipart/form-data">
             @csrf @method('put')
             <div class="bm-form-group">
                 <label for="act_id" class="bm-label">{{ __('vacancies.act') }}</label>
@@ -65,6 +65,24 @@
                 />
                 @error('country') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+            {{-- Image --}}
+            <h3 class="bm-section-title mt-6">{{ __('vacancies.media_section') }}</h3>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('vacancies.upload_image') }}</label>
+                @php $currentImage = $vacancy->getFirstMedia('images/VacancyPics'); @endphp
+                @if($currentImage)
+                <div class="mb-3">
+                    <img src="{{ asset('/storage/' . $currentImage->id . '/' . $currentImage->file_name) }}"
+                         class="rounded-lg border border-white/10"
+                         style="max-width:200px; max-height:150px; object-fit:cover;"
+                         alt="{{ $vacancy->act->name ?? '' }}">
+                    <p class="text-white/40 text-xs mt-1">Current image (upload a new one to replace)</p>
+                </div>
+                @endif
+                <input type="file" name="vacancypic" class="bm-input" accept="image/*">
+                @error('vacancypic')<span class="bm-error">{{ $message }}</span>@enderror
+            </div>
+
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('vacancies.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

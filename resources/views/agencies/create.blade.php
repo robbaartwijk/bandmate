@@ -5,7 +5,7 @@
         <h2 class="bm-card-title">{{ __('agencies.add') }}</h2>
     </div>
     <div class="bm-card-body">
-        <form action="{{ route('agencies.store') }}" method="post">
+        <form action="{{ route('agencies.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="bm-form-group">
                 <label for="name" class="bm-label">{{ __('agencies.name') }}</label>
@@ -50,6 +50,15 @@
                 <textarea id="description" name="description" class="bm-input" rows="4" placeholder="{{ __('agencies.description_placeholder') }}">{{ old('description') }}</textarea>
                 @error('description') <span class="bm-error">{{ $message }}</span> @enderror
             </div>
+
+            {{-- Image --}}
+            <h3 class="bm-section-title mt-6">{{ __('agencies.media_section') }}</h3>
+            <div class="bm-form-group">
+                <label class="bm-label">{{ __('agencies.upload_image') }}</label>
+                <input type="file" name="agencypic" class="bm-input" accept="image/*">
+                @error('agencypic')<span class="bm-error">{{ $message }}</span>@enderror
+            </div>
+
             <div class="flex gap-2 mt-6">
                 <button type="submit" class="bm-btn bm-btn-primary">{{ __('common.save') }}</button>
                 <a href="{{ route('agencies.index') }}" class="bm-btn bm-btn-secondary">{{ __('common.cancel') }}</a>

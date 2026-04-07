@@ -83,6 +83,10 @@ class VacancyController extends BaseController
 
         $vacancy->save();
 
+        if ($request->hasFile('vacancypic')) {
+            $vacancy->addMediaFromRequest('vacancypic')->toMediaCollection('images/VacancyPics');
+        }
+
         $this->notificationService->dispatchModuleNotification(
             templateName: 'email_notification_vacancies',
             moduleColumn: 'email_notification_vacancies',
@@ -141,7 +145,12 @@ class VacancyController extends BaseController
     {
         $vacancy->fill($request->validated());
         $vacancy->save();
- 
+
+        if ($request->hasFile('vacancypic')) {
+            $vacancy->clearMediaCollection('images/VacancyPics');
+            $vacancy->addMediaFromRequest('vacancypic')->toMediaCollection('images/VacancyPics');
+        }
+
         return redirect()->route('vacancies.index')
             ->with('status', 'Vacancy updated successfully');
     }

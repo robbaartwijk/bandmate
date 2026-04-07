@@ -11,6 +11,10 @@ return [
     'edit'  => 'Edit Vacancy',
     'show'  => 'Vacancy Details',
 
+    // Media
+    'media_section' => 'Photo',
+    'upload_image'  => 'Upload image',
+
     // Form labels & placeholders
     'instrument'              => 'Instrument',
     'select_instrument'       => 'Select instrument',

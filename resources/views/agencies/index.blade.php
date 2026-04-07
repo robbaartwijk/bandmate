@@ -34,8 +34,24 @@
                 </tr></thead>
                 <tbody>
                     @foreach ($agencies as $record)
+                    @php $thumb = $record->getFirstMedia('images/AgencyPics'); @endphp
                     <tr>
-                        <td><a href="{{ route('agencies.show', $record->id) }}" class="hover:underline">{{ $record->name }}</a></td>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                @if($thumb)
+                                <img src="{{ asset('/storage/' . $thumb->id . '/' . $thumb->file_name) }}"
+                                     class="rounded-full object-cover border border-white/20 flex-shrink-0"
+                                     style="width:32px; height:32px;"
+                                     alt="{{ $record->name }}">
+                                @else
+                                <div class="rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0"
+                                     style="width:32px; height:32px;">
+                                    <i class="fas fa-building text-white/25 text-xs"></i>
+                                </div>
+                                @endif
+                                <a href="{{ route('agencies.show', $record->id) }}" class="hover:underline">{{ $record->name }}</a>
+                            </div>
+                        </td>
                         <td>{{ $record->city }}</td>
                         <td>{{ $record->country }}</td>
                         <td class="hidden lg:table-cell text-xs text-white/60">{{ $record->created_at->format('Y-m-d') }}</td>
